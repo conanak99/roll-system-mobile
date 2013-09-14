@@ -29,7 +29,7 @@ display: inline;
 }
 </style>
 </head>
-<body>
+<body onload="">
 <ul class="nav nav-tabs">
   <li class="active"><a href="#studentlist" data-toggle="tab">Student List</a></li>
   <li><a href="#newStudent" data-toggle="tab">New Student</a></li>
@@ -53,7 +53,7 @@ display: inline;
             <th width="20%">Email</th>
             <th width="10%">Current Class</th>
             <th>Face Set</th>
-            <th width="5%">Active</th>
+            <th width="8%">Active</th>
           </tr>
         </thead>
         <tbody>
@@ -67,6 +67,12 @@ display: inline;
                 <img class="thumbnail" src="data/Hoang_3.jpg" />
                 <img class="thumbnail" src="data/Hoang_4.jpg" />
                 <img class="thumbnail" src="data/Hoang_5.jpg" />
+                <img class="thumbnail" src="data/Hoang_1.jpg" />
+                <img class="thumbnail" src="data/Hoang_2.jpg" />
+                <img class="thumbnail" src="data/Hoang_3.jpg" />
+                <img class="thumbnail" src="data/Hoang_4.jpg" />
+                <img class="thumbnail" src="data/Hoang_5.jpg" />
+                <button class="btn btn-success" onclick="openPopup();">Edit</button>
             </td>
             <td>Yes</td>
           <tr>
@@ -75,7 +81,7 @@ display: inline;
             <td>Le Van Thong</td>
             <td>thonglvse60741@fpt.edu.vn</td>
             <td>SE675</td>
-            <td>Empty</td>
+            <td><button class="btn btn-primary">Create</button></td>
             <td>No</td>
           <tr>
           <tr>
@@ -87,7 +93,9 @@ display: inline;
                 <img class="thumbnail" src="data/Binh_2.jpg" />
                 <img class="thumbnail" src="data/Binh_3.jpg" />
                 <img class="thumbnail" src="data/Binh_4.jpg" />
-                <img class="thumbnail" src="data/Binh_5.jpg" /></td>
+                <img class="thumbnail" src="data/Binh_5.jpg" />
+                <button class="btn btn-success">Edit</button>
+                </td>
             <td>No</td>
           <tr>
           <tr>
@@ -95,7 +103,7 @@ display: inline;
             <td>Tran Binh Giang</td>
             <td>giangtb60743@fpt.edu.vn</td>
             <td>SE672</td>
-            <td>Empty</td>
+            <td><button class="btn btn-primary">Create</button></td>
             <td>Yes</td>
           <tr>
           <tr>
@@ -103,7 +111,7 @@ display: inline;
             <td>Le Thuong</td>
             <td>thuonglse60744@fpt.edu.vn</td>
             <td>SE671</td>
-            <td>Empty</td>
+            <td><button class="btn btn-primary">Create</button></td>
             <td>Yes</td>
           <tr>
             <td>SE60745</td>
@@ -113,7 +121,9 @@ display: inline;
             <td><img class="thumbnail" src="data/Vi_1.jpg" />
                 <img class="thumbnail" src="data/Vi_2.jpg" />
                 <img class="thumbnail" src="data/Vi_3.jpg" />
-                <img class="thumbnail" src="data/Vi_4.jpg" /></td>
+                <img class="thumbnail" src="data/Vi_4.jpg" />
+                <button class="btn btn-success">Edit</button>
+                </td>
             <td>Yes</td>
           <tr>
             <td>SE60746</td>
@@ -125,6 +135,7 @@ display: inline;
                 <img class="thumbnail" src="data/Minh_3.jpg" />
                 <img class="thumbnail" src="data/Minh_4.jpg" />
                 <img class="thumbnail" src="data/Minh_5.jpg" />
+                <button class="btn btn-success">Edit</button>
                 </td>
             <td>No</td>
           <tr>
@@ -132,7 +143,7 @@ display: inline;
             <td>Le Van Liem</td>
             <td>liemlvse60746@fpt.edu.vn</td>
             <td>SE672</td>
-            <td>Empty</td>
+            <td><button class="btn btn-primary">Create</button></td>
             <td>No</td>
           </tr>
           <tr>
@@ -140,7 +151,7 @@ display: inline;
             <td>Chau Minh Triet</td>
             <td>trietcmse60748@fpt.edu.vn</td>
             <td>SE671</td>
-            <td>Empty</td>
+            <td><button class="btn btn-primary">Create</button></td>
             <td>No</td>
           </tr>
           <tr>
@@ -148,7 +159,7 @@ display: inline;
             <td>Trau Minh</td>
             <td>minhtse60749@fpt.edu.vn</td>
             <td>SE672</td>
-            <td>Empty</td>
+            <td><button class="btn btn-primary">Create</button></td>
             <td>Yes</td>
           <tr>
         </tbody>
@@ -187,7 +198,7 @@ display: inline;
         <div class="control-group">
           <label class="control-label" for="name">Student Name</label>
           <div class="controls">
-            <input id="txtName2" name="name" type="text" placeholder="" class="input-xlarge">
+            <input id="txtName" name="name" type="text" placeholder="" class="input-xlarge">
           </div>
         </div>
         <!-- Select Basic -->
@@ -302,7 +313,7 @@ display: inline;
 
 
 
-<!-- Modal -->
+<!--Created Student Modal -->
 <div id="createdStudentModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -322,7 +333,7 @@ display: inline;
         <div class="control-group">
           <label class="control-label" for="name">Student Name</label>
           <div class="controls">
-            <input id="txtName" name="name" type="text" placeholder="" class="input-xlarge" value="Pham Huy Hoang" disabled="disabled">
+            <input id="txtNameEdited" name="name" type="text" placeholder="" class="input-xlarge" value="Pham Huy Hoang" disabled="disabled">
           </div>
         </div>
         <!-- Text input-->
@@ -336,7 +347,7 @@ display: inline;
         <div class="control-group">
           <label class="control-label" for="class">Class</label>
           <div class="controls">
-            <input id="txtCode" name="name" type="text" placeholder="" class="input-small" value="SE672" disabled="disabled">
+            <input id="txtClass" name="name" type="text" placeholder="" class="input-small" value="SE672" disabled="disabled">
           </div>
         </div>
         </fieldset>
@@ -410,8 +421,18 @@ $('a.model-caller').click(function(){
 
 $('#addStudent').click(function(e){
       e.preventDefault();
+	  var studentCode = $('#spec :selected').text() + '60740';
+	  var studentName = $('#txtName').val();
+	  var email = createEmail(studentCode, studentName);
+	  
+	  $('#txtCode').val(studentCode);
+	  $('#txtNameEdited').val(studentName);
+	  $('#txtEmail').val(email);
+	  $('#txtClass').val($('#class :selected').text());
+	  
+	  
       $('#createdStudentModal').modal('show');
-	  $('#txtName2').val('');
+	  $('#txtName').val('');
 });
 
 $('#btnSearch').click(function(e){
@@ -447,6 +468,10 @@ function createEmail(studentCode, studentName)
 	return result.toLowerCase();
 }
 
-
+function openPopup()
+{
+		myWindow=window.open('Face Training.html','','width=900,height=600,top=80, left=200,scrollbars=yes');
+		myWindow.focus();
+}
 </script>
 </html>
