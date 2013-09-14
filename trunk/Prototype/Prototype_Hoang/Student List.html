@@ -1,0 +1,452 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Student List</title>
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="bootstrap/css/tablesorter.css" rel="stylesheet"/>
+<script src="bootstrap/js/jquery-2.0.3.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script src="bootstrap/js/jquery.tablesorter.js"></script>
+<script src="bootstrap/js/jquery.doubleSelect.js"></script>
+<style>
+.tab-pane-content {
+	padding: 30px;
+}
+li.search-li {
+	float:right;
+}
+li.search-li form {
+	margin: 0;
+	margin-top: 3px;
+}
+
+img.thumbnail {
+width: 50px;
+height: 50px;
+display: inline;
+}
+</style>
+</head>
+<body>
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#studentlist" data-toggle="tab">Student List</a></li>
+  <li><a href="#newStudent" data-toggle="tab">New Student</a></li>
+  <li><a href="#search" data-toggle="tab" id="searchTab">Searched Student</a></li>
+  <li class="search-li">
+    <form class="form-search" action="#">
+      <div class="input-append">
+        <input id="txtSearch" type="text" class="span3 search-query" autocomplete="off">
+        <button type="submit" class="btn" id="btnSearch">Search</button>
+      </div>
+    </form>
+</ul>
+<div class="tab-content">
+  <div class="tab-pane active tab-pane-content active" id="studentlist">
+    <div>
+      <table id="studentTable" class="table table-bordered tablesorter">
+        <thead>
+          <tr>
+            <th width="10%">Student Code</th>
+            <th width="15%">Full Name</th>
+            <th width="20%">Email</th>
+            <th width="10%">Current Class</th>
+            <th>Face Set</th>
+            <th width="5%">Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#" class="model-caller">SE60740</a></td>
+            <td>Pham Huy Hoang</td>
+            <td>hoangphse60740@fpt.edu.vn</td>
+            <td>SE672</td>
+            <td><img class="thumbnail" src="data/Hoang_1.jpg" />
+                <img class="thumbnail" src="data/Hoang_2.jpg" />
+                <img class="thumbnail" src="data/Hoang_3.jpg" />
+                <img class="thumbnail" src="data/Hoang_4.jpg" />
+                <img class="thumbnail" src="data/Hoang_5.jpg" />
+            </td>
+            <td>Yes</td>
+          <tr>
+          <tr>
+            <td>SE60741</td>
+            <td>Le Van Thong</td>
+            <td>thonglvse60741@fpt.edu.vn</td>
+            <td>SE675</td>
+            <td>Empty</td>
+            <td>No</td>
+          <tr>
+          <tr>
+            <td>SE60742</td>
+            <td>Nguyen Thanh Binh</td>
+            <td>binhntse60742@fpt.edu.vn</td>
+            <td>SE676</td>
+            <td><img class="thumbnail" src="data/Binh_1.jpg" />
+                <img class="thumbnail" src="data/Binh_2.jpg" />
+                <img class="thumbnail" src="data/Binh_3.jpg" />
+                <img class="thumbnail" src="data/Binh_4.jpg" />
+                <img class="thumbnail" src="data/Binh_5.jpg" /></td>
+            <td>No</td>
+          <tr>
+          <tr>
+            <td>SE60743</td>
+            <td>Tran Binh Giang</td>
+            <td>giangtb60743@fpt.edu.vn</td>
+            <td>SE672</td>
+            <td>Empty</td>
+            <td>Yes</td>
+          <tr>
+          <tr>
+            <td>SE60744</td>
+            <td>Le Thuong</td>
+            <td>thuonglse60744@fpt.edu.vn</td>
+            <td>SE671</td>
+            <td>Empty</td>
+            <td>Yes</td>
+          <tr>
+            <td>SE60745</td>
+            <td>Nguyen Hieu Trieu Vi</td>
+            <td>vinht60745@fpt.edu.vn</td>
+            <td>SE671</td>
+            <td><img class="thumbnail" src="data/Vi_1.jpg" />
+                <img class="thumbnail" src="data/Vi_2.jpg" />
+                <img class="thumbnail" src="data/Vi_3.jpg" />
+                <img class="thumbnail" src="data/Vi_4.jpg" /></td>
+            <td>Yes</td>
+          <tr>
+            <td>SE60746</td>
+            <td>Trinh Hoang Minh</td>
+            <td>minhthse60746@fpt.edu.vn</td>
+            <td>SE673</td>
+            <td><img class="thumbnail" src="data/Minh_1.jpg" />
+                <img class="thumbnail" src="data/Minh_2.jpg" />
+                <img class="thumbnail" src="data/Minh_3.jpg" />
+                <img class="thumbnail" src="data/Minh_4.jpg" />
+                <img class="thumbnail" src="data/Minh_5.jpg" />
+                </td>
+            <td>No</td>
+          <tr>
+            <td>SE60747</td>
+            <td>Le Van Liem</td>
+            <td>liemlvse60746@fpt.edu.vn</td>
+            <td>SE672</td>
+            <td>Empty</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>SE60748</td>
+            <td>Chau Minh Triet</td>
+            <td>trietcmse60748@fpt.edu.vn</td>
+            <td>SE671</td>
+            <td>Empty</td>
+            <td>No</td>
+          </tr>
+          <tr>
+            <td>SE60749</td>
+            <td>Trau Minh</td>
+            <td>minhtse60749@fpt.edu.vn</td>
+            <td>SE672</td>
+            <td>Empty</td>
+            <td>Yes</td>
+          <tr>
+        </tbody>
+      </table>
+      <div class="pagination pagination-right">
+        <ul>
+          <li><a href="#">Prev</a></li>
+          <li><a href="#">1</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="#">5</a></li>
+          <li><a href="#">6</a></li>
+          <li><a href="#">7</a></li>
+          <li><a href="#">8</a></li>
+          <li><a href="#">Next</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="tab-pane tab-pane-content" id="newStudent">
+    <div id="new-student-form">
+      <!-- Form -->
+      <form class="form-horizontal" id="new-student-form">
+        <legend>New Student</legend>
+        <fieldset>
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="code">Course</label>
+          <div class="controls">
+            <select class="span1" id="spec">
+            </select>
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="name">Student Name</label>
+          <div class="controls">
+            <input id="txtName2" name="name" type="text" placeholder="" class="input-xlarge">
+          </div>
+        </div>
+        <!-- Select Basic -->
+        <div class="control-group">
+          <label class="control-label" for="class">Class</label>
+          <div class="controls">
+            <select name="class" class="input-small" id="class">
+            </select>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="addStudent">Add</button>
+          <button type="reset" class="btn" id='btnResetStudent'>Cancel</button>
+        </div>
+        </fieldset>
+      </form>
+    </div>
+  
+  </div>
+  <div class="tab-pane tab-pane-content" id="search">
+    <div id="search-pane-content"><p id="searchMessage">Enter some keyword (Student's name, email, Code, to begin search). </p></div>
+    <div id="search-result">
+     <table id="studentTable" class="table table-bordered tablesorter">
+        <thead>
+          <tr>
+            <th width="10%">Student Code</th>
+            <th width="15%">Full Name</th>
+            <th width="20%">Email</th>
+            <th width="10%">Current Class</th>
+            <th>Face Set</th>
+            <th width="5%">Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a href="#" class="model-caller">SE60740</a></td>
+            <td>Pham Huy Hoang</td>
+            <td>hoangphse60740@fpt.edu.vn</td>
+            <td>SE672</td>
+            <td>1</td>
+            <td>Yes</td>
+          </tr>
+          </tbody>
+          </table>
+    </div>
+  </div>
+</div>
+</body>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 id="myModalLabel">Student Info</h4>
+  </div>
+  <div class="modal-body">
+    <!-- Form -->
+    <form class="form-horizontal">
+      <fieldset>
+      <!-- Text input-->
+      <div class="control-group">
+        <label class="control-label" for="code">Student Code</label>
+        <div class="controls">
+          <input name="code" type="text" placeholder="" class="input-small" disabled="disabled" value="SE60740">
+        </div>
+      </div>
+      <!-- Text input-->
+      <div class="control-group">
+        <label class="control-label" for="name">Student Name</label>
+        <div class="controls">
+          <input name="name" type="text" placeholder="" class="input-xlarge" value="Pham Huy Hoang">
+        </div>
+      </div>
+      <!-- Text input-->
+      <div class="control-group">
+        <label class="control-label" for="email">Email</label>
+        <div class="controls">
+          <input name="email" type="text" placeholder="" class="input-xlarge" disabled="disabled" value="hoangphse60740@fpt.edu.vn">
+        </div>
+      </div>
+      <!-- Select Basic -->
+      <div class="control-group">
+        <label class="control-label" for="class">Class</label>
+        <div class="controls">
+          <select id="class" name="class" class="input-small">
+            <option>SE670</option>
+            <option>SE672</option>
+            <option>SE675</option>
+            <option>SE676</option>
+          </select>
+        </div>
+      </div>
+      <!-- Multiple Radios (inline) -->
+      <div class="control-group">
+        <label class="control-label" for="active">Active</label>
+        <div class="controls">
+          <label class="radio inline" for="active-0">
+          <input type="radio" name="active" id="active-0" value="Yes" checked="checked">
+          Yes</label>
+          <label class="radio inline" for="active-1">
+          <input type="radio" name="active" id="active-1" value="No">
+          No</label>
+        </div>
+      </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary" data-dismiss="modal">Save changes</button>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div id="createdStudentModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h4 id="myModalLabel">Student Created</h4>
+  </div>
+  <div class="modal-body">
+    <!-- Form -->
+        <fieldset>
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="code">Student Code</label>
+          <div class="controls">
+             <input id="txtCode" name="name" type="text" placeholder="" class="input-small" value="SE60740" disabled="disabled">
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="name">Student Name</label>
+          <div class="controls">
+            <input id="txtName" name="name" type="text" placeholder="" class="input-xlarge" value="Pham Huy Hoang" disabled="disabled">
+          </div>
+        </div>
+        <!-- Text input-->
+        <div class="control-group">
+          <label class="control-label" for="email">Email</label>
+          <div class="controls">
+            <input id="txtEmail" name="email" type="text" placeholder="" class="input-xlarge" disabled="disabled" value="hoangphse60740@fpt.edu.vn">
+          </div>
+        </div>
+        <!-- Select Basic -->
+        <div class="control-group">
+          <label class="control-label" for="class">Class</label>
+          <div class="controls">
+            <input id="txtCode" name="name" type="text" placeholder="" class="input-small" value="SE672" disabled="disabled">
+          </div>
+        </div>
+        </fieldset>
+      </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Ok</button>
+  </div>
+</div>
+
+
+<script>
+
+var students = ["SE60740 - Pham Huy Hoang", "SE60741 - Le Van Thong", "SE60742 - Nguyen Thanh Binh", "SE60743 - Tran Binh Giang", "SE60744 - Le Thuong", "SE60745 - Nguyen Hieu Trieu Vi", "SE60746 - Trinh Hoang Minh", "SE60747 - Le Van Liem", "SE60748 - Chau Minh Triet", "SE60749 - Trau Minh"];
+$('#txtSearch').typeahead({ source: students, items: 5 });
+
+$("#studentTable").tablesorter({
+headers: { 
+            // assign the secound column (we start counting zero) 
+            4: { 
+                // disable it by setting the property sorter to false 
+                sorter: false 
+            }, 
+            // assign the third column (we start counting zero) 
+            5: { 
+                // disable it by setting the property sorter to false 
+                sorter: false 
+            } 
+        } 
+});	
+
+var selectoptions = {
+    		"SE": {
+    	         "key" : 10,
+                 "defaultvalue" : 101,
+    	         "values" : {
+                     "SE0570": 101,
+                     "SE0571": 102,
+                     "SE0572": 103
+                     }
+              },
+            "FB": {
+                 "key" : 11,
+                 "defaultvalue" : 110,
+                 "values" : {
+                     "FB0891": 110,
+                     "FB0892": 111,
+                     "FB0894": 112,
+                     "FB0895": 113
+                     }
+              },
+			  "BA": {
+                 "key" : 12,
+                 "defaultvalue" : 120,
+                 "values" : {
+                     "BA0591": 120,
+                     "BA0592": 121,
+                     "BA0594": 122,
+                     "BA0595": 123
+                     }
+              }
+    };
+
+$('#spec').doubleSelect('class', selectoptions);
+$('#search-result').hide();
+
+
+$('a.model-caller').click(function(){
+      $('#myModal').modal('show');
+});
+
+$('#addStudent').click(function(e){
+      e.preventDefault();
+      $('#createdStudentModal').modal('show');
+	  $('#txtName2').val('');
+});
+
+$('#btnSearch').click(function(e){
+      e.preventDefault();
+$('#searchTab').click();
+var keyword = $('#txtSearch').val();
+
+if(keyword.length > 0) {
+$('#searchMessage').html("Search Result:");
+$('#search-result').show();
+}
+});
+
+
+
+$('#email-generate').click(function(e){
+    e.preventDefault();
+	var studentCode = $('#txtCode').val();
+	var studentName = $('#txtName').val();
+	var email = createEmail(studentCode, studentName);
+	$('#txtEmail').val(email);
+});
+
+function createEmail(studentCode, studentName)
+{
+     var splited= studentName.split(" ");
+	 var result = splited[splited.length - 1];
+	 for (var i=0;i < splited.length - 1;i++)
+	{ 
+ 		result += splited[i].charAt(0);
+	}
+	result = result + studentCode + "@fpt.edu.vn";
+	return result.toLowerCase();
+}
+
+
+</script>
+</html>
