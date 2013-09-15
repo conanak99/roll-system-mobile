@@ -437,15 +437,13 @@ $('#addStudent').click(function(e){
 
 $('#btnSearch').click(function(e){
       e.preventDefault();
-$('#searchTab').click();
-var keyword = $('#txtSearch').val();
-
-if(keyword.length > 0) {
-$('#searchMessage').html("Search Result:");
-$('#search-result').show();
+	$('#searchTab').click();
+	var keyword = $('#txtSearch').val();
+	if(keyword.length > 0) {
+	$('#searchMessage').html("Search Result:");
+	$('#search-result').show();
 }
 });
-
 
 
 $('#email-generate').click(function(e){
