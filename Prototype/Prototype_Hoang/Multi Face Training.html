@@ -6,10 +6,14 @@
 <link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
 <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
 <link href="bootstrap/css/tablesorter.css" rel="stylesheet"/>
+<link href="bootstrap/css/jquery.qtip.css" rel="stylesheet"/>
+<link href="bootstrap/css/jquery-ui.css" rel="stylesheet" />
 <script src="bootstrap/js/jquery-2.0.3.js"></script>
 <script src="bootstrap/js/bootstrap.js"></script>
 <script src="bootstrap/js/jquery.tablesorter.js"></script>
 <script src="bootstrap/js/jquery.doubleSelect.js"></script>
+<script src="bootstrap/js/jquery.qtip.js"></script>
+<script src="bootstrap/js/jquery-ui-1.10.3.custom.js"></script>
 <style>
 .tab-pane-content {
 	padding: 30px;
@@ -48,12 +52,10 @@ button.btn-delete:hover {
 	color:red;
 	opacity: 1;
 }
-
 .img-resized {
-height: 350px;
-margin-top: 10px;
+	height: 350px;
+	margin-top: 10px;
 }
-
 .face-region {
 	position: absolute;
 	border-style: solid;
@@ -61,66 +63,43 @@ margin-top: 10px;
 	background-color: rgba(255, 255, 255, 0.3);
 	opacity: 0.7;
 }
-
 .face-region.selected {
 	background-color: rgba(255, 255, 255, 0.7);
 	opacity: 1;
 }
-
-
 .face-region:hover {
 	background-color: rgba(255, 255, 255, 0.7);
 	opacity: 1;
+}
+div.list_item_container {
+	width: 200px;
+	padding: 5px;
+}
+div.value {
+	font-size: 80%;
+	font-weight: bold;
+}
+div.image {
+	margin-right: 10px;
+	margin-bottom: 10px;
+	clear:left;
+	float: left;
+}
+div.image img {
+	width: 50px;
+	height: 50px;
+}
+div.description {
+	font-style: italic;
+	font-size: 0.8em;
+	color: gray;
 }
 </style>
 </head>
 <body>
 <div class="container-fluid">
-  <div>
-    <h4>Hoang's Image Data</h4>
-    <h5>Current Data:</h5>
-    <div id="current-data">
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_1.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_2.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_3.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_4.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_2.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_5.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    </div>
-    <div id="image-added" style="display:none">    
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_3.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_4.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_2.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-    </div>
-    <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_1.jpg" />
-      <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-      </div>
-
-    
-    </div>
-    <div style="height:20px;">
-      <p id='message' style="height:20px"></p>
-    </div>
-  </div>
   <div id="upload-div">
-    <h5>Add more Image Data:</h5>
+    <h5>Upload Students's Images:</h5>
     <input type="file" id="files" name="files[]" multiple />
     <br/>
     <output id="list"></output>
@@ -132,48 +111,72 @@ margin-top: 10px;
       <div class="face-region" style="top:-105px;left:140px;width:45px;height:50px"></div>
       <div class="face-region" style="top:-80px;left:195px;width:45px;height:50px"></div>
     </div>
-    
-            <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_2.jpg" />
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_2.jpg" />
       <div class="face-region" style="top:-105px;left:160px;width:65px;height:70px"></div>
       <div class="face-region" style="top:-50px;left:255px;width:60px;height:65px"></div>
     </div>
-    
     <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_3.jpg" />
       <div class="face-region" style="top:-120px;left:190px;width:70px;height:75px"></div>
     </div>
-    
-        <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_4.jpg" />
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_4.jpg" />
       <div class="face-region" style="top:-50px;left:35px;width:80px;height:85px"></div>
       <div class="face-region" style="top:0px;left:150px;width:72px;height:80px"></div>
     </div>
     <button class="btn" id="btnSave" onclick="closeWindow()">Save Images</button>
   </div>
 </div>
+
 </body>
+<div class="hidden" id="select-student" style="width:260px" class="text-center">
+  <!-- This class should hide the element, change it if needed -->
+  <input id="txtSearch" type="text" style="width:250px" />
+</div>
 <script>
+var students = ["SE60740 - Pham Huy Hoang", "SE60741 - Le Van Thong", "SE60742 - Nguyen Thanh Binh", "SE60743 - Tran Binh Giang", "SE60744 - Le Thuong", "SE60745 - Nguyen Hieu Trieu Vi", "SE60746 - Trinh Hoang Minh", "SE60747 - Le Van Liem", "SE60748 - Chau Minh Triet", "SE60749 - Trau Minh"];
+
+var studentsImage = [
+			{
+                value: "SE60740",
+                label: "SE60740 - Pham Huy Hoang",
+                description: "Class: SE672",
+                image: "data/hoang_1.jpg"
+            },
+            {
+                value: "SE060530",
+                label: "SE060530 - Nguyen Hieu Trieu Vi",
+                description: "Class: SE0692",
+                image: "data/vi_1.jpg"
+            },
+			{
+                value: "SE060569",
+                label: "SE060569 - Trinh Hoang Minh",
+                description: "Class: SE0592",
+                image: "data/minh_1.jpg"
+            }
+];
+
+//$('#txtSearch').autocomplete({ source: students});
+
+$('#txtSearch').autocomplete({ source: studentsImage}).data("ui-autocomplete")._renderItem = function( ul, item ) {
+        var inner_html = '<a><div class="list_item_container"><div class="image"><img src="' + item.image + '"></div><div class="value">' + item.label + '</div><div class="description">' + item.description + '</div></div></a>';
+        return $( "<li></li>" )
+            .data( "item.autocomplete", item )
+            .append(inner_html)
+            .appendTo( ul );
+    };
+;
+
+//Set chieu ngang thu cong, set Z-index cao de de len qtip
+$('ul.ui-autocomplete').css('width','250px').css('z-index','15555');
+
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 $('#result-div').hide();
 
 function closeWindow()
 {
-
-     //opener.location.href = 'Student List.html';
-     //window.close(); 
-	 $('#result-div').slideUp(1000, function(){
-	     $('#list').html('');
-	 	 $('#upload-div').slideDown(1000, function(){
-		 //Tao span ao, image added sau nay load image ra
-		 var tempSpan = $('<span></span>');
-		 tempSpan.html($('#image-added').html());
-		 tempSpan.appendTo('#current-data').show(3000, function() {
-				$('#message').html('New Image Added');
-				$('#message').fadeIn(1000);
-				$('#message').fadeOut(2000);
-			});
-		 $('button.btn-delete').click(deleteImage);
-		 });
-	 });
-	}
+     opener.location.href = 'Student List.html';
+     window.close(); 
+}
 
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
@@ -205,17 +208,8 @@ function parseFile(file)
       reader.readAsDataURL(file);
 }
 
-$('button.btn-delete').click(deleteImage);
-//Delegate toi ham nay, khi click vao thi xoa anh
-function deleteImage()
-{
-	var imageName = $(this).prev().attr('src');
-    $(this).parent().hide('slow', function() {
-		$('#message').html(imageName + ' deleted.');
-		$('#message').fadeIn(1000);
-		$('#message').fadeOut(1500);
-	});
-}
+
+
 
 $('#btnUpload').click(function(){
      $('#upload-div').slideUp(1000, function(){
@@ -223,10 +217,27 @@ $('#btnUpload').click(function(){
 	 });
 });
 
-$('.face-region').click(function() {
-     $(this).siblings().removeClass('selected');
-     $(this).addClass('selected');
-});
+
+$('.face-region').qtip({ // Grab some elements to apply the tooltip to
+    id: 'studenttip',
+    content: {
+        text: $('#select-student')
+    },
+	position: {
+        my: 'top center',  // Position my top left...
+        at: 'bottom center', // at the bottom right of...
+    },
+	style: {
+        classes: 'qtip-light'
+    },
+	show: {
+	event: 'click'
+	},
+	hide: {
+	target: $('#txtSearch'),
+	event: 'autocompletechange mouseleave'
+    }
+})
 
 </script>
 </html>
