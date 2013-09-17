@@ -4428,13 +4428,13 @@
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">364</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">212</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">142</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">137</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
 <XPD:REF name="Model">yagMtJ/muk2fPOFbMT9GkgAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="QIUCZ3u3GUmX5u0qqTHXFgAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="iAqsyf1/tUGfqJrKc2upDAAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Manage Subject</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Manage Course</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="2L/Tuek+wkilf9AV2pAOyQAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -4461,13 +4461,13 @@
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">592</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">164</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">110</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">108</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
 <XPD:REF name="Model">ER4UImhe/EGBCTLipYq43wAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="SflbFhg6Yk+44ZbhI0o0bQAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="Qs3i+ElHUEqEwH+m/QS6xgAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Add Subject</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Add Course</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="OEfZhBN2VUG0a+DDEk8CkAAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -4494,13 +4494,13 @@
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">596</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">240</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">108</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">103</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
 <XPD:REF name="Model">+yuUh3RiZkmKFWEl2GTRdgAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="1yr34m6e0UuMNHpOng2QnwAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="tbjTdVJUbkansVH30pKAOwAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Edit Subject</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Edit Course</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="NEKEF1s69UiYhve84LPWzgAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -4525,15 +4525,15 @@
 <XPD:OBJ name="OwnedViews[48]" type="UMLUseCaseView" guid="G3PmEeVqOUq4JxE+XD3rzwAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">576</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">580</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">308</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">145</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">142</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
 <XPD:REF name="Model">NQsB+UgED06JdrOkYOnk5wAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="cjuXBYN5dUSO92C2evB3qwAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="Q+8pVkEV/ESYs7TC05MU7gAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Inactive Subject</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Inactive Course</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="XaI38yBqWE6nMFYXd2v9WwAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -4642,7 +4642,7 @@
 <XPD:OBJ name="OwnedViews[50]" type="UMLGeneralizationView" guid="rOPQcpXyY0m20CfREkHA7gAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">592,198;505,218</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">592,198;500,219</XPD:ATTR>
 <XPD:REF name="Model">myQ54CGkbU25gOTC2Ds8XgAA</XPD:REF>
 <XPD:REF name="Head">DxZ+rEq/7k+9jgL4V93TAAAA</XPD:REF>
 <XPD:REF name="Tail">rCLPVlJtGke/c2sxw5pY/gAA</XPD:REF>
@@ -4668,7 +4668,7 @@
 <XPD:OBJ name="OwnedViews[51]" type="UMLGeneralizationView" guid="lO/5BvVDwkOF3z5x1fwslgAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">596,255;505,243</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">596,255;500,243</XPD:ATTR>
 <XPD:REF name="Model">OHvl0RpcJk6k4NC4PCSw/wAA</XPD:REF>
 <XPD:REF name="Head">DxZ+rEq/7k+9jgL4V93TAAAA</XPD:REF>
 <XPD:REF name="Tail">VyCLMOngL0WZhu6SCDJaXgAA</XPD:REF>
@@ -4694,7 +4694,7 @@
 <XPD:OBJ name="OwnedViews[52]" type="UMLGeneralizationView" guid="Ygc9iwFGTkm72lsml4+hrwAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">599,308;483,256</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">600,308;482,256</XPD:ATTR>
 <XPD:REF name="Model">PVpHOGb8/0qQI1XpS3Mi4wAA</XPD:REF>
 <XPD:REF name="Head">DxZ+rEq/7k+9jgL4V93TAAAA</XPD:REF>
 <XPD:REF name="Tail">G3PmEeVqOUq4JxE+XD3rzwAA</XPD:REF>
@@ -6549,7 +6549,7 @@
 </XPD:OBJ>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[115]" type="UMLUseCase" guid="yagMtJ/muk2fPOFbMT9GkgAA">
-<XPD:ATTR name="Name" type="string">Manage Subject</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Manage Course</XPD:ATTR>
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">DxZ+rEq/7k+9jgL4V93TAAAA</XPD:REF>
@@ -6564,7 +6564,7 @@
 <XPD:REF name="Associations[0]">YjxpVVyzqUuJaxUJYzMeagAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[116]" type="UMLUseCase" guid="ER4UImhe/EGBCTLipYq43wAA">
-<XPD:ATTR name="Name" type="string">Add Subject</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Add Course</XPD:ATTR>
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">rCLPVlJtGke/c2sxw5pY/gAA</XPD:REF>
@@ -6575,7 +6575,7 @@
 <XPD:REF name="Generalizations[0]">myQ54CGkbU25gOTC2Ds8XgAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[117]" type="UMLUseCase" guid="+yuUh3RiZkmKFWEl2GTRdgAA">
-<XPD:ATTR name="Name" type="string">Edit Subject</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Edit Course</XPD:ATTR>
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">VyCLMOngL0WZhu6SCDJaXgAA</XPD:REF>
@@ -6586,7 +6586,7 @@
 <XPD:REF name="Generalizations[0]">OHvl0RpcJk6k4NC4PCSw/wAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[118]" type="UMLUseCase" guid="NQsB+UgED06JdrOkYOnk5wAA">
-<XPD:ATTR name="Name" type="string">Inactive Subject</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Inactive Course</XPD:ATTR>
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
 <XPD:REF name="Views[0]">G3PmEeVqOUq4JxE+XD3rzwAA</XPD:REF>
