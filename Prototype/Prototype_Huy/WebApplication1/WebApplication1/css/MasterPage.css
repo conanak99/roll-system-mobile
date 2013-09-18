@@ -1,0 +1,60 @@
+﻿*
+{
+    margin: 0;
+    padding: 0;
+}
+#wrapper
+{
+    width: 1080px;
+    background-color: white;
+    margin: 0 auto;
+}
+
+#banner
+{
+    height: 200px;
+    background-color: rgb(49, 52, 58);
+    margin-top: 5px;
+    border: 2px solid gray;
+}
+
+#content_area
+{
+    float: right;
+    width: 870px;
+    margin: 5px 0 20px 0;
+    padding: 10px 0 10px 30px;
+    border: 2px solid gray;
+}
+
+#sidebar
+{
+    float: left;
+    width: 200px;
+    height: 400px;
+    margin: 5px 0 20px 0px;
+    padding: 10px;
+    border: 2px solid gray;
+    background-color: rgb(49, 52, 58);
+}
+#footer
+{
+    border: 2px solid gray;
+    clear: both;
+    width: auto;
+    height: 40px;
+    padding: 10px;
+    text-align: center;
+    color: White;
+    background-color: rgb(49, 52, 58);
+}
+
+#menu
+{
+    border: 2px solid gray;
+    height: 60px;
+    width: 1080px;
+    background-color: rgb(35, 38, 43);
+    padding: 10px 0 0 350px;
+    color: White;
+}
