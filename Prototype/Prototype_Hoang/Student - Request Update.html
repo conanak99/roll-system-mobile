@@ -69,10 +69,19 @@ button.btn-delete:hover {
 }
 </style>
 </head>
-<body>
+<body style="padding:30px 30px 0 20px">
 <div class="container-fluid">
+  <div class="btn-group pull-right"> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Hello, Pham Huy Hoang <span class="caret"></span> </a>
+  <ul class="dropdown-menu">
+    <!-- dropdown menu links -->
+    <li><a tabindex="-1" href="#">Change Profile</a></li>
+    <li><a tabindex="-1" href="Student - Request Update.html">Update Image List</a></li>
+    <li><a tabindex="-1" href="#">Log out</a></li>
+  </ul>
+</div> 
+
   <div>
-    <h4>Hoang's Image Data</h4>
+    <h4>Your Image Data</h4>
     <h5>Current Data:</h5>
     <div id="current-data">
       <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_1.jpg" />
@@ -81,13 +90,13 @@ button.btn-delete:hover {
       <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_2.jpg" />
         <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Binh_3.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Minh_3.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
       <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_3.jpg" />
-        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-      </div>
-      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_4.jpg" />
-        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
-      </div>
-      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_2.jpg" />
         <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
       </div>
       <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_5.jpg" />
@@ -112,6 +121,21 @@ button.btn-delete:hover {
       <p id='message' style="height:20px"></p>
     </div>
   </div>
+  
+  <div>
+  <table class="table table-bordered" style="width:40%">
+  <tr>
+  <td width="25%">Request Delete</td>
+  <td id='request-delete'></td>
+  </tr>
+  <tr>
+  <td width="25%">Request Add</td>
+  <td id='request-add'></td>
+  </tr>
+  </table>
+  
+  </div>
+  
   <div id="upload-div">
     <h5>Add more Image Data:</h5>
     <input type="file" id="files" name="files[]" multiple />
@@ -120,7 +144,7 @@ button.btn-delete:hover {
     <button class="btn" id="btnUpload">Upload</button>
   </div>
   <div id="result-div">
-    <h5>Select Hoang's faces from images </h5>
+    <h5>Select your faces from images </h5>
     <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_1.jpg" />
       <div class="face-region" style="top:-105px;left:140px;width:45px;height:50px"></div>
       <div class="face-region" style="top:-80px;left:195px;width:45px;height:50px"></div>
@@ -153,17 +177,12 @@ function closeWindow()
      //window.close(); 
 	 $('#result-div').slideUp(1000, function(){
 	     $('#list').html('');
-	 	 $('#upload-div').slideDown(1000, function(){
 		 //Tao span ao, image added sau nay load image ra
 		 var tempSpan = $('<span></span>');
 		 tempSpan.html($('#image-added').html());
-		 tempSpan.appendTo('#current-data').show(3000, function() {
-				$('#message').html('New Image Added');
-				$('#message').fadeIn(1000);
-				$('#message').fadeOut(2000);
-			});
-		 $('button.btn-delete').click(deleteImage);
-		 });
+		 tempSpan.appendTo('#request-add').show(1000);
+		 $('#request-add button.btn-delete').remove();
+	 	 $('#upload-div').slideDown(1000);
 	 });
 	}
 
@@ -204,10 +223,10 @@ function deleteImage()
 	var imageName = $(this).prev().attr('src');
 	var con = confirm("Do you want to delete?");
     if (con){
+	var thisHtml = $(this).parent().html();	
+		
 	$(this).parent().hide('slow', function() {
-		$('#message').html(imageName + ' deleted.');
-		$('#message').fadeIn(1000);
-		$('#message').fadeOut(1500);
+		$('#request-delete').append(thisHtml);
 	});
 	}
 }
