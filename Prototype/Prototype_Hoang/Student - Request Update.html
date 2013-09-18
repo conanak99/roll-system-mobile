@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Student List</title>
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="bootstrap/css/tablesorter.css" rel="stylesheet"/>
+<script src="bootstrap/js/jquery-2.0.3.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script src="bootstrap/js/jquery.tablesorter.js"></script>
+<script src="bootstrap/js/jquery.doubleSelect.js"></script>
+<style>
+.tab-pane-content {
+	padding: 30px;
+}
+li.search-li {
+	float: right;
+}
+li.search-li form {
+	margin: 0;
+	margin-top: 3px;
+}
+img.thumbnail {
+	width: 50px;
+	height: 50px;
+	display: inline;
+}
+.thumbnail-holder {
+	display: inline;
+	position: relative;
+	margin: 4px;
+}
+.thumb {
+	height: 100px;
+	border: 1px solid #000;
+	margin: 10px 5px 0 0;
+}
+button.btn-delete {
+	position: absolute;
+	top: -24px;
+	right: 6px;
+	color: gray;
+	opacity: 0.75;
+	font-size: 25px;
+}
+button.btn-delete:hover {
+	color: red;
+	opacity: 1;
+}
+.img-resized {
+	height: 350px;
+	margin-top: 10px;
+}
+.face-region {
+	position: absolute;
+	border-style: solid;
+	border-color: white;
+	background-color: rgba(255, 255, 255, 0.3);
+	opacity: 0.7;
+}
+.face-region.selected {
+	background-color: rgba(255, 255, 255, 0.7);
+	opacity: 1;
+}
+.face-region:hover {
+	background-color: rgba(255, 255, 255, 0.7);
+	opacity: 1;
+}
+</style>
+</head>
+<body>
+<div class="container-fluid">
+  <div>
+    <h4>Hoang's Image Data</h4>
+    <h5>Current Data:</h5>
+    <div id="current-data">
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_1.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_2.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_3.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_4.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_2.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_5.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+    </div>
+    <div id="image-added" style="display:none">
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_3.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_4.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_2.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+      <div class="thumbnail-holder"> <img class="thumbnail" src="data/Hoang_1.jpg" />
+        <button type="button" class="close btn-delete" data-dismiss="modal" aria-hidden="true">×</button>
+      </div>
+    </div>
+    <div style="height:20px;">
+      <p id='message' style="height:20px"></p>
+    </div>
+  </div>
+  <div id="upload-div">
+    <h5>Add more Image Data:</h5>
+    <input type="file" id="files" name="files[]" multiple />
+    <br/>
+    <output id="list"></output>
+    <button class="btn" id="btnUpload">Upload</button>
+  </div>
+  <div id="result-div">
+    <h5>Select Hoang's faces from images </h5>
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_1.jpg" />
+      <div class="face-region" style="top:-105px;left:140px;width:45px;height:50px"></div>
+      <div class="face-region" style="top:-80px;left:195px;width:45px;height:50px"></div>
+    </div>
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_2.jpg" />
+      <div class="face-region" style="top:-105px;left:160px;width:65px;height:70px"></div>
+      <div class="face-region" style="top:-50px;left:255px;width:60px;height:65px"></div>
+    </div>
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_3.jpg" />
+      <div class="face-region" style="top:-120px;left:190px;width:70px;height:75px"></div>
+    </div>
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_4.jpg" />
+      <div class="face-region" style="top:-50px;left:35px;width:80px;height:85px"></div>
+      <div class="face-region" style="top:0px;left:150px;width:72px;height:80px"></div>
+    </div>
+    <button class="btn" id="btnSave" onclick="closeWindow()">Save Images</button>
+  </div>
+</div>
+</body>
+<script>
+
+var files;
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+$('#result-div').hide();
+
+function closeWindow()
+{
+     //opener.location.href = 'Student List.html';
+     //window.close(); 
+	 $('#result-div').slideUp(1000, function(){
+	     $('#list').html('');
+	 	 $('#upload-div').slideDown(1000, function(){
+		 //Tao span ao, image added sau nay load image ra
+		 var tempSpan = $('<span></span>');
+		 tempSpan.html($('#image-added').html());
+		 tempSpan.appendTo('#current-data').show(3000, function() {
+				$('#message').html('New Image Added');
+				$('#message').fadeIn(1000);
+				$('#message').fadeOut(2000);
+			});
+		 $('button.btn-delete').click(deleteImage);
+		 });
+	 });
+	}
+
+function handleFileSelect(evt) {
+    files = evt.target.files; // FileList object
+
+    document.getElementById('list').innerHTML = "";
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+      parseFile(f);
+  }
+}
+  
+function parseFile(file)
+{
+   // Only process image files.
+      if (!file.type.match('image.*')) {
+        return;
+      }
+	  
+      var reader = new FileReader();
+      // Closure to capture the file information.
+      reader.onload = function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(file.name), '"/>'].join('');			
+          document.getElementById('list').insertBefore(span, null);
+       }
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(file);
+}
+
+$('button.btn-delete').click(deleteImage);
+//Delegate toi ham nay, khi click vao thi xoa anh
+function deleteImage()
+{
+	var imageName = $(this).prev().attr('src');
+	var con = confirm("Do you want to delete?");
+    if (con){
+	$(this).parent().hide('slow', function() {
+		$('#message').html(imageName + ' deleted.');
+		$('#message').fadeIn(1000);
+		$('#message').fadeOut(1500);
+	});
+	}
+}
+
+$('#btnUpload').click(function(){
+	if (typeof files === "undefined" || files.length == 0)
+	{
+		alert("Select file to upload!");
+	} else if (files.length > 20)
+	{
+	    alert("Too many images. Select fewer than 20 images");	
+	} else {
+     $('#upload-div').slideUp(1000, function(){
+	 	 $('#result-div').slideDown(1000);
+	 });
+	}
+});
+
+$('.face-region').click(function() {
+     $(this).siblings().removeClass('selected');
+     $(this).addClass('selected');
+});
+
+</script>
+</html>

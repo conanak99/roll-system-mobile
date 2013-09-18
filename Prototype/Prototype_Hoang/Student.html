@@ -1,0 +1,256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Student List</title>
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="bootstrap/css/tablesorter.css" rel="stylesheet"/>
+<link href="bootstrap/css/datepicker.css" rel="stylesheet"/>
+<script src="bootstrap/js/jquery-2.0.3.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script src="bootstrap/js/jquery.tablesorter.js"></script>
+<script src="bootstrap/js/jquery.doubleSelect.js"></script>
+<script src="bootstrap/js/bootstrap-datepicker.js"></script>
+<style>
+.tab-pane-content {
+	padding: 30px;
+}
+li.search-li {
+	float: right;
+}
+li.search-li form {
+	margin: 0;
+	margin-top: 3px;
+}
+img.thumbnail {
+	width: 50px;
+	height: 50px;
+	display: inline;
+}
+.margin-top-12 {
+	margin-top: 12px;
+}
+legend {
+	font-size: 18px;
+}
+.image-log {
+	width: 350px;
+}
+.span3 {
+	margin-left: 8px;
+	margin-right: 8px;
+	padding: 5px 0 5px 10px;
+}
+</style>
+</head>
+<body style="padding:20px 0 0 40px">
+<div class="btn-group"> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Hello, Pham Huy Hoang <span class="caret"></span> </a>
+  <ul class="dropdown-menu">
+    <!-- dropdown menu links -->
+    <li><a tabindex="-1" href="#">Change Profile</a></li>
+    <li><a tabindex="-1" href="Student - Request Update.html">Update Image List</a></li>
+    <li><a tabindex="-1" href="#">Log out</a></li>
+  </ul>
+</div>
+<dl class="dl-horizontal">
+  <dt class="margin-top-12">Learned Subjects</dt>
+  <dd style="margin-top:8px;">
+    <div class="accordion-group" style="width:400px">
+      <div class="accordion-heading" style="height:35px"> <a class="accordion-toggle" data-toggle="collapse" href="#studentList" style="margin-top:-3px">Show</a> </div>
+      <div id="studentList" class="accordion-body collapse">
+        <div class="accordion-inner">
+          <table class="table table-bordered table-condensed">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Subject</th>
+                <th>Time</th>
+                <th>Present Rate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><a href="#" class="modal-caller">XML</a></td>
+                <td>From 02-04-2013 to 03-04-2013</td>
+                <th><span class="badge badge-success">100%</span></th>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Core Java</td>
+                <td>From 02-04-2013 to 03-04-2013</td>
+                <th><span class="badge badge-success">100%</span></th>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>C# Dot Net</td>
+                <td>From 02-04-2013 to 03-04-2013</td>
+                <th><span class="badge badge-warning">90%</span></th>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Alice</td>
+                <td>From 02-04-2013 to 03-04-2013</td>
+                <th><span class="badge badge-important">70%</span></th>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>I2SE</td>
+                <td>From 02-04-2013 to 03-04-2013</td>
+                <th><span class="badge badge-success">100%</span></th>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>OS</td>
+                <td>From 02-04-2013 to 03-04-2013</td>
+                <th><span class="badge badge-success">100%</span></th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    </div>
+  </dd>
+  <dt class="margin-top-12">Learning Subject</dt>
+  <dd class="margin-top-12">
+    <div style="width:400px">
+      <table class="table table-bordered table-condensed">
+        <thead>
+          <tr>
+            <th>No</th>
+            <th>Subject</th>
+            <th>Time</th>
+            <th>Present Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><a href="#" class="modal-caller">Capstone Project</a></td>
+            <td>From 02-04-2013 to 03-04-2013</td>
+            <th><span class="badge badge-success">100%</span></th>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>Principle of Account</td>
+            <td>From 02-04-2013 to 03-04-2013</td>
+            <th><span class="badge badge-important">0%</span></th>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>D-Math</td>
+            <td>From 02-04-2013 to 03-04-2013</td>
+            <th><span class="badge badge-warning">90%</span></th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </dd>
+</dl>
+</body>
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Attendance</h3>
+  </div>
+  <div class="modal-body" id='modal-body'>
+    <legend>Roll Call Info</legend>
+    <fieldset style="margin:-20px 0 -20px -20px">
+      <dl class="dl-horizontal">
+        <dt>Roll Call</dt>
+        <dd>1221</dd>
+        <dt>Subject</dt>
+        <dd>XML</dd>
+        <dt>Time</dt>
+        <dd>From 02-04-2013 to 03-04-2012</dd>
+        <dt>Student</dt>
+        <dd>Pham Huy Hoang - SE0662</dd>
+        <dt>Present</dt>
+        <dd>17/18</dd>
+        <dt>Present Rate</dt>
+        <dd>94%</dd>
+      </dl>
+    </fieldset>
+    <legend>Detail</legend>
+    <fieldset>
+      <div style="width:65%">
+        <table class="table table-bordered table-condensed">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>02-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>03-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>04-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>05-04-2012</td>
+              <td><span class="label label-important">Absent</span></td>
+            </tr><tr>
+              <td>6</td>
+              <td>06-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr><tr>
+              <td>7</td>
+              <td>07-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr>
+            <tr>
+              <td>8</td>
+              <td>06-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr><tr>
+              <td>9</td>
+              <td>07-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr>
+            <tr>
+              <td>10</td>
+              <td>06-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr><tr>
+              <td>11</td>
+              <td>07-04-2012</td>
+              <td><span class="label label-success">Present</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </fieldset>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+  </div>
+</div>
+<script>
+
+$('.modal-caller').click(function(){
+      $('#myModal').modal('show');
+});
+
+//Moi khi tat thi scroll len tren lai
+$('#myModal').on('hide', function () {
+     $('#modal-body').scrollTop(0);
+})
+
+</script>
+</html>
