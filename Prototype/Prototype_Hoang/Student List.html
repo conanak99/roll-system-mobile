@@ -15,6 +15,7 @@
 <style>
 .tab-pane-content {
 	padding: 30px;
+	padding-top: 15px;
 }
 li.search-li {
 	float: right;
@@ -27,6 +28,18 @@ img.thumbnail {
 	width: 50px;
 	height: 50px;
 	display: inline;
+}
+input[type=checkbox] {
+	/* Double-sized Checkboxes */
+	-ms-transform: scale(1.2); /* IE */
+	-moz-transform: scale(1.2); /* FF */
+	-webkit-transform: scale(1.2); /* Safari and Chrome */
+	-o-transform: scale(1.2); /* Opera */
+	padding: 10px;
+}
+
+table.table-bordered {
+	border-style: solid;
 }
 </style>
 </head>
@@ -45,17 +58,38 @@ img.thumbnail {
 </ul>
 <div class="tab-content">
   <div class="tab-pane active tab-pane-content active" id="studentlist">
+  <h3>Student List</h3>
     <div>
-      <table id="studentTable" class="table table-bordered tablesorter">
+      <table id="studentTable" class="table table-bordered">
         <thead>
+          <tr>
+            <th colspan="5">
+            </td>
+            <th colspan="2"> <div class="pull-right" style="margin-bottom:-10px; width:90%">
+                <select style="width:100%">
+                  <option>Active</option>
+                  <option>Inactive</option>
+                  <optgroup label="Transfer to Another Class">
+                  <option value="mercedes">SE674</option>
+                  <option value="audi">SE690</option>
+                  <option value="audi">BE650</option>
+                  <option value="audi">BE651</option>
+                  </optgroup>
+                </select>
+              </div>
+              </td>
+            <th colspan="1"><button class="btn btn-primary">Proces</button>
+              </td>
+          </tr>
           <tr>
             <th width="5%">No</th>
             <th width="10%">Student Code</th>
             <th width="15%">Full Name</th>
             <th width="20%">Email</th>
-            <th width="10%">Current Class</th>
+            <th width="17%">Current Class</th>
             <th>Face Set</th>
             <th width="8%">Active</th>
+            <th width="6%"><input type="checkbox" name="selectID" value="SE0672" id='top-chbox'> Select</th>
           </tr>
         </thead>
         <tbody>
@@ -64,9 +98,10 @@ img.thumbnail {
             <td><a href="#" class="model-caller">SE60740</a></td>
             <td>Pham Huy Hoang</td>
             <td>hoangphse60740@fpt.edu.vn</td>
-            <td>SE672, SE675, SE594</td>
+            <td><strong>SE672</strong>, SE675, SE594</td>
             <td><button class="btn btn-primary" onclick="openPopup();">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           <tr>
           <tr>
             <td>2</td>
@@ -76,15 +111,17 @@ img.thumbnail {
             <td>SE675</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           <tr>
           <tr>
             <td>3</td>
             <td>SE60742</td>
             <td>Nguyen Thanh Binh</td>
             <td>binhntse60742@fpt.edu.vn</td>
-            <td>SE676, SE594</td>
+            <td><strong>SE676</strong>, SE594</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           <tr>
           <tr>
             <td>4</td>
@@ -94,15 +131,17 @@ img.thumbnail {
             <td>SE672</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-success">Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           <tr>
           <tr>
             <td>5</td>
             <td>SE60744</td>
             <td>Le Thuong</td>
             <td>thuonglse60744@fpt.edu.vn</td>
-            <td>SE671, SE821</td>
+            <td><strong>SE671</strong>, SE821</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-success">Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           <tr>
             <td>6</td>
             <td>SE60745</td>
@@ -111,31 +150,35 @@ img.thumbnail {
             <td>SE671</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           <tr>
             <td>7</td>
             <td>SE60746</td>
             <td>Trinh Hoang Minh</td>
             <td>minhthse60746@fpt.edu.vn</td>
-            <td>SE673</td>
+            <td>SE692</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           <tr>
             <td>8</td>
             <td>SE60747</td>
             <td>Le Van Liem</td>
             <td>liemlvse60746@fpt.edu.vn</td>
-            <td>SE672</td>
+            <td>SE692</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           </tr>
           <tr>
             <td>9</td>
             <td>SE60748</td>
             <td>Chau Minh Triet</td>
             <td>trietcmse60748@fpt.edu.vn</td>
-            <td>SE671</td>
+            <td>SE692</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           </tr>
           <tr>
             <td>10</td>
@@ -145,6 +188,7 @@ img.thumbnail {
             <td>SE672</td>
             <td><button class="btn btn-primary">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
+            <td><input type="checkbox" name="selectID" value="SE0672"></td>
           <tr>
         </tbody>
       </table>
@@ -165,7 +209,7 @@ img.thumbnail {
     </div>
   </div>
   <div class="tab-pane tab-pane-content" id="newStudent">
-    <h2 style="margin-top:-30px">Add new student</h2>
+    <h3>Add new student</h3>
     <div id="new-student-form"> 
       <!-- Form -->
       <form class="form-horizontal" id="new-student-form">
@@ -323,8 +367,8 @@ img.thumbnail {
             <td><button class="btn btn-primary" onclick="openPopup();">Detail</button></td>
             <td><button class="btn btn-warning">In Active</button></td>
           </tr>
-          </tbody>
-          </table>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
@@ -442,20 +486,14 @@ img.thumbnail {
 var students = ["SE60740 - Pham Huy Hoang", "SE60741 - Le Van Thong", "SE60742 - Nguyen Thanh Binh", "SE60743 - Tran Binh Giang", "SE60744 - Le Thuong", "SE60745 - Nguyen Hieu Trieu Vi", "SE60746 - Trinh Hoang Minh", "SE60747 - Le Van Liem", "SE60748 - Chau Minh Triet", "SE60749 - Trau Minh"];
 $('#txtSearch').typeahead({ source: students, items: 5 });
 
+/*
 $("#studentTable").tablesorter({
 headers: { 
-            // assign the secound column (we start counting zero) 
-            4: { 
-                // disable it by setting the property sorter to false 
-                sorter: false 
-            }, 
-            // assign the third column (we start counting zero) 
-            5: { 
-                // disable it by setting the property sorter to false 
-                sorter: false 
-            } 
+            5: {sorter: false}, 1: {sorter: false}, 2: {sorter: false}, 
+            8: {sorter: false}, 9: {sorter: false}, 10: {sorter: false}
         } 
-});	
+});
+*/	
 
 var selectoptions = {
     		"SE": {
@@ -508,6 +546,10 @@ onRender: function(date) {
 
 $('#search-result').hide();
 
+$('#top-chbox').change(function(e) {
+    var checked = $(this).prop('checked');
+	$('input[type=checkbox').prop('checked', checked);
+});
 
 $('a.model-caller').click(function(){
       $('#myModal').modal('show');
