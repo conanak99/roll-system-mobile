@@ -37,7 +37,6 @@ input[type=checkbox] {
 	-o-transform: scale(1.2); /* Opera */
 	padding: 10px;
 }
-
 table.table-bordered {
 	border-style: solid;
 }
@@ -45,36 +44,21 @@ table.table-bordered {
 </head>
 <body onload="">
 <ul class="nav nav-tabs">
-  <li class="active"><a href="#studentlist" data-toggle="tab">Student List</a></li>
-  <li><a href="#newStudent" data-toggle="tab">New Student</a></li>
-  <li><a href="#search" data-toggle="tab" id="searchTab">Searched Student</a></li>
-  <li class="search-li">
-    <form class="form-search" action="#">
-      <div class="input-append">
-        <input id="txtSearch" type="text" class="span3 search-query" autocomplete="off">
-        <button type="submit" class="btn" id="btnSearch">Search</button>
-      </div>
-    </form>
+  <li class="active"><a href="#uncheckReq" data-toggle="tab">Uncheck Request</a></li>
+  <li><a href="#checkedReq" data-toggle="tab">Checked Request</a></li>
 </ul>
 <div class="tab-content">
-  <div class="tab-pane active tab-pane-content active" id="studentlist">
-  <h3>Student List</h3>
+  <div class="tab-pane active tab-pane-content active" id="uncheckReq">
+    <h3>Unchecked Request</h3>
     <div>
-      <table id="studentTable" class="table table-bordered">
+      <table id="studentTable" class="table table-bordered table-condensed" style="width:80%" >
         <thead>
           <tr>
-            <th colspan="5">
-            </td>
-            <th colspan="2"> <div class="pull-right" style="margin-bottom:-10px; width:90%">
+            <th colspan="4"> </td>
+            <th colspan="2"> <div class="pull-right" style="margin-bottom:-10px; width:30%">
                 <select style="width:100%">
-                  <option>Active</option>
-                  <option>Inactive</option>
-                  <optgroup label="Transfer to Another Class">
-                  <option value="mercedes">SE674</option>
-                  <option value="audi">SE690</option>
-                  <option value="audi">BE650</option>
-                  <option value="audi">BE651</option>
-                  </optgroup>
+                  <option>Accept</option>
+                  <option>Deny</option>
                 </select>
               </div>
               </td>
@@ -82,117 +66,120 @@ table.table-bordered {
               </td>
           </tr>
           <tr>
-            <th width="5%">No</th>
-            <th width="10%">Student Code</th>
-            <th width="15%">Full Name</th>
-            <th width="20%">Email</th>
-            <th width="17%">Current Class</th>
-            <th>Face Set</th>
-            <th width="8%">Active</th>
-            <th width="6%"><input type="checkbox" name="selectID" value="SE0672" id='top-chbox'> Select</th>
+            <th width="3%">No</th>
+            <th width="20%">Student</th>
+            <th width="10%">Sent Time</th>
+            <th width="5%">Request Type</th>
+            <th>Content</th>
+            <th width="15%">Action</th>
+            <th width="5%"><input type="checkbox" name="selectID" value="SE0672" id='top-chbox'>
+              Select</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>1</td>
-            <td><a href="#" class="model-caller">SE60740</a></td>
-            <td>Pham Huy Hoang</td>
-            <td>hoangphse60740@fpt.edu.vn</td>
-            <td><strong>SE672</strong>, SE675, SE594</td>
-            <td><button class="btn btn-primary" onclick="openPopup();">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
+            <td>SE60740 - Pham Huy Hoang</td>
+            <td>04-03-2013</td>
+            <td><label class="label label-success">Add</label></td>
+            <td><img src="data/Hoang_1.jpg" class="thumbnail"/> <img src="data/Hoang_2.jpg" class="thumbnail"/> <img src="data/Hoang_3.jpg" class="thumbnail"/></td>
+            <td><button class="btn btn-success" >Accept</button>
+              <button class="btn btn-warning" >Deny</button></td>
             <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          <tr>
+          </tr>
           <tr>
             <td>2</td>
-            <td>SE60741</td>
-            <td>Le Van Thong</td>
-            <td>thonglvse60741@fpt.edu.vn</td>
-            <td>SE675</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
+            <td>SE60740 - Pham Huy Hoang</td>
+                        <td>04-03-2013</td>
+            <td><label class="label label-important">Delete</label></td>
+            <td><img src="data/Binh_1.jpg" class="thumbnail"/> <img src="data/Minh_2.jpg" class="thumbnail"/></td>
+            <td><button class="btn btn-success" >Accept</button>
+              <button class="btn btn-warning" >Deny</button></td>
             <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          <tr>
+          </tr>
           <tr>
             <td>3</td>
-            <td>SE60742</td>
-            <td>Nguyen Thanh Binh</td>
-            <td>binhntse60742@fpt.edu.vn</td>
-            <td><strong>SE676</strong>, SE594</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
+            <td>SE60592 - Nguyen Thanh Binh</td>
+                        <td>05-03-2013</td>
+            <td><label class="label label-success">Add</label></td>
+            <td><img src="data/Binh_2.jpg" class="thumbnail"/> <img src="data/Binh_3.jpg" class="thumbnail"/></td>
+            <td><button class="btn btn-success" >Accept</button>
+              <button class="btn btn-warning" >Deny</button></td>
             <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          <tr>
+          </tr>
+          
           <tr>
             <td>4</td>
-            <td>SE60743</td>
-            <td>Tran Binh Giang</td>
-            <td>giangtb60743@fpt.edu.vn</td>
-            <td>SE672</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-success">Active</button></td>
-            <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          <tr>
-          <tr>
-            <td>5</td>
-            <td>SE60744</td>
-            <td>Le Thuong</td>
-            <td>thuonglse60744@fpt.edu.vn</td>
-            <td><strong>SE671</strong>, SE821</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-success">Active</button></td>
-            <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          <tr>
-            <td>6</td>
-            <td>SE60745</td>
-            <td>Nguyen Hieu Trieu Vi</td>
-            <td>vinht60745@fpt.edu.vn</td>
-            <td>SE671</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
-            <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          <tr>
-            <td>7</td>
-            <td>SE60746</td>
-            <td>Trinh Hoang Minh</td>
-            <td>minhthse60746@fpt.edu.vn</td>
-            <td>SE692</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
-            <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          <tr>
-            <td>8</td>
-            <td>SE60747</td>
-            <td>Le Van Liem</td>
-            <td>liemlvse60746@fpt.edu.vn</td>
-            <td>SE692</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
+            <td>SE60745 - Trinh Hoang Minh</td>
+                        <td>06-03-2013</td>
+            <td><label class="label label-success">Add</label></td>
+            <td><img src="data/Minh_3.jpg" class="thumbnail"/> <img src="data/Minh_4.jpg" class="thumbnail"/></td>
+            <td><button class="btn btn-success" >Accept</button>
+              <button class="btn btn-warning" >Deny</button></td>
             <td><input type="checkbox" name="selectID" value="SE0672"></td>
           </tr>
-          <tr>
-            <td>9</td>
-            <td>SE60748</td>
-            <td>Chau Minh Triet</td>
-            <td>trietcmse60748@fpt.edu.vn</td>
-            <td>SE692</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
-            <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          </tr>
-          <tr>
-            <td>10</td>
-            <td>SE60749</td>
-            <td>Trau Minh</td>
-            <td>minhtse60749@fpt.edu.vn</td>
-            <td>SE672</td>
-            <td><button class="btn btn-primary">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
-            <td><input type="checkbox" name="selectID" value="SE0672"></td>
-          <tr>
+          
         </tbody>
       </table>
-      <div class="pagination pagination-right">
+     
+    </div>
+  </div>
+  <div class="tab-pane tab-pane-content" id="checkedReq">
+  <h3>Checked Request</h3>
+  
+  <table id="studentTable" class="table table-bordered table-condensed" style="width:80%" >
+        <thead>
+          <tr>
+            <th width="3%">No</th>
+            <th width="20%">Student</th>
+            <th width="15%">Sent Time</th>
+            <th width="15%">Checked Time</th>
+            <th width="5%">Request Type</th>
+            <th>Content</th>
+            <th width="10%">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>SE60740 - Pham Huy Hoang</td>
+            <td>04-03-2013</td>
+            <td>05-03-2013</td>
+            <td><label class="label label-success">Add</label></td>
+            <td><img src="data/Hoang_1.jpg" class="thumbnail"/> <img src="data/Hoang_2.jpg" class="thumbnail"/> <img src="data/Hoang_3.jpg" class="thumbnail"/></td>
+            <td><label class="label label-success">Accepted</label></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>SE60740 - Pham Huy Hoang</td>
+            <td>04-03-2013</td>
+            <td>05-03-2013</td>
+            <td><label class="label label-important">Delete</label></td>
+            <td><img src="data/Binh_1.jpg" class="thumbnail"/> <img src="data/Minh_2.jpg" class="thumbnail"/></td>
+            <td><label class="label label-success">Accepted</label></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>SE60592 - Nguyen Thanh Binh</td>
+            <td>05-03-2013</td>
+            <td>06-03-2013</td>
+            <td><label class="label label-success">Add</label></td>
+            <td><img src="data/Binh_2.jpg" class="thumbnail"/> <img src="data/Binh_3.jpg" class="thumbnail"/></td>
+            <td><label class="label label-important">Denied</label></td>
+          </tr>
+          
+          <tr>
+            <td>4</td>
+            <td>SE60745 - Trinh Hoang Minh</td>
+            <td>05-03-2013</td>
+            <td>06-03-2013</td>
+            <td><label class="label label-success">Add</label></td>
+            <td><img src="data/Minh_3.jpg" class="thumbnail"/> <img src="data/Minh_4.jpg" class="thumbnail"/></td>
+           <td><label class="label label-success">Accepted</label></td>
+          </tr>
+        </tbody>
+      </table>
+   <div class="pagination pagination-left">
         <ul>
           <li><a href="#">Prev</a></li>
           <li><a href="#">1</a></li>
@@ -206,171 +193,8 @@ table.table-bordered {
           <li><a href="#">Next</a></li>
         </ul>
       </div>
-    </div>
-  </div>
-  <div class="tab-pane tab-pane-content" id="newStudent">
-    <h3>Add new student</h3>
-    <div id="new-student-form"> 
-      <!-- Form -->
-      <form class="form-horizontal" id="new-student-form">
-        <legend>Student Info</legend>
-        <fieldset>
-          <div class="row">
-            <div class="span6">
-              <div class="control-group">
-                <label class="control-label" for="code">Course and class<font color="red">*</font></label>
-                <div class="controls">
-                  <select class="span1" id="spec">
-                  </select>
-                  <select name="class" class="input-small" id="class">
-                  </select>
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Full Name<font color="red">*</font></label>
-                <div class="controls">
-                  <input id="txtName" name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Birthday<font color="red">*</font></label>
-                <div class="controls">
-                  <input id="datetimeBirth" name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-            </div>
-            <div class="span6"> 
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Citizen Card ID<font color="red">*</font></label>
-                <div class="controls">
-                  <input id="txtCitizen" name="name" type="text" placeholder="" pattern="\d{8}" class="input-xlarge">
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Email</label>
-                <div class="controls">
-                  <input id="txtEmail" name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-              
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Address<font color="red">*</font></label>
-                <div class="controls">
-                  <input id="txtAddress" name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <legend>Parents info</legend>
-        <fieldset>
-          <!-- Text input-->
-          <div class="row">
-            <div class="span6"> 
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Father's Name</label>
-                <div class="controls">
-                  <input name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Father's Job</label>
-                <div class="controls">
-                  <input name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Father's Address</label>
-                <div class="controls">
-                  <input name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Father's Phone Number</label>
-                <div class="controls">
-                  <input name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-            </div>
-            <div class="span6"> 
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Mother's Name</label>
-                <div class="controls">
-                  <input name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Mother's Job</label>
-                <div class="controls">
-                  <input name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Mother's Address</label>
-                <div class="controls">
-                  <input name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-              <!-- Text input-->
-              <div class="control-group">
-                <label class="control-label" for="name">Mother's Phone Number</label>
-                <div class="controls">
-                  <input name="name" type="text" placeholder="" class="input-xlarge">
-                </div>
-              </div>
-            </div>
-          </div>
-        </fieldset>
-        <div class="form-actions" style="margin-top:0">
-          <button type="submit" class="btn btn-primary" id="addStudent">Add</button>
-          <button type="reset" class="btn" id='btnResetStudent'>Cancel</button>
-        </div>
-      </form>
-    </div>
-  </div>
-  <div class="tab-pane tab-pane-content" id="search">
-    <div id="search-pane-content">
-      <p id="searchMessage">Enter some keyword (Student's name, email, Code, to begin search). </p>
-    </div>
-    <div id="search-result">
-      <table id="studentTable" class="table table-bordered tablesorter">
-        <thead>
-          <tr>
-            <th width="5%">No</th>
-            <th width="10%">Student Code</th>
-            <th width="15%">Full Name</th>
-            <th width="20%">Email</th>
-            <th width="10%">Current Class</th>
-            <th>Face Set</th>
-            <th width="8%">Active</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td><a href="#" class="model-caller">SE60740</a></td>
-            <td>Pham Huy Hoang</td>
-            <td>hoangphse60740@fpt.edu.vn</td>
-            <td>SE672, SE675, SE594</td>
-            <td><button class="btn btn-primary" onclick="openPopup();">Detail</button></td>
-            <td><button class="btn btn-warning">In Active</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
+   </div>
+</div>
 </div>
 </body>
 <!-- Modal -->
@@ -436,115 +260,7 @@ table.table-bordered {
     <button class="btn btn-primary" data-dismiss="modal">Save changes</button>
   </div>
 </div>
-
-<!--Created Student Modal -->
-<div id="createdStudentModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h4 id="myModalLabel">Student Created</h4>
-  </div>
-  <div class="modal-body">
-    <!-- Form -->
-    <fieldset>
-      <!-- Text input-->
-      <div class="control-group">
-        <label class="control-label" for="code">Student Code</label>
-        <div class="controls">
-          <input id="txtCode" name="name" type="text" placeholder="" class="input-small" value="SE60740" disabled="disabled">
-        </div>
-      </div>
-      <!-- Text input-->
-      <div class="control-group">
-        <label class="control-label" for="name">Student Name</label>
-        <div class="controls">
-          <input id="txtNameEdited" name="name" type="text" placeholder="" class="input-xlarge" value="Pham Huy Hoang" disabled="disabled">
-        </div>
-      </div>
-      <!-- Text input-->
-      <div class="control-group">
-        <label class="control-label" for="email">Email</label>
-        <div class="controls">
-          <input id="txtEmailEdited" name="email" type="text" placeholder="" class="input-xlarge" disabled="disabled">
-        </div>
-      </div>
-      <!-- Select Basic -->
-      <div class="control-group">
-        <label class="control-label" for="class">Class</label>
-        <div class="controls">
-          <input id="txtClass" name="name" type="text" placeholder="" class="input-small" value="SE672" disabled="disabled">
-        </div>
-      </div>
-    </fieldset>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Ok</button>
-  </div>
-</div>
 <script>
-
-var students = ["SE60740 - Pham Huy Hoang", "SE60741 - Le Van Thong", "SE60742 - Nguyen Thanh Binh", "SE60743 - Tran Binh Giang", "SE60744 - Le Thuong", "SE60745 - Nguyen Hieu Trieu Vi", "SE60746 - Trinh Hoang Minh", "SE60747 - Le Van Liem", "SE60748 - Chau Minh Triet", "SE60749 - Trau Minh"];
-$('#txtSearch').typeahead({ source: students, items: 5 });
-
-/*
-$("#studentTable").tablesorter({
-headers: { 
-            5: {sorter: false}, 1: {sorter: false}, 2: {sorter: false}, 
-            8: {sorter: false}, 9: {sorter: false}, 10: {sorter: false}
-        } 
-});
-*/	
-
-var selectoptions = {
-    		"SE": {
-    	         "key" : 10,
-                 "defaultvalue" : 101,
-    	         "values" : {
-                     "SE0570": 101,
-                     "SE0571": 102,
-                     "SE0572": 103
-                     }
-              },
-            "FB": {
-                 "key" : 11,
-                 "defaultvalue" : 110,
-                 "values" : {
-                     "FB0891": 110,
-                     "FB0892": 111,
-                     "FB0894": 112,
-                     "FB0895": 113
-                     }
-              },
-			  "BA": {
-                 "key" : 12,
-                 "defaultvalue" : 120,
-                 "values" : {
-                     "BA0591": 120,
-                     "BA0592": 121,
-                     "BA0594": 122,
-                     "BA0595": 123
-                     }
-              }
-    };
-
-$('#spec').doubleSelect('class', selectoptions);
-
-//Setup datetimepicker
-var nowTemp = new Date();
-var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-
-$('#datetimeBirth').datepicker({
-onRender: function(date) {
-	//SV tuoi tu 18-25
-	var studentYear = now.getFullYear() - date.getFullYear();
-	if(studentYear < 18 || studentYear > 25)
-	return 'disabled';
-	else return '';
-	//return date.valueOf() < now.valueOf() ? 'disabled' : '';
-}
-});
-
-$('#search-result').hide();
 
 $('#top-chbox').change(function(e) {
     var checked = $(this).prop('checked');
@@ -555,49 +271,10 @@ $('a.model-caller').click(function(){
       $('#myModal').modal('show');
 });
 
-$('#addStudent').click(function(e){
-      e.preventDefault();
-	  var studentCode = $('#spec :selected').text() + '60740';
-	  var studentName = $('#txtName').val();
-	  var email = createEmail(studentCode, studentName);
-	  
-	  $('#txtCode').val(studentCode);
-	  $('#txtNameEdited').val(studentName);
-	  $('#txtEmailEdited').val(email);
-	  $('#txtClass').val($('#class :selected').text());
-	  
-	  
-      $('#createdStudentModal').modal('show');
-	  $('#txtName').val('');
+$('button.btn-success,button.btn-warning').click(function(e) {
+   //An luon row do
+   $(this).parent().parent().hide(500);
 });
 
-$('#btnSearch').click(function(e){
-      e.preventDefault();
-	$('#searchTab').click();
-	var keyword = $('#txtSearch').val();
-	if(keyword.length > 0) {
-	$('#searchMessage').html("Search Result:");
-	$('#search-result').show();
-}
-});
-
-
-function createEmail(studentCode, studentName)
-{
-     var splited= studentName.split(" ");
-	 var result = splited[splited.length - 1];
-	 for (var i=0;i < splited.length - 1;i++)
-	{ 
- 		result += splited[i].charAt(0);
-	}
-	result = result + studentCode + "@fpt.edu.vn";
-	return result.toLowerCase();
-}
-
-function openPopup()
-{
-		myWindow=window.open('Face Training.html','','width=900,height=600,top=80, left=200,scrollbars=yes');
-		myWindow.focus();
-}
 </script>
 </html>
