@@ -1,0 +1,1328 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="RSMModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="RSMModelStoreContainer">
+          <EntitySet Name="AttendanceLog" EntityType="RSMModel.Store.AttendanceLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Class" EntityType="RSMModel.Store.Class" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Instructor" EntityType="RSMModel.Store.Instructor" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="InstructorTeaching" EntityType="RSMModel.Store.InstructorTeaching" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LogImage" EntityType="RSMModel.Store.LogImage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="LogType" EntityType="RSMModel.Store.LogType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Major" EntityType="RSMModel.Store.Major" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Role" EntityType="RSMModel.Store.Role" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RollCall" EntityType="RSMModel.Store.RollCall" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Semester" EntityType="RSMModel.Store.Semester" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Staff" EntityType="RSMModel.Store.Staff" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Student" EntityType="RSMModel.Store.Student" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StudentAttendance" EntityType="RSMModel.Store.StudentAttendance" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StudentImage" EntityType="RSMModel.Store.StudentImage" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StudentInRollCall" EntityType="RSMModel.Store.StudentInRollCall" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Subject" EntityType="RSMModel.Store.Subject" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SubjectMajorMapping" EntityType="RSMModel.Store.SubjectMajorMapping" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="User" EntityType="RSMModel.Store.User" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="AttendanceLog_LogImage_FK1" Association="RSMModel.Store.AttendanceLog_LogImage_FK1">
+            <End Role="AttendanceLog" EntitySet="AttendanceLog" />
+            <End Role="LogImage" EntitySet="LogImage" />
+          </AssociationSet>
+          <AssociationSet Name="AttendanceLog_StudentAttendance_FK1" Association="RSMModel.Store.AttendanceLog_StudentAttendance_FK1">
+            <End Role="AttendanceLog" EntitySet="AttendanceLog" />
+            <End Role="StudentAttendance" EntitySet="StudentAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="Class_Student_FK1" Association="RSMModel.Store.Class_Student_FK1">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Class_Major" Association="RSMModel.Store.FK_Class_Major">
+            <End Role="Major" EntitySet="Major" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RollCall_Class" Association="RSMModel.Store.FK_RollCall_Class">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="RollCall" EntitySet="RollCall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RollCall_Semester" Association="RSMModel.Store.FK_RollCall_Semester">
+            <End Role="Semester" EntitySet="Semester" />
+            <End Role="RollCall" EntitySet="RollCall" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RollCall_Subject" Association="RSMModel.Store.FK_RollCall_Subject">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="RollCall" EntitySet="RollCall" />
+          </AssociationSet>
+          <AssociationSet Name="Instructor_InstructorTeaching_FK1" Association="RSMModel.Store.Instructor_InstructorTeaching_FK1">
+            <End Role="Instructor" EntitySet="Instructor" />
+            <End Role="InstructorTeaching" EntitySet="InstructorTeaching" />
+          </AssociationSet>
+          <AssociationSet Name="LogType_AttendanceLog_FK1" Association="RSMModel.Store.LogType_AttendanceLog_FK1">
+            <End Role="LogType" EntitySet="LogType" />
+            <End Role="AttendanceLog" EntitySet="AttendanceLog" />
+          </AssociationSet>
+          <AssociationSet Name="Major_SubjectMajorMapping_FK1" Association="RSMModel.Store.Major_SubjectMajorMapping_FK1">
+            <End Role="Major" EntitySet="Major" />
+            <End Role="SubjectMajorMapping" EntitySet="SubjectMajorMapping" />
+          </AssociationSet>
+          <AssociationSet Name="Role_User_FK1" Association="RSMModel.Store.Role_User_FK1">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="RollCall_AttendanceLog_FK1" Association="RSMModel.Store.RollCall_AttendanceLog_FK1">
+            <End Role="RollCall" EntitySet="RollCall" />
+            <End Role="AttendanceLog" EntitySet="AttendanceLog" />
+          </AssociationSet>
+          <AssociationSet Name="RollCall_InstructorTeaching_FK1" Association="RSMModel.Store.RollCall_InstructorTeaching_FK1">
+            <End Role="RollCall" EntitySet="RollCall" />
+            <End Role="InstructorTeaching" EntitySet="InstructorTeaching" />
+          </AssociationSet>
+          <AssociationSet Name="RollCall_StudentInRollCall_FK1" Association="RSMModel.Store.RollCall_StudentInRollCall_FK1">
+            <End Role="RollCall" EntitySet="RollCall" />
+            <End Role="StudentInRollCall" EntitySet="StudentInRollCall" />
+          </AssociationSet>
+          <AssociationSet Name="Student_StudentAttendance_FK1" Association="RSMModel.Store.Student_StudentAttendance_FK1">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentAttendance" EntitySet="StudentAttendance" />
+          </AssociationSet>
+          <AssociationSet Name="Student_StudentImage_FK1" Association="RSMModel.Store.Student_StudentImage_FK1">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentImage" EntitySet="StudentImage" />
+          </AssociationSet>
+          <AssociationSet Name="Student_StudentInRollCall_FK1" Association="RSMModel.Store.Student_StudentInRollCall_FK1">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="StudentInRollCall" EntitySet="StudentInRollCall" />
+          </AssociationSet>
+          <AssociationSet Name="Subject_SubjectMajorMapping_FK1" Association="RSMModel.Store.Subject_SubjectMajorMapping_FK1">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="SubjectMajorMapping" EntitySet="SubjectMajorMapping" />
+          </AssociationSet>
+          <AssociationSet Name="User_Instructor_FK1" Association="RSMModel.Store.User_Instructor_FK1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Instructor" EntitySet="Instructor" />
+          </AssociationSet>
+          <AssociationSet Name="User_Staff_FK1" Association="RSMModel.Store.User_Staff_FK1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Staff" EntitySet="Staff" />
+          </AssociationSet>
+          <AssociationSet Name="User_Student_FK1" Association="RSMModel.Store.User_Student_FK1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AttendanceLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" Nullable="false" />
+          <Property Name="RollCallID" Type="int" Nullable="false" />
+          <Property Name="LogDate" Type="date" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="MajorID" Type="int" Nullable="false" />
+          <Property Name="ClassName" Type="char" Nullable="false" MaxLength="5" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Instructor">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+          </Key>
+          <Property Name="InstructorID" Type="int" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="12" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="InstructorTeaching">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+            <PropertyRef Name="RollCallID" />
+          </Key>
+          <Property Name="InstructorID" Type="int" Nullable="false" />
+          <Property Name="RollCallID" Type="int" Nullable="false" />
+          <Property Name="BeginDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LogImage">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" Nullable="false" />
+          <Property Name="LogID" Type="int" Nullable="false" />
+          <Property Name="ImageLink" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="LogType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Major">
+          <Key>
+            <PropertyRef Name="MajorID" />
+          </Key>
+          <Property Name="MajorID" Type="int" Nullable="false" />
+          <Property Name="ShortName" Type="char" MaxLength="2" />
+          <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="RollCall">
+          <Key>
+            <PropertyRef Name="RollCallID" />
+          </Key>
+          <Property Name="RollCallID" Type="int" Nullable="false" />
+          <Property Name="StartTime" Type="time" Nullable="false" />
+          <Property Name="EndTime" Type="time" Nullable="false" />
+          <Property Name="StartDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+          <Property Name="SubjectID" Type="int" Nullable="false" />
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="SemesterID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Semester">
+          <Key>
+            <PropertyRef Name="SemesterID" />
+          </Key>
+          <Property Name="SemesterID" Type="int" Nullable="false" />
+          <Property Name="SemesterName" Type="varchar" Nullable="false" MaxLength="15" />
+          <Property Name="BeginDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="Fullname" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="12" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="FullName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Birthdate" Type="datetime" Nullable="false" />
+          <Property Name="CitizenID" Type="char" Nullable="false" MaxLength="8" />
+          <Property Name="Address" Type="nvarchar" MaxLength="100" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="StudentCode" Type="char" Nullable="false" MaxLength="7" />
+        </EntityType>
+        <EntityType Name="StudentAttendance">
+          <Key>
+            <PropertyRef Name="LogID" />
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="LogID" Type="int" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="IsPresent" Type="bit" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="StudentImage">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="int" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="ImageLink" Type="varchar" Nullable="false" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="StudentInRollCall">
+          <Key>
+            <PropertyRef Name="StudentID" />
+            <PropertyRef Name="RollCallID" />
+          </Key>
+          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="RollCallID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="int" Nullable="false" />
+          <Property Name="ShortName" Type="nvarchar" MaxLength="10" />
+          <Property Name="FullName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="NumberOfSlot" Type="int" Nullable="false" />
+          <Property Name="Description" Type="char" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="SubjectMajorMapping">
+          <Key>
+            <PropertyRef Name="MajorID" />
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="MajorID" Type="int" Nullable="false" />
+          <Property Name="SubjectID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="30" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="AttendanceLog_LogImage_FK1">
+          <End Role="AttendanceLog" Type="RSMModel.Store.AttendanceLog" Multiplicity="1" />
+          <End Role="LogImage" Type="RSMModel.Store.LogImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendanceLog">
+              <PropertyRef Name="LogID" />
+            </Principal>
+            <Dependent Role="LogImage">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AttendanceLog_StudentAttendance_FK1">
+          <End Role="AttendanceLog" Type="RSMModel.Store.AttendanceLog" Multiplicity="1" />
+          <End Role="StudentAttendance" Type="RSMModel.Store.StudentAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendanceLog">
+              <PropertyRef Name="LogID" />
+            </Principal>
+            <Dependent Role="StudentAttendance">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Class_Student_FK1">
+          <End Role="Class" Type="RSMModel.Store.Class" Multiplicity="1" />
+          <End Role="Student" Type="RSMModel.Store.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Class_Major">
+          <End Role="Major" Type="RSMModel.Store.Major" Multiplicity="1" />
+          <End Role="Class" Type="RSMModel.Store.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Major">
+              <PropertyRef Name="MajorID" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="MajorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RollCall_Class">
+          <End Role="Class" Type="RSMModel.Store.Class" Multiplicity="1" />
+          <End Role="RollCall" Type="RSMModel.Store.RollCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="RollCall">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RollCall_Semester">
+          <End Role="Semester" Type="RSMModel.Store.Semester" Multiplicity="1" />
+          <End Role="RollCall" Type="RSMModel.Store.RollCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="SemesterID" />
+            </Principal>
+            <Dependent Role="RollCall">
+              <PropertyRef Name="SemesterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RollCall_Subject">
+          <End Role="Subject" Type="RSMModel.Store.Subject" Multiplicity="1" />
+          <End Role="RollCall" Type="RSMModel.Store.RollCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="RollCall">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Instructor_InstructorTeaching_FK1">
+          <End Role="Instructor" Type="RSMModel.Store.Instructor" Multiplicity="1" />
+          <End Role="InstructorTeaching" Type="RSMModel.Store.InstructorTeaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="InstructorTeaching">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LogType_AttendanceLog_FK1">
+          <End Role="LogType" Type="RSMModel.Store.LogType" Multiplicity="1" />
+          <End Role="AttendanceLog" Type="RSMModel.Store.AttendanceLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="AttendanceLog">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Major_SubjectMajorMapping_FK1">
+          <End Role="Major" Type="RSMModel.Store.Major" Multiplicity="1" />
+          <End Role="SubjectMajorMapping" Type="RSMModel.Store.SubjectMajorMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Major">
+              <PropertyRef Name="MajorID" />
+            </Principal>
+            <Dependent Role="SubjectMajorMapping">
+              <PropertyRef Name="MajorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Role_User_FK1">
+          <End Role="Role" Type="RSMModel.Store.Role" Multiplicity="1" />
+          <End Role="User" Type="RSMModel.Store.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RollCall_AttendanceLog_FK1">
+          <End Role="RollCall" Type="RSMModel.Store.RollCall" Multiplicity="1" />
+          <End Role="AttendanceLog" Type="RSMModel.Store.AttendanceLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RollCall">
+              <PropertyRef Name="RollCallID" />
+            </Principal>
+            <Dependent Role="AttendanceLog">
+              <PropertyRef Name="RollCallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RollCall_InstructorTeaching_FK1">
+          <End Role="RollCall" Type="RSMModel.Store.RollCall" Multiplicity="1" />
+          <End Role="InstructorTeaching" Type="RSMModel.Store.InstructorTeaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RollCall">
+              <PropertyRef Name="RollCallID" />
+            </Principal>
+            <Dependent Role="InstructorTeaching">
+              <PropertyRef Name="RollCallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RollCall_StudentInRollCall_FK1">
+          <End Role="RollCall" Type="RSMModel.Store.RollCall" Multiplicity="1" />
+          <End Role="StudentInRollCall" Type="RSMModel.Store.StudentInRollCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RollCall">
+              <PropertyRef Name="RollCallID" />
+            </Principal>
+            <Dependent Role="StudentInRollCall">
+              <PropertyRef Name="RollCallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Student_StudentAttendance_FK1">
+          <End Role="Student" Type="RSMModel.Store.Student" Multiplicity="1" />
+          <End Role="StudentAttendance" Type="RSMModel.Store.StudentAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentAttendance">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Student_StudentImage_FK1">
+          <End Role="Student" Type="RSMModel.Store.Student" Multiplicity="1" />
+          <End Role="StudentImage" Type="RSMModel.Store.StudentImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentImage">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Student_StudentInRollCall_FK1">
+          <End Role="Student" Type="RSMModel.Store.Student" Multiplicity="1" />
+          <End Role="StudentInRollCall" Type="RSMModel.Store.StudentInRollCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentInRollCall">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Subject_SubjectMajorMapping_FK1">
+          <End Role="Subject" Type="RSMModel.Store.Subject" Multiplicity="1" />
+          <End Role="SubjectMajorMapping" Type="RSMModel.Store.SubjectMajorMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="SubjectMajorMapping">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Instructor_FK1">
+          <End Role="User" Type="RSMModel.Store.User" Multiplicity="0..1" />
+          <End Role="Instructor" Type="RSMModel.Store.Instructor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Instructor">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Staff_FK1">
+          <End Role="User" Type="RSMModel.Store.User" Multiplicity="0..1" />
+          <End Role="Staff" Type="RSMModel.Store.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Student_FK1">
+          <End Role="User" Type="RSMModel.Store.User" Multiplicity="0..1" />
+          <End Role="Student" Type="RSMModel.Store.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="RSMModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="RSMEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AttendanceLogs" EntityType="RSMModel.AttendanceLog" />
+          <EntitySet Name="Classes" EntityType="RSMModel.Class" />
+          <EntitySet Name="Instructors" EntityType="RSMModel.Instructor" />
+          <EntitySet Name="InstructorTeachings" EntityType="RSMModel.InstructorTeaching" />
+          <EntitySet Name="LogImages" EntityType="RSMModel.LogImage" />
+          <EntitySet Name="LogTypes" EntityType="RSMModel.LogType" />
+          <EntitySet Name="Majors" EntityType="RSMModel.Major" />
+          <EntitySet Name="Roles" EntityType="RSMModel.Role" />
+          <EntitySet Name="RollCalls" EntityType="RSMModel.RollCall" />
+          <EntitySet Name="Semesters" EntityType="RSMModel.Semester" />
+          <EntitySet Name="Staffs" EntityType="RSMModel.Staff" />
+          <EntitySet Name="Students" EntityType="RSMModel.Student" />
+          <EntitySet Name="StudentAttendances" EntityType="RSMModel.StudentAttendance" />
+          <EntitySet Name="StudentImages" EntityType="RSMModel.StudentImage" />
+          <EntitySet Name="Subjects" EntityType="RSMModel.Subject" />
+          <EntitySet Name="Users" EntityType="RSMModel.User" />
+          <AssociationSet Name="AttendanceLog_LogImage_FK1" Association="RSMModel.AttendanceLog_LogImage_FK1">
+            <End Role="AttendanceLog" EntitySet="AttendanceLogs" />
+            <End Role="LogImage" EntitySet="LogImages" />
+          </AssociationSet>
+          <AssociationSet Name="AttendanceLog_StudentAttendance_FK1" Association="RSMModel.AttendanceLog_StudentAttendance_FK1">
+            <End Role="AttendanceLog" EntitySet="AttendanceLogs" />
+            <End Role="StudentAttendance" EntitySet="StudentAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="LogType_AttendanceLog_FK1" Association="RSMModel.LogType_AttendanceLog_FK1">
+            <End Role="LogType" EntitySet="LogTypes" />
+            <End Role="AttendanceLog" EntitySet="AttendanceLogs" />
+          </AssociationSet>
+          <AssociationSet Name="RollCall_AttendanceLog_FK1" Association="RSMModel.RollCall_AttendanceLog_FK1">
+            <End Role="RollCall" EntitySet="RollCalls" />
+            <End Role="AttendanceLog" EntitySet="AttendanceLogs" />
+          </AssociationSet>
+          <AssociationSet Name="Class_Student_FK1" Association="RSMModel.Class_Student_FK1">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Class_Major" Association="RSMModel.FK_Class_Major">
+            <End Role="Major" EntitySet="Majors" />
+            <End Role="Class" EntitySet="Classes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RollCall_Class" Association="RSMModel.FK_RollCall_Class">
+            <End Role="Class" EntitySet="Classes" />
+            <End Role="RollCall" EntitySet="RollCalls" />
+          </AssociationSet>
+          <AssociationSet Name="Instructor_InstructorTeaching_FK1" Association="RSMModel.Instructor_InstructorTeaching_FK1">
+            <End Role="Instructor" EntitySet="Instructors" />
+            <End Role="InstructorTeaching" EntitySet="InstructorTeachings" />
+          </AssociationSet>
+          <AssociationSet Name="User_Instructor_FK1" Association="RSMModel.User_Instructor_FK1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Instructor" EntitySet="Instructors" />
+          </AssociationSet>
+          <AssociationSet Name="RollCall_InstructorTeaching_FK1" Association="RSMModel.RollCall_InstructorTeaching_FK1">
+            <End Role="RollCall" EntitySet="RollCalls" />
+            <End Role="InstructorTeaching" EntitySet="InstructorTeachings" />
+          </AssociationSet>
+          <AssociationSet Name="Role_User_FK1" Association="RSMModel.Role_User_FK1">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RollCall_Semester" Association="RSMModel.FK_RollCall_Semester">
+            <End Role="Semester" EntitySet="Semesters" />
+            <End Role="RollCall" EntitySet="RollCalls" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RollCall_Subject" Association="RSMModel.FK_RollCall_Subject">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="RollCall" EntitySet="RollCalls" />
+          </AssociationSet>
+          <AssociationSet Name="User_Staff_FK1" Association="RSMModel.User_Staff_FK1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Staff" EntitySet="Staffs" />
+          </AssociationSet>
+          <AssociationSet Name="Student_StudentAttendance_FK1" Association="RSMModel.Student_StudentAttendance_FK1">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentAttendance" EntitySet="StudentAttendances" />
+          </AssociationSet>
+          <AssociationSet Name="Student_StudentImage_FK1" Association="RSMModel.Student_StudentImage_FK1">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="StudentImage" EntitySet="StudentImages" />
+          </AssociationSet>
+          <AssociationSet Name="User_Student_FK1" Association="RSMModel.User_Student_FK1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="StudentInRollCall" Association="RSMModel.StudentInRollCall">
+            <End Role="RollCall" EntitySet="RollCalls" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="SubjectMajorMapping" Association="RSMModel.SubjectMajorMapping">
+            <End Role="Major" EntitySet="Majors" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AttendanceLog">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" />
+          <Property Name="RollCallID" Type="Int32" Nullable="false" />
+          <Property Name="LogDate" Type="DateTime" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="LogImages" Relationship="RSMModel.AttendanceLog_LogImage_FK1" FromRole="AttendanceLog" ToRole="LogImage" />
+          <NavigationProperty Name="StudentAttendances" Relationship="RSMModel.AttendanceLog_StudentAttendance_FK1" FromRole="AttendanceLog" ToRole="StudentAttendance" />
+          <NavigationProperty Name="LogType" Relationship="RSMModel.LogType_AttendanceLog_FK1" FromRole="AttendanceLog" ToRole="LogType" />
+          <NavigationProperty Name="RollCall" Relationship="RSMModel.RollCall_AttendanceLog_FK1" FromRole="AttendanceLog" ToRole="RollCall" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="ClassID" />
+          </Key>
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="MajorID" Type="Int32" Nullable="false" />
+          <Property Name="ClassName" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Students" Relationship="RSMModel.Class_Student_FK1" FromRole="Class" ToRole="Student" />
+          <NavigationProperty Name="Major" Relationship="RSMModel.FK_Class_Major" FromRole="Class" ToRole="Major" />
+          <NavigationProperty Name="RollCalls" Relationship="RSMModel.FK_RollCall_Class" FromRole="Class" ToRole="RollCall" />
+        </EntityType>
+        <EntityType Name="Instructor">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+          </Key>
+          <Property Name="InstructorID" Type="Int32" Nullable="false" />
+          <Property Name="Fullname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="InstructorTeachings" Relationship="RSMModel.Instructor_InstructorTeaching_FK1" FromRole="Instructor" ToRole="InstructorTeaching" />
+          <NavigationProperty Name="User" Relationship="RSMModel.User_Instructor_FK1" FromRole="Instructor" ToRole="User" />
+        </EntityType>
+        <EntityType Name="InstructorTeaching">
+          <Key>
+            <PropertyRef Name="InstructorID" />
+            <PropertyRef Name="RollCallID" />
+          </Key>
+          <Property Name="InstructorID" Type="Int32" Nullable="false" />
+          <Property Name="RollCallID" Type="Int32" Nullable="false" />
+          <Property Name="BeginDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Instructor" Relationship="RSMModel.Instructor_InstructorTeaching_FK1" FromRole="InstructorTeaching" ToRole="Instructor" />
+          <NavigationProperty Name="RollCall" Relationship="RSMModel.RollCall_InstructorTeaching_FK1" FromRole="InstructorTeaching" ToRole="RollCall" />
+        </EntityType>
+        <EntityType Name="LogImage">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" />
+          <Property Name="LogID" Type="Int32" Nullable="false" />
+          <Property Name="ImageLink" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="AttendanceLog" Relationship="RSMModel.AttendanceLog_LogImage_FK1" FromRole="LogImage" ToRole="AttendanceLog" />
+        </EntityType>
+        <EntityType Name="LogType">
+          <Key>
+            <PropertyRef Name="TypeID" />
+          </Key>
+          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="TypeName" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="AttendanceLogs" Relationship="RSMModel.LogType_AttendanceLog_FK1" FromRole="LogType" ToRole="AttendanceLog" />
+        </EntityType>
+        <EntityType Name="Major">
+          <Key>
+            <PropertyRef Name="MajorID" />
+          </Key>
+          <Property Name="MajorID" Type="Int32" Nullable="false" />
+          <Property Name="ShortName" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Classes" Relationship="RSMModel.FK_Class_Major" FromRole="Major" ToRole="Class" />
+          <NavigationProperty Name="Subjects" Relationship="RSMModel.SubjectMajorMapping" FromRole="Major" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Users" Relationship="RSMModel.Role_User_FK1" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="RollCall">
+          <Key>
+            <PropertyRef Name="RollCallID" />
+          </Key>
+          <Property Name="RollCallID" Type="Int32" Nullable="false" />
+          <Property Name="StartTime" Type="Time" Nullable="false" />
+          <Property Name="EndTime" Type="Time" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" />
+          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="SemesterID" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AttendanceLogs" Relationship="RSMModel.RollCall_AttendanceLog_FK1" FromRole="RollCall" ToRole="AttendanceLog" />
+          <NavigationProperty Name="Class" Relationship="RSMModel.FK_RollCall_Class" FromRole="RollCall" ToRole="Class" />
+          <NavigationProperty Name="InstructorTeachings" Relationship="RSMModel.RollCall_InstructorTeaching_FK1" FromRole="RollCall" ToRole="InstructorTeaching" />
+          <NavigationProperty Name="Semester" Relationship="RSMModel.FK_RollCall_Semester" FromRole="RollCall" ToRole="Semester" />
+          <NavigationProperty Name="Subject" Relationship="RSMModel.FK_RollCall_Subject" FromRole="RollCall" ToRole="Subject" />
+          <NavigationProperty Name="Students" Relationship="RSMModel.StudentInRollCall" FromRole="RollCall" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Semester">
+          <Key>
+            <PropertyRef Name="SemesterID" />
+          </Key>
+          <Property Name="SemesterID" Type="Int32" Nullable="false" />
+          <Property Name="SemesterName" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
+          <Property Name="BeginDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="RollCalls" Relationship="RSMModel.FK_RollCall_Semester" FromRole="Semester" ToRole="RollCall" />
+        </EntityType>
+        <EntityType Name="Staff">
+          <Key>
+            <PropertyRef Name="StaffID" />
+          </Key>
+          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="Fullname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Phone" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="RSMModel.User_Staff_FK1" FromRole="Staff" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Birthdate" Type="DateTime" Nullable="false" />
+          <Property Name="CitizenID" Type="String" Nullable="false" MaxLength="8" Unicode="false" FixedLength="true" />
+          <Property Name="Address" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="StudentCode" Type="String" Nullable="false" MaxLength="7" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="Class" Relationship="RSMModel.Class_Student_FK1" FromRole="Student" ToRole="Class" />
+          <NavigationProperty Name="StudentAttendances" Relationship="RSMModel.Student_StudentAttendance_FK1" FromRole="Student" ToRole="StudentAttendance" />
+          <NavigationProperty Name="StudentImages" Relationship="RSMModel.Student_StudentImage_FK1" FromRole="Student" ToRole="StudentImage" />
+          <NavigationProperty Name="User" Relationship="RSMModel.User_Student_FK1" FromRole="Student" ToRole="User" />
+          <NavigationProperty Name="RollCalls" Relationship="RSMModel.StudentInRollCall" FromRole="Student" ToRole="RollCall" />
+        </EntityType>
+        <EntityType Name="StudentAttendance">
+          <Key>
+            <PropertyRef Name="LogID" />
+            <PropertyRef Name="StudentID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="IsPresent" Type="Boolean" Nullable="false" />
+          <Property Name="Note" Type="String" MaxLength="20" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="AttendanceLog" Relationship="RSMModel.AttendanceLog_StudentAttendance_FK1" FromRole="StudentAttendance" ToRole="AttendanceLog" />
+          <NavigationProperty Name="Student" Relationship="RSMModel.Student_StudentAttendance_FK1" FromRole="StudentAttendance" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="StudentImage">
+          <Key>
+            <PropertyRef Name="ImageID" />
+          </Key>
+          <Property Name="ImageID" Type="Int32" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="ImageLink" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
+          <NavigationProperty Name="Student" Relationship="RSMModel.Student_StudentImage_FK1" FromRole="StudentImage" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <Property Name="ShortName" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="NumberOfSlot" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
+          <NavigationProperty Name="RollCalls" Relationship="RSMModel.FK_RollCall_Subject" FromRole="Subject" ToRole="RollCall" />
+          <NavigationProperty Name="Majors" Relationship="RSMModel.SubjectMajorMapping" FromRole="Subject" ToRole="Major" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Instructors" Relationship="RSMModel.User_Instructor_FK1" FromRole="User" ToRole="Instructor" />
+          <NavigationProperty Name="Role" Relationship="RSMModel.Role_User_FK1" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Staffs" Relationship="RSMModel.User_Staff_FK1" FromRole="User" ToRole="Staff" />
+          <NavigationProperty Name="Students" Relationship="RSMModel.User_Student_FK1" FromRole="User" ToRole="Student" />
+        </EntityType>
+        <Association Name="AttendanceLog_LogImage_FK1">
+          <End Role="AttendanceLog" Type="RSMModel.AttendanceLog" Multiplicity="1" />
+          <End Role="LogImage" Type="RSMModel.LogImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendanceLog">
+              <PropertyRef Name="LogID" />
+            </Principal>
+            <Dependent Role="LogImage">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="AttendanceLog_StudentAttendance_FK1">
+          <End Role="AttendanceLog" Type="RSMModel.AttendanceLog" Multiplicity="1" />
+          <End Role="StudentAttendance" Type="RSMModel.StudentAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttendanceLog">
+              <PropertyRef Name="LogID" />
+            </Principal>
+            <Dependent Role="StudentAttendance">
+              <PropertyRef Name="LogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LogType_AttendanceLog_FK1">
+          <End Role="LogType" Type="RSMModel.LogType" Multiplicity="1" />
+          <End Role="AttendanceLog" Type="RSMModel.AttendanceLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LogType">
+              <PropertyRef Name="TypeID" />
+            </Principal>
+            <Dependent Role="AttendanceLog">
+              <PropertyRef Name="TypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RollCall_AttendanceLog_FK1">
+          <End Role="RollCall" Type="RSMModel.RollCall" Multiplicity="1" />
+          <End Role="AttendanceLog" Type="RSMModel.AttendanceLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RollCall">
+              <PropertyRef Name="RollCallID" />
+            </Principal>
+            <Dependent Role="AttendanceLog">
+              <PropertyRef Name="RollCallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Class_Student_FK1">
+          <End Role="Class" Type="RSMModel.Class" Multiplicity="1" />
+          <End Role="Student" Type="RSMModel.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Class_Major">
+          <End Role="Major" Type="RSMModel.Major" Multiplicity="1" />
+          <End Role="Class" Type="RSMModel.Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Major">
+              <PropertyRef Name="MajorID" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="MajorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RollCall_Class">
+          <End Role="Class" Type="RSMModel.Class" Multiplicity="1" />
+          <End Role="RollCall" Type="RSMModel.RollCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="ClassID" />
+            </Principal>
+            <Dependent Role="RollCall">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Instructor_InstructorTeaching_FK1">
+          <End Role="Instructor" Type="RSMModel.Instructor" Multiplicity="1" />
+          <End Role="InstructorTeaching" Type="RSMModel.InstructorTeaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="InstructorTeaching">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Instructor_FK1">
+          <End Role="User" Type="RSMModel.User" Multiplicity="0..1" />
+          <End Role="Instructor" Type="RSMModel.Instructor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Instructor">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="RollCall_InstructorTeaching_FK1">
+          <End Role="RollCall" Type="RSMModel.RollCall" Multiplicity="1" />
+          <End Role="InstructorTeaching" Type="RSMModel.InstructorTeaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RollCall">
+              <PropertyRef Name="RollCallID" />
+            </Principal>
+            <Dependent Role="InstructorTeaching">
+              <PropertyRef Name="RollCallID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Role_User_FK1">
+          <End Role="Role" Type="RSMModel.Role" Multiplicity="1" />
+          <End Role="User" Type="RSMModel.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RollCall_Semester">
+          <End Role="Semester" Type="RSMModel.Semester" Multiplicity="1" />
+          <End Role="RollCall" Type="RSMModel.RollCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="SemesterID" />
+            </Principal>
+            <Dependent Role="RollCall">
+              <PropertyRef Name="SemesterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RollCall_Subject">
+          <End Role="Subject" Type="RSMModel.Subject" Multiplicity="1" />
+          <End Role="RollCall" Type="RSMModel.RollCall" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="RollCall">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Staff_FK1">
+          <End Role="User" Type="RSMModel.User" Multiplicity="0..1" />
+          <End Role="Staff" Type="RSMModel.Staff" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Staff">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Student_StudentAttendance_FK1">
+          <End Role="Student" Type="RSMModel.Student" Multiplicity="1" />
+          <End Role="StudentAttendance" Type="RSMModel.StudentAttendance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentAttendance">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Student_StudentImage_FK1">
+          <End Role="Student" Type="RSMModel.Student" Multiplicity="1" />
+          <End Role="StudentImage" Type="RSMModel.StudentImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="StudentID" />
+            </Principal>
+            <Dependent Role="StudentImage">
+              <PropertyRef Name="StudentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Student_FK1">
+          <End Role="User" Type="RSMModel.User" Multiplicity="0..1" />
+          <End Role="Student" Type="RSMModel.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="StudentInRollCall">
+          <End Role="RollCall" Type="RSMModel.RollCall" Multiplicity="*" />
+          <End Role="Student" Type="RSMModel.Student" Multiplicity="*" />
+        </Association>
+        <Association Name="SubjectMajorMapping">
+          <End Role="Major" Type="RSMModel.Major" Multiplicity="*" />
+          <End Role="Subject" Type="RSMModel.Subject" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="RSMModelStoreContainer" CdmEntityContainer="RSMEntities">
+          <EntitySetMapping Name="AttendanceLogs"><EntityTypeMapping TypeName="RSMModel.AttendanceLog"><MappingFragment StoreEntitySet="AttendanceLog">
+            <ScalarProperty Name="LogID" ColumnName="LogID" />
+            <ScalarProperty Name="RollCallID" ColumnName="RollCallID" />
+            <ScalarProperty Name="LogDate" ColumnName="LogDate" />
+            <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Classes"><EntityTypeMapping TypeName="RSMModel.Class"><MappingFragment StoreEntitySet="Class">
+            <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+            <ScalarProperty Name="MajorID" ColumnName="MajorID" />
+            <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Instructors"><EntityTypeMapping TypeName="RSMModel.Instructor"><MappingFragment StoreEntitySet="Instructor">
+            <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+            <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="Phone" ColumnName="Phone" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="UserID" ColumnName="UserID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="InstructorTeachings"><EntityTypeMapping TypeName="RSMModel.InstructorTeaching"><MappingFragment StoreEntitySet="InstructorTeaching">
+            <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+            <ScalarProperty Name="RollCallID" ColumnName="RollCallID" />
+            <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="LogImages"><EntityTypeMapping TypeName="RSMModel.LogImage"><MappingFragment StoreEntitySet="LogImage">
+            <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+            <ScalarProperty Name="LogID" ColumnName="LogID" />
+            <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="LogTypes"><EntityTypeMapping TypeName="RSMModel.LogType"><MappingFragment StoreEntitySet="LogType">
+            <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+            <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Majors"><EntityTypeMapping TypeName="RSMModel.Major"><MappingFragment StoreEntitySet="Major">
+            <ScalarProperty Name="MajorID" ColumnName="MajorID" />
+            <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+            <ScalarProperty Name="FullName" ColumnName="FullName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Roles"><EntityTypeMapping TypeName="RSMModel.Role"><MappingFragment StoreEntitySet="Role">
+            <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+            <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="RollCalls"><EntityTypeMapping TypeName="RSMModel.RollCall"><MappingFragment StoreEntitySet="RollCall">
+            <ScalarProperty Name="RollCallID" ColumnName="RollCallID" />
+            <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+            <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+            <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+            <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+            <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+            <ScalarProperty Name="SemesterID" ColumnName="SemesterID" />
+            <ScalarProperty Name="Status" ColumnName="Status" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Semesters"><EntityTypeMapping TypeName="RSMModel.Semester"><MappingFragment StoreEntitySet="Semester">
+            <ScalarProperty Name="SemesterID" ColumnName="SemesterID" />
+            <ScalarProperty Name="SemesterName" ColumnName="SemesterName" />
+            <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+            <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Staffs"><EntityTypeMapping TypeName="RSMModel.Staff"><MappingFragment StoreEntitySet="Staff">
+            <ScalarProperty Name="StaffID" ColumnName="StaffID" />
+            <ScalarProperty Name="Fullname" ColumnName="Fullname" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="Phone" ColumnName="Phone" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="UserID" ColumnName="UserID" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Students"><EntityTypeMapping TypeName="RSMModel.Student"><MappingFragment StoreEntitySet="Student">
+            <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+            <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+            <ScalarProperty Name="FullName" ColumnName="FullName" />
+            <ScalarProperty Name="Birthdate" ColumnName="Birthdate" />
+            <ScalarProperty Name="CitizenID" ColumnName="CitizenID" />
+            <ScalarProperty Name="Address" ColumnName="Address" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+            <ScalarProperty Name="UserID" ColumnName="UserID" />
+            <ScalarProperty Name="StudentCode" ColumnName="StudentCode" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="StudentAttendances"><EntityTypeMapping TypeName="RSMModel.StudentAttendance"><MappingFragment StoreEntitySet="StudentAttendance">
+            <ScalarProperty Name="LogID" ColumnName="LogID" />
+            <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+            <ScalarProperty Name="IsPresent" ColumnName="IsPresent" />
+            <ScalarProperty Name="Note" ColumnName="Note" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="StudentImages"><EntityTypeMapping TypeName="RSMModel.StudentImage"><MappingFragment StoreEntitySet="StudentImage">
+            <ScalarProperty Name="ImageID" ColumnName="ImageID" />
+            <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+            <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Subjects"><EntityTypeMapping TypeName="RSMModel.Subject"><MappingFragment StoreEntitySet="Subject">
+            <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+            <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+            <ScalarProperty Name="FullName" ColumnName="FullName" />
+            <ScalarProperty Name="NumberOfSlot" ColumnName="NumberOfSlot" />
+            <ScalarProperty Name="Description" ColumnName="Description" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="RSMModel.User"><MappingFragment StoreEntitySet="User">
+            <ScalarProperty Name="UserID" ColumnName="UserID" />
+            <ScalarProperty Name="Username" ColumnName="Username" />
+            <ScalarProperty Name="Password" ColumnName="Password" />
+            <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <AssociationSetMapping Name="StudentInRollCall" TypeName="RSMModel.StudentInRollCall" StoreEntitySet="StudentInRollCall">
+            <EndProperty Name="RollCall">
+              <ScalarProperty Name="RollCallID" ColumnName="RollCallID" />
+            </EndProperty>
+            <EndProperty Name="Student">
+              <ScalarProperty Name="StudentID" ColumnName="StudentID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="SubjectMajorMapping" TypeName="RSMModel.SubjectMajorMapping" StoreEntitySet="SubjectMajorMapping">
+            <EndProperty Name="Major">
+              <ScalarProperty Name="MajorID" ColumnName="MajorID" />
+            </EndProperty>
+            <EndProperty Name="Subject">
+              <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="RSMModel">
+        <EntityTypeShape EntityType="RSMModel.AttendanceLog" Width="1.5" PointX="7.5" PointY="11.25" Height="2.5571907552083317" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.Class" Width="1.5" PointX="3" PointY="5.875" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.Instructor" Width="1.5" PointX="8.25" PointY="2.25" Height="2.5571907552083335" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.InstructorTeaching" Width="1.5" PointX="10.5" PointY="3.5" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.LogImage" Width="1.5" PointX="9.75" PointY="13.625" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.LogType" Width="1.5" PointX="5.25" PointY="17.75" Height="1.5956835937500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.Major" Width="1.5" PointX="0.75" PointY="7.625" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.Role" Width="1.5" PointX="3" PointY="14" Height="1.5956835937499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.RollCall" Width="1.5" PointX="5.25" PointY="6.625" Height="3.9033007812499996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.Semester" Width="1.5" PointX="3" PointY="2.625" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.Staff" Width="1.5" PointX="7.5" PointY="14.625" Height="2.3648893229166745" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.Student" Width="1.5" PointX="7.5" PointY="6.25" Height="3.9033007812500031" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.StudentAttendance" Width="1.5" PointX="9.75" PointY="7.125" Height="2.172587890624996" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.StudentImage" Width="1.5" PointX="9.75" PointY="10.25" Height="1.7879850260416674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.Subject" Width="1.5" PointX="3" PointY="8.875" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.User" Width="1.5" PointX="5.25" PointY="13.375" Height="2.7494921875000031" IsExpanded="true" />
+        <AssociationConnector Association="RSMModel.AttendanceLog_LogImage_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="9" PointY="13.807190755208332" />
+          <ConnectorPoint PointX="9.1598244349011217" PointY="13.967015190109452" />
+          <ConnectorPoint PointX="9.2776755650988783" PointY="14.08486632030721" />
+          <ConnectorPoint PointX="9.375" PointY="14.182190755208332" />
+          <ConnectorPoint PointX="9.375" PointY="13.25" />
+          <ConnectorPoint PointX="9.75" PointY="13.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.AttendanceLog_StudentAttendance_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="9" PointY="11.25" />
+          <ConnectorPoint PointX="9.15982443490112" PointY="11.090175565098878" />
+          <ConnectorPoint PointX="9.2776755650988783" PointY="10.972324434901122" />
+          <ConnectorPoint PointX="9.375" PointY="10.875" />
+          <ConnectorPoint PointX="9.375" PointY="8.211293945312498" />
+          <ConnectorPoint PointX="9.75" PointY="8.211293945312498" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.LogType_AttendanceLog_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="17.751152846153843" />
+          <ConnectorPoint PointX="7.125" PointY="17.376152846153843" />
+          <ConnectorPoint PointX="7.125" PointY="12.528595377604166" />
+          <ConnectorPoint PointX="7.197916666666667" PointY="12.528595377604166" />
+          <ConnectorPoint PointX="7.364583333333333" PointY="12.528595377604166" />
+          <ConnectorPoint PointX="7.5" PointY="12.528595377604166" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.RollCall_AttendanceLog_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="10.465992088942308" />
+          <ConnectorPoint PointX="7.1875" PointY="10.903492088942308" />
+          <ConnectorPoint PointX="7.1875" PointY="11.858045688802083" />
+          <ConnectorPoint PointX="7.197916666666667" PointY="11.858045688802083" />
+          <ConnectorPoint PointX="7.364583333333333" PointY="11.858045688802083" />
+          <ConnectorPoint PointX="7.5" PointY="11.858045688802083" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.Class_Student_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="6.40625" />
+          <ConnectorPoint PointX="5.5104141666666671" PointY="6.4062499999999991" />
+          <ConnectorPoint PointX="5.6770808333333331" PointY="6.40625" />
+          <ConnectorPoint PointX="5.916666666666667" PointY="6.4062499999999991" />
+          <ConnectorPoint PointX="6.083333333333333" PointY="6.40625" />
+          <ConnectorPoint PointX="7.5" PointY="6.40625" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.FK_Class_Major" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="7.9324446614583337" />
+          <ConnectorPoint PointX="3" PointY="7.9324446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.FK_RollCall_Class" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="7.4324446614583337" />
+          <ConnectorPoint PointX="5.25" PointY="7.4324446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.Instructor_InstructorTeaching_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="9.75" PointY="4.1535953776041667" />
+          <ConnectorPoint PointX="10.5" PointY="4.1535953776041667" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.User_Instructor_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="14.216095377604166" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="14.216095377604166" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="14.216095377604166" />
+          <ConnectorPoint PointX="9.21875" PointY="14.216095377604166" />
+          <ConnectorPoint PointX="9.21875" PointY="4.8071907552083335" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.RollCall_InstructorTeaching_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6" PointY="6.625" />
+          <ConnectorPoint PointX="6" PointY="5.2711393229166665" />
+          <ConnectorPoint PointX="9.1354166666666661" PointY="5.2711393229166656" />
+          <ConnectorPoint PointX="9.3020833333333339" PointY="5.2711393229166665" />
+          <ConnectorPoint PointX="10.5" PointY="5.2711393229166665" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.Role_User_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="14.797841796875" />
+          <ConnectorPoint PointX="5.25" PointY="14.797841796875" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.FK_RollCall_Semester" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="3.6151432291666659" />
+          <ConnectorPoint PointX="5.5937475" PointY="3.6151432291666659" />
+          <ConnectorPoint PointX="5.5937475" PointY="6.625" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.FK_RollCall_Subject" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="9.701650390625" />
+          <ConnectorPoint PointX="5.25" PointY="9.701650390625" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.User_Staff_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="15.374746093750002" />
+          <ConnectorPoint PointX="7.041666666666667" PointY="15.374746093750002" />
+          <ConnectorPoint PointX="7.208333333333333" PointY="15.374746093750002" />
+          <ConnectorPoint PointX="7.5" PointY="15.374746093750002" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.Student_StudentAttendance_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="9" PointY="7.605646972656249" />
+          <ConnectorPoint PointX="9.1354166666666661" PointY="7.6056469726562481" />
+          <ConnectorPoint PointX="9.3020833333333339" PointY="7.605646972656249" />
+          <ConnectorPoint PointX="9.75" PointY="7.605646972656249" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.Student_StudentImage_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="9" PointY="10.090992088942313" />
+          <ConnectorPoint PointX="9.1598244349011217" PointY="10.250816523843433" />
+          <ConnectorPoint PointX="9.2776755650988783" PointY="10.368667654041191" />
+          <ConnectorPoint PointX="9.3160744349011217" PointY="10.407066523843433" />
+          <ConnectorPoint PointX="9.4339255650988783" PointY="10.524917654041191" />
+          <ConnectorPoint PointX="9.5625" PointY="10.653492088942313" />
+          <ConnectorPoint PointX="9.5625" PointY="10.0625" />
+          <ConnectorPoint PointX="9.75" PointY="10.25" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.User_Student_FK1" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="13.407306692307694" />
+          <ConnectorPoint PointX="7.0660744349011209" PointY="13.091232257406571" />
+          <ConnectorPoint PointX="7.1839255650988791" PointY="12.973381127208814" />
+          <ConnectorPoint PointX="7.28125" PointY="12.876056692307692" />
+          <ConnectorPoint PointX="7.28125" PointY="8.3110273906249965" />
+          <ConnectorPoint PointX="7.5" PointY="8.3110273906249965" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.StudentInRollCall" ManuallyRouted="false">
+          <ConnectorPoint PointX="6.75" PointY="9.2946640859375" />
+          <ConnectorPoint PointX="7.197916666666667" PointY="9.2946640859375" />
+          <ConnectorPoint PointX="7.364583333333333" PointY="9.2946640859375" />
+          <ConnectorPoint PointX="7.5" PointY="9.2946640859375" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.SubjectMajorMapping" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="9.2401432291666659" />
+          <ConnectorPoint PointX="3" PointY="9.2401432291666659" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
