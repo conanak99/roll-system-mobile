@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using RollSystemMobile.Models;
 
 namespace RollSystemMobile
 {
@@ -35,6 +36,9 @@ namespace RollSystemMobile
 
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
+
+            FaceBO.SetXMLPath(Server.MapPath("~/haarcascade_frontalface_alt_tree.xml"));
+            FaceBO.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
         }
     }
 }
