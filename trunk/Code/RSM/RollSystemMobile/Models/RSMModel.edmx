@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="RSMModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+    <Schema Namespace="RSMModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="RSMModelStoreContainer">
           <EntitySet Name="AttendanceLog" EntityType="RSMModel.Store.AttendanceLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Class" EntityType="RSMModel.Store.Class" store:Type="Tables" Schema="dbo" />
@@ -23,6 +23,7 @@
           <EntitySet Name="StudentInRollCall" EntityType="RSMModel.Store.StudentInRollCall" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Subject" EntityType="RSMModel.Store.Subject" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SubjectMajorMapping" EntityType="RSMModel.Store.SubjectMajorMapping" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="sysdiagrams" EntityType="RSMModel.Store.sysdiagrams" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="User" EntityType="RSMModel.Store.User" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="AttendanceLog_LogImage_FK1" Association="RSMModel.Store.AttendanceLog_LogImage_FK1">
             <End Role="AttendanceLog" EntitySet="AttendanceLog" />
@@ -113,7 +114,7 @@
           <Key>
             <PropertyRef Name="LogID" />
           </Key>
-          <Property Name="LogID" Type="int" Nullable="false" />
+          <Property Name="LogID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="RollCallID" Type="int" Nullable="false" />
           <Property Name="LogDate" Type="date" Nullable="false" />
           <Property Name="TypeID" Type="int" Nullable="false" />
@@ -122,7 +123,7 @@
           <Key>
             <PropertyRef Name="ClassID" />
           </Key>
-          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="ClassID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MajorID" Type="int" Nullable="false" />
           <Property Name="ClassName" Type="char" Nullable="false" MaxLength="5" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
@@ -131,7 +132,7 @@
           <Key>
             <PropertyRef Name="InstructorID" />
           </Key>
-          <Property Name="InstructorID" Type="int" Nullable="false" />
+          <Property Name="InstructorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Fullname" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="12" />
@@ -152,22 +153,22 @@
           <Key>
             <PropertyRef Name="ImageID" />
           </Key>
-          <Property Name="ImageID" Type="int" Nullable="false" />
+          <Property Name="ImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="LogID" Type="int" Nullable="false" />
-          <Property Name="ImageLink" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="ImageLink" Type="varchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <EntityType Name="LogType">
           <Key>
             <PropertyRef Name="TypeID" />
           </Key>
-          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TypeName" Type="nvarchar" MaxLength="10" />
         </EntityType>
         <EntityType Name="Major">
           <Key>
             <PropertyRef Name="MajorID" />
           </Key>
-          <Property Name="MajorID" Type="int" Nullable="false" />
+          <Property Name="MajorID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ShortName" Type="char" MaxLength="2" />
           <Property Name="FullName" Type="varchar" Nullable="false" MaxLength="30" />
         </EntityType>
@@ -175,14 +176,14 @@
           <Key>
             <PropertyRef Name="RoleID" />
           </Key>
-          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="10" />
         </EntityType>
         <EntityType Name="RollCall">
           <Key>
             <PropertyRef Name="RollCallID" />
           </Key>
-          <Property Name="RollCallID" Type="int" Nullable="false" />
+          <Property Name="RollCallID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="StartTime" Type="time" Nullable="false" />
           <Property Name="EndTime" Type="time" Nullable="false" />
           <Property Name="StartDate" Type="date" Nullable="false" />
@@ -196,7 +197,7 @@
           <Key>
             <PropertyRef Name="SemesterID" />
           </Key>
-          <Property Name="SemesterID" Type="int" Nullable="false" />
+          <Property Name="SemesterID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="SemesterName" Type="varchar" Nullable="false" MaxLength="15" />
           <Property Name="BeginDate" Type="date" Nullable="false" />
           <Property Name="EndDate" Type="date" Nullable="false" />
@@ -205,7 +206,7 @@
           <Key>
             <PropertyRef Name="StaffID" />
           </Key>
-          <Property Name="StaffID" Type="int" Nullable="false" />
+          <Property Name="StaffID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Fullname" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="Phone" Type="nvarchar" MaxLength="12" />
@@ -216,7 +217,7 @@
           <Key>
             <PropertyRef Name="StudentID" />
           </Key>
-          <Property Name="StudentID" Type="int" Nullable="false" />
+          <Property Name="StudentID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ClassID" Type="int" Nullable="false" />
           <Property Name="FullName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="Birthdate" Type="datetime" Nullable="false" />
@@ -241,9 +242,9 @@
           <Key>
             <PropertyRef Name="ImageID" />
           </Key>
-          <Property Name="ImageID" Type="int" Nullable="false" />
+          <Property Name="ImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="StudentID" Type="int" Nullable="false" />
-          <Property Name="ImageLink" Type="varchar" Nullable="false" MaxLength="30" />
+          <Property Name="ImageLink" Type="varchar" Nullable="false" MaxLength="100" />
         </EntityType>
         <EntityType Name="StudentInRollCall">
           <Key>
@@ -257,7 +258,7 @@
           <Key>
             <PropertyRef Name="SubjectID" />
           </Key>
-          <Property Name="SubjectID" Type="int" Nullable="false" />
+          <Property Name="SubjectID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ShortName" Type="nvarchar" MaxLength="10" />
           <Property Name="FullName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="NumberOfSlot" Type="int" Nullable="false" />
@@ -271,11 +272,21 @@
           <Property Name="MajorID" Type="int" Nullable="false" />
           <Property Name="SubjectID" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="128" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="nvarchar" Nullable="false" MaxLength="30" />
           <Property Name="Password" Type="nvarchar" Nullable="false" MaxLength="30" />
           <Property Name="RoleID" Type="int" Nullable="false" />
@@ -533,8 +544,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="RSMModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
@@ -554,6 +564,7 @@
           <EntitySet Name="StudentAttendances" EntityType="RSMModel.StudentAttendance" />
           <EntitySet Name="StudentImages" EntityType="RSMModel.StudentImage" />
           <EntitySet Name="Subjects" EntityType="RSMModel.Subject" />
+          <EntitySet Name="sysdiagrams" EntityType="RSMModel.sysdiagram" />
           <EntitySet Name="Users" EntityType="RSMModel.User" />
           <AssociationSet Name="AttendanceLog_LogImage_FK1" Association="RSMModel.AttendanceLog_LogImage_FK1">
             <End Role="AttendanceLog" EntitySet="AttendanceLogs" />
@@ -636,7 +647,7 @@
           <Key>
             <PropertyRef Name="LogID" />
           </Key>
-          <Property Name="LogID" Type="Int32" Nullable="false" />
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RollCallID" Type="Int32" Nullable="false" />
           <Property Name="LogDate" Type="DateTime" Nullable="false" />
           <Property Name="TypeID" Type="Int32" Nullable="false" />
@@ -649,7 +660,7 @@
           <Key>
             <PropertyRef Name="ClassID" />
           </Key>
-          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MajorID" Type="Int32" Nullable="false" />
           <Property Name="ClassName" Type="String" Nullable="false" MaxLength="5" Unicode="false" FixedLength="true" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
@@ -661,7 +672,7 @@
           <Key>
             <PropertyRef Name="InstructorID" />
           </Key>
-          <Property Name="InstructorID" Type="Int32" Nullable="false" />
+          <Property Name="InstructorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Fullname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Phone" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
@@ -686,7 +697,7 @@
           <Key>
             <PropertyRef Name="ImageID" />
           </Key>
-          <Property Name="ImageID" Type="Int32" Nullable="false" />
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="LogID" Type="Int32" Nullable="false" />
           <Property Name="ImageLink" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="AttendanceLog" Relationship="RSMModel.AttendanceLog_LogImage_FK1" FromRole="LogImage" ToRole="AttendanceLog" />
@@ -695,7 +706,7 @@
           <Key>
             <PropertyRef Name="TypeID" />
           </Key>
-          <Property Name="TypeID" Type="Int32" Nullable="false" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="TypeName" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="AttendanceLogs" Relationship="RSMModel.LogType_AttendanceLog_FK1" FromRole="LogType" ToRole="AttendanceLog" />
         </EntityType>
@@ -703,7 +714,7 @@
           <Key>
             <PropertyRef Name="MajorID" />
           </Key>
-          <Property Name="MajorID" Type="Int32" Nullable="false" />
+          <Property Name="MajorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ShortName" Type="String" MaxLength="2" Unicode="false" FixedLength="true" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Classes" Relationship="RSMModel.FK_Class_Major" FromRole="Major" ToRole="Class" />
@@ -713,7 +724,7 @@
           <Key>
             <PropertyRef Name="RoleID" />
           </Key>
-          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RoleName" Type="String" Nullable="false" MaxLength="10" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="Users" Relationship="RSMModel.Role_User_FK1" FromRole="Role" ToRole="User" />
         </EntityType>
@@ -721,7 +732,7 @@
           <Key>
             <PropertyRef Name="RollCallID" />
           </Key>
-          <Property Name="RollCallID" Type="Int32" Nullable="false" />
+          <Property Name="RollCallID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StartTime" Type="Time" Nullable="false" />
           <Property Name="EndTime" Type="Time" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" />
@@ -741,7 +752,7 @@
           <Key>
             <PropertyRef Name="SemesterID" />
           </Key>
-          <Property Name="SemesterID" Type="Int32" Nullable="false" />
+          <Property Name="SemesterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SemesterName" Type="String" Nullable="false" MaxLength="15" Unicode="false" FixedLength="false" />
           <Property Name="BeginDate" Type="DateTime" Nullable="false" />
           <Property Name="EndDate" Type="DateTime" Nullable="false" />
@@ -751,7 +762,7 @@
           <Key>
             <PropertyRef Name="StaffID" />
           </Key>
-          <Property Name="StaffID" Type="Int32" Nullable="false" />
+          <Property Name="StaffID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Fullname" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Email" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Phone" Type="String" MaxLength="12" Unicode="true" FixedLength="false" />
@@ -763,7 +774,7 @@
           <Key>
             <PropertyRef Name="StudentID" />
           </Key>
-          <Property Name="StudentID" Type="Int32" Nullable="false" />
+          <Property Name="StudentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ClassID" Type="Int32" Nullable="false" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="Birthdate" Type="DateTime" Nullable="false" />
@@ -795,7 +806,7 @@
           <Key>
             <PropertyRef Name="ImageID" />
           </Key>
-          <Property Name="ImageID" Type="Int32" Nullable="false" />
+          <Property Name="ImageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="StudentID" Type="Int32" Nullable="false" />
           <Property Name="ImageLink" Type="String" Nullable="false" MaxLength="30" Unicode="false" FixedLength="false" />
           <NavigationProperty Name="Student" Relationship="RSMModel.Student_StudentImage_FK1" FromRole="StudentImage" ToRole="Student" />
@@ -804,7 +815,7 @@
           <Key>
             <PropertyRef Name="SubjectID" />
           </Key>
-          <Property Name="SubjectID" Type="Int32" Nullable="false" />
+          <Property Name="SubjectID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ShortName" Type="String" MaxLength="10" Unicode="true" FixedLength="false" />
           <Property Name="FullName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
           <Property Name="NumberOfSlot" Type="Int32" Nullable="false" />
@@ -812,11 +823,21 @@
           <NavigationProperty Name="RollCalls" Relationship="RSMModel.FK_RollCall_Subject" FromRole="Subject" ToRole="RollCall" />
           <NavigationProperty Name="Majors" Relationship="RSMModel.SubjectMajorMapping" FromRole="Subject" ToRole="Major" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" Unicode="true" FixedLength="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Username" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="30" Unicode="true" FixedLength="false" />
           <Property Name="RoleID" Type="Int32" Nullable="false" />
@@ -1143,6 +1164,13 @@
             <ScalarProperty Name="NumberOfSlot" ColumnName="NumberOfSlot" />
             <ScalarProperty Name="Description" ColumnName="Description" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams"><EntityTypeMapping TypeName="RSMModel.sysdiagram"><MappingFragment StoreEntitySet="sysdiagrams">
+            <ScalarProperty Name="name" ColumnName="name" />
+            <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+            <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+            <ScalarProperty Name="version" ColumnName="version" />
+            <ScalarProperty Name="definition" ColumnName="definition" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="RSMModel.User"><MappingFragment StoreEntitySet="User">
             <ScalarProperty Name="UserID" ColumnName="UserID" />
             <ScalarProperty Name="Username" ColumnName="Username" />
@@ -1202,6 +1230,7 @@
         <EntityTypeShape EntityType="RSMModel.StudentAttendance" Width="1.5" PointX="9.75" PointY="7.125" Height="2.172587890624996" IsExpanded="true" />
         <EntityTypeShape EntityType="RSMModel.StudentImage" Width="1.5" PointX="9.75" PointY="10.25" Height="1.7879850260416674" IsExpanded="true" />
         <EntityTypeShape EntityType="RSMModel.Subject" Width="1.5" PointX="3" PointY="8.875" Height="2.3648893229166674" IsExpanded="true" />
+        <EntityTypeShape EntityType="RSMModel.sysdiagram" Width="1.5" PointX="11.75" PointY="6.75" Height="1.9802864583333388" IsExpanded="true" />
         <EntityTypeShape EntityType="RSMModel.User" Width="1.5" PointX="5.25" PointY="13.375" Height="2.7494921875000031" IsExpanded="true" />
         <AssociationConnector Association="RSMModel.AttendanceLog_LogImage_FK1" ManuallyRouted="false">
           <ConnectorPoint PointX="9" PointY="13.807190755208332" />

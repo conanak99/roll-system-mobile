@@ -1,0 +1,27 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+  <div class="btn-group pull-right"> <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Hello, Admin <span class="caret"></span> </a>
+  <ul class="dropdown-menu">
+    <!-- dropdown menu links -->
+    <li><a tabindex="-1" href="#">Change Password</a></li>
+    <li><a tabindex="-1" href="#">Log out</a></li>
+  </ul>
+</div> 
+</div>
+
+<div class="container-fluid">
+  <div class="btn-group pull-left"> 
+  <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Manage Student Image<span class="caret"></span> </a>
+  <ul class="dropdown-menu">
+    <!-- dropdown menu links -->
+    <li><a tabindex="-1" href="/Admin/StudentList">Student List</a></li>
+    <li><a tabindex="-1" href="/Admin/AddImages">Add Image for Many Students</a></li>
+  </ul>
+</div> 
+</div>
+
+
+@RenderBody()

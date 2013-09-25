@@ -1,0 +1,45 @@
+﻿@model IEnumerable<RollSystemMobile.Models.RecognizerResult>
+@{
+    ViewBag.Title = "Upload Result";
+}
+<style>
+    
+</style>
+<h4>
+    Select @ViewBag.StudentName face from Image
+</h4>
+@using (@Html.BeginForm("SaveImageSingle", "Image", FormMethod.Post))
+{
+    
+    <input type="hidden" name="StudentID" value="@ViewBag.StudentID" />
+    foreach (var Image in Model)
+    {
+    <input type="hidden" name="ImageLink" value="@Image.ImageLink"/>
+    <input type="hidden" name="FaceID" value="-1" />
+    <div class="img-holder">
+    @{int FaceIndex = 0;}
+        @foreach (var Face in Image.FaceList)
+        {
+            <div class="face-region" faceID="@FaceIndex" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
+                                       Face.X, Face.Y, Face.Width, Face.Height);">
+            </div>
+            {FaceIndex++;}
+        }
+        <img src="@Url.Content("~/Content/Temp/Resized/" + Image.ImageLink)" />
+    </div>
+    }
+    
+    <input type="submit" class="btn btn-primary" value="Submit Result" />
+}
+
+<script>
+
+    $('.face-region').click(function () {
+        $(this).siblings().removeClass('selected');
+        $(this).addClass('selected');
+        var faceID = $(this).attr('faceID');
+        //Set gia tri cho cai input ngay truoc do
+        $(this).parent().prev().val(faceID);
+    });
+
+</script>

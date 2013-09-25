@@ -1,0 +1,87 @@
+.btn-with-dropdown
+{
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+th.text-left, td.text-left
+{
+    text-align: left;
+}
+
+th.text-center, td.text-center
+{
+    text-align: center;
+}
+
+th.text-right, td.text-right
+{
+    text-align: right;
+}
+
+.dropdown-label
+{
+    font-size: 120%;
+    margin-bottom: 10px;
+    margin-right: 5px;
+}
+
+button.btn-delete
+{
+    position: absolute;
+    top: -24px;
+    right: 6px;
+    color: gray;
+    opacity: 0.75;
+    font-size: 25px;
+}
+button.btn-delete:hover
+{
+    color: red;
+    opacity: 1;
+}
+
+img.thumbnail
+{
+    width: 50px;
+    height: 50px;
+    display: inline;
+}
+.thumbnail-holder
+{
+    display: inline;
+    position: relative;
+    margin: 4px;
+}
+.thumb
+{
+    height: 100px;
+    border: 1px solid #000;
+    margin: 10px 5px 0 0;
+}
+
+.img-holder
+{
+    display: inline-block;
+    position: relative;
+}
+
+.face-region
+{
+    border-color: white;
+    border-width: 4px;
+    border-style: solid;
+    position: absolute;
+    opacity: 0.7;
+}
+
+.face-region:hover
+{
+    opacity: 1;
+}
+
+.face-region.selected
+{
+     opacity: 1;
+     background-color: rgba(255,255,255,0.7);
+}
