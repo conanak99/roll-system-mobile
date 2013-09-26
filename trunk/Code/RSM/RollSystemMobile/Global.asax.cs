@@ -37,7 +37,7 @@ namespace RollSystemMobile
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            FaceBO.SetXMLPath(Server.MapPath("~/haarcascade_frontalface_alt_tree.xml"));
+            FaceBO.SetXMLPath(Server.MapPath("~/haarcascade_frontalface_alt2.xml"));
             FaceBO.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
         }
     }

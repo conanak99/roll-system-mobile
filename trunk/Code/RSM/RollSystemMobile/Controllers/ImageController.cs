@@ -9,16 +9,18 @@ namespace RollSystemMobile.Controllers
 {
     public class ImageController : Controller
     {
-        //
+
+        private RSMEntities _db = new RSMEntities();
+
         // GET: /Image/
         [HttpPost]
         public ActionResult SaveImageSingle(FormCollection Form)
         {
-            int StudentID = int.Parse(Form["StudentID"].ToString());
+            int StudentID = int.Parse(Form["StudentID"]);
 
             //Moi anh se co 1 id, luu face region co id nay vao database
-            String[] FilesPath = Form["ImageLink"].ToString().Split(',');
-            String[] FaceIDs = Form["FaceID"].ToString().Split(',');
+            String[] FilesPath = Form["ImageLink"].Split(',');
+            String[] FaceIDs = Form["FaceID"].Split(',');
 
             for (int i = 0; i < FilesPath.Length; i++)
             {
@@ -33,11 +35,19 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult DeleteTrainingImage(int ImageID)
         {
-            var TrainingImage = DataContext.db.StudentImages.First(i => i.ImageID == ImageID);
-            DataContext.db.StudentImages.DeleteObject(TrainingImage);
-            DataContext.db.SaveChanges();
-
-            return Json(new { message = TrainingImage.ImageLink + " deleted."}, JsonRequestBehavior.AllowGet );
+            var TrainingImage = _db.StudentImages.FirstOrDefault(i => i.ImageID == ImageID);
+            String message = "";
+            if (TrainingImage != null)
+            {
+                _db.StudentImages.DeleteObject(TrainingImage);
+                _db.SaveChanges();
+                message = TrainingImage.ImageLink + " deleted.";
+            }
+            else
+            {
+                message = "Error. Image not exist in DB";
+            }
+            return Json(new { message = message}, JsonRequestBehavior.AllowGet);
         }
     }
 }
