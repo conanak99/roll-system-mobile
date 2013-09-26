@@ -80,7 +80,7 @@ namespace RollSystemMobile.Models
             }
 
 
-            RSMEntities db = DataContext.db;
+            RSMEntities db = new RSMEntities();
 
             Image<Bgr, byte> Image = new Image<Bgr, byte>(ImagePath);
             using (Image<Gray, byte> GrayImage = Image.Clone().Convert<Gray, byte>())
@@ -108,9 +108,7 @@ namespace RollSystemMobile.Models
 
         public static void SaveTrainingData(string ImagePath, int[] FaceIDs, int[] StudentIDs)
         {
-            RSMEntities db = DataContext.db;
-
-
+            RSMEntities db = new RSMEntities();
             Image<Gray, byte> Image = new Image<Bgr, byte>(ImagePath).Convert<Gray, byte>();
 
             var FacesDetected = Image.DetectHaarCascade(Haar, DETECT_SCALE, MIN_NEIGHBOR,
