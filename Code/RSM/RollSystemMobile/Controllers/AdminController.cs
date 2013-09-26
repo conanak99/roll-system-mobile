@@ -12,6 +12,8 @@ namespace RollSystemMobile.Controllers
     {
         //
         // GET: /Admin/
+        private RSMEntities _db = new RSMEntities();
+
 
         public ActionResult Index()
         {
@@ -20,7 +22,6 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult StudentList(int? ClassID)
         {
-            RSMEntities _db = DataContext.db;
             List<Student> Students = null;
 
             if (ClassID == null)
@@ -40,7 +41,6 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult SingleStudent(int StudentID)
         {
-            RSMEntities _db = DataContext.db;
             var Student = _db.Students.SingleOrDefault(s => s.StudentID == StudentID);
             return View(Student);
         }
@@ -48,7 +48,6 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult SingleStudent(int StudentID, IEnumerable<HttpPostedFileBase> imageFiles)
         {
-            RSMEntities _db = DataContext.db;
             ViewBag.StudentID = StudentID;
             ViewBag.StudentName = _db.Students.First(s => s.StudentID == StudentID).FullName;
 

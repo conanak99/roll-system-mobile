@@ -18,8 +18,8 @@ namespace RollSystemMobile.Models
         private static String HAAR_XML_PATH;
         private static String TRAINING_FOLDER_PATH;
 
-        private static int RESIZE_WIDTH = 900;
-        private static int RESIZE_HEIGHT = 500;
+        private static int RESIZE_WIDTH = 1200;
+        private static int RESIZE_HEIGHT = 650;
         private static int TRAINING_DATA_SIZE = 100;
         private static FaceRecognizer FaceRec;
 
@@ -138,7 +138,6 @@ namespace RollSystemMobile.Models
                 }
                 
             }
-
             db.SaveChanges();
         }
     }
