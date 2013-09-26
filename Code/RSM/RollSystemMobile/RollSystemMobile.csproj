@@ -118,7 +118,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataContext.cs" />
     <Compile Include="Models\FaceBO.cs" />
     <Compile Include="Models\RecognizerResult.cs" />
     <Compile Include="Models\RSMModel.Designer.cs">
