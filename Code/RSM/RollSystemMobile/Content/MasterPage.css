@@ -1,0 +1,133 @@
+﻿*
+{
+    margin: 0;
+    padding: 0;
+    border-radius: 5px;
+}
+body
+{
+    background-color: #e5e5e5;
+}
+#wrapper
+{
+    width: 1080px;
+    background-color: #e5e5e5;
+    margin: 0 auto;
+}
+
+#banner
+{
+    height: 200px;
+    background-color: rgb(49, 52, 58);
+    background-image: url("./themes/base/images/banner.png");
+}
+
+#content_area
+{
+    float: right;
+    width: 820px;
+    margin: 5px 0 20px 0;
+    padding: 10px 0 10px 30px;
+    background-color: #e5e5e5;
+}
+
+#sidebar
+{
+    float: left;
+    width: 200px;
+    height: 400px;
+    margin: 5px 0 20px 0px;
+    padding: 10px;
+    background-color: #e5e5e5;
+}
+#footer
+{
+    clear: both;
+    width: auto;
+    height: 20px;
+    padding: 10px;
+    text-align: center;
+    color: black;
+    background-color: #232323;
+}
+
+#logo
+{
+    float: left;
+    width: 400px;
+    height: 70px;
+    margin: 5px 0 5px 0;
+}
+#menu_top1
+{
+    
+}
+#image
+{
+    width: 100px;
+    height: 70px;
+    background-image: url("./themes/base/images/logo.png");
+    background-repeat:no-repeat;
+}
+#menu_top
+{
+    color: White;
+    height: 40px;
+    width: 1040px;
+    background-color: #232323;
+    padding: 10px 20px 0 20px;
+}
+#menu_top a, #sidebar a, #menu_top2 a, #menu_top2 li
+{
+    color: White;
+}
+#menu_top a:hover, #sidebar a:hover, #menu_top2 a:hover
+{
+    color: Black;
+}
+#sidebar li
+{
+    background-color: #404a65;
+    height: 50px;
+    margin-top: 5px;
+}
+
+#menu_top2 a
+{
+    padding: 10px 20px 11px 20px;
+}
+#sidebar a
+{
+    padding: 18px 0 18px 20px;
+}
+#sidebar label
+{
+    height: 30px;
+    font-size: 20px;
+    color: White;
+    background-color: #2c3653;
+    text-align: center;
+    padding-top: 15px;
+    margin-bottom:10px;
+}
+#user
+{
+    margin-left:80%;
+    margin-top:5px;
+}
+#menu_top2
+{
+    padding:2px 0 0 20px;
+    height: 40px;
+    background-color: #a51c30;
+    margin: 40px 0 5px 420px;
+    width: 640px;
+}
+#menu_top2 li
+{
+    margin:0 0 0 10px;
+}
+#1
+{
+    background-color:black;
+    }
