@@ -115,6 +115,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
+    <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -128,6 +129,7 @@
       <DependentUpon>RSMModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\ViewModels\AdminViewModel.cs" />
+    <Compile Include="Models\ViewModels\InstructorViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -265,6 +267,7 @@
     <Content Include="Views\Staff\_Layout.cshtml" />
     <Content Include="Views\Staff\_ViewStart.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Instructor\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
