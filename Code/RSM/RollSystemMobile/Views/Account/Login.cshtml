@@ -1,0 +1,57 @@
+﻿@model RollSystemMobile.Models.LoginModelView
+@{
+    ViewBag.Title = "Login";
+}
+<h2>
+    Login</h2>
+@if (User.Identity.IsAuthenticated)
+{
+    <p>You don't have permision to access this page.</p>
+    <a href="javascript: history.go(-1)">Go Back</a>
+}
+else
+{
+    using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+    {
+    <fieldset>
+        <div id="legend">
+            <legend class="">Login</legend>
+        </div>
+        <div class="control-group">
+            <!-- Username -->
+            <label class="control-label" for="Username">
+                Username</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.Username)
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+        </div>
+        <div class="control-group">
+            <!-- Password-->
+            <label class="control-label" for="password">
+                Password</label>
+            <div class="controls">
+                @Html.EditorFor(model => model.Password)
+                @Html.ValidationMessageFor(model => model.Password)
+            </div>
+            @Html.ValidationMessage("Error")
+        </div>
+        <div class="control-group">
+            <!-- Button -->
+            <div class="controls">
+                <br />
+                <button class="btn btn-success">
+                    Login</button>
+            </div>
+        </div>
+    </fieldset>
+        if (@Request.Params["ReturnUrl"] != null)
+        {
+    <input type="hidden" name="returnUrl" value="@Request.Params["ReturnUrl"]"/> 
+        }
+        else
+        {
+    @Html.HiddenFor(model => model.ReturnUrl)
+        }
+    }
+}

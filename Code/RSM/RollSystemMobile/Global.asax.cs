@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using System.Web.Routing;
 using RollSystemMobile.Models;
 
@@ -40,5 +41,40 @@ namespace RollSystemMobile
             FaceBO.SetXMLPath(Server.MapPath("~/haarcascade_frontalface_alt2.xml"));
             FaceBO.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
         }
+
+
+        //Lay role de authorize
+        protected void FormsAuthentication_OnAuthenticate(Object sender, FormsAuthenticationEventArgs e)
+        {
+            if (FormsAuthentication.CookiesSupported == true)
+            {
+                if (Request.Cookies[FormsAuthentication.FormsCookieName] != null)
+                {
+                    try
+                    {
+                        //Lay username ra                
+                        string username = FormsAuthentication.Decrypt(Request.Cookies[FormsAuthentication.FormsCookieName].Value).Name;
+                        string roles = string.Empty;
+
+                        //Lay role cua username
+                        using (RSMEntities entities = new RSMEntities())
+                        {
+                            User user = entities.Users.SingleOrDefault(u => u.Username.Equals(username));
+                            roles = user.Role.RoleName;
+                        }
+
+                        //Set Role vao, sau nay co the authorize bang annotation
+                        e.User = new System.Security.Principal.GenericPrincipal(
+                          new System.Security.Principal.GenericIdentity(username, "Forms"), roles.Split(';'));
+                    }
+                    catch (Exception)
+                    {
+                        //somehting went wrong
+                    }
+                }
+            }
+        }
+
+
     }
 }
