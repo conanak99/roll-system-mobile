@@ -79,7 +79,6 @@ namespace RollSystemMobile.Models
                 return;
             }
 
-
             RSMEntities db = new RSMEntities();
 
             Image<Bgr, byte> Image = new Image<Bgr, byte>(ImagePath);

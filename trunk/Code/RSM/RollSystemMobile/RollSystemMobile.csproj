@@ -111,6 +111,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\FaceBO.cs" />
     <Compile Include="Models\RecognizerResult.cs" />
     <Compile Include="Models\RSMModel.Designer.cs">
@@ -262,6 +264,7 @@
     <Content Include="Views\Staff\Index.cshtml" />
     <Content Include="Views\Staff\_Layout.cshtml" />
     <Content Include="Views\Staff\_ViewStart.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
