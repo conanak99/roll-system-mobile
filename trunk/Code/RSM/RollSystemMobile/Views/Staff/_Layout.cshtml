@@ -1,8 +1,90 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h5>This is staff layout</h5>
-
-
+<form id="form1" runat="server">
+<div id="wrapper">
+    <div id="menu_top">
+        <ul class="nav nav-pills">
+            <li><a href="#">Introduction</a></li>
+            <li style="padding: 5px;">|</li>
+            <li><a href="#">Role</a></li>
+            <li style="padding: 5px;">|</li>
+            <li><a href="#">About us</a></li>
+            <li style="padding: 5px;">|</li>
+            <li><a href="#">Report</a></li>
+        </ul>
+    </div>
+    <div id="logo">
+        <div id="image" style="float: left;">
+        </div>
+        <div id="name" style="float: right; font-family: Constantia; padding-top: 10px;">
+            <h2>
+                ROLL CALL SYSTEM</h2>
+        </div>
+    </div>
+    <div id="user">
+            <div class="btn-group pull-right">
+                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Hello, Staff <span
+                    class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <!-- dropdown menu links -->
+                    <li><a tabindex="-1" href="#">Change Password</a></li>
+                    <li><a tabindex="-1" href="#">Log out</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="menu_top2">
+            <ul class="nav nav-pills">
+                <li><a href="#">Instructor</a></li>
+                <li style="padding: 5px;">|</li>
+                <li><a href="#">Student</a></li>
+                <li style="padding: 5px;">|</li>
+                <li><a href="#">Class</a></li>
+                <li style="padding: 5px;">|</li>
+                <li><a href="#">Subject</a></li>
+                <li style="padding: 5px;">|</li>
+                <li><a href="#">RollCall</a></li>
+            </ul>
+        </div>
+ 
+    <div id="banner">
+    </div>
+    <div id="sidebar">
+        <ul class="nav nav-pills nav-stacked">
+            <li><a href="Instructor.aspx">Instructor</a></li>
+            <li><a href="#">Student</a></li>
+            <li><a href="Class.aspx">Class</a></li>
+            <li><a href="Subject.aspx">Subject</a></li>
+            <li><a href="RollCall.aspx">RollCall</a></li>
+        </ul>
+    </div>
+    <div id="content_area">
+        <asp:contentplaceholder id="ContentPlaceHolder" runat="server">
+            </asp:contentplaceholder>
+    </div>
+    <div id="footer">
+        <p>
+            Copyright by myself</p>
+    </div>
+</div>
+</form>
+<script type="text/javascript">
+    $(function () {
+        $("#e9").select2();
+        $('.selectpicker').selectpicker();
+        $(".timerollcall").selectpicker();
+        $("#startdate").datepicker();
+        $("#enddate").datepicker();
+        $('.dropdown-toggle').dropdown();
+        //            var subjects = ['PHP', 'MySQL', 'SQL', 'PostgreSQL', 'HTML', 'CSS', 'HTML5', 'CSS3', 'JSON'];
+        //            $('#search').typeahead({ source: subjects });
+        $('#autocomplete').typeahead({
+            source: [
+            { id: 1, name: 'Nguyen Thanh Binh' },
+            { id: 2, name: 'Pham Huy Hoang' },
+            { id: 3, name: 'Nguyen Quoc Huy' },
+             ]
+        });
+    })
+</script>
 @RenderBody()
