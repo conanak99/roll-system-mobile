@@ -44,7 +44,8 @@ namespace RollSystemMobile.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            String Role = user.Role.RoleName;
+                            return RedirectToAction("Index", Role);
                         }
                     }
                     else

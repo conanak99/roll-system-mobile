@@ -10,7 +10,6 @@ namespace RollSystemMobile.Controllers
 {
     public class AdminController : Controller
     {
-        //gacon BinhNT
         // GET: /Admin/
         private RSMEntities _db = new RSMEntities();
 
