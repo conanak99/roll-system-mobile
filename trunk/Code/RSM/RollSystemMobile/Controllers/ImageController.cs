@@ -12,7 +12,7 @@ namespace RollSystemMobile.Controllers
 
         private RSMEntities _db = new RSMEntities();
 
-        // GET: /Image/
+        // GET: /Image/ 
         [HttpPost]
         public ActionResult SaveImageSingle(FormCollection Form)
         {
