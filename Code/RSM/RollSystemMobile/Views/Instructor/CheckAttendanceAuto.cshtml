@@ -1,0 +1,52 @@
+﻿@model RollSystemMobile.Models.ViewModels.AttendanceViewModel
+@{
+    ViewBag.Title = "Auto Attendance Checking";
+}
+<h2>
+    Attendance Checking</h2>
+<div>
+    <legend>Roll Call Info</legend>
+    <fieldset style="margin: -20px 0 -20px -20px">
+        <dl class="dl-horizontal">
+            <dt>Roll Call</dt>
+            <dd>@Model.CurrentRollCall.RollCallID</dd>
+            <dt>Date</dt>
+            <dd>@DateTime.Today.ToString("dd-MM-yyyy")</dd>
+            <dt>Subject</dt>
+            <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
+            <dt>Class</dt>
+            <dd>@Model.CurrentRollCall.Class.ClassName</dd>
+        </dl>
+    </fieldset>
+    <legend>Log Image</legend>
+    <fieldset class="text-center">
+        @foreach (var RecognizerResult in Model.RecognizeResult)
+        {
+            <div class="img-holder">
+                @foreach (var Face in RecognizerResult.FaceList)
+                {
+                    <div class="face-region" title="@Face.StudentName" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
+                                       Face.X, Face.Y, Face.Width, Face.Height);">
+                    </div>
+                }
+                <img src="@Url.Content("~/Content/Temp/Resized/" + RecognizerResult.ImageLink)" />
+            </div>
+        }
+    </fieldset>
+    <legend>Attendance</legend>
+    <fieldset>
+        <div>
+            <div class="well well-small span3">
+                <h5>
+                    Auto Attendance</h5>
+                    @foreach (var Student in @Model.PresentStudents)
+                    {
+                        <span class="label label-success">@Student.StudentCode - @Student.FullName</span>
+                    }
+                <div>
+                    <span class="label label-success" style="font-weight: bold; width: 90%; margin-top: 10px">
+                        Present: @Model.PresentStudents.Count / @Model.CurrentRollCall.Students.Count  </span></div>
+            </div>
+        </div>
+    </fieldset>
+</div>

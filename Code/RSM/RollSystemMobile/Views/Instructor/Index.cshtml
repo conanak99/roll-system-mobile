@@ -85,7 +85,7 @@
             </dd>
             <dt class="margin-top-12">Upload Image for<br /> Attendance Check</dt>
             <dd style="margin-top: 8px;">
-                @using (Html.BeginForm("CheckAttendance", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("CheckAttendanceAuto", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
                     <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />

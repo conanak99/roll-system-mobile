@@ -50,9 +50,40 @@ namespace RollSystemMobile.Controllers
         }
 
         [HttpPost]
-        public ActionResult CheckAttendance(int RollCallID, IEnumerable<HttpPostedFileBase> ImageFiles)
+        public ActionResult CheckAttendanceAuto(int RollCallID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
-            return View();
+            List<String> ImagePaths = new List<string>();
+            foreach (HttpPostedFileBase file in ImageFiles)
+            {
+                //Save file anh xuong
+                String OldPath = Server.MapPath("~/Content/Temp/" + file.FileName);
+                file.SaveAs(OldPath);
+
+                //Resize file anh
+                String NewPath = Server.MapPath("~/Content/Temp/Resized/" + file.FileName);
+                FaceBO.ResizeImage(OldPath, NewPath);
+                ImagePaths.Add(NewPath);
+
+                //Nhan dien tung khuon mat trong anh
+            }
+
+            List<RecognizerResult> Result = FaceBO.RecognizeStudentForAttendance(RollCallID, ImagePaths);
+            //Dua reseult nay cho AttendanceBO xu ly
+            AttendanceBO attendanceBO = new AttendanceBO();
+            
+            AttendanceLog Log = attendanceBO.WriteAttendanceLog(RollCallID, Result);
+            //Danh sach sinh vien trong log
+            List<Student> Students = _db.Students.Where(stu => stu.StudentAttendances.
+                Any(attend => attend.LogID == Log.LogID)).ToList();
+            RollCall CurrentRollCall = _db.RollCalls.First(roll => roll.RollCallID == RollCallID);
+
+            //Tao model de show trong view
+            AttendanceViewModel model = new AttendanceViewModel();
+            model.CurrentRollCall = CurrentRollCall;
+            model.PresentStudents = Students;
+            model.RecognizeResult = Result;
+
+            return View(model);
         }
     }
 }
