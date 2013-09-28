@@ -1,0 +1,130 @@
+﻿@model RollSystemMobile.Models.RollCall
+@{
+    ViewBag.Title = "Roll Call " + Model.RollCallID;
+}
+@section ExtraHead
+{
+    <style>
+        body
+        {
+            background-color: White;
+        }
+        *
+        {
+            border-radius: 0;
+        }
+    </style>
+}
+<h2>
+    Roll Call Detail</h2>
+<dl class="dl-horizontal">
+    <dt>Roll Call</dt>
+    <dd>@Model.RollCallID</dd>
+    <dt>Subject</dt>
+    <dd>@Model.Subject.ShortName</dd>
+    <dt>Instructor</dt>
+    <dd>@Model.InstructorTeachings.ElementAt(0).Instructor.Fullname</dd>
+    <dt>Class</dt>
+    <dd>@Model.Class.ClassName</dd>
+    <dt>Date</dt>
+    <dd>
+        From @Model.BeginDate.ToString("dd-MM-yyyy") to @Model.EndDate.ToString("dd-MM-yyyy")</dd>
+    <dt>Time</dt>
+    <dd>@Model.StartTime.ToString(@"hh\:mm") - @Model.EndTime.ToString(@"hh\:mm")</dd>
+    <dt class="margin-top-12">Student List</dt>
+    <dd style="margin-top: 8px;">
+        <div class="accordion-group" style="width: 400px">
+            <div class="accordion-heading" style="height: 35px">
+                <a class="accordion-toggle" data-toggle="collapse" href="#studentList" style="margin-top: -3px">
+                    Show</a>
+            </div>
+            <div id="studentList" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <table class="table table-striped table-condensed">
+                        <thead>
+                            <tr>
+                                <th>
+                                    No
+                                </th>
+                                <th>
+                                    Student ID
+                                </th>
+                                <th>
+                                    Student Name
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{int index = 1;}
+                            @foreach (var Student in Model.Students)
+                            {
+                                <tr>
+                                    <td>
+                                        @index
+                                    </td>
+                                    <td>
+                                        @Student.StudentCode
+                                    </td>
+                                    <td>
+                                        @Student.FullName
+                                    </td>
+                                </tr>
+                                { index++; }
+
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </dd>
+    <dt class="margin-top-12">Attendance Logs</dt>
+    <dd class="margin-top-12">
+        <div style="width: 400px">
+            <table class="table table-bordered table-condensed">
+                <thead>
+                    <tr>
+                        <th>
+                            No
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Present
+                        </th>
+                        <th>
+                            Log Detail
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                <!-- Khi tim log, dua ID vao, phai tim log cung ngay, cung mon, ca auto lan manual.
+                    Chi duoc sua log dang manual, hoac log 1 ngay truoc do.
+                    Khi chua co log manual, nho hien log auto
+                  -->
+                    @{int logIndex = 1;}
+                    @foreach (var AttendanceLog in Model.AttendanceLogs.OrderBy(attend => attend.LogDate))
+                    {
+                        <tr>
+                            <td>
+                                @logIndex
+                            </td>
+                            <td>
+                                @AttendanceLog.LogDate
+                            </td>
+                            <td>
+                                <span class="badge">@AttendanceLog.StudentAttendances.Count/@Model.Students.Count</span>
+                            </td>
+                            <td>
+                                <a class="btn btn-info btn-small modal-caller" href="">
+                                    Log Detail</a>
+                            </td>
+                        </tr>
+                        { logIndex++; }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </dd>
+</dl>

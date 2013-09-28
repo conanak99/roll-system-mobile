@@ -23,17 +23,14 @@ namespace RollSystemMobile.Controllers
             User User = _db.Users.First(u => u.Username.Equals(Username));
             Instructor AuthorizedInstructor = _db.Instructors.First(i => i.UserID == User.UserID);
 
-
-
             //Nhung mon ma instructor nay dang day
             DateTime Today = DateTime.Now;
             var RollCalls = _db.RollCalls.Where(r => r.InstructorTeachings.
                                        Any(inte => inte.InstructorID == AuthorizedInstructor.InstructorID)
                                        && r.BeginDate < Today && r.EndDate > Today);
+            
             //Mon dang day vao thoi diem dang nhap
             RollCall CurrentRollCall = null;
-
-
             TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
             if (RollCalls.Count() > 0)
             {
@@ -41,11 +38,19 @@ namespace RollSystemMobile.Controllers
                 CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime < CurrentTime && r.EndTime > CurrentTime);
             }
 
+            //Neu co mon dang day, lay luon log cua mon do
+            AttendanceLog CurrentAttendanceLog = null;
+            if (CurrentRollCall != null)
+            {
+                AttendanceBO AttendanceBO = new AttendanceBO();
+                CurrentAttendanceLog = AttendanceBO.GetCurrentAttendanceLog(CurrentRollCall.RollCallID);
+            }
+
             InstructorViewModel model = new InstructorViewModel();
             model.AuthorizedInstructor = AuthorizedInstructor;
             model.CurrentRollCall = CurrentRollCall;
             model.TeachingRollCall = RollCalls;
-
+            model.CurrentAttendanceLog = CurrentAttendanceLog;
             return View(model);
         }
 
@@ -59,8 +64,9 @@ namespace RollSystemMobile.Controllers
                 String OldPath = Server.MapPath("~/Content/Temp/" + file.FileName);
                 file.SaveAs(OldPath);
 
-                //Resize file anh
-                String NewPath = Server.MapPath("~/Content/Temp/Resized/" + file.FileName);
+                //Resize file anh, luu vao thu muc log, nho them ngay thang truoc
+                String NewPath = Server.MapPath("~/Content/Log/" + 
+                    DateTime.Today.ToString("dd-MM-yyyy") + "_" + file.FileName);
                 FaceBO.ResizeImage(OldPath, NewPath);
                 ImagePaths.Add(NewPath);
 
@@ -84,6 +90,12 @@ namespace RollSystemMobile.Controllers
             model.RecognizeResult = Result;
 
             return View(model);
+        }
+
+        public ActionResult RollCallDetail(int id)
+        {
+            RollCall RollCall = _db.RollCalls.FirstOrDefault(roll => roll.RollCallID == id);
+            return View(RollCall);
         }
     }
 }

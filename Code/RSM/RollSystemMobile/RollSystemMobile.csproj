@@ -202,6 +202,8 @@
     <Content Include="Content\bootstrap-responsive.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\datepicker.css" />
+    <Content Include="Content\themes\img\glyphicons-halflings-white.png" />
+    <Content Include="Content\themes\img\glyphicons-halflings.png" />
     <Content Include="Dll\Emgu.CV.dll" />
     <Content Include="Dll\Emgu.CV.UI.dll" />
     <Content Include="Dll\Emgu.CV.UI.xml" />
@@ -212,6 +214,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\resize-face-region.js" />
     <Content Include="Scripts\jquery-2.0.3-vsdoc.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -273,6 +276,7 @@
     <Content Include="Views\Instructor\Index.cshtml" />
     <Content Include="Views\Staff\Class.cshtml" />
     <Content Include="Views\Instructor\CheckAttendanceAuto.cshtml" />
+    <Content Include="Views\Instructor\RollCallDetail.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

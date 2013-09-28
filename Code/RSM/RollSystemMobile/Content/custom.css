@@ -64,6 +64,8 @@ img.thumbnail
 {
     display: inline-block;
     position: relative;
+    margin-bottom: 10px;
+    margin-right: 8px;
 }
 
 .face-region
@@ -85,4 +87,9 @@ img.thumbnail
 {
      opacity: 1;
      background-color: rgba(255,255,255,0.7);
+}
+
+.margin-top-12 
+{
+    margin-top: 12px;
 }
