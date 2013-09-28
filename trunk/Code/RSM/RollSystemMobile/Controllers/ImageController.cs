@@ -14,7 +14,7 @@ namespace RollSystemMobile.Controllers
 
         // GET: /Image/ 
         [HttpPost]
-        public ActionResult SaveImageSingle(FormCollection Form)
+        public ActionResult SaveImageSingle(FormCollection Form) 
         {
             int StudentID = int.Parse(Form["StudentID"]);
 

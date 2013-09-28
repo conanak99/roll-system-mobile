@@ -8,7 +8,7 @@ using RollSystemMobile.Models.ViewModels;
 
 namespace RollSystemMobile.Controllers
 {
-    [Authorize(Roles = "Instructor")]
+    [Authorize(Roles = "Instructor")] 
     public class InstructorController : Controller
     {
         //
