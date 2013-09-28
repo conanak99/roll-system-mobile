@@ -12,7 +12,7 @@ namespace RollSystemMobile.Controllers
     public class InstructorController : Controller
     {
         //
-        // GET: /Instructor/
+        // GET: /Instructor/ cai nay la cai gi
 
         private RSMEntities _db = new RSMEntities();
 
