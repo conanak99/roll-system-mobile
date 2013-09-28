@@ -45,14 +45,14 @@ namespace RollSystemMobile.Controllers
         }
 
         [HttpPost]
-        public ActionResult SingleStudent(int StudentID, IEnumerable<HttpPostedFileBase> imageFiles)
+        public ActionResult SingleStudent(int StudentID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
             ViewBag.StudentID = StudentID;
             ViewBag.StudentName = _db.Students.First(s => s.StudentID == StudentID).FullName;
 
             List<RecognizerResult> Results = new List<RecognizerResult>();
-            
-            foreach (HttpPostedFileBase file in imageFiles)
+
+            foreach (HttpPostedFileBase file in ImageFiles)
             {
                 //Save file anh xuong
                 String OldPath = Server.MapPath("~/Content/Temp/" + file.FileName);

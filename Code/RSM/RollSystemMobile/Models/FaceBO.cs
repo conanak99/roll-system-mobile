@@ -12,6 +12,9 @@ namespace RollSystemMobile.Models
     public class FaceBO
     {
         private static HaarCascade Haar;
+        //Luc add, co the dung alt2
+        //Luc detect, nen dung alt_tree neu can chinh xac cao, can nhieu van dung alt2
+        private static String HaarXML = "haarcascade_frontalface_alt_tree.xml"; //"haarcascade_frontalface_alt2.xml"
         private static double DETECT_SCALE = 1.1;
         private static int MIN_NEIGHBOR = 3;
         private static int MIN_SIZE = 20;
@@ -25,7 +28,7 @@ namespace RollSystemMobile.Models
 
         public static void SetXMLPath(String FilePath)
         {
-            HAAR_XML_PATH = FilePath;
+            HAAR_XML_PATH = FilePath + HaarXML;
         }
 
         public static void SetTrainingFolderPath(String FolderPath)
@@ -137,5 +140,25 @@ namespace RollSystemMobile.Models
             }
             db.SaveChanges();
         }
+
+
+        private static FaceRecognizer CreateRollCallRecognizer(int RollCallID)
+        {
+            //Tu rollcall ID, tao face recognizer, train
+            return null;
+        }
+
+        private static RecognizerResult RecognizeFromImage(FaceRecognizer FaceRec, String ImagePath)
+        {
+            //Dua anh vao, dua ket qua ra
+            return null;
+        }
+
+        public static List<RecognizerResult> RecognizeStudentForAttendance(int RollCallID, List<String> ImagePaths)
+        {
+            //Dua ID cua roll call, cac hinh da up, cho ra danh sach ket qua
+            return null;
+        }
+
     }
 }
