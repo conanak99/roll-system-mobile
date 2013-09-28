@@ -121,6 +121,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\AttendanceBO.cs" />
     <Compile Include="Models\FaceBO.cs" />
     <Compile Include="Models\RecognizerResult.cs" />
     <Compile Include="Models\RSMModel.Designer.cs">

@@ -29,13 +29,15 @@ namespace RollSystemMobile.Controllers
             DateTime Today = DateTime.Now;
             var RollCalls = _db.RollCalls.Where(r => r.InstructorTeachings.
                                        Any(inte => inte.InstructorID == AuthorizedInstructor.InstructorID)
-                                       && r.StartDate < Today && r.EndDate > Today);
+                                       && r.BeginDate < Today && r.EndDate > Today);
             //Mon dang day vao thoi diem dang nhap
             RollCall CurrentRollCall = null;
 
+
+            TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
             if (RollCalls.Count() > 0)
             {
-                TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
+                
                 CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime < CurrentTime && r.EndTime > CurrentTime);
             }
 
@@ -47,5 +49,10 @@ namespace RollSystemMobile.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public ActionResult CheckAttendance(int RollCallID, IEnumerable<HttpPostedFileBase> ImageFiles)
+        {
+            return View();
+        }
     }
 }

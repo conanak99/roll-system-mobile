@@ -2,6 +2,16 @@
 @{
     ViewBag.Title = Model.StudentCode + " - " + Model.FullName + " Image Data";
 }
+
+@section ExtraHead {
+  <style>
+  body 
+  {
+      background-color: White;
+  }
+  </style>
+}
+
 <h4>@Model.FullName Image Data
 </h4>
 @if (Model.StudentImages.Count > 0)
@@ -29,7 +39,7 @@ else
     
         <h5>
             Add more Image Data:</h5>
-        <input type="file" id="files" name="imageFiles" accept="image/*" multiple />
+        <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
         <button class="btn" id="btnUpload">
             Upload</button>
         <br />
