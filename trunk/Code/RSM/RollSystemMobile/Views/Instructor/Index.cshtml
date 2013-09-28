@@ -16,143 +16,215 @@
 <ul class="nav nav-tabs">
     <li class="active"><a href="#auto" data-toggle="tab">Auto Attendance</a></li>
     <li><a href="#manual" data-toggle="tab">Take Attendance Manually</a></li>
-
 </ul>
 <div class="tab-content">
     <div class="tab-pane tab-pane-content active" id="auto">
-       @if (Model.CurrentRollCall != null)
-       {
-           <h3>Teaching class as present</h3>
-           <dl class="dl-horizontal">
-            <dt>Roll Call</dt>
-            <dd>@Model.CurrentRollCall.RollCallID</dd>
-            <dt>Subject</dt>
-            <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
-            <dt>Instructor</dt>
-            <dd>@Model.AuthorizedInstructor.Fullname</dd>
-            <dt>Class</dt>
-            <dd>@Model.CurrentRollCall.Class.ClassName</dd>
-            <dt>Date</dt>
-            <dd>
-                From @Model.CurrentRollCall.BeginDate.ToString("dd-MM-yyyy") to @Model.CurrentRollCall.EndDate.ToString("dd-MM-yyyy")</dd>
-            <dt>Time</dt>
-            <dd>@Model.CurrentRollCall.StartTime.ToString(@"hh\:mm") - @Model.CurrentRollCall.EndTime.ToString(@"hh\:mm")</dd>
-            <dt class="margin-top-12">Student List</dt>
-            <dd style="margin-top: 8px;">
-                <div class="accordion-group" style="width: 400px">
-                    <div class="accordion-heading" style="height: 35px">
-                        <a class="accordion-toggle" data-toggle="collapse" href="#studentList" style="margin-top: -3px">
-                            Show</a>
-                    </div>
-                    <div id="studentList" class="accordion-body collapse">
-                        <div class="accordion-inner">
-                            <table class="table table-striped table-condensed">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            No
-                                        </th>
-                                        <th>
-                                            Student ID
-                                        </th>
-                                        <th>
-                                            Student Name
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{int index = 1;}
-                                    @foreach (var Student in Model.CurrentRollCall.Students)
-                                    {
+        @if (Model.CurrentRollCall != null)
+        {
+            <h3>
+                Teaching class at present</h3>
+            <dl class="dl-horizontal">
+                <dt>Roll Call</dt>
+                <dd>@Model.CurrentRollCall.RollCallID</dd>
+                <dt>Subject</dt>
+                <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
+                <dt>Instructor</dt>
+                <dd>@Model.AuthorizedInstructor.Fullname</dd>
+                <dt>Class</dt>
+                <dd>@Model.CurrentRollCall.Class.ClassName</dd>
+                <dt>Date</dt>
+                <dd>
+                    From @Model.CurrentRollCall.BeginDate.ToString("dd-MM-yyyy") to @Model.CurrentRollCall.EndDate.ToString("dd-MM-yyyy")</dd>
+                <dt>Time</dt>
+                <dd>@Model.CurrentRollCall.StartTime.ToString(@"hh\:mm") - @Model.CurrentRollCall.EndTime.ToString(@"hh\:mm")</dd>
+                <dt class="margin-top-12">Student List</dt>
+                <dd style="margin-top: 8px;">
+                    <div class="accordion-group" style="width: 400px">
+                        <div class="accordion-heading" style="height: 35px">
+                            <a class="accordion-toggle" data-toggle="collapse" href="#studentList" style="margin-top: -3px">
+                                Show</a>
+                        </div>
+                        <div id="studentList" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <table class="table table-striped table-condensed">
+                                    <thead>
                                         <tr>
-                                            <td>
-                                                @index
-                                            </td>
-                                            <td>
-                                                @Student.StudentCode
-                                            </td>
-                                            <td>
-                                                @Student.FullName
-                                            </td>
+                                            <th>
+                                                No
+                                            </th>
+                                            <th>
+                                                Student ID
+                                            </th>
+                                            <th>
+                                                Student Name
+                                            </th>
+                                            <th>
+                                                Status
+                                            </th>
                                         </tr>
-                                        { index++; }
-                                    }
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        @{int index = 1;}
+                                        @if (Model.CurrentAttendanceLog == null)
+                                        {
+                                            foreach (var Student in Model.CurrentRollCall.Students)
+                                            {
+                                            <tr>
+                                                <td>
+                                                    @index
+                                                </td>
+                                                <td>
+                                                    @Student.StudentCode
+                                                </td>
+                                                <td>
+                                                    @Student.FullName
+                                                </td>
+                                                <td>
+                                                    Uncheck
+                                                </td>
+                                            </tr>
+                                                { index++; }
+                                            }
+                                             <tr>
+                                                <td colspan="4" class="text-right">
+                                                    <strong>Please upload image to check attendance.</strong>
+                                                </td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            foreach (var Student in Model.CurrentRollCall.Students)
+                                            {
+                                            <tr>
+                                                <td>
+                                                    @index
+                                                </td>
+                                                <td>
+                                                    @Student.StudentCode
+                                                </td>
+                                                <td>
+                                                    @Student.FullName
+                                                </td>
+                                                <td>
+                                                    @if (Model.CurrentAttendanceLog.StudentAttendances.Any(attend => attend.StudentID == Student.StudentID))
+                                                    {
+                                                        <span>Present</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <font color="red">Absent</font>
+                                                    }
+                                                </td>
+                                            </tr>
+                                                    { index++; }
+                                            }
+                                            <tr>
+                                                <td colspan="4" class="text-right">
+                                                    <strong>Present: @Model.CurrentAttendanceLog.StudentAttendances.Count/@Model.CurrentRollCall.Students.Count</strong>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </dd>
-            <dt class="margin-top-12">Upload Image for<br /> Attendance Check</dt>
-            <dd style="margin-top: 8px;">
-                @using (Html.BeginForm("CheckAttendanceAuto", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                </dd>
+                <dt class="margin-top-12">Upload Image for<br />
+                    Attendance Check</dt>
+                <dd style="margin-top: 8px;">
+                    @using (Html.BeginForm("CheckAttendanceAuto", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
+                        <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
+                        <button class="btn" id="btnUpload">
+                            Upload</button>
+                    }
+                </dd>
+
+                @if (Model.CurrentAttendanceLog != null)
                 {
-                    <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
-                    <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
-                    <button class="btn" id="btnUpload">
-                        Upload</button>
+                 <dt class="margin-top-12">Check Attendance Manually</dt>
+                <dd style="margin-top: 8px;">
+                    <div class="accordion-group" style="width: 400px">
+                        <div class="accordion-heading" style="height: 35px">
+                            <a class="accordion-toggle" data-toggle="collapse" href="#attendance" style="margin-top: -3px">
+                                Check</a>
+                        </div>
+                        <div id="attendance" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                 <form>
+                                 <!-- Tao form check attendace dua tren log hien tai -->
+
+                                 <button>Submit Attendance</button>
+                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                </dd>   
                 }
-            </dd>
-        </dl>
-       }
-       else
-       {
-           <h3>You aren't teaching any class at present.</h3>
-       }
+            </dl>
+        }
+        else
+        {
+            <h3>
+                You aren't teaching any class at present.</h3>
+        }
     </div>
     <div class="tab-pane tab-pane-content" id="manual">
-       <h4>My current teaching classes.</h4>
-       <table class="table table-condensed">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            No
-                                        </th>
-                                        <th>
-                                            Class
-                                        </th>
-                                        <th>
-                                            Subject
-                                        </th>
-                                        <th>
-                                            Time
-                                        </th>
-                                        <th>
-                                            Date
-                                        </th>
-                                        <th>
-                                            Detail
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{ int rollIndex = 1;}
-                                    @foreach (var RollCall in Model.TeachingRollCall)
-                                    {
-                                        <tr class="@(Model.CurrentRollCall==null || 
+        <h4>
+            My current teaching classes.</h4>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>
+                        No
+                    </th>
+                    <th>
+                        Class
+                    </th>
+                    <th>
+                        Subject
+                    </th>
+                    <th>
+                        Time
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                    <th>
+                        Detail
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int rollIndex = 1;}
+                @foreach (var RollCall in Model.TeachingRollCall)
+                {
+                    <tr class="@(Model.CurrentRollCall == null ||
                                         RollCall.RollCallID != Model.CurrentRollCall.RollCallID ? "" : "success")">
-                                            <td>
-                                                @rollIndex
-                                            </td>
-                                            <td>
-                                                @RollCall.Class.ClassName
-                                            </td>
-                                            <td>
-                                               @RollCall.Subject.ShortName
-                                            </td>
-                                            <td>
-                                              @RollCall.StartTime.ToString(@"hh\:mm") - @RollCall.EndTime.ToString(@"hh\:mm")
-                                            </td>
-                                            <td>
-                                               @RollCall.BeginDate.ToString("dd-MM-yyyy") to @RollCall.EndDate.ToString("dd-MM-yyyy")
-                                            </td>
-                                            <td>
-                                               <a class="btn btn-info" href="RollCallDetail/@RollCall.RollCallID">Detail</a>
-                                            </td>
-                                        </tr>
-                                        { rollIndex++; }
-                                    }
-                                </tbody>
-                            </table>
+                        <td>
+                            @rollIndex
+                        </td>
+                        <td>
+                            @RollCall.Class.ClassName
+                        </td>
+                        <td>
+                            @RollCall.Subject.ShortName
+                        </td>
+                        <td>
+                            @RollCall.StartTime.ToString(@"hh\:mm") - @RollCall.EndTime.ToString(@"hh\:mm")
+                        </td>
+                        <td>
+                            @RollCall.BeginDate.ToString("dd-MM-yyyy") to @RollCall.EndDate.ToString("dd-MM-yyyy")
+                        </td>
+                        <td>
+                            <a class="btn btn-info" href="@Url.Action("RollCallDetail", "Instructor", new { id = @RollCall.RollCallID })">Detail</a>
+                        </td>
+                    </tr>
+                    { rollIndex++; }
+                }
+            </tbody>
+        </table>
     </div>
 </div>

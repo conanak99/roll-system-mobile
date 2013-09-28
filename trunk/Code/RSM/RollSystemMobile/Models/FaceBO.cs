@@ -21,8 +21,8 @@ namespace RollSystemMobile.Models
         private static String HAAR_XML_PATH;
         private static String TRAINING_FOLDER_PATH;
 
-        private static int RESIZE_WIDTH = 1200;
-        private static int RESIZE_HEIGHT = 650;
+        private static int RESIZE_WIDTH = 1300;
+        private static int RESIZE_HEIGHT = 800;
         private static int TRAINING_DATA_SIZE = 100;
         private static FaceRecognizer FaceRec;
 
@@ -70,7 +70,15 @@ namespace RollSystemMobile.Models
         {
             using (Image<Bgr, byte> OldImage = new Image<Bgr, byte>(OldPath))
             {
-                OldImage.Resize(RESIZE_WIDTH, RESIZE_HEIGHT, INTER.CV_INTER_CUBIC, true).Save(NewPath);
+                //Neu anh nho, 1 trong 2 chieu < max thi ko can resize
+                if (OldImage.Width < RESIZE_WIDTH || OldImage.Height < RESIZE_HEIGHT)
+                {
+                    OldImage.Save(NewPath);
+                }
+                else
+                {
+                    OldImage.Resize(RESIZE_WIDTH, RESIZE_HEIGHT, INTER.CV_INTER_CUBIC, true).Save(NewPath);
+                }
             }
         }
 
@@ -91,7 +99,7 @@ namespace RollSystemMobile.Models
                                     0, new System.Drawing.Size(MIN_SIZE, MIN_SIZE))[0];
                 Image<Bgr, byte> FaceImage = Image.Copy(FacesDetected[FaceID].rect)
                                              .Resize(TRAINING_DATA_SIZE, TRAINING_DATA_SIZE,
-                                             INTER.CV_INTER_CUBIC);;
+                                             INTER.CV_INTER_CUBIC); ;
 
                 //Tao ten file
                 String ImageName = System.IO.Path.GetFileNameWithoutExtension(ImagePath);
@@ -136,7 +144,7 @@ namespace RollSystemMobile.Models
                     //TraDa.ImageLink = FileName;
                     //db.TrainingDatas.AddObject(TraDa);
                 }
-                
+
             }
             db.SaveChanges();
         }
@@ -160,12 +168,12 @@ namespace RollSystemMobile.Models
                     {
                         //Load ID va anh de train cho bo recognizer
                         StudentIDs.Add(Image.StudentID);
-                        String TrainingImagePath = TRAINING_FOLDER_PATH + Image.ImageLink;
-                        using (Image<Gray,byte> TrainingImage = new Image<Gray,byte>(TrainingImagePath))
-                        {
-                            TrainingImage._EqualizeHist();
-                            StudentImages.Add(TrainingImage);
-                        }
+                        String TrainingImagePath = TRAINING_FOLDER_PATH + "/" + Image.ImageLink;
+                        Image<Gray, byte> TrainingImage = new Image<Gray, byte>(TrainingImagePath);
+
+                        TrainingImage._EqualizeHist();
+                        StudentImages.Add(TrainingImage);
+
                     }
                 }
             }
@@ -237,7 +245,7 @@ namespace RollSystemMobile.Models
                 RecognizerResult Result = RecognizeFromImage(FaceRec, ImagePath);
                 Results.Add(Result);
             }
-            
+
             //Dung xong nho dispose cho nhe bo nho
             FaceRec.Dispose();
             return Results;

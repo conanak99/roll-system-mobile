@@ -12,6 +12,7 @@ namespace RollSystemMobile.Models.ViewModels
         public Instructor AuthorizedInstructor { get; set; }
         public RollCall CurrentRollCall { get; set; }
         public IEnumerable<RollCall> TeachingRollCall { get; set; }
+        public AttendanceLog CurrentAttendanceLog { get; set; }
     }
 
     public class AttendanceViewModel
@@ -19,5 +20,6 @@ namespace RollSystemMobile.Models.ViewModels
         public List<RecognizerResult> RecognizeResult { get; set; }
         public List<Student> PresentStudents { get; set; }
         public RollCall CurrentRollCall { get; set; }
+
     }
 }

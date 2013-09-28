@@ -16,6 +16,22 @@ namespace RollSystemMobile.Models
 
         public AttendanceLog WriteAttendanceLog(int RollCallID, List<RecognizerResult> RecognizerResults)
         {
+            AttendanceLog Log = null;
+            //Tim xem da co log auto cho hom nay chua
+            Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1
+                && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
+            bool LogExist = true;
+            if (Log == null)
+            {
+                Log = new AttendanceLog() {
+                    RollCallID = RollCallID,
+                    LogDate = DateTime.Today,
+                    TypeID = 1 
+                };
+
+                LogExist = false;
+            }
+
             //Dua danh sach nhan vao, loc ra ID nhung sinh vien co mat
             HashSet<int> StudentIDs = new HashSet<int>();
             foreach (var result in RecognizerResults)
@@ -28,29 +44,27 @@ namespace RollSystemMobile.Models
                         StudentIDs.Add(face.StudentID);
                     }
                 }
+
+                //Save hinh cho log, neu hinh da trung thi ko save
+                if (!Log.LogImages.Any(image => image.ImageLink.Equals(result.ImageLink)))
+                {
+                    LogImage LogImg = new LogImage() { ImageLink = result.ImageLink };
+                    Log.LogImages.Add(LogImg); 
+                }
             }
 
-            AttendanceLog Log = null;
-            //Tim xem da co log auto cho hom nay chua
-            Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1 
-                && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
-            bool LogExist = true;
-            if (Log == null)
-            {
-                Log = new AttendanceLog();
-                LogExist = false;
-            }
-            
             //Bat dau danh dau attendance
             foreach (int StudentID in StudentIDs)
             {
                 //Neu student chua duoc danh dau trong log moi add vao.
                 if (!Log.StudentAttendances.Any(attendace => attendace.StudentID == StudentID))
                 {
-                    StudentAttendance attendance = new StudentAttendance();
-                    attendance.StudentID = StudentID;
-                    attendance.IsPresent = true;
-                    Log.StudentAttendances.Add(attendance);
+                    StudentAttendance Attendance = new StudentAttendance()
+                    {
+                        StudentID = StudentID,
+                        IsPresent = true
+                    };
+                    Log.StudentAttendances.Add(Attendance);
                 }
             }
 
@@ -70,7 +84,7 @@ namespace RollSystemMobile.Models
         }
 
         //Ham nay dung hien log attendace trong tab Auto Attendace trang instructor
-        public AttendanceLog GetCurrentAttendance(int RollCallID)
+        public AttendanceLog GetCurrentAttendanceLog(int RollCallID)
         {
             AttendanceLog Log = null;
             //Tim xem da co uu tien tim log manual
@@ -79,7 +93,7 @@ namespace RollSystemMobile.Models
             if (Log == null)
             {
                 //Ko co log manual thi tim log auto
-                _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1
+                Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1
                 && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
             }
 

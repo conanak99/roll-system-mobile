@@ -2,22 +2,61 @@
 @{
     ViewBag.Title = "Auto Attendance Checking";
 }
+@section ExtraHead
+{
+    <style>
+        body
+        {
+            background-color: White;
+        }
+        *
+        {
+            border-radius: 0;
+        }
+    </style>
+    
+    <script src="@Url.Content("~/Scripts/resize-face-region.js")" type="text/javascript"></script>
+}
 <h2>
     Attendance Checking</h2>
+
+<a href="@Url.Action("Index")" class="btn btn-primary"><i class="icon-white icon-chevron-left"></i> Back</a>
 <div>
-    <legend>Roll Call Info</legend>
-    <fieldset style="margin: -20px 0 -20px -20px"> 
-        <dl class="dl-horizontal">
-            <dt>Roll Call</dt>
-            <dd>@Model.CurrentRollCall.RollCallID</dd>
-            <dt>Date</dt>
-            <dd>@DateTime.Today.ToString("dd-MM-yyyy")</dd>
-            <dt>Subject</dt>
-            <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
-            <dt>Class</dt>
-            <dd>@Model.CurrentRollCall.Class.ClassName</dd>
-        </dl>
-    </fieldset>
+    <div class="row">
+        <div class="span6">
+            <legend>Roll Call Info</legend>
+            <fieldset style="margin: 0 0 -20px -20px">
+                <dl class="dl-horizontal">
+                    <dt>Roll Call</dt>
+                    <dd>@Model.CurrentRollCall.RollCallID</dd>
+                    <dt>Date</dt>
+                    <dd>@DateTime.Today.ToString("dd-MM-yyyy")</dd>
+                    <dt>Subject</dt>
+                    <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
+                    <dt>Class</dt>
+                    <dd>@Model.CurrentRollCall.Class.ClassName</dd>
+                </dl>
+            </fieldset>
+        </div>
+        <div class="span6">
+            <legend>Attendance</legend>
+            <fieldset>
+                <div>
+                    <div class="span3">
+                        @foreach (var Student in @Model.PresentStudents)
+                        {
+                            <p>@Student.StudentCode - @Student.FullName</p>
+                        }
+                        <div>
+                            <h5>
+                                Present: @Model.PresentStudents.Count / @Model.CurrentRollCall.Students.Count . 
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    </div>
     <legend>Log Image</legend>
     <fieldset class="text-center">
         @foreach (var RecognizerResult in Model.RecognizeResult)
@@ -29,24 +68,9 @@
                                        Face.X, Face.Y, Face.Width, Face.Height);">
                     </div>
                 }
-                <img src="@Url.Content("~/Content/Temp/Resized/" + RecognizerResult.ImageLink)" />
+                <img src="@Url.Content("~/Content/Log/" + RecognizerResult.ImageLink)" />
             </div>
         }
     </fieldset>
-    <legend>Attendance</legend>
-    <fieldset>
-        <div>
-            <div class="well well-small span3">
-                <h5>
-                    Auto Attendance</h5>
-                    @foreach (var Student in @Model.PresentStudents)
-                    {
-                        <span class="label label-success">@Student.StudentCode - @Student.FullName</span>
-                    }
-                <div>
-                    <span class="label label-success" style="font-weight: bold; width: 90%; margin-top: 10px">
-                        Present: @Model.PresentStudents.Count / @Model.CurrentRollCall.Students.Count  </span></div>
-            </div>
-        </div>
-    </fieldset>
+
 </div>
