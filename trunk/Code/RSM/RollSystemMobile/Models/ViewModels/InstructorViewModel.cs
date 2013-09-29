@@ -22,4 +22,17 @@ namespace RollSystemMobile.Models.ViewModels
         public RollCall CurrentRollCall { get; set; }
 
     }
+
+    public class RollCallDetailViewModel
+    {
+        public RollCall RollCall { get; set; }
+        public IEnumerable<AttendanceLog> RollCallLogs { get; set; }
+    }
+
+    public class LogDetailViewModel
+    {
+        public RollCall RollCall { get; set; }
+        public AttendanceLog AutoLog { get; set; }
+        public AttendanceLog ManualLog { get; set; }
+    }
 }

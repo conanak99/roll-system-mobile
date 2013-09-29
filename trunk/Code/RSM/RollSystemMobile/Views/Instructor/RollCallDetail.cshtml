@@ -1,17 +1,27 @@
-﻿@model RollSystemMobile.Models.RollCall
+﻿@model RollSystemMobile.Models.ViewModels.RollCallDetailViewModel
 @{
-    ViewBag.Title = "Roll Call " + Model.RollCallID;
+    ViewBag.Title = "Roll Call " + Model.RollCall.RollCallID;
 }
 @section ExtraHead
 {
     <style>
         body
         {
-            background-color: White; 
+            background-color: White;
         }
         *
         {
             border-radius: 0;
+        }
+        form
+        {
+            margin: 0;
+        }
+        
+        .modal
+        {
+            width: 65%;
+            margin-left: -30%;
         }
     </style>
 }
@@ -19,18 +29,18 @@
     Roll Call Detail</h2>
 <dl class="dl-horizontal">
     <dt>Roll Call</dt>
-    <dd>@Model.RollCallID</dd>
+    <dd>@Model.RollCall.RollCallID</dd>
     <dt>Subject</dt>
-    <dd>@Model.Subject.ShortName</dd>
+    <dd>@Model.RollCall.Subject.ShortName</dd>
     <dt>Instructor</dt>
-    <dd>@Model.InstructorTeachings.ElementAt(0).Instructor.Fullname</dd>
+    <dd>@Model.RollCall.InstructorTeachings.ElementAt(0).Instructor.Fullname</dd>
     <dt>Class</dt>
-    <dd>@Model.Class.ClassName</dd>
+    <dd>@Model.RollCall.Class.ClassName</dd>
     <dt>Date</dt>
     <dd>
-        From @Model.BeginDate.ToString("dd-MM-yyyy") to @Model.EndDate.ToString("dd-MM-yyyy")</dd>
+        From @Model.RollCall.BeginDate.ToString("dd-MM-yyyy") to @Model.RollCall.EndDate.ToString("dd-MM-yyyy")</dd>
     <dt>Time</dt>
-    <dd>@Model.StartTime.ToString(@"hh\:mm") - @Model.EndTime.ToString(@"hh\:mm")</dd>
+    <dd>@Model.RollCall.StartTime.ToString(@"hh\:mm") - @Model.RollCall.EndTime.ToString(@"hh\:mm")</dd>
     <dt class="margin-top-12">Student List</dt>
     <dd style="margin-top: 8px;">
         <div class="accordion-group" style="width: 400px">
@@ -56,7 +66,7 @@
                         </thead>
                         <tbody>
                             @{int index = 1;}
-                            @foreach (var Student in Model.Students)
+                            @foreach (var Student in Model.RollCall.Students)
                             {
                                 <tr>
                                     <td>
@@ -84,7 +94,7 @@
             <table class="table table-bordered table-condensed">
                 <thead>
                     <tr>
-                        <th>
+                        <th class="text-right">
                             No
                         </th>
                         <th>
@@ -93,38 +103,63 @@
                         <th>
                             Present
                         </th>
-                        <th>
+                        <th class="text-center">
                             Log Detail
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                <!-- Khi tim log, dua ID vao, phai tim log cung ngay, cung mon, ca auto lan manual.
+                    <!-- Khi tim log, dua ID vao, phai tim log cung ngay, cung mon, ca auto lan manual.
                     Chi duoc sua log dang manual, hoac log 1 ngay truoc do.
                     Khi chua co log manual, nho hien log auto
                   -->
                     @{int logIndex = 1;}
-                    @foreach (var AttendanceLog in Model.AttendanceLogs.OrderBy(attend => attend.LogDate))
+                    @foreach (var AttendanceLog in Model.RollCallLogs)
                     {
                         <tr>
-                            <td>
+                            <td class="text-right">
                                 @logIndex
                             </td>
                             <td>
-                                @AttendanceLog.LogDate
+                                @AttendanceLog.LogDate.ToString("dd-MM-yyyy")
                             </td>
                             <td>
-                                <span class="badge">@AttendanceLog.StudentAttendances.Count/@Model.Students.Count</span>
+                                @AttendanceLog.StudentAttendances.Count(attend => attend.IsPresent == true) /@Model.RollCall.Students.Count
                             </td>
-                            <td>
-                                <a class="btn btn-info btn-small modal-caller" href="">
-                                    Log Detail</a>
+                            <td class="text-center">
+                                @using (Html.BeginForm("LogDetail", "Instructor", FormMethod.Get, new { @class = "AjaxForm" }))
+                                {
+                                    <input type="hidden" name="RollCallID" value="@Model.RollCall.RollCallID" />
+                                    <input type="hidden" name="Date" value="@AttendanceLog.LogDate.Date" />
+                                    <input type="submit" class="btn btn-info" value="Log Detail" />
+                                }
                             </td>
                         </tr>
-                        { logIndex++; }
+                                { logIndex++; }
                     }
                 </tbody>
             </table>
         </div>
     </dd>
 </dl>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
+<script>
+    $('.AjaxForm').submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var url = $(this).attr("action");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            success: function (data) {
+                $('#myModal').html(data);
+                $('#myModal').modal('show');
+            }
+        });
+    });
+
+</script>

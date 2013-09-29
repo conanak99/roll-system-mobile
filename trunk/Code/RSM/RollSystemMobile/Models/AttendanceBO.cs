@@ -85,19 +85,19 @@ namespace RollSystemMobile.Models
         }
 
 
-        public AttendanceLog WriteAttendanceManualLog(int RollCallID, List<SingleAttendanceCheck> AttendanceChecks)
+        public AttendanceLog WriteAttendanceManualLog(int RollCallID, DateTime Date, List<SingleAttendanceCheck> AttendanceChecks)
         {
             AttendanceLog Log = null;
-            //Tim xem da co log manual cho hom nay chua
+            //Tim xem da co log manual cho ngay du vao chua
             Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 2
-                && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
+                && log.LogDate == Date && log.RollCallID == RollCallID);
             bool LogExist = true;
             if (Log == null)
             {
                 Log = new AttendanceLog()
                 {
                     RollCallID = RollCallID,
-                    LogDate = DateTime.Today,
+                    LogDate = Date,
                     TypeID = 2
                 };
                 LogExist = false;
@@ -142,7 +142,7 @@ namespace RollSystemMobile.Models
         }
 
 
-        //Ham nay dung hien log attendace trong tab Auto Attendace trang instructor
+        //Ham nay dung hien log attendace hom nay trong tab Auto Attendace trang instructor
         public AttendanceLog GetCurrentAttendanceLog(int RollCallID)
         {
             AttendanceLog Log = null;
@@ -154,6 +154,23 @@ namespace RollSystemMobile.Models
                 //Ko co log manual thi tim log auto
                 Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1
                 && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
+            }
+
+            //Neu van ko co log thi xem nhu bang null
+            return Log;
+        }
+
+        public AttendanceLog GetAttendanceLogAtDate(int RollCallID, DateTime Date)
+        {
+            AttendanceLog Log = null;
+            //Tim xem da co uu tien tim log manual
+            Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 2
+                && log.LogDate == Date && log.RollCallID == RollCallID);
+            if (Log == null)
+            {
+                //Ko co log manual thi tim log auto
+                Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1
+                && log.LogDate == Date && log.RollCallID == RollCallID);
             }
 
             //Neu van ko co log thi xem nhu bang null

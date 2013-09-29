@@ -93,3 +93,7 @@ img.thumbnail
 {
     margin-top: 12px;
 }
+
+.image-log {
+	width: 350px;
+}
