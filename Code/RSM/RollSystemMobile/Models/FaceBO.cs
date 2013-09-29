@@ -153,7 +153,7 @@ namespace RollSystemMobile.Models
         private static FaceRecognizer CreateRollCallRecognizer(int RollCallID)
         {
             //Tu rollcall ID, tao face recognizer, train
-            FaceRecognizer FaceRec = new LBPHFaceRecognizer(1, 8, 8, 8, 100);
+            FaceRecognizer FaceRec = new LBPHFaceRecognizer(1, 8, 8, 8, 75);
 
             List<int> StudentIDs = new List<int>();
             List<Image<Gray, byte>> StudentImages = new List<Image<Gray, byte>>();

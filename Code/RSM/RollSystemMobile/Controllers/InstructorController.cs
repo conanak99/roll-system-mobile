@@ -24,7 +24,7 @@ namespace RollSystemMobile.Controllers
             User User = _db.Users.First(u => u.Username.Equals(Username));
             Instructor AuthorizedInstructor = _db.Instructors.First(i => i.UserID == User.UserID);
 
-            //Nhung mon ma instructor nay dang day
+            //Nhung mon ma instructor nay dang day, sau nay phai check status
             DateTime Today = DateTime.Now;
             var RollCalls = _db.RollCalls.Where(r => r.InstructorTeachings.
                                        Any(inte => inte.InstructorID == AuthorizedInstructor.InstructorID)
@@ -34,12 +34,11 @@ namespace RollSystemMobile.Controllers
             RollCall CurrentRollCall = null;
             TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
             if (RollCalls.Count() > 0)
-            {
-                
+            {             
                 CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime < CurrentTime && r.EndTime > CurrentTime);
             }
 
-            //Neu co mon dang day, lay luon log cua mon do
+            //Neu co mon dang day, lay luon attendanlog log cua mon do
             AttendanceLog CurrentAttendanceLog = null;
             if (CurrentRollCall != null)
             {
@@ -95,15 +94,59 @@ namespace RollSystemMobile.Controllers
         public ActionResult RollCallDetail(int id)
         {
             RollCall RollCall = _db.RollCalls.FirstOrDefault(roll => roll.RollCallID == id);
-            return View(RollCall);
+
+
+            AttendanceBO AttendanceBO = new AttendanceBO();
+            //Lay danh sach nhung log cua roll call nay, tu luc bat dau
+            var Dates = RollCall.AttendanceLogs.OrderBy(roll => roll.LogDate).Select(roll => roll.LogDate).Distinct();
+            List<AttendanceLog> AttendanceLogs = new List<AttendanceLog>();
+            foreach (DateTime Date in Dates)
+            {
+                AttendanceLog Log = AttendanceBO.GetAttendanceLogAtDate(RollCall.RollCallID, Date);
+                AttendanceLogs.Add(Log);
+            }
+
+            RollCallDetailViewModel Model = new RollCallDetailViewModel();
+            Model.RollCall = RollCall;
+            Model.RollCallLogs = AttendanceLogs;
+
+            return View(Model);
         }
 
         [HttpPost]
         public ActionResult CheckAttendanceManual(CheckAttendanceManualBindModel Model)
         {
             AttendanceBO AttendanceBO = new AttendanceBO();
-            AttendanceBO.WriteAttendanceManualLog(Model.RollCallID, Model.AttendanceChecks);
+            AttendanceBO.WriteAttendanceManualLog(Model.RollCallID, Model.Date ,Model.AttendanceChecks);
+
+            String returnUrl = Model.ReturnUrl;
+
+            if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1
+                            && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//")
+                            && !returnUrl.StartsWith("/\\"))
+            {
+                return Redirect(Model.ReturnUrl);
+            }
             return RedirectToAction("Index");
         }
+
+        public ActionResult LogDetail(int RollCallID, DateTime Date)
+        {
+            //1 ngay, 1 roll call co the co 2 loai log, log manual va auto, do do phai lay ca 2
+            AttendanceLog AutoLog = _db.AttendanceLogs.FirstOrDefault(
+                                    log => log.RollCallID == RollCallID && log.LogDate == Date
+                                    && log.TypeID == 1);
+            AttendanceLog ManualLog = _db.AttendanceLogs.FirstOrDefault(
+                                    log => log.RollCallID == RollCallID && log.LogDate == Date
+                                    && log.TypeID == 2);
+            RollCall RollCall = _db.RollCalls.First(roll => roll.RollCallID == RollCallID);
+
+            LogDetailViewModel Model = new LogDetailViewModel();
+            Model.RollCall = RollCall;
+            Model.AutoLog = AutoLog;
+            Model.ManualLog = ManualLog;
+            return PartialView("_LogDetail", Model);
+        }
+
     }
 }
