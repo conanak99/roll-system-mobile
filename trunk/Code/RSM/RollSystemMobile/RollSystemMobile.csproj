@@ -120,8 +120,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\BindingModels\AccountModel.cs" />
     <Compile Include="Models\AttendanceBO.cs" />
+    <Compile Include="Models\BindingModels\InstructorBindingModel.cs" />
     <Compile Include="Models\Default1Controller.cs" />
     <Compile Include="Models\FaceBO.cs" />
     <Compile Include="Models\RecognizerResult.cs" />

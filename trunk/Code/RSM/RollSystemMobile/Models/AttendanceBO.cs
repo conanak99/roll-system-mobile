@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Models
 {
@@ -14,7 +15,7 @@ namespace RollSystemMobile.Models
             _db = new RSMEntities();
         }
 
-        public AttendanceLog WriteAttendanceLog(int RollCallID, List<RecognizerResult> RecognizerResults)
+        public AttendanceLog WriteAttendanceAutoLog(int RollCallID, List<RecognizerResult> RecognizerResults)
         {
             AttendanceLog Log = null;
             //Tim xem da co log auto cho hom nay chua
@@ -82,6 +83,64 @@ namespace RollSystemMobile.Models
             //Tra Log ra de show
             return Log;
         }
+
+
+        public AttendanceLog WriteAttendanceManualLog(int RollCallID, List<SingleAttendanceCheck> AttendanceChecks)
+        {
+            AttendanceLog Log = null;
+            //Tim xem da co log manual cho hom nay chua
+            Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 2
+                && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
+            bool LogExist = true;
+            if (Log == null)
+            {
+                Log = new AttendanceLog()
+                {
+                    RollCallID = RollCallID,
+                    LogDate = DateTime.Today,
+                    TypeID = 2
+                };
+                LogExist = false;
+            }
+
+            //Bat dau danh dau attendance
+            foreach (var AttendanceCheck in AttendanceChecks)
+            {
+                //Neu student xuat hien trong log moi add vao.
+                StudentAttendance Attendance = Log.StudentAttendances.FirstOrDefault(attendace => attendace.StudentID == AttendanceCheck.StudentID);
+                if (Attendance == null)
+                {
+                    Attendance = new StudentAttendance()
+                    {
+                        StudentID = AttendanceCheck.StudentID,
+                        Note = AttendanceCheck.Note,
+                        IsPresent = AttendanceCheck.IsPresent
+                    };
+                    Log.StudentAttendances.Add(Attendance);
+                }
+                else
+                {
+                    //Neu da co roi thi chi sua present
+                    Attendance.Note = AttendanceCheck.Note;
+                    Attendance.IsPresent = AttendanceCheck.IsPresent;
+                }
+            }
+
+            //Neu log chua co thi them vao, da co thi edit lai
+            if (LogExist)
+            {
+                _db.AttendanceLogs.ApplyCurrentValues(Log);
+            }
+            else
+            {
+                _db.AttendanceLogs.AddObject(Log);
+            }
+            _db.SaveChanges();
+
+            //Tra Log ra de show
+            return Log;
+        }
+
 
         //Ham nay dung hien log attendace trong tab Auto Attendace trang instructor
         public AttendanceLog GetCurrentAttendanceLog(int RollCallID)
