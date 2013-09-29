@@ -51,7 +51,7 @@ namespace RollSystemMobile.Controllers
             model.CurrentRollCall = CurrentRollCall;
             model.TeachingRollCall = RollCalls;
             model.CurrentAttendanceLog = CurrentAttendanceLog;
-            return View(model);
+            return View(model); 
         }
 
         [HttpPost]
