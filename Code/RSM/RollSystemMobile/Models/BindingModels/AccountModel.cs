@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Web.Mvc;
 using System.Web.Security;
 
-namespace RollSystemMobile.Models
+namespace RollSystemMobile.Models.BindingModels
 {
     public class LoginModelView
     {

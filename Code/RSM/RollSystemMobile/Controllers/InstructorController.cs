@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
+using RollSystemMobile.Models.BindingModels;
 using RollSystemMobile.Models.ViewModels;
 
 namespace RollSystemMobile.Controllers
@@ -75,9 +76,8 @@ namespace RollSystemMobile.Controllers
 
             List<RecognizerResult> Result = FaceBO.RecognizeStudentForAttendance(RollCallID, ImagePaths);
             //Dua reseult nay cho AttendanceBO xu ly
-            AttendanceBO attendanceBO = new AttendanceBO();
-            
-            AttendanceLog Log = attendanceBO.WriteAttendanceLog(RollCallID, Result);
+            AttendanceBO attendanceBO = new AttendanceBO();            
+            AttendanceLog Log = attendanceBO.WriteAttendanceAutoLog(RollCallID, Result);
             //Danh sach sinh vien trong log
             List<Student> Students = _db.Students.Where(stu => stu.StudentAttendances.
                 Any(attend => attend.LogID == Log.LogID)).ToList();
@@ -96,6 +96,14 @@ namespace RollSystemMobile.Controllers
         {
             RollCall RollCall = _db.RollCalls.FirstOrDefault(roll => roll.RollCallID == id);
             return View(RollCall);
+        }
+
+        [HttpPost]
+        public ActionResult CheckAttendanceManual(CheckAttendanceManualBindModel Model)
+        {
+            AttendanceBO AttendanceBO = new AttendanceBO();
+            AttendanceBO.WriteAttendanceManualLog(Model.RollCallID, Model.AttendanceChecks);
+            return RedirectToAction("Index");
         }
     }
 }

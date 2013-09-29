@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using RollSystemMobile.Models;
+using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Controllers
 {
