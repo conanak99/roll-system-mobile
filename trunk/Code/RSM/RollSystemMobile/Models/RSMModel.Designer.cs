@@ -8,12 +8,13 @@
 //------------------------------------------------------------------------------
 
 using System;
+using System.ComponentModel;
+using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Data.EntityClient;
-using System.ComponentModel;
-using System.Xml.Serialization;
+using System.Linq;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -361,6 +362,7 @@ namespace RollSystemMobile.Models
         private ObjectSet<RollCall> _RollCalls;
 
         #endregion
+
         #region AddTo Methods
     
         /// <summary>
@@ -500,11 +502,11 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
-    
 
     #endregion
-    
+
     #region Entities
     
     /// <summary>
@@ -535,6 +537,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -637,6 +640,7 @@ namespace RollSystemMobile.Models
         partial void OnTypeIDChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -761,6 +765,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -791,6 +796,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -893,6 +899,7 @@ namespace RollSystemMobile.Models
         partial void OnIsActiveChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -979,6 +986,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1007,6 +1015,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1157,6 +1166,7 @@ namespace RollSystemMobile.Models
         partial void OnUserIDChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1221,6 +1231,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1245,6 +1256,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1371,6 +1383,7 @@ namespace RollSystemMobile.Models
         partial void OnEndDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1451,6 +1464,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1479,6 +1493,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1557,6 +1572,7 @@ namespace RollSystemMobile.Models
         partial void OnImageLinkChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1599,6 +1615,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1623,6 +1640,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1677,6 +1695,7 @@ namespace RollSystemMobile.Models
         partial void OnTypeNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1703,6 +1722,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1729,6 +1749,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1807,6 +1828,7 @@ namespace RollSystemMobile.Models
         partial void OnFullNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1855,6 +1877,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -1881,6 +1904,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -1935,6 +1959,7 @@ namespace RollSystemMobile.Models
         partial void OnRoleNameChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -1961,6 +1986,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2001,6 +2027,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2223,6 +2250,7 @@ namespace RollSystemMobile.Models
         partial void OnStatusChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2407,6 +2435,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2437,6 +2466,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2539,6 +2569,7 @@ namespace RollSystemMobile.Models
         partial void OnEndDateChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2565,6 +2596,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2593,6 +2625,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -2743,6 +2776,7 @@ namespace RollSystemMobile.Models
         partial void OnUserIDChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -2785,6 +2819,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -2821,6 +2856,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3067,6 +3103,7 @@ namespace RollSystemMobile.Models
         partial void OnStudentCodeChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3213,6 +3250,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3241,6 +3279,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3346,6 +3385,7 @@ namespace RollSystemMobile.Models
         partial void OnNoteChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3426,6 +3466,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3454,6 +3495,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3532,6 +3574,7 @@ namespace RollSystemMobile.Models
         partial void OnImageLinkChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3574,6 +3617,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3602,6 +3646,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3728,6 +3773,7 @@ namespace RollSystemMobile.Models
         partial void OnDescriptionChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -3776,6 +3822,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
     
     /// <summary>
@@ -3804,6 +3851,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -3930,6 +3978,7 @@ namespace RollSystemMobile.Models
         partial void OndefinitionChanged();
 
         #endregion
+
     
     }
     
@@ -3963,6 +4012,7 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
         #region Primitive Properties
     
         /// <summary>
@@ -4089,6 +4139,7 @@ namespace RollSystemMobile.Models
         partial void OnIsActiveChanged();
 
         #endregion
+
     
         #region Navigation Properties
     
@@ -4197,8 +4248,10 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
+
     }
 
     #endregion
+
     
 }
