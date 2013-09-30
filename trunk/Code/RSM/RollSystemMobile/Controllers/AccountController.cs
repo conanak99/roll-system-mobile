@@ -46,7 +46,20 @@ namespace RollSystemMobile.Controllers
                         else
                         {
                             String Role = user.Role.RoleName;
-                            return RedirectToAction("Index", Role);
+                            String Action = "";
+                            switch (Role)
+                            {
+                                case "Instructor":
+                                    Action = "RollCallList";
+                                    break;
+                                case "Staff":
+                                case "Admin":
+                                case "Student":
+                                default:
+                                    Action = "Index";
+                                    break;
+                            }
+                            return RedirectToAction(Action, Role);
                         }
                     }
                     else

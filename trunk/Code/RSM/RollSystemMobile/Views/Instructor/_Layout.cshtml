@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section ExtraHead {
+    <style>
+        body
+        {
+            background-color: White;
+        }
+        *
+        {
+            border-radius: 0;
+        }
+    </style>
+    @RenderSection("ExtraHead", required: false)
+}
+<div class="container-fluid">
+    <div class="btn-group pull-right">
+        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">Hello, @User.Identity.Name
+            <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+            <!-- dropdown menu links -->
+            <li><a tabindex="-1" href="#">Change Password</a></li>
+            <li><a tabindex="-1" href="@Url.Action("Logout", "Account")">Log out</a></li>
+        </ul>
+    </div>
+</div>
+@RenderBody()
