@@ -4,12 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
-using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
-using System.Text;
-using System.Threading.Tasks;
-//using Excel = Microsoft.Office.Interop.Excel;
+using Excel = Microsoft.Office.Interop.Excel;
 using System.Data.OleDb;
 using System.Data;
 using RollSystemMobile.Models;
@@ -25,10 +20,13 @@ namespace RollSystemMobile.Controllers
             return View();
         }
         //class layout
-        public ActionResult Class()
+        public ActionResult ClassList()
         {
             return View();
         }
+        private RSMEntities _db = new RSMEntities()
+        {
+        };
         [HttpPost]
         public ActionResult ImportExcelFileToDatabase(HttpPostedFileBase file)
         {
@@ -96,16 +94,12 @@ namespace RollSystemMobile.Controllers
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
 
-                        //  Default1Controller  model = new Default1Controller();
-                        //  model.ClassID = ds.Tables[0].Rows[i]["ClassID"].ToString();
-                        //  model.MajorID = ds.Tables[0].Rows[i]["MajorID"].ToString();
-                        //  model.ClassName = ds.Tables[0].Rows[i]["ClassName"].ToString();
-                        //  model.IsActive = ds.Tables[0].Rows[i]["IsActive"].ToString();
 
-
-                        // SAVE THE DATA INTO DATABASE HERE. I HAVE USED WEB API HERE TO SAVE THE DATA. 
-                        // YOU CAN USE YOUR OWN PROCESS TO SAVE.
-
+                        Class dbclass = new Class();
+                        dbclass.MajorID = int.Parse(ds.Tables[0].Rows[i]["MajorID"].ToString());
+                        dbclass.ClassName = ds.Tables[0].Rows[i]["Class"].ToString();
+                        _db.Classes.AddObject(dbclass);
+                        _db.SaveChanges();
                     }
                     ViewBag.message = "Information saved successfully.";
                 }
@@ -117,5 +111,6 @@ namespace RollSystemMobile.Controllers
             }
             return View();
         }
+
     }
 }
