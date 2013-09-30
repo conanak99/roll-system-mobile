@@ -125,7 +125,7 @@
           </Key>
           <Property Name="ClassID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="MajorID" Type="int" Nullable="false" />
-          <Property Name="ClassName" Type="char" Nullable="false" MaxLength="5" />
+          <Property Name="ClassName" Type="char" Nullable="false" MaxLength="6" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Instructor">
@@ -293,7 +293,9 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <Association Name="AttendanceLog_LogImage_FK1">
-          <End Role="AttendanceLog" Type="RSMModel.Store.AttendanceLog" Multiplicity="1" />
+          <End Role="AttendanceLog" Type="RSMModel.Store.AttendanceLog" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="LogImage" Type="RSMModel.Store.LogImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AttendanceLog">
@@ -305,7 +307,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="AttendanceLog_StudentAttendance_FK1">
-          <End Role="AttendanceLog" Type="RSMModel.Store.AttendanceLog" Multiplicity="1" />
+          <End Role="AttendanceLog" Type="RSMModel.Store.AttendanceLog" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="StudentAttendance" Type="RSMModel.Store.StudentAttendance" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="AttendanceLog">
