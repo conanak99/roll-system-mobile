@@ -287,6 +287,9 @@
     <Content Include="Views\Instructor\CheckAttendanceAuto.cshtml" />
     <Content Include="Views\Instructor\RollCallDetail.cshtml" />
     <Content Include="Views\Instructor\_LogDetail.cshtml" />
+    <Content Include="Views\Instructor\RollCallList.cshtml" />
+    <Content Include="Views\Instructor\_ViewStart.cshtml" />
+    <Content Include="Views\Instructor\_Layout.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

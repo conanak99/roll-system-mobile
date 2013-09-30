@@ -9,13 +9,44 @@ using RollSystemMobile.Models.ViewModels;
 
 namespace RollSystemMobile.Controllers
 {
-    [Authorize(Roles = "Instructor")] 
+    [Authorize(Roles = "Instructor")]
     public class InstructorController : Controller
     {
         //
         // GET: /Instructor/
 
         private RSMEntities _db = new RSMEntities();
+
+        public ActionResult RollCallList()
+        {
+            //Neu bam vao mon dang day, moi ra index
+            //Tim instructor da dang nhạp vao
+            string Username = this.HttpContext.User.Identity.Name;
+            User User = _db.Users.First(u => u.Username.Equals(Username));
+            Instructor AuthorizedInstructor = _db.Instructors.First(i => i.UserID == User.UserID);
+
+            //Nhung mon ma instructor nay dang day, sau nay phai check status
+            DateTime Today = DateTime.Now;
+            var RollCalls = _db.RollCalls.Where(r => r.InstructorTeachings.
+                                       Any(inte => inte.InstructorID == AuthorizedInstructor.InstructorID)
+                                       && r.BeginDate < Today && r.EndDate > Today);
+
+            //Mon dang day vao thoi diem dang nhap
+            RollCall CurrentRollCall = null;
+            TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
+            if (RollCalls.Count() > 0)
+            {
+                CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime < CurrentTime && r.EndTime > CurrentTime);
+            }
+
+            InstructorViewModel model = new InstructorViewModel();
+            model.AuthorizedInstructor = AuthorizedInstructor;
+            model.CurrentRollCall = CurrentRollCall;
+            model.TeachingRollCall = RollCalls;
+            return View(model);
+
+        }
+
 
         public ActionResult Index()
         {
@@ -29,12 +60,12 @@ namespace RollSystemMobile.Controllers
             var RollCalls = _db.RollCalls.Where(r => r.InstructorTeachings.
                                        Any(inte => inte.InstructorID == AuthorizedInstructor.InstructorID)
                                        && r.BeginDate < Today && r.EndDate > Today);
-            
+
             //Mon dang day vao thoi diem dang nhap
             RollCall CurrentRollCall = null;
             TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
             if (RollCalls.Count() > 0)
-            {             
+            {
                 CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime < CurrentTime && r.EndTime > CurrentTime);
             }
 
@@ -51,7 +82,7 @@ namespace RollSystemMobile.Controllers
             model.CurrentRollCall = CurrentRollCall;
             model.TeachingRollCall = RollCalls;
             model.CurrentAttendanceLog = CurrentAttendanceLog;
-            return View(model); 
+            return View(model);
         }
 
         [HttpPost]
@@ -65,7 +96,7 @@ namespace RollSystemMobile.Controllers
                 file.SaveAs(OldPath);
 
                 //Resize file anh, luu vao thu muc log, nho them ngay thang truoc
-                String NewPath = Server.MapPath("~/Content/Log/" + 
+                String NewPath = Server.MapPath("~/Content/Log/" +
                     DateTime.Today.ToString("dd-MM-yyyy") + "_" + file.FileName);
                 FaceBO.ResizeImage(OldPath, NewPath);
                 ImagePaths.Add(NewPath);
@@ -75,7 +106,7 @@ namespace RollSystemMobile.Controllers
 
             List<RecognizerResult> Result = FaceBO.RecognizeStudentForAttendance(RollCallID, ImagePaths);
             //Dua reseult nay cho AttendanceBO xu ly
-            AttendanceBO attendanceBO = new AttendanceBO();            
+            AttendanceBO attendanceBO = new AttendanceBO();
             AttendanceLog Log = attendanceBO.WriteAttendanceAutoLog(RollCallID, Result);
             //Danh sach sinh vien trong log
             List<Student> Students = _db.Students.Where(stu => stu.StudentAttendances.
@@ -117,7 +148,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult CheckAttendanceManual(CheckAttendanceManualBindModel Model)
         {
             AttendanceBO AttendanceBO = new AttendanceBO();
-            AttendanceBO.WriteAttendanceManualLog(Model.RollCallID, Model.Date ,Model.AttendanceChecks);
+            AttendanceBO.WriteAttendanceManualLog(Model.RollCallID, Model.Date, Model.AttendanceChecks);
 
             String returnUrl = Model.ReturnUrl;
 
