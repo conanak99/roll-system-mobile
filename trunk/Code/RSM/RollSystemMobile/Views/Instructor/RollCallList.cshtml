@@ -24,7 +24,7 @@
                     Date
                 </th>
                 <th>
-                    Detail
+                    Action
                 </th>
             </tr>
         </thead>
@@ -49,7 +49,7 @@
                     <td>
                         @RollCall.BeginDate.ToString("dd-MM-yyyy") to @RollCall.EndDate.ToString("dd-MM-yyyy")
                     </td>
-                    <td>
+                    <td class="text-center">
                         @if (!IsCurrentRollCall)
                         {
                             <a class="btn btn-info" href="@Url.Action("RollCallDetail", "Instructor", new { id = @RollCall.RollCallID })">
@@ -58,6 +58,8 @@
                         else
                         {
                             <a class="btn btn-success" href="@Url.Action("Index", "Instructor")">Take Attendance</a>
+                            <a class="btn btn-info" href="@Url.Action("RollCallDetail", "Instructor", new { id = @RollCall.RollCallID })">
+                                View Detail</a>
                         }
                     </td>
                 </tr>

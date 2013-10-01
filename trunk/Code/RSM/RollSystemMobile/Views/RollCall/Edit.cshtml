@@ -1,21 +1,46 @@
 ﻿@model RollSystemMobile.Models.RollCall
-
 @{
     ViewBag.Title = "Edit";
 }
-
-<h2>Edit</h2>
-
-<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
-<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-
-@using (Html.BeginForm()) {
+<h2>
+    Edit</h2>
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
     <fieldset>
         <legend>RollCall</legend>
-
         @Html.HiddenFor(model => model.RollCallID)
-
+        <div class="editor-label">
+            Major
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("MajorID")
+        </div>
+                <div class="editor-label">
+            @Html.LabelFor(model => model.SubjectID, "Subject")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("SubjectID")
+        </div>
+                <div class="editor-label">
+            @Html.LabelFor(model => model.ClassID, "Class")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("ClassID")
+        </div>
+        <div class="editor-label">
+            Instructor
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("InstructorID")
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SemesterID, "Semester")
+        </div>
+        <div class="editor-field">
+            @Html.DropDownList("SemesterID")
+            @Html.ValidationMessageFor(model => model.SemesterID)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.StartTime)
         </div>
@@ -23,15 +48,6 @@
             @Html.EditorFor(model => model.StartTime)
             @Html.ValidationMessageFor(model => model.StartTime)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.EndTime)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EndTime)
-            @Html.ValidationMessageFor(model => model.EndTime)
-        </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.BeginDate)
         </div>
@@ -39,7 +55,6 @@
             @Html.EditorFor(model => model.BeginDate)
             @Html.ValidationMessageFor(model => model.BeginDate)
         </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.EndDate)
         </div>
@@ -47,31 +62,6 @@
             @Html.EditorFor(model => model.EndDate)
             @Html.ValidationMessageFor(model => model.EndDate)
         </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SubjectID, "Subject")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("SubjectID", String.Empty)
-            @Html.ValidationMessageFor(model => model.SubjectID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ClassID, "Class")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("ClassID", String.Empty)
-            @Html.ValidationMessageFor(model => model.ClassID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.SemesterID, "Semester")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("SemesterID", String.Empty)
-            @Html.ValidationMessageFor(model => model.SemesterID)
-        </div>
-
         <div class="editor-label">
             @Html.LabelFor(model => model.Status)
         </div>
@@ -79,13 +69,36 @@
             @Html.EditorFor(model => model.Status)
             @Html.ValidationMessageFor(model => model.Status)
         </div>
-
         <p>
             <input type="submit" value="Save" />
         </p>
     </fieldset>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+    $('#MajorID').change(function () {
+        var majorID = $('#MajorID :selected').attr("value");
+
+        var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
+        var classUrl = '@Url.Action("GetClasses")/' + majorID;
+
+        $.getJSON(subjectUrl, function (subjects) {
+            var html = "";
+            $.each(subjects, function (index, subject) {
+                html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
+            });
+            $("#SubjectID").html(html);
+        });
+
+        $.getJSON(classUrl, function (classes) {
+            var html = "";
+            $.each(classes, function (index, item_class) {
+                html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
+            });
+            $("#ClassID").html(html);
+        });
+    });
+
+</script>
