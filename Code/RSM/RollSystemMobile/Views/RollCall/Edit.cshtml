@@ -16,13 +16,13 @@
         <div class="editor-field">
             @Html.DropDownList("MajorID")
         </div>
-                <div class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.SubjectID, "Subject")
         </div>
         <div class="editor-field">
             @Html.DropDownList("SubjectID")
         </div>
-                <div class="editor-label">
+        <div class="editor-label">
             @Html.LabelFor(model => model.ClassID, "Class")
         </div>
         <div class="editor-field">
@@ -45,7 +45,15 @@
             @Html.LabelFor(model => model.StartTime)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.StartTime)
+            @Html.DropDownList("StartTime", new List<SelectListItem> 
+       { 
+           new SelectListItem { Text = "7:00", Value = "7:00" ,Selected=true}, 
+           new SelectListItem { Text = "8:45", Value = "8:45" },
+           new SelectListItem { Text = "10:30", Value = "10:30" }, 
+           new SelectListItem { Text = "12:30", Value = "12:30" }, 
+           new SelectListItem { Text = "14:15", Value = "14:15" }, 
+           new SelectListItem { Text = "16:00", Value = "16:00" } 
+       })
             @Html.ValidationMessageFor(model => model.StartTime)
         </div>
         <div class="editor-label">

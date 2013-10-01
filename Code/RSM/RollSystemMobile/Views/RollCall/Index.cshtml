@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+    
 }
 
 <h2>Index</h2>
@@ -9,7 +11,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table>
+<table class="table">
     <tr>
         <th>
             StartTime
