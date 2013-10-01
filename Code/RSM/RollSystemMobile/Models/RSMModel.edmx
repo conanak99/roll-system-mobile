@@ -144,10 +144,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="InstructorID" Type="int" />
-          <Property Name="RollCallID" Type="int" />
-          <Property Name="BeginDate" Type="date" />
-          <Property Name="EndDate" Type="date" />
+          <Property Name="InstructorID" Type="int" Nullable="false" />
+          <Property Name="RollCallID" Type="int" Nullable="false" />
+          <Property Name="BeginDate" Type="date" Nullable="false" />
+          <Property Name="EndDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="LogImage">
           <Key>
@@ -263,6 +263,7 @@
           <Property Name="FullName" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="NumberOfSlot" Type="int" Nullable="false" />
           <Property Name="Description" Type="char" MaxLength="10" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="SubjectMajorMapping">
           <Key>
@@ -345,7 +346,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_InstructorTeaching_Instructor">
-          <End Role="Instructor" Type="RSMModel.Store.Instructor" Multiplicity="0..1" />
+          <End Role="Instructor" Type="RSMModel.Store.Instructor" Multiplicity="1" />
           <End Role="InstructorTeaching" Type="RSMModel.Store.InstructorTeaching" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Instructor">
@@ -357,7 +358,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_InstructorTeaching_RollCall">
-          <End Role="RollCall" Type="RSMModel.Store.RollCall" Multiplicity="0..1" />
+          <End Role="RollCall" Type="RSMModel.Store.RollCall" Multiplicity="1" />
           <End Role="InstructorTeaching" Type="RSMModel.Store.InstructorTeaching" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="RollCall">
@@ -616,7 +617,6 @@
             <End Role="Major" EntitySet="Majors" />
             <End Role="Subject" EntitySet="Subjects" />
           </AssociationSet>
-          <EntitySet Name="InstructorTeachings" EntityType="RSMModel.InstructorTeaching" />
           <EntitySet Name="RollCalls" EntityType="RSMModel.RollCall" />
           <AssociationSet Name="RollCall_AttendanceLog_FK1" Association="RSMModel.RollCall_AttendanceLog_FK1">
             <End Role="RollCall" EntitySet="RollCalls" />
@@ -625,14 +625,6 @@
           <AssociationSet Name="FK_RollCall_Class" Association="RSMModel.FK_RollCall_Class">
             <End Role="Class" EntitySet="Classes" />
             <End Role="RollCall" EntitySet="RollCalls" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InstructorTeaching_Instructor" Association="RSMModel.FK_InstructorTeaching_Instructor">
-            <End Role="Instructor" EntitySet="Instructors" />
-            <End Role="InstructorTeaching" EntitySet="InstructorTeachings" />
-          </AssociationSet>
-          <AssociationSet Name="FK_InstructorTeaching_RollCall" Association="RSMModel.FK_InstructorTeaching_RollCall">
-            <End Role="RollCall" EntitySet="RollCalls" />
-            <End Role="InstructorTeaching" EntitySet="InstructorTeachings" />
           </AssociationSet>
           <AssociationSet Name="FK_RollCall_Semester" Association="RSMModel.FK_RollCall_Semester">
             <End Role="Semester" EntitySet="Semesters" />
@@ -645,6 +637,15 @@
           <AssociationSet Name="StudentInRollCall" Association="RSMModel.StudentInRollCall">
             <End Role="RollCall" EntitySet="RollCalls" />
             <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <EntitySet Name="InstructorTeachings" EntityType="RSMModel.InstructorTeaching" />
+          <AssociationSet Name="FK_InstructorTeaching_Instructor" Association="RSMModel.FK_InstructorTeaching_Instructor">
+            <End Role="Instructor" EntitySet="Instructors" />
+            <End Role="InstructorTeaching" EntitySet="InstructorTeachings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InstructorTeaching_RollCall" Association="RSMModel.FK_InstructorTeaching_RollCall">
+            <End Role="RollCall" EntitySet="RollCalls" />
+            <End Role="InstructorTeaching" EntitySet="InstructorTeachings" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AttendanceLog">
@@ -794,6 +795,7 @@
           <Property Name="Description" Type="String" MaxLength="10" Unicode="false" FixedLength="true" />
           <NavigationProperty Name="Majors" Relationship="RSMModel.SubjectMajorMapping" FromRole="Subject" ToRole="Major" />
           <NavigationProperty Name="RollCalls" Relationship="RSMModel.FK_RollCall_Subject" FromRole="Subject" ToRole="RollCall" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -955,18 +957,6 @@
           <End Role="Major" Type="RSMModel.Major" Multiplicity="*" />
           <End Role="Subject" Type="RSMModel.Subject" Multiplicity="*" />
         </Association>
-        <EntityType Name="InstructorTeaching">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="InstructorID" />
-          <Property Type="Int32" Name="RollCallID" />
-          <Property Type="DateTime" Name="BeginDate" />
-          <Property Type="DateTime" Name="EndDate" />
-          <NavigationProperty Name="Instructor" Relationship="RSMModel.FK_InstructorTeaching_Instructor" FromRole="InstructorTeaching" ToRole="Instructor" />
-          <NavigationProperty Name="RollCall" Relationship="RSMModel.FK_InstructorTeaching_RollCall" FromRole="InstructorTeaching" ToRole="RollCall" />
-        </EntityType>
         <EntityType Name="RollCall">
           <Key>
             <PropertyRef Name="RollCallID" />
@@ -982,10 +972,10 @@
           <Property Type="Int32" Name="Status" Nullable="false" />
           <NavigationProperty Name="AttendanceLogs" Relationship="RSMModel.RollCall_AttendanceLog_FK1" FromRole="RollCall" ToRole="AttendanceLog" />
           <NavigationProperty Name="Class" Relationship="RSMModel.FK_RollCall_Class" FromRole="RollCall" ToRole="Class" />
-          <NavigationProperty Name="InstructorTeachings" Relationship="RSMModel.FK_InstructorTeaching_RollCall" FromRole="RollCall" ToRole="InstructorTeaching" />
           <NavigationProperty Name="Semester" Relationship="RSMModel.FK_RollCall_Semester" FromRole="RollCall" ToRole="Semester" />
           <NavigationProperty Name="Subject" Relationship="RSMModel.FK_RollCall_Subject" FromRole="RollCall" ToRole="Subject" />
           <NavigationProperty Name="Students" Relationship="RSMModel.StudentInRollCall" FromRole="RollCall" ToRole="Student" />
+          <NavigationProperty Name="InstructorTeachings" Relationship="RSMModel.FK_InstructorTeaching_RollCall" FromRole="RollCall" ToRole="InstructorTeaching" />
         </EntityType>
         <Association Name="RollCall_AttendanceLog_FK1">
           <End Type="RSMModel.RollCall" Role="RollCall" Multiplicity="1" />
@@ -1008,30 +998,6 @@
             </Principal>
             <Dependent Role="RollCall">
               <PropertyRef Name="ClassID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InstructorTeaching_Instructor">
-          <End Type="RSMModel.Instructor" Role="Instructor" Multiplicity="0..1" />
-          <End Type="RSMModel.InstructorTeaching" Role="InstructorTeaching" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Instructor">
-              <PropertyRef Name="InstructorID" />
-            </Principal>
-            <Dependent Role="InstructorTeaching">
-              <PropertyRef Name="InstructorID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InstructorTeaching_RollCall">
-          <End Type="RSMModel.RollCall" Role="RollCall" Multiplicity="0..1" />
-          <End Type="RSMModel.InstructorTeaching" Role="InstructorTeaching" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="RollCall">
-              <PropertyRef Name="RollCallID" />
-            </Principal>
-            <Dependent Role="InstructorTeaching">
-              <PropertyRef Name="RollCallID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1062,6 +1028,42 @@
         <Association Name="StudentInRollCall">
           <End Type="RSMModel.RollCall" Role="RollCall" Multiplicity="*" />
           <End Type="RSMModel.Student" Role="Student" Multiplicity="*" />
+        </Association>
+        <EntityType Name="InstructorTeaching">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="InstructorID" Nullable="false" />
+          <Property Type="Int32" Name="RollCallID" Nullable="false" />
+          <Property Type="DateTime" Name="BeginDate" Nullable="false" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" />
+          <NavigationProperty Name="Instructor" Relationship="RSMModel.FK_InstructorTeaching_Instructor" FromRole="InstructorTeaching" ToRole="Instructor" />
+          <NavigationProperty Name="RollCall" Relationship="RSMModel.FK_InstructorTeaching_RollCall" FromRole="InstructorTeaching" ToRole="RollCall" />
+        </EntityType>
+        <Association Name="FK_InstructorTeaching_Instructor">
+          <End Type="RSMModel.Instructor" Role="Instructor" Multiplicity="1" />
+          <End Type="RSMModel.InstructorTeaching" Role="InstructorTeaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Instructor">
+              <PropertyRef Name="InstructorID" />
+            </Principal>
+            <Dependent Role="InstructorTeaching">
+              <PropertyRef Name="InstructorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InstructorTeaching_RollCall">
+          <End Type="RSMModel.RollCall" Role="RollCall" Multiplicity="1" />
+          <End Type="RSMModel.InstructorTeaching" Role="InstructorTeaching" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RollCall">
+              <PropertyRef Name="RollCallID" />
+            </Principal>
+            <Dependent Role="InstructorTeaching">
+              <PropertyRef Name="RollCallID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -1145,7 +1147,8 @@
             <ScalarProperty Name="ImageLink" ColumnName="ImageLink" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Subjects"><EntityTypeMapping TypeName="RSMModel.Subject"><MappingFragment StoreEntitySet="Subject">
-            <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+            <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
             <ScalarProperty Name="ShortName" ColumnName="ShortName" />
             <ScalarProperty Name="FullName" ColumnName="FullName" />
             <ScalarProperty Name="NumberOfSlot" ColumnName="NumberOfSlot" />
@@ -1173,17 +1176,6 @@
               <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
             </EndProperty>
           </AssociationSetMapping>
-          <EntitySetMapping Name="InstructorTeachings">
-            <EntityTypeMapping TypeName="RSMModel.InstructorTeaching">
-              <MappingFragment StoreEntitySet="InstructorTeaching">
-                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
-                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
-                <ScalarProperty Name="RollCallID" ColumnName="RollCallID" />
-                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RollCalls">
             <EntityTypeMapping TypeName="RSMModel.RollCall">
               <MappingFragment StoreEntitySet="RollCall">
@@ -1207,6 +1199,17 @@
               <ScalarProperty Name="RollCallID" ColumnName="RollCallID" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="InstructorTeachings">
+            <EntityTypeMapping TypeName="RSMModel.InstructorTeaching">
+              <MappingFragment StoreEntitySet="InstructorTeaching">
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="RollCallID" ColumnName="RollCallID" />
+                <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1268,11 +1271,11 @@
         <AssociationConnector Association="RSMModel.Class_Student_FK1" ManuallyRouted="false">
           <ConnectorPoint PointX="4.5" PointY="8.2398893229166674" />
           <ConnectorPoint PointX="4.875" PointY="8.6148893229166674" />
-          <ConnectorPoint PointX="4.875" PointY="10.52830078125" />
-          <ConnectorPoint PointX="7.1261528461538468" PointY="10.52830078125" />
-          <ConnectorPoint PointX="7.1285744349011209" PointY="10.525879192502725" />
-          <ConnectorPoint PointX="7.3401755650988791" PointY="10.314278062304968" />
-          <ConnectorPoint PointX="7.5011528461538459" PointY="10.15330078125" />
+          <ConnectorPoint PointX="4.875" PointY="10.528300781250003" />
+          <ConnectorPoint PointX="7.1261528461538468" PointY="10.528300781250003" />
+          <ConnectorPoint PointX="7.1285744349011209" PointY="10.525879192502728" />
+          <ConnectorPoint PointX="7.3089255650988791" PointY="10.345528062304972" />
+          <ConnectorPoint PointX="7.5011528461538459" PointY="10.153300781250003" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_Class_Major" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="7.9324446614583337" />
@@ -1316,27 +1319,43 @@
           <ConnectorPoint PointX="7.0660744349011209" PointY="13.12238610356042" />
           <ConnectorPoint PointX="7.1839255650988791" PointY="13.004534973362663" />
           <ConnectorPoint PointX="7.1875" PointY="13.000960538461541" />
-          <ConnectorPoint PointX="7.1875" PointY="8.201650390625" />
-          <ConnectorPoint PointX="7.5" PointY="8.201650390625" />
+          <ConnectorPoint PointX="7.1875" PointY="8.689564988281246" />
+          <ConnectorPoint PointX="7.5" PointY="8.689564988281246" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.SubjectMajorMapping" ManuallyRouted="false">
           <ConnectorPoint PointX="2.25" PointY="9.2401432291666659" />
           <ConnectorPoint PointX="3" PointY="9.2401432291666659" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RSMModel.InstructorTeaching" Width="1.5" PointX="10.5" PointY="3.375" Height="2.3648893229166674" />
         <EntityTypeShape EntityType="RSMModel.RollCall" Width="1.5" PointX="5.25" PointY="5" Height="3.9033007812500031" />
         <AssociationConnector Association="RSMModel.RollCall_AttendanceLog_FK1" >
-          <ConnectorPoint PointX="6.75" PointY="8.8721459350961567" />
-          <ConnectorPoint PointX="7.1285744349011217" PointY="9.2507203699972766" />
-          <ConnectorPoint PointX="7.2464255650988791" PointY="9.3685715001950349" />
-          <ConnectorPoint PointX="7.28125" PointY="9.4033959350961567" />
-          <ConnectorPoint PointX="7.28125" PointY="11.858045688802083" />
-          <ConnectorPoint PointX="7.5" PointY="11.858045688802083" />
+          <ConnectorPoint PointX="6.75" PointY="8.90330078125" />
+          <ConnectorPoint PointX="7.1285744349011217" PointY="9.28187521615112" />
+          <ConnectorPoint PointX="7.2464255650988791" PointY="9.3997263463488778" />
+          <ConnectorPoint PointX="7.25" PointY="9.40330078125" />
+          <ConnectorPoint PointX="7.25" PointY="12.528595377604166" />
+          <ConnectorPoint PointX="7.5" PointY="12.528595377604166" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_RollCall_Class" >
           <ConnectorPoint PointX="4.5" PointY="7.0261921614583338" />
           <ConnectorPoint PointX="5.25" PointY="7.0261921614583338" />
         </AssociationConnector>
+        <AssociationConnector Association="RSMModel.FK_RollCall_Semester" >
+          <ConnectorPoint PointX="4.5" PointY="3.6151432291666659" />
+          <ConnectorPoint PointX="6" PointY="3.6151432291666659" />
+          <ConnectorPoint PointX="6" PointY="5" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.FK_RollCall_Subject" >
+          <ConnectorPoint PointX="4.5" PointY="9.747053281249995" />
+          <ConnectorPoint PointX="4.791666666666667" PointY="9.747053281249995" />
+          <ConnectorPoint PointX="4.958333333333333" PointY="9.747053281249995" />
+          <ConnectorPoint PointX="5.9687475" PointY="9.747053281249995" />
+          <ConnectorPoint PointX="5.9687475" PointY="8.90330078125" />
+        </AssociationConnector>
+        <AssociationConnector Association="RSMModel.StudentInRollCall" >
+          <ConnectorPoint PointX="6.75" PointY="7.4072824941406221" />
+          <ConnectorPoint PointX="7.5" PointY="7.4072824941406221" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="RSMModel.InstructorTeaching" Width="1.5" PointX="10.5" PointY="3.375" Height="2.3648893229166674" />
         <AssociationConnector Association="RSMModel.FK_InstructorTeaching_Instructor" >
           <ConnectorPoint PointX="9.75" PointY="4.0910953776041659" />
           <ConnectorPoint PointX="10.5" PointY="4.0910953776041659" />
@@ -1346,22 +1365,6 @@
           <ConnectorPoint PointX="9.1354166666666661" PointY="5.3699446614583328" />
           <ConnectorPoint PointX="9.3020833333333339" PointY="5.3699446614583337" />
           <ConnectorPoint PointX="10.5" PointY="5.3699446614583337" />
-        </AssociationConnector>
-        <AssociationConnector Association="RSMModel.FK_RollCall_Semester" >
-          <ConnectorPoint PointX="4.5" PointY="3.6151432291666667" />
-          <ConnectorPoint PointX="6" PointY="3.6151432291666667" />
-          <ConnectorPoint PointX="6" PointY="5" />
-        </AssociationConnector>
-        <AssociationConnector Association="RSMModel.FK_RollCall_Subject" >
-          <ConnectorPoint PointX="4.5" PointY="9.7158012812500019" />
-          <ConnectorPoint PointX="4.791666666666667" PointY="9.7158012812500019" />
-          <ConnectorPoint PointX="4.958333333333333" PointY="9.7158012812500019" />
-          <ConnectorPoint PointX="6" PointY="9.7158012812500019" />
-          <ConnectorPoint PointX="6" PointY="8.9033007812500031" />
-        </AssociationConnector>
-        <AssociationConnector Association="RSMModel.StudentInRollCall" >
-          <ConnectorPoint PointX="6.75" PointY="7.1633251953125" />
-          <ConnectorPoint PointX="7.5" PointY="7.1633251953125" />
         </AssociationConnector>
       </Diagram>
     </Diagrams>

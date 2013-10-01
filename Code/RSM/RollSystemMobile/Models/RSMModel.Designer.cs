@@ -8,13 +8,12 @@
 //------------------------------------------------------------------------------
 
 using System;
-using System.ComponentModel;
-using System.Data.EntityClient;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
-using System.Linq;
-using System.Runtime.Serialization;
+using System.Data.EntityClient;
+using System.ComponentModel;
 using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 [assembly: EdmSchemaAttribute()]
 #region EDM Relationship Metadata
@@ -33,11 +32,11 @@ using System.Xml.Serialization;
 [assembly: EdmRelationshipAttribute("RSMModel", "SubjectMajorMapping", "Major", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Major), "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Subject))]
 [assembly: EdmRelationshipAttribute("RSMModel", "RollCall_AttendanceLog_FK1", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.RollCall), "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.AttendanceLog), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Class", "Class", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Class), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_InstructorTeaching_Instructor", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.Instructor), "InstructorTeaching", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.InstructorTeaching), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_InstructorTeaching_RollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.RollCall), "InstructorTeaching", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.InstructorTeaching), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Semester", "Semester", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Semester), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Subject", "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Subject), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "StudentInRollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student))]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_InstructorTeaching_Instructor", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Instructor), "InstructorTeaching", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.InstructorTeaching), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_InstructorTeaching_RollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.RollCall), "InstructorTeaching", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.InstructorTeaching), true)]
 
 #endregion
 
@@ -332,22 +331,6 @@ namespace RollSystemMobile.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<InstructorTeaching> InstructorTeachings
-        {
-            get
-            {
-                if ((_InstructorTeachings == null))
-                {
-                    _InstructorTeachings = base.CreateObjectSet<InstructorTeaching>("InstructorTeachings");
-                }
-                return _InstructorTeachings;
-            }
-        }
-        private ObjectSet<InstructorTeaching> _InstructorTeachings;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<RollCall> RollCalls
         {
             get
@@ -360,9 +343,24 @@ namespace RollSystemMobile.Models
             }
         }
         private ObjectSet<RollCall> _RollCalls;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<InstructorTeaching> InstructorTeachings
+        {
+            get
+            {
+                if ((_InstructorTeachings == null))
+                {
+                    _InstructorTeachings = base.CreateObjectSet<InstructorTeaching>("InstructorTeachings");
+                }
+                return _InstructorTeachings;
+            }
+        }
+        private ObjectSet<InstructorTeaching> _InstructorTeachings;
 
         #endregion
-
         #region AddTo Methods
     
         /// <summary>
@@ -486,27 +484,27 @@ namespace RollSystemMobile.Models
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the InstructorTeachings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToInstructorTeachings(InstructorTeaching instructorTeaching)
-        {
-            base.AddObject("InstructorTeachings", instructorTeaching);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the RollCalls EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToRollCalls(RollCall rollCall)
         {
             base.AddObject("RollCalls", rollCall);
         }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the InstructorTeachings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToInstructorTeachings(InstructorTeaching instructorTeaching)
+        {
+            base.AddObject("InstructorTeachings", instructorTeaching);
+        }
 
         #endregion
-
     }
+    
 
     #endregion
-
+    
     #region Entities
     
     /// <summary>
@@ -537,7 +535,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -640,7 +637,6 @@ namespace RollSystemMobile.Models
         partial void OnTypeIDChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -765,7 +761,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -796,7 +791,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -899,7 +893,6 @@ namespace RollSystemMobile.Models
         partial void OnIsActiveChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -986,7 +979,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -1015,7 +1007,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -1166,7 +1157,6 @@ namespace RollSystemMobile.Models
         partial void OnUserIDChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -1231,7 +1221,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -1248,15 +1237,22 @@ namespace RollSystemMobile.Models
         /// Create a new InstructorTeaching object.
         /// </summary>
         /// <param name="id">Initial value of the ID property.</param>
-        public static InstructorTeaching CreateInstructorTeaching(global::System.Int32 id)
+        /// <param name="instructorID">Initial value of the InstructorID property.</param>
+        /// <param name="rollCallID">Initial value of the RollCallID property.</param>
+        /// <param name="beginDate">Initial value of the BeginDate property.</param>
+        /// <param name="endDate">Initial value of the EndDate property.</param>
+        public static InstructorTeaching CreateInstructorTeaching(global::System.Int32 id, global::System.Int32 instructorID, global::System.Int32 rollCallID, global::System.DateTime beginDate, global::System.DateTime endDate)
         {
             InstructorTeaching instructorTeaching = new InstructorTeaching();
             instructorTeaching.ID = id;
+            instructorTeaching.InstructorID = instructorID;
+            instructorTeaching.RollCallID = rollCallID;
+            instructorTeaching.BeginDate = beginDate;
+            instructorTeaching.EndDate = endDate;
             return instructorTeaching;
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -1289,9 +1285,9 @@ namespace RollSystemMobile.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> InstructorID
+        public global::System.Int32 InstructorID
         {
             get
             {
@@ -1306,16 +1302,16 @@ namespace RollSystemMobile.Models
                 OnInstructorIDChanged();
             }
         }
-        private Nullable<global::System.Int32> _InstructorID;
-        partial void OnInstructorIDChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _InstructorID;
+        partial void OnInstructorIDChanging(global::System.Int32 value);
         partial void OnInstructorIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.Int32> RollCallID
+        public global::System.Int32 RollCallID
         {
             get
             {
@@ -1330,16 +1326,16 @@ namespace RollSystemMobile.Models
                 OnRollCallIDChanged();
             }
         }
-        private Nullable<global::System.Int32> _RollCallID;
-        partial void OnRollCallIDChanging(Nullable<global::System.Int32> value);
+        private global::System.Int32 _RollCallID;
+        partial void OnRollCallIDChanging(global::System.Int32 value);
         partial void OnRollCallIDChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> BeginDate
+        public global::System.DateTime BeginDate
         {
             get
             {
@@ -1354,16 +1350,16 @@ namespace RollSystemMobile.Models
                 OnBeginDateChanged();
             }
         }
-        private Nullable<global::System.DateTime> _BeginDate;
-        partial void OnBeginDateChanging(Nullable<global::System.DateTime> value);
+        private global::System.DateTime _BeginDate;
+        partial void OnBeginDateChanging(global::System.DateTime value);
         partial void OnBeginDateChanged();
     
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
         [DataMemberAttribute()]
-        public Nullable<global::System.DateTime> EndDate
+        public global::System.DateTime EndDate
         {
             get
             {
@@ -1378,12 +1374,11 @@ namespace RollSystemMobile.Models
                 OnEndDateChanged();
             }
         }
-        private Nullable<global::System.DateTime> _EndDate;
-        partial void OnEndDateChanging(Nullable<global::System.DateTime> value);
+        private global::System.DateTime _EndDate;
+        partial void OnEndDateChanging(global::System.DateTime value);
         partial void OnEndDateChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -1464,7 +1459,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -1493,7 +1487,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -1572,7 +1565,6 @@ namespace RollSystemMobile.Models
         partial void OnImageLinkChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -1615,7 +1607,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -1640,7 +1631,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -1695,7 +1685,6 @@ namespace RollSystemMobile.Models
         partial void OnTypeNameChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -1722,7 +1711,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -1749,7 +1737,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -1828,7 +1815,6 @@ namespace RollSystemMobile.Models
         partial void OnFullNameChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -1877,7 +1863,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -1904,7 +1889,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -1959,7 +1943,6 @@ namespace RollSystemMobile.Models
         partial void OnRoleNameChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -1986,7 +1969,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -2027,7 +2009,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -2250,7 +2231,6 @@ namespace RollSystemMobile.Models
         partial void OnStatusChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -2310,28 +2290,6 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Class>("RSMModel.FK_RollCall_Class", "Class", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_InstructorTeaching_RollCall", "InstructorTeaching")]
-        public EntityCollection<InstructorTeaching> InstructorTeachings
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InstructorTeaching>("RSMModel.FK_InstructorTeaching_RollCall", "InstructorTeaching");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InstructorTeaching>("RSMModel.FK_InstructorTeaching_RollCall", "InstructorTeaching", value);
                 }
             }
         }
@@ -2433,9 +2391,30 @@ namespace RollSystemMobile.Models
                 }
             }
         }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_InstructorTeaching_RollCall", "InstructorTeaching")]
+        public EntityCollection<InstructorTeaching> InstructorTeachings
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InstructorTeaching>("RSMModel.FK_InstructorTeaching_RollCall", "InstructorTeaching");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InstructorTeaching>("RSMModel.FK_InstructorTeaching_RollCall", "InstructorTeaching", value);
+                }
+            }
+        }
 
         #endregion
-
     }
     
     /// <summary>
@@ -2466,7 +2445,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -2569,7 +2547,6 @@ namespace RollSystemMobile.Models
         partial void OnEndDateChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -2596,7 +2573,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -2625,7 +2601,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -2776,7 +2751,6 @@ namespace RollSystemMobile.Models
         partial void OnUserIDChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -2819,7 +2793,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -2856,7 +2829,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -3103,7 +3075,6 @@ namespace RollSystemMobile.Models
         partial void OnStudentCodeChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -3250,7 +3221,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -3279,7 +3249,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -3385,7 +3354,6 @@ namespace RollSystemMobile.Models
         partial void OnNoteChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -3466,7 +3434,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -3495,7 +3462,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -3574,7 +3540,6 @@ namespace RollSystemMobile.Models
         partial void OnImageLinkChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -3617,7 +3582,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -3636,17 +3600,18 @@ namespace RollSystemMobile.Models
         /// <param name="subjectID">Initial value of the SubjectID property.</param>
         /// <param name="fullName">Initial value of the FullName property.</param>
         /// <param name="numberOfSlot">Initial value of the NumberOfSlot property.</param>
-        public static Subject CreateSubject(global::System.Int32 subjectID, global::System.String fullName, global::System.Int32 numberOfSlot)
+        /// <param name="isActive">Initial value of the IsActive property.</param>
+        public static Subject CreateSubject(global::System.Int32 subjectID, global::System.String fullName, global::System.Int32 numberOfSlot, global::System.Boolean isActive)
         {
             Subject subject = new Subject();
             subject.SubjectID = subjectID;
             subject.FullName = fullName;
             subject.NumberOfSlot = numberOfSlot;
+            subject.IsActive = isActive;
             return subject;
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -3771,9 +3736,32 @@ namespace RollSystemMobile.Models
         private global::System.String _Description;
         partial void OnDescriptionChanging(global::System.String value);
         partial void OnDescriptionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsActive
+        {
+            get
+            {
+                return _IsActive;
+            }
+            set
+            {
+                OnIsActiveChanging(value);
+                ReportPropertyChanging("IsActive");
+                _IsActive = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsActive");
+                OnIsActiveChanged();
+            }
+        }
+        private global::System.Boolean _IsActive;
+        partial void OnIsActiveChanging(global::System.Boolean value);
+        partial void OnIsActiveChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -3822,7 +3810,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
     
     /// <summary>
@@ -3851,7 +3838,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -3978,7 +3964,6 @@ namespace RollSystemMobile.Models
         partial void OndefinitionChanged();
 
         #endregion
-
     
     }
     
@@ -4012,7 +3997,6 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
         #region Primitive Properties
     
         /// <summary>
@@ -4139,7 +4123,6 @@ namespace RollSystemMobile.Models
         partial void OnIsActiveChanged();
 
         #endregion
-
     
         #region Navigation Properties
     
@@ -4248,10 +4231,8 @@ namespace RollSystemMobile.Models
         }
 
         #endregion
-
     }
 
     #endregion
-
     
 }

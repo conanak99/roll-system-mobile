@@ -12,6 +12,7 @@ namespace RollSystemMobile.Controllers
 {
     public class StaffController : Controller
     {
+        private RSMEntities _db = new RSMEntities();
         //
         // GET: /Staff/
 
@@ -24,9 +25,7 @@ namespace RollSystemMobile.Controllers
         {
             return View();
         }
-        private RSMEntities _db = new RSMEntities()
-        {
-        };
+        
         [HttpPost]
         public ActionResult ImportExcelFileToDatabase(HttpPostedFileBase file)
         {
