@@ -1,6 +1,7 @@
 ﻿@model RollSystemMobile.Models.RollCall
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
     Create</h2>
@@ -43,16 +44,23 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.StartTime)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.StartTime)
+        <div class="editor-field" id="a">
+            @Html.DropDownList("StartTime", new List<SelectListItem> 
+       { 
+           new SelectListItem { Text = "7:00", Value = "7:00" ,Selected=true}, 
+           new SelectListItem { Text = "8:45", Value = "8:45" },
+           new SelectListItem { Text = "10:30", Value = "10:30" }, 
+           new SelectListItem { Text = "12:30", Value = "12:30" }, 
+           new SelectListItem { Text = "14:15", Value = "14:15" }, 
+           new SelectListItem { Text = "16:00", Value = "16:00" } 
+       })
             @Html.ValidationMessageFor(model => model.StartTime)
         </div>
-        <div class="editor-label">
-            @Html.LabelFor(model => model.BeginDate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.BeginDate)
-            @Html.ValidationMessageFor(model => model.BeginDate)
+        Start Date :
+        <div class="input-append date" id="startdate" data-date-format="dd-mm-yyyy" style="margin-left: 12px;
+            margin-right: 50px;">
+            <input class="span2" style="width: 160px;" size="16" type="text" value="12-02-2013"
+                readonly><span class="add-on"><i class="icon-th"></i></span>
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.EndDate)
@@ -61,7 +69,6 @@
             @Html.EditorFor(model => model.EndDate)
             @Html.ValidationMessageFor(model => model.EndDate)
         </div>
-
         <p>
             <input type="submit" value="Create" />
         </p>
@@ -71,6 +78,19 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 <script>
+    $(document).ready(function () {
+        $("#startdate").datepicker({ dateFormat: 'dd/mm/yy' });
+    });
+    //set selected start time on reload page
+    $('#StartTime').change(function () {
+        var value = $('#StartTime :selected').index();
+        localStorage.a = value;
+    })
+    window.onload = function () {
+        document.getElementById('StartTime').selectedIndex = localStorage.a;
+    }
+    //dom not only ready, but everything is loaded
+
     $('#MajorID').change(function () {
         var majorID = $('#MajorID :selected').attr("value");
 
