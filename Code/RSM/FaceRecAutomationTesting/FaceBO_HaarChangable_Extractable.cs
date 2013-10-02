@@ -10,18 +10,19 @@ using Emgu.CV.CvEnum;
 namespace FaceRecAutomationTesting
 {
 
-    public class FaceBO_HaarChangable
+    public class FaceBO_HaarChangable_Extractable
     {
         public static HaarCascade Haar;
         //Luc add, co the dung alt2
         //Luc detect, nen dung alt_tree neu can chinh xac cao, can nhieu van dung alt2
-
+        private static String HaarXML = "haarcascade_frontalface_alt_tree.xml"; //"haarcascade_frontalface_alt2.xml"
+        public static String EXTRACT_FOLDER_PATH;
+        private static List<Image<Gray, byte>> ImageList;
         private static double DETECT_SCALE = 1.1;
         private static int MIN_NEIGHBOR = 3;
         private static int MIN_SIZE = 20;
         private static String HAAR_XML_PATH;
         private static String TRAINING_FOLDER_PATH;
-        
 
         private static int RESIZE_WIDTH = 1300;
         private static int RESIZE_HEIGHT = 800;
@@ -35,6 +36,11 @@ namespace FaceRecAutomationTesting
         public static void SetTrainingFolderPath(String FolderPath)
         {
             TRAINING_FOLDER_PATH = FolderPath;
+        }
+
+        public static void InitialImageList()
+        {
+            ImageList = new List<Image<Gray, byte>>();
         }
 
         public static RecognizerResult DetectFromImage(string ImagePath)
@@ -58,14 +64,16 @@ namespace FaceRecAutomationTesting
                     FaceRegion FaceReg = new FaceRegion(Face.rect.X, Face.rect.Y,
                                     Face.rect.Width, Face.rect.Height);
                     Result.FaceList.Add(FaceReg);
+
+
+                    Image<Gray, byte> GrayFace = Image.Copy(Face.rect).
+                                                 Resize(100, 100, INTER.CV_INTER_CUBIC);
+                    ImageList.Add(GrayFace);
                 }
 
             }
-
             return Result;
         }
-
-
 
         //Resize lai anh
         public static void ResizeImage(string OldPath, string NewPath)
@@ -107,6 +115,20 @@ namespace FaceRecAutomationTesting
             }
             return null;
         }
+
+        public static void SaveImage()
+        {
+            bool isExists = System.IO.Directory.Exists(EXTRACT_FOLDER_PATH);
+
+            if (!isExists)
+                System.IO.Directory.CreateDirectory(EXTRACT_FOLDER_PATH);
+            for (int i = 0; i < ImageList.Count; i++)
+            {
+                String FileName = EXTRACT_FOLDER_PATH + "\\" + i + ".jpg";
+                ImageList.ElementAt(i).ToBitmap().Save(FileName);
+            }
+        }
+
 
         /*
         public static void SaveTrainingData(string ImagePath, int FaceID, int StudentID)
