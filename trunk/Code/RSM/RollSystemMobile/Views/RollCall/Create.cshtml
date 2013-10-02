@@ -60,11 +60,14 @@
         <div class="editor-label">
             @Html.LabelFor(model => model.BeginDate)
         </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.BeginDate)
+        </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.EndDate)
         </div>
         <div class="editor-field" id="enddate">
-            @Html.EditorFor(model=> model.EndDate)
+            @Html.EditorFor(model => model.EndDate)
         </div>
         <p>
             <input type="submit" value="Create" />
@@ -77,9 +80,7 @@
 <script>
     $(document).ready(function () {
         //create datepicker
-        $(".date").datepicker({ dateFormat: 'dd/MM/yy' });
-        $("#enddate").datepicker({ dateFormat: 'dd/MM/yy' });
-
+        $("#enddate").datepicker();
 
         //set gia tri ban dau cho dropdowlist student
         var classID = $('#ClassID :selected').attr("value");
