@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.Routing;
 using RollSystemMobile.Models;
+using RollSystemMobile.Models.BusinessObject;
 
 namespace RollSystemMobile
 {
