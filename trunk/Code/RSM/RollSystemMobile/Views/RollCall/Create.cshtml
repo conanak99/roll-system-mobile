@@ -60,18 +60,18 @@
             @Html.LabelFor(model => model.BeginDate)
         </div>
         <div class="editor-field">
-            <div class="input-append date" id="begindate" data-date-format="dd-mm-yyyy">
-                <input class="span2" style="width: 160px; margin-left: 10px;" size="16" type="text"
-                    value="12-02-2013" readonly><span class="add-on"><i class="icon-th"></i></span>
+            <div class="input-append date" id="begindate" data-date-format="mm-dd-yyyy">
+                <input class="span2" name="BeginDate" style="width: 160px; margin-left: 10px;" size="16" type="text"
+                    value="@DateTime.Today.ToString("MM-dd-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
             </div>
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.EndDate)
         </div>
         <div class="editor-field">
-            <div class="input-append date" id="enddate" data-date-format="dd-mm-yyyy">
-                <input class="span2" style="width: 160px; margin-left: 10px;" size="16" type="text"
-                    value="12-02-2013" readonly><span class="add-on"><i class="icon-th"></i></span>
+            <div class="input-append date" id="enddate" data-date-format="mm-dd-yyyy">
+                <input class="span2" name="EndDate" style="width: 160px; margin-left: 10px;" size="16" type="text"
+                    value="@DateTime.Today.ToString("MM-dd-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
             </div>
         </div>
         <p>
