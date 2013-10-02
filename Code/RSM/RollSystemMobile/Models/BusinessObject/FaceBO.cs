@@ -7,7 +7,7 @@ using Emgu.CV.Structure;
 using Emgu.Util;
 using Emgu.CV.CvEnum;
 
-namespace RollSystemMobile.Models
+namespace RollSystemMobile.Models.BusinessObject
 {
     public class FaceBO
     {

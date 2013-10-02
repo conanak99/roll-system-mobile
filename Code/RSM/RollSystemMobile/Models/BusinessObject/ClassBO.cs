@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using RollSystemMobile.Models.BindingModels;
 
-namespace RollSystemMobile.Models
+namespace RollSystemMobile.Models.BusinessObject
 {
     public class ClassBO
     {

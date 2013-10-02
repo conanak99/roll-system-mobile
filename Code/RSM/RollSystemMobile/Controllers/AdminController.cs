@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
+using RollSystemMobile.Models.BusinessObject;
 using System.Drawing;
 
 namespace RollSystemMobile.Controllers

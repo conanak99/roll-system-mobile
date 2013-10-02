@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using RollSystemMobile.Models.BindingModels;
 
-namespace RollSystemMobile.Models
+namespace RollSystemMobile.Models.BusinessObject
 {
     public class AttendanceBO
     {
@@ -176,5 +176,22 @@ namespace RollSystemMobile.Models
             //Neu van ko co log thi xem nhu bang null
             return Log;
         }
+
+        public List<AttendanceLog> GetRollCallAttendanceLog(int RollCallID)
+        {
+            RollCall RollCall = _db.RollCalls.FirstOrDefault(roll => roll.RollCallID == RollCallID);
+            var Dates = RollCall.AttendanceLogs.OrderBy(roll => roll.LogDate).Select(roll => roll.LogDate).Distinct();
+            List<AttendanceLog> AttendanceLogs = new List<AttendanceLog>();
+            foreach (DateTime Date in Dates)
+            {
+                AttendanceLog Log = GetAttendanceLogAtDate(RollCall.RollCallID, Date);
+                AttendanceLogs.Add(Log);
+            }
+
+            return AttendanceLogs;
+        }
+
+
+
     }
 }

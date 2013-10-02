@@ -90,6 +90,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>Dll\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
@@ -122,17 +125,20 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RollCallController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\BindingModels\AccountModel.cs" />
-    <Compile Include="Models\AttendanceBO.cs" />
+    <Compile Include="Models\BusinessObject\AttendanceBO.cs" />
     <Compile Include="Models\BindingModels\InstructorBindingModel.cs" />
-    <Compile Include="Models\ClassBO.cs" />
-    <Compile Include="Models\RollCallBO.cs" />
-    <Compile Include="Models\FaceBO.cs" />
+    <Compile Include="Models\BusinessObject\ClassBO.cs" />
+    <Compile Include="Models\BusinessObject\RollCallBO.cs" />
+    <Compile Include="Models\BusinessObject\FaceBO.cs" />
+    <Compile Include="Models\HelperClass\ExcelReader.cs" />
+    <Compile Include="Models\HelperClass\ExcelWriter.cs" />
     <Compile Include="Models\RecognizerResult.cs" />
     <Compile Include="Models\RSMModel.Designer.cs">
       <AutoGen>True</AutoGen>

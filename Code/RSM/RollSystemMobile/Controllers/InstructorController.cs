@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
+using RollSystemMobile.Models.BusinessObject;
 using RollSystemMobile.Models.BindingModels;
 using RollSystemMobile.Models.ViewModels;
 
@@ -126,16 +127,10 @@ namespace RollSystemMobile.Controllers
         {
             RollCall RollCall = _db.RollCalls.FirstOrDefault(roll => roll.RollCallID == id);
 
-
             AttendanceBO AttendanceBO = new AttendanceBO();
             //Lay danh sach nhung log cua roll call nay, tu luc bat dau
-            var Dates = RollCall.AttendanceLogs.OrderBy(roll => roll.LogDate).Select(roll => roll.LogDate).Distinct();
-            List<AttendanceLog> AttendanceLogs = new List<AttendanceLog>();
-            foreach (DateTime Date in Dates)
-            {
-                AttendanceLog Log = AttendanceBO.GetAttendanceLogAtDate(RollCall.RollCallID, Date);
-                AttendanceLogs.Add(Log);
-            }
+            List<AttendanceLog> AttendanceLogs = AttendanceBO.GetRollCallAttendanceLog(id);
+
 
             RollCallDetailViewModel Model = new RollCallDetailViewModel();
             Model.RollCall = RollCall;
