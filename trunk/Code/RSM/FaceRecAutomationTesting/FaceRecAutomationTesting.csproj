@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FaceBO_HaarChangable_Extractable.cs" />
     <Compile Include="FaceBO_HaarChangable.cs" />
     <Compile Include="FaceBO.cs" />
     <Compile Include="Program.cs" />
