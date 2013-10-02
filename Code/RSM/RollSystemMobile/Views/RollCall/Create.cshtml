@@ -23,11 +23,10 @@
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.ClassID, "Class")
+            <a tabindex="-1" href="@Url.Action("StudentList")">Student List</a>
         </div>
         <div class="editor-field">
             @Html.DropDownList("ClassID")
-            <tab />
-            Student List : @Html.DropDownList("StudentID")
         </div>
         <div class="editor-label">
             Instructor
@@ -61,7 +60,10 @@
             @Html.LabelFor(model => model.BeginDate)
         </div>
         <div class="editor-field">
-            @Html.EditorFor(model => model.BeginDate)
+            <div class="input-append date" id="begindate" data-date-format="dd-mm-yyyy">
+                <input class="span2" style="width: 160px; margin-left: 10px;" size="16" type="text"
+                    value="12-02-2013" readonly><span class="add-on"><i class="icon-th"></i></span>
+            </div>
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.EndDate)
@@ -83,6 +85,7 @@
 <script>
     $(document).ready(function () {
         //create datepicker
+        $("#begindate").datepicker();
         $("#enddate").datepicker();
 
         //set gia tri ban dau cho dropdowlist student
