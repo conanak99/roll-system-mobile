@@ -4,12 +4,11 @@
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
-    Create</h2>
+    Create New Roll Call</h2>
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
     <fieldset>
-        <legend>RollCall</legend>
         <div class="editor-label">
             Major
         </div>
@@ -27,6 +26,8 @@
         </div>
         <div class="editor-field">
             @Html.DropDownList("ClassID")
+            <tab />
+            Student List : @Html.DropDownList("StudentID")
         </div>
         <div class="editor-label">
             Instructor
@@ -56,17 +57,14 @@
        })
             @Html.ValidationMessageFor(model => model.StartTime)
         </div>
-        Start Date :
-        <div class="input-append date" id="startdate" data-date-format="dd-mm-yyyy" style="margin-left: 12px;
-            margin-right: 50px;">
-            <input class="span2" style="width: 160px;" size="16" type="text" readonly><span class="add-on"><i class="icon-th"></i></span>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BeginDate)
         </div>
         <div class="editor-label">
             @Html.LabelFor(model => model.EndDate)
         </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.EndDate)
-            @Html.ValidationMessageFor(model => model.EndDate)
+        <div class="editor-field" id="enddate">
+            @Html.EditorFor(model=> model.EndDate)
         </div>
         <p>
             <input type="submit" value="Create" />
@@ -78,7 +76,22 @@
 </div>
 <script>
     $(document).ready(function () {
-        $("#startdate").datepicker({ dateFormat: 'dd/MM/yy' });
+        //create datepicker
+        $(".date").datepicker({ dateFormat: 'dd/MM/yy' });
+        $("#enddate").datepicker({ dateFormat: 'dd/MM/yy' });
+
+
+        //set gia tri ban dau cho dropdowlist student
+        var classID = $('#ClassID :selected').attr("value");
+        var studentUrl = '@Url.Action("GetStudents")/' + classID;
+        $.getJSON(studentUrl, function (students) {
+            var html = "";
+            $.each(students, function (index, student) {
+                html += ('<option value="' + student.id + '" >' + student.name + '</option>');
+            });
+            $("#StudentID").html(html);
+
+        });
     });
 
 
@@ -112,7 +125,35 @@
                 html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
             });
             $("#ClassID").html(html);
+
+            //set gia tri dropdownlist student khi change dropdownlist major
+            var classID = $('#ClassID :selected').attr("value");
+            var studentUrl = '@Url.Action("GetStudents")/' + classID;
+
+            $.getJSON(studentUrl, function (students) {
+                var html = "";
+                $.each(students, function (index, student) {
+                    html += ('<option value="' + student.id + '" >' + student.name + '</option>');
+                });
+                $("#StudentID").html(html);
+
+            });
+        });
+
+
+    });
+    //set gia tri dropdownlist student khi change dropdownlist class
+    $('#ClassID').change(function () {
+        var classID = $('#ClassID :selected').attr("value");
+        var studentUrl = '@Url.Action("GetStudents")/' + classID;
+
+        $.getJSON(studentUrl, function (students) {
+            var html = "";
+            $.each(students, function (index, student) {
+                html += ('<option value="' + student.id + '" >' + student.name + '</option>');
+            });
+            $("#StudentID").html(html);
         });
     });
-
+   
 </script>
