@@ -225,6 +225,8 @@
     <Content Include="Dll\Emgu.CV.xml" />
     <Content Include="Dll\Emgu.Util.dll" />
     <Content Include="Dll\Emgu.Util.xml" />
+    <Content Include="Dll\EPPlus.dll" />
+    <Content Include="Dll\EPPlus.XML" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
