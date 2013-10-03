@@ -10,7 +10,7 @@ namespace FaceRecAutomationTesting
     {
         static void Main(string[] args)
         {
-            FaceDetectionAutomation.RunTestAutomation();
+            FaceRecognitionAutomation.RunTestAutomation();
             Console.ReadLine();
         }
 
