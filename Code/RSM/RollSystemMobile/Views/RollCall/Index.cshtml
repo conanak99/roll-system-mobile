@@ -53,7 +53,7 @@
                 @Html.DisplayFor(modelItem => item.StartTime)- @Html.DisplayFor(modelItem => item.EndTime)
             </td>
             <td>
-                @Html.ActionLink("Show", "EditStudentlist", new { ClassID = item.ClassID})
+                @Html.ActionLink("Show", "RollCallStudentList", new { RollCallID = item.RollCallID })
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID })

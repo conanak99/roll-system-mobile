@@ -1,0 +1,43 @@
+﻿@model IEnumerable<RollSystemMobile.Models.Student>
+
+@{
+    ViewBag.Title = "RollCallStudentList";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+
+<h2>StudentList</h2>
+<table class="table">
+    <tr>
+        <th>
+            No.
+        </th>
+        <th>
+            Student Name
+        </th>
+        <th>
+            Student Code
+        </th>
+        <th></th>
+    </tr>
+    @{var index = 1;}
+@foreach (var item in Model) {
+    <tr>
+        <td style="text-align:right;">
+          @index  
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentCode)
+        </td>
+        <td>
+            @Html.ActionLink("Remove", "DeleteStudent", new { StudentID = item.StudentID, RollCallID = "1" })
+        </td>
+    </tr>
+    {index++;}
+}
+</table>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
