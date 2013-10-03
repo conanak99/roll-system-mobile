@@ -11,46 +11,54 @@
 </p>
 <table class="table" id="test">
     <tr>
-        <th>
+        <th style="width:50px;">
+            Index
+        </th>
+        <th style="width:50px;">
             Class
         </th>
-        <th>
+        <th style="width:200px;">
             Subject
         </th>
-        <th>
-            Semester
-        </th>
-        <th>
+        <th style="width:200px;">
             Date
         </th>
-        <th>
+        <th style="width:200px;">
             Time
         </th>
-        <th>
+        <th style="width:100px;">
+            Student List
+        </th>
+        <th style="width:100px;">
             Edit
         </th>
     </tr>
+    @{ int index = 1;}
     @foreach (var item in Model)
     {
         <tr>
+            <td style="text-align:right;">
+                @index
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Class.ClassName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Subject.ShortName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Semester.SemesterName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)- @Html.DisplayFor(modelItem => item.EndTime)
+                @Html.DisplayFor(modelItem => item.Subject.FullName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.BeginDate)-@Html.DisplayFor(modelItem => item.EndDate)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.StartTime)- @Html.DisplayFor(modelItem => item.EndTime)
+            </td>
+            <td>
+                @Html.ActionLink("Show", "EditStudentlist", new { ClassID = item.ClassID})
+            </td>
+            <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID })
             </td>
         </tr>
+        { index++; }
     }
 </table>

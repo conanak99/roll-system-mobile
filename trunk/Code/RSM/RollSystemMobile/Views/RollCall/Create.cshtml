@@ -10,41 +10,41 @@
     @Html.ValidationSummary(true)
     <fieldset>
         <div class="editor-label">
-            Major
+            <b>Major :</b>
         </div>
-        <div class="editor-field">
+        <div class="editor-field" style="margin-left:10px">
             @Html.DropDownList("MajorID")
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.SubjectID, "Subject")
+            <b>Subject</b>
         </div>
-        <div class="editor-field">
+        <div class="editor-field" style="margin-left:10px">
             @Html.DropDownList("SubjectID")
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.ClassID, "Class")
-            <a tabindex="-1" href="@Url.Action("StudentList")">Student List</a>
+            <b>Class</b>
         </div>
-        <div class="editor-field">
-            @Html.DropDownList("ClassID")
+        <div class="editor-field" style="margin-left:10px">
+            @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID)
+            <a onclick="ViewStudentList();" href="#">Click to view student in this class</a>
         </div>
         <div class="editor-label">
-            Instructor
+            <b>Instructor</b>
         </div>
-        <div class="editor-field">
+        <div class="editor-field" style="margin-left:10px">
             @Html.DropDownList("InstructorID")
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.SemesterID, "Semester")
+            <b>Semester</b>
         </div>
-        <div class="editor-field">
+        <div class="editor-field" style="margin-left:10px">
             @Html.DropDownList("SemesterID")
             @Html.ValidationMessageFor(model => model.SemesterID)
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.StartTime)
+            <b>Start time</b>
         </div>
-        <div class="editor-field" id="a">
+        <div class="editor-field" id="a" style="margin-left:10px">
             @Html.DropDownList("StartTime", new List<SelectListItem> 
        { 
            new SelectListItem { Text = "7:00", Value = "7:00" ,Selected=true}, 
@@ -57,61 +57,52 @@
             @Html.ValidationMessageFor(model => model.StartTime)
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.BeginDate)
+            <b>Begin Date</b> <span style="margin-left:180px;"><b>Begin Date</b></span>
         </div>
-        <div class="editor-field">
+        <div class="editor-field" style="margin-left:10px">
             <div class="input-append date" id="begindate" data-date-format="mm-dd-yyyy">
-                <input class="span2" name="BeginDate" style="width: 160px; margin-left: 10px;" size="16" type="text"
+                <input class="span2" name="BeginDate" style="width: 100px; margin-left: 10px;" size="16" type="text"
+                    value="@DateTime.Today.ToString("MM-dd-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
+            </div>
+             <div class="input-append date" id="enddate" data-date-format="mm-dd-yyyy">
+                <input class="span2" name="EndDate" style="width: 100px; margin-left: 110px;" size="16" type="text"
                     value="@DateTime.Today.ToString("MM-dd-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
             </div>
         </div>
         <div class="editor-label">
-            @Html.LabelFor(model => model.EndDate)
+            <b>End Date</b>
         </div>
-        <div class="editor-field">
-            <div class="input-append date" id="enddate" data-date-format="mm-dd-yyyy">
-                <input class="span2" name="EndDate" style="width: 160px; margin-left: 10px;" size="16" type="text"
-                    value="@DateTime.Today.ToString("MM-dd-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
-            </div>
+        <div class="editor-field" style="margin-left:10px">
+           
         </div>
         <p>
-            <input type="submit" value="Create" />
+            <input type="submit" value="Create" class="btn btn-primary"/>
         </p>
     </fieldset>
 }
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         //create datepicker
         $("#begindate").datepicker();
         $("#enddate").datepicker();
-
-        //set gia tri ban dau cho dropdowlist student
-        var classID = $('#ClassID :selected').attr("value");
-        var studentUrl = '@Url.Action("GetStudents")/' + classID;
-        $.getJSON(studentUrl, function (students) {
-            var html = "";
-            $.each(students, function (index, student) {
-                html += ('<option value="' + student.id + '" >' + student.name + '</option>');
-            });
-            $("#StudentID").html(html);
-
-        });
     });
-
-
     //set selected start time on reload page
     $('#StartTime').change(function () {
         var value = $('#StartTime :selected').index();
         localStorage.a = value;
-    })
+    });
     window.onload = function () {
         document.getElementById('StartTime').selectedIndex = localStorage.a;
-    }
-    //dom not only ready, but everything is loaded
+    };
 
+    //dom not only ready, but everything is loaded
+    function ViewStudentList() {
+        var classID = $('#ClassID :selected').attr("value");
+        window.location.href = "Studentlist?ClassID="+classID;
+     }
     $('#MajorID').change(function () {
         var majorID = $('#MajorID :selected').attr("value");
 
@@ -132,35 +123,6 @@
                 html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
             });
             $("#ClassID").html(html);
-
-            //set gia tri dropdownlist student khi change dropdownlist major
-            var classID = $('#ClassID :selected').attr("value");
-            var studentUrl = '@Url.Action("GetStudents")/' + classID;
-
-            $.getJSON(studentUrl, function (students) {
-                var html = "";
-                $.each(students, function (index, student) {
-                    html += ('<option value="' + student.id + '" >' + student.name + '</option>');
-                });
-                $("#StudentID").html(html);
-
-            });
         });
-
-
-    });
-    //set gia tri dropdownlist student khi change dropdownlist class
-    $('#ClassID').change(function () {
-        var classID = $('#ClassID :selected').attr("value");
-        var studentUrl = '@Url.Action("GetStudents")/' + classID;
-
-        $.getJSON(studentUrl, function (students) {
-            var html = "";
-            $.each(students, function (index, student) {
-                html += ('<option value="' + student.id + '" >' + student.name + '</option>');
-            });
-            $("#StudentID").html(html);
-        });
-    });
-   
+    });   
 </script>

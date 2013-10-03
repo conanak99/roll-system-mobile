@@ -8,7 +8,6 @@ using System.Web.Mvc;
 using RollSystemMobile.Models;
 using System.Drawing;
 using RollSystemMobile.Models.BusinessObject;
-
 namespace RollSystemMobile.Controllers
 {
     public class RollCallController : Controller
@@ -21,7 +20,47 @@ namespace RollSystemMobile.Controllers
             var rollcalls = db.RollCalls.Include("Class").Include("Semester").Include("Subject");
             return View(rollcalls.ToList());
         }
+        //student list cho trang create new rollcall
+        public ActionResult Studentlist(int? ClassID)
+        {
+            List<Student> Students = null;
 
+            if (ClassID == null)
+            {
+                Students = db.Students.Include("Class").Where(st => st.IsActive == true).Take(30).ToList();
+            }
+            else
+            {
+                Students = db.Students.Include("Class").Where(st => st.IsActive == true && st.ClassID == ClassID).ToList();
+            }
+
+
+            var Classes = db.Classes.Where(c => c.IsActive == true);
+            ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
+            return View(Students);
+        }
+        //student list cho trang roll call list (co the xoa them)
+        public ActionResult EditStudentlist(int? ClassID,int? StudentID)
+        {
+            List<Student> Students = null;
+
+            if (ClassID == null)
+            {
+                Students = db.Students.Include("Class").Where(st => st.IsActive == true).Take(30).ToList();
+            }
+            else if (StudentID == null)
+            {
+                Students = db.Students.Include("Class").Where(st => st.IsActive == true && st.ClassID == ClassID).ToList();
+            }
+            else
+            {
+                Students = db.Students.Include("Class").Where(st => st.IsActive == true && st.ClassID == ClassID && st.StudentID != StudentID).ToList();
+            }
+
+            var Classes = db.Classes.Where(c => c.IsActive == true);
+            ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
+            return View(Students);
+        }
         //
         // GET: /RollCall/Details/5
 
@@ -38,11 +77,9 @@ namespace RollSystemMobile.Controllers
         {
             //Mac dinh, majorID la 1
             int MajorID = 1;
-            int ClassID = 1;
             //Them 1 cai ID cua instructor
             ViewBag.InstructorID = new SelectList(db.Instructors, "InstructorID", "FullName");
             ViewBag.MajorID = new SelectList(db.Majors, "MajorID", "FullName", MajorID);
-            ViewBag.StudentID = new SelectList(db.Students.Where(a => a.ClassID == ClassID), "StudentID", "FullName");
             ViewBag.ClassID = new SelectList(db.Classes.Where(c => c.MajorID == MajorID),
                 "ClassID", "ClassName");
             //Mac dinh, lay semester moi nhat
@@ -58,7 +95,7 @@ namespace RollSystemMobile.Controllers
         // POST: /RollCall/Create
 
         [HttpPost]
-        public ActionResult Create(RollCall rollcall, int MajorID, int InstructorID,int ClassID)
+        public ActionResult Create(RollCall rollcall, int MajorID, int InstructorID, int ClassID)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +118,6 @@ namespace RollSystemMobile.Controllers
 
             ViewBag.InstructorID = new SelectList(db.Instructors, "InstructorID", "FullName", InstructorID);
             ViewBag.MajorID = new SelectList(db.Majors, "MajorID", "FullName", MajorID);
-            ViewBag.StudentID = new SelectList(db.Students.Where(a => a.ClassID == ClassID), "StudentID", "FullName");
             ViewBag.ClassID = new SelectList(db.Classes.Where(c => c.MajorID == MajorID),
                 "ClassID", "ClassName", rollcall.ClassID);
             ViewBag.SemesterID = new SelectList(db.Semesters, "SemesterID", "SemesterName", rollcall.SemesterID);
@@ -200,17 +236,9 @@ namespace RollSystemMobile.Controllers
         public JsonResult GetSubjects(int id)
         {
             var Subject = db.Majors.Single(m => m.MajorID == id).Subjects.
-                Where(s=> s.IsActive).OrderBy(s => s.ShortName).
+                Where(s => s.IsActive).OrderBy(s => s.ShortName).
                 Select(s => new { id = s.SubjectID, name = s.ShortName });
             return Json(Subject, JsonRequestBehavior.AllowGet);
-        }
-
-        public JsonResult GetStudents(int id)
-        {
-            var Students = db.Students.Where(a => a.ClassID == id).
-                Where(a => a.IsActive).OrderBy(a => a.FullName).
-                Select(a => new { id = a.StudentID, name = a.FullName });
-            return Json(Students, JsonRequestBehavior.AllowGet);
         }
     }
 }
