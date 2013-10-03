@@ -47,9 +47,15 @@ namespace RollSystemMobile.Controllers
             Students = rollcall.Students.ToList();
             return View(Students);
         }
-
         //remove student from studenrlist of the rollcall
-      
+        public ActionResult DeleteStudent(int? RollCallID,int? StudentID)
+        {
+            RollCall rollcall = db.RollCalls.Single(r => r.RollCallID == RollCallID);
+            var Student = rollcall.Students.Single(a => a.StudentID == StudentID);
+            rollcall.Students.Remove(Student);
+            db.SaveChanges();
+            return RedirectToAction("RollCallStudentList", new { RollCallID = RollCallID });
+        }
         // GET: /RollCall/Details/5
 
         public ViewResult Details(int id)
