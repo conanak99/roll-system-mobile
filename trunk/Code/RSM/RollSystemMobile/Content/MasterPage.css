@@ -11,7 +11,7 @@ body
 #wrapper
 {
     width: 1080px;
-    background-color: #e5e5e5;
+    background-color: white;
     margin: 0 auto;
 }
 
@@ -19,7 +19,7 @@ body
 {
     height: 200px;
     background-color: rgb(49, 52, 58);
-    background-image: url("./themes/base/images/banner.png");
+    background-image: url("./themes/base/images/banner2.jpg");
 }
 
 #content_area
@@ -28,7 +28,7 @@ body
     width: 820px;
     margin: 5px 0 20px 0;
     padding: 10px 0 10px 30px;
-    background-color: #e5e5e5;
+    background-color: white;
 }
 
 #sidebar
@@ -38,17 +38,17 @@ body
     height: 400px;
     margin: 5px 0 20px 0px;
     padding: 10px;
-    background-color: #e5e5e5;
+    background-color: #194f1e;
 }
 #footer
 {
     clear: both;
     width: auto;
-    height: 20px;
+    height: 100px;
     padding: 10px;
     text-align: center;
     color: black;
-    background-color: #232323;
+    background-color: #194f1e;
 }
 
 #logo
@@ -57,9 +57,6 @@ body
     width: 400px;
     height: 70px;
     margin: 5px 0 5px 0;
-}
-#menu_top1
-{
 }
 #image
 {
@@ -76,9 +73,13 @@ body
     background-color: #232323;
     padding: 10px 20px 0 20px;
 }
-#menu_top a, #sidebar a, #menu_top2 a, #menu_top2 li
+#menu_top a, #menu_top2 a, #menu_top2 li
 {
     color: White;
+}
+#sidebar a
+{
+    color: Black;
 }
 #menu_top a:hover, #sidebar a:hover, #menu_top2 a:hover
 {
@@ -86,11 +87,10 @@ body
 }
 #sidebar li
 {
-    background-color: #404a65;
+    background-color: White;
     height: 50px;
     margin-top: 5px;
 }
-
 #menu_top2 a
 {
     padding: 10px 20px 11px 20px;
@@ -98,16 +98,6 @@ body
 #sidebar a
 {
     padding: 18px 0 18px 20px;
-}
-#sidebar label
-{
-    height: 30px;
-    font-size: 20px;
-    color: White;
-    background-color: #2c3653;
-    text-align: center;
-    padding-top: 15px;
-    margin-bottom: 10px;
 }
 #user
 {
@@ -118,7 +108,7 @@ body
 {
     padding: 2px 0 0 20px;
     height: 40px;
-    background-color: #a51c30;
+    background-color: #194f1e;
     margin: 40px 0 5px 420px;
     width: 640px;
 }
@@ -130,17 +120,50 @@ body
 {
     background-color: black;
 }
-div.fileupload {
+div.fileupload
+{
     width: 157px;
     height: 57px;
     background: url(https://lh6.googleusercontent.com/-dqTIJRTqEAQ/UJaofTQm3hI/AAAAAAAABHo/w7ruR1SOIsA/s157/upload.png);
     overflow: hidden;
 }
 
-div.fileupload input[type="file"] {
+div.fileupload input[type="file"]
+{
     display: block !important;
     width: 157px !important;
     height: 57px !important;
     opacity: 0 !important;
     overflow: hidden !important;
+}
+#footer_image
+{
+    float: left;
+    width: 500px;
+    height: 100px;
+    text-align: right;
+    padding-right: 20px;
+    margin: 10px 0 0 0;
+}
+#footer_contact
+{
+    float: left;
+    height: 80px;
+    width: 250px;
+    margin: 10px 0 10px 0;
+    border-left: 2px solid white;
+    border-radius: 0;
+    text-align: right;
+    padding-right: 20px;
+}
+
+#footer_link
+{
+    text-align: right;
+    float: left;
+    height: 80px;
+    width: 230px;
+    margin: 10px 0 0 10px;
+    border-left: 2px solid white;
+    border-radius: 0;
 }

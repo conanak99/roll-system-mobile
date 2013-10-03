@@ -40,28 +40,16 @@ namespace RollSystemMobile.Controllers
             return View(Students);
         }
         //student list cho trang roll call list (co the xoa them)
-        public ActionResult EditStudentlist(int? ClassID,int? StudentID)
+        public ActionResult RollCallStudentList(int? RollCallID)
         {
             List<Student> Students = null;
-
-            if (ClassID == null)
-            {
-                Students = db.Students.Include("Class").Where(st => st.IsActive == true).Take(30).ToList();
-            }
-            else if (StudentID == null)
-            {
-                Students = db.Students.Include("Class").Where(st => st.IsActive == true && st.ClassID == ClassID).ToList();
-            }
-            else
-            {
-                Students = db.Students.Include("Class").Where(st => st.IsActive == true && st.ClassID == ClassID && st.StudentID != StudentID).ToList();
-            }
-
-            var Classes = db.Classes.Where(c => c.IsActive == true);
-            ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
+            var rollcall = db.RollCalls.Single(r => r.RollCallID == RollCallID);
+            Students = rollcall.Students.ToList();
             return View(Students);
         }
-        //
+
+        //remove student from studenrlist of the rollcall
+      
         // GET: /RollCall/Details/5
 
         public ViewResult Details(int id)
