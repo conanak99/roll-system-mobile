@@ -88,7 +88,7 @@ namespace FaceRecAutomationTesting
                 Console.WriteLine("Begin testing for Haar " + Type + ":\n");
                 DateTime Start = DateTime.Now;
                 int index = 1;
-                foreach (var FilePath in Directory.GetFiles(FolderPath, "*.jpg"))
+                foreach (var FilePath in Directory.GetFiles(FolderPath, "*.jpg", SearchOption.TopDirectoryOnly))
                 {
                     FaceBO_HaarChangable.DetectFromImage(FilePath);
                     Console.WriteLine("\tDetect " + index + " images.");
@@ -108,7 +108,7 @@ namespace FaceRecAutomationTesting
             FaceBO_HaarChangable.SetXMLPath("HaarXML");
             Console.WriteLine("For Face Detection. We have 4 haarXML file.\nWe will check the time to detect face with each file.");
             Console.WriteLine("We will test with a folder contain 100 images. Image Resolution is 2200px x 1500px.");
-            String FolderPath = @"C:\Users\Hoang\Documents\Visual Studio 2010\Projects\RollSystemMobile\FaceRecAutomationTesting\Sample Images 2";
+            String FolderPath = @"C:\Users\Hoang\Documents\Visual Studio 2010\Projects\RollSystemMobile\FaceRecAutomationTesting\Sample Images\Sample Images 2";
             Console.Write("Press Enter to begin: ");
             Console.ReadLine();
 
@@ -146,7 +146,7 @@ namespace FaceRecAutomationTesting
             Console.WriteLine("For Face Detection. We have 4 haarXML file.\nWe will check the time to detect face with each file.");
             Console.WriteLine("We will test with a folder contain 100 images. Image Resolution is 2200px x 1500px.");
             Console.WriteLine("The image will be resized to 1100px x 750px before detecting.");
-            String FolderPath = @"C:\Users\Hoang\Documents\Visual Studio 2010\Projects\RollSystemMobile\FaceRecAutomationTesting\Sample Images 2";
+            String FolderPath = @"C:\Users\Hoang\Documents\Visual Studio 2010\Projects\RollSystemMobile\FaceRecAutomationTesting\Sample Images\Sample Images 2";
             Console.Write("Press Enter to begin: ");
             Console.ReadLine();
 
@@ -292,7 +292,7 @@ namespace FaceRecAutomationTesting
                 Console.WriteLine("Begin testing for Haar " + Type + ":\n");
 
                 int index = 1;
-                foreach (var FilePath in Directory.GetFiles(FolderPath, "*.jpg"))
+                foreach (var FilePath in Directory.GetFiles(FolderPath, "*.jpg", SearchOption.TopDirectoryOnly))
                 {
                     FaceBO_HaarChangable_Extractable.DetectFromImage(FilePath);
                     Console.WriteLine("\tDetect " + index + " images.");
