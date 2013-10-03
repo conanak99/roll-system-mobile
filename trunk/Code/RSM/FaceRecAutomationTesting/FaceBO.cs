@@ -52,7 +52,7 @@ namespace FaceRecAutomationTesting
             }
 
             //Chuyen anh trang den roi bat dau recognize, dung using de tu giai phong memories
-            using (Image<Gray, byte> Image = new Image<Bgr, byte>(ImagePath).Convert<Gray, byte>())
+            using (Image<Gray, byte> Image = new Image<Gray, byte>(ImagePath))
             {
                 var FacesDetected = Image.DetectHaarCascade(Haar, DETECT_SCALE, MIN_NEIGHBOR,
                                     0, new System.Drawing.Size(MIN_SIZE, MIN_SIZE))[0];
