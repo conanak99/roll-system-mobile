@@ -27,7 +27,7 @@ namespace RollSystemMobile.Controllers
 
             if (ClassID == null)
             {
-                Students = db.Students.Include("Class").Where(st => st.IsActive == true).Take(30).ToList();
+                Students = db.Students.Include("Class").Where(st => st.IsActive == true).Take(10).ToList();
             }
             else
             {
@@ -42,18 +42,33 @@ namespace RollSystemMobile.Controllers
         //student list cho trang roll call list (co the xoa them)
         public ActionResult RollCallStudentList(int? RollCallID)
         {
+            ViewBag.RollCallID = RollCallID;
             List<Student> Students = null;
             var rollcall = db.RollCalls.Single(r => r.RollCallID == RollCallID);
             Students = rollcall.Students.ToList();
             return View(Students);
         }
         //remove student from studenrlist of the rollcall
-        public ActionResult DeleteStudent(int? RollCallID,int? StudentID)
+        public ActionResult DeleteStudent(int? RollCallID, int? StudentID)
         {
             RollCall rollcall = db.RollCalls.Single(r => r.RollCallID == RollCallID);
             var Student = rollcall.Students.Single(a => a.StudentID == StudentID);
             rollcall.Students.Remove(Student);
             db.SaveChanges();
+            return RedirectToAction("RollCallStudentList", new { RollCallID = RollCallID });
+        }
+        //remove student from studenrlist of the rollcall
+        public ActionResult AddStudent(int? RollCallID, String StudentID)
+        {
+            RollCall rollcall = db.RollCalls.Single(r => r.RollCallID == RollCallID);
+            String[] tmp = StudentID.Split(',');
+            for (int i = 0; i < tmp.Length; i++) 
+            {
+                int test = int.Parse(tmp[i]);
+                var Student = db.Students.Single(d => d.StudentID == test);
+                rollcall.Students.Add(Student);
+                db.SaveChanges();
+            }
             return RedirectToAction("RollCallStudentList", new { RollCallID = RollCallID });
         }
         // GET: /RollCall/Details/5
@@ -233,6 +248,13 @@ namespace RollSystemMobile.Controllers
                 Where(s => s.IsActive).OrderBy(s => s.ShortName).
                 Select(s => new { id = s.SubjectID, name = s.ShortName });
             return Json(Subject, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetSelectOption(int RollCallID)
+        {
+            var option = db.Students.Where(s => !s.RollCalls.Any(d => d.RollCallID ==RollCallID)).
+                OrderBy(s => s.StudentID).
+               Select(d => new { id = d.StudentID, name = d.FullName, code = d.StudentCode });
+            return Json(option, JsonRequestBehavior.AllowGet);
         }
     }
 }
