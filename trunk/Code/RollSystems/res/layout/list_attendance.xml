@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <AbsoluteLayout
+        android:id="@+id/AbsoluteLayout1"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_cell_camera" >
+
+        <TextView
+            android:id="@+id/txtStudentName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="4dp"
+            android:layout_y="24dp"
+            android:text="Student Name" />
+
+        <TextView
+            android:id="@+id/txtStudentCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="105dp"
+            android:layout_y="26dp"
+            android:text="StudentCode" />
+
+        <RadioButton
+            android:id="@+id/radioButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="268dp"
+            android:layout_y="17dp" />
+
+        <RadioButton
+            android:id="@+id/radioButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="208dp"
+            android:layout_y="19dp" />
+
+    </AbsoluteLayout>
+
+</LinearLayout>
