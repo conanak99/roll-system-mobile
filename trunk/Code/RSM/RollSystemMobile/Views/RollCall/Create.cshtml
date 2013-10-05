@@ -8,44 +8,48 @@
 @using (Html.BeginForm())
 {
     @Html.ValidationSummary(true)
-    <fieldset>
-        <div class="editor-label">
-            <b>Major :</b>
-        </div>
-        <div class="editor-field" style="margin-left:10px">
-            @Html.DropDownList("MajorID")
-        </div>
-        <div class="editor-label">
-            <b>Subject</b>
-        </div>
-        <div class="editor-field" style="margin-left:10px">
-            @Html.DropDownList("SubjectID")
-        </div>
-        <div class="editor-label">
-            <b>Class</b>
-        </div>
-        <div class="editor-field" style="margin-left:10px">
-            @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID)
-            <a onclick="ViewStudentList();" href="#">Click to view student in this class</a>
-        </div>
-        <div class="editor-label">
-            <b>Instructor</b>
-        </div>
-        <div class="editor-field" style="margin-left:10px">
-            @Html.DropDownList("InstructorID")
-        </div>
-        <div class="editor-label">
-            <b>Semester</b>
-        </div>
-        <div class="editor-field" style="margin-left:10px">
-            @Html.DropDownList("SemesterID")
-            @Html.ValidationMessageFor(model => model.SemesterID)
-        </div>
-        <div class="editor-label">
-            <b>Start time</b>
-        </div>
-        <div class="editor-field" id="a" style="margin-left:10px">
-            @Html.DropDownList("StartTime", new List<SelectListItem> 
+    <table class="table">
+        <tr>
+            <td style="width: 350px;">
+                <div class="editor-label">
+                    <b>Major :</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                    @Html.DropDownList("MajorID")
+                </div>
+                <div class="editor-label">
+                    <b>Subject</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                    @Html.DropDownList("SubjectID")
+                </div>
+                <div class="editor-label">
+                    <b>Class</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                    @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID)<br />
+                    <a onclick="ViewStudentList();" href="#">Click to view student in this class</a>
+                </div>
+                <div class="editor-label">
+                    <b>Instructor</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                    @Html.DropDownList("InstructorID")
+                </div>
+            </td>
+            <td>
+                <div class="editor-label">
+                    <b>Semester</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                    @Html.DropDownList("SemesterID")
+                    @Html.ValidationMessageFor(model => model.SemesterID)
+                </div>
+                <div class="editor-label">
+                    <b>Start time</b>
+                </div>
+                <div class="editor-field" id="a" style="margin-left: 10px">
+                    @Html.DropDownList("StartTime", new List<SelectListItem> 
        { 
            new SelectListItem { Text = "7:00", Value = "7:00" ,Selected=true}, 
            new SelectListItem { Text = "8:45", Value = "8:45" },
@@ -54,31 +58,32 @@
            new SelectListItem { Text = "14:15", Value = "14:15" }, 
            new SelectListItem { Text = "16:00", Value = "16:00" } 
        })
-            @Html.ValidationMessageFor(model => model.StartTime)
-        </div>
-        <div class="editor-label">
-            <b>Begin Date</b> <span style="margin-left:180px;"><b>Begin Date</b></span>
-        </div>
-        <div class="editor-field" style="margin-left:10px">
-            <div class="input-append date" id="begindate" data-date-format="mm-dd-yyyy">
-                <input class="span2" name="BeginDate" style="width: 100px; margin-left: 10px;" size="16" type="text"
+                    @Html.ValidationMessageFor(model => model.StartTime)
+                </div>
+                <div class="editor-label">
+                    <b>Begin Date</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                    <div class="input-append date" id="begindate" data-date-format="mm-dd-yyyy">
+                        <input class="span2" name="BeginDate" style="width: 100px; margin-left: 10px;" size="16" type="text"
                     value="@DateTime.Today.ToString("MM-dd-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
-            </div>
-             <div class="input-append date" id="enddate" data-date-format="mm-dd-yyyy">
-                <input class="span2" name="EndDate" style="width: 100px; margin-left: 110px;" size="16" type="text"
+                    </div>
+                </div>
+                <div class="editor-label">
+                    <b>End Date</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                    <div class="input-append date" id="enddate" data-date-format="mm-dd-yyyy">
+                        <input class="span2" name="EndDate" style="width: 100px; margin-left: 10px;" size="16" type="text"
                     value="@DateTime.Today.ToString("MM-dd-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
-            </div>
-        </div>
-        <div class="editor-label">
-            <b>End Date</b>
-        </div>
-        <div class="editor-field" style="margin-left:10px">
-           
-        </div>
-        <p>
-            <input type="submit" value="Create" class="btn btn-primary"/>
-        </p>
-    </fieldset>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </p>
 }
 <div>
     @Html.ActionLink("Back to List", "Index")
@@ -101,8 +106,8 @@
     //dom not only ready, but everything is loaded
     function ViewStudentList() {
         var classID = $('#ClassID :selected').attr("value");
-        window.location.href = "Studentlist?ClassID="+classID;
-     }
+        window.location.href = "Studentlist?ClassID=" + classID;
+    }
     $('#MajorID').change(function () {
         var majorID = $('#MajorID :selected').attr("value");
 

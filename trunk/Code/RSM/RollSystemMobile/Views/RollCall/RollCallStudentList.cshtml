@@ -4,7 +4,7 @@
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
-    StudentList</h2>
+    Student List</h2>
 <table class="table">
     <tr>
         <th>
@@ -33,12 +33,38 @@
                 @Html.DisplayFor(modelItem => item.StudentCode)
             </td>
             <td>
-                @Html.ActionLink("Remove", "DeleteStudent", new { StudentID = item.StudentID })
+                @Html.ActionLink("Remove", "DeleteStudent", new { StudentID = item.StudentID, RollCallID = ViewBag.RollCallID })
             </td>
         </tr>
            { index++; }
     }
 </table>
 <div>
+    <select id="SelectStudent" multiple style="width: 300px;">
+    </select>
+    <input onclick="AddStudent()" class="btn btn-primary" type="submit" value="Add" />
+</div>
+<div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script type="text/javascript">
+    $("#SelectStudent").select2();
+    //add option for student select
+
+    var selectUrl = '@Url.Action("GetSelectOption")' + '?RollCallID=' + '@ViewBag.RollCallID';
+    $.getJSON(selectUrl, function (options) {
+        var html = "";
+        $.each(options, function (index, option) {
+            html += ('<option value="' + option.id + '" >' + option.code + '-' + option.name + '</option>');
+        });
+        $("#SelectStudent").append(html);
+    });
+
+    //send action add students to rollcall
+
+    function AddStudent() {
+        var a = $("#SelectStudent").select2("val");
+        var url = '@Url.Action("AddStudent")' + '?RollCallID=' + '@ViewBag.RollCallID' + '&StudentID=' + a;
+        window.location.href = url;
+    }
+</script>
