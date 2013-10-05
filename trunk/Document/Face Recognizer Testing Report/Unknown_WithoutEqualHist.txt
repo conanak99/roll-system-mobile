@@ -1,0 +1,24 @@
+﻿========================================================================================================================
+|Result    |Eigen 2k   |Eigen 3k5  |Eigen 5k   |Fisher 500 |Fisher 1k  |Fisher 1k5 |LBPH 50    |LPBH 100   |LPBH 150   |
+========================================================================================================================
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Dung    (X)|Unknown (O)|Dung    (X)|Dung    (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Minh    (X)|Unknown (O)|Hoang   (X)|Hoang   (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Dung    (X)|Unknown (O)|Unknown (O)|Hoang   (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Dung    (X)|Unknown (O)|Dung    (X)|Dung    (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Minh    (X)|Unknown (O)|Hoa     (X)|Hoa     (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Hoa     (X)|Unknown (O)|Hoa     (X)|Hoa     (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Hoa     (X)|Unknown (O)|Unknown (O)|Hoang   (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Bao     (X)|Unknown (O)|Hoang   (X)|Hoang   (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Hoa     (X)|Unknown (O)|Unknown (O)|Bao     (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Minh    (X)|Unknown (O)|Minh    (X)|Minh    (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Dung    (X)|Unknown (O)|Unknown (O)|Unknown (O)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Minh    (X)|Unknown (O)|Unknown (O)|Unknown (O)|
+|Unknown   |Unknown (O)|Unknown (O)|Bao     (X)|Unknown (O)|Unknown (O)|Minh    (X)|Unknown (O)|Hoang   (X)|Hoang   (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Minh    (X)|Unknown (O)|Unknown (O)|Hoang   (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Dung    (X)|Unknown (O)|Unknown (O)|Hoang   (X)|
+|Unknown   |Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Unknown (O)|Dung    (X)|Unknown (O)|Sen     (X)|Sen     (X)|
+========================================================================================================================
+|Hit       |16/16      |16/16      |15/16      |16/16      |16/16      |0/16       |16/16      |7/16       |2/16       |
+========================================================================================================================
+|Percent   |100.00%    |100.00%    |93.75%     |100.00%    |100.00%    |0.00%      |100.00%    |43.75%     |12.50%     |
+========================================================================================================================
