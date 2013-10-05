@@ -27,7 +27,10 @@ namespace FaceRecAutomationTesting
 
             //TestPerformanceBig();
             //TestPerformanceSmall();
-            TestAccuracy();
+            TestAccuracy(4);
+            TestAccuracy(6);
+            TestAccuracy(8);
+            TestAccuracy(10);
         }
 
 
@@ -213,21 +216,24 @@ namespace FaceRecAutomationTesting
 
         }
 
-        private static void TestAccuracy()
+        private static void TestAccuracy(int NumberOfTrainingImage)
         {
             //Khoi tao 9 bo face recognizer
             FaceRecognizers = new List<FaceRecognizer>();
             FaceRecognizers.Add(new EigenFaceRecognizer(80, 2000));
             FaceRecognizers.Add(new EigenFaceRecognizer(80, 3500));
-            FaceRecognizers.Add(new EigenFaceRecognizer(80, 5000));
+            //Can't recognize unknown
+            FaceRecognizers.Add(new EigenFaceRecognizer(80, 8000));
 
             FaceRecognizers.Add(new FisherFaceRecognizer(80, 500));
             FaceRecognizers.Add(new FisherFaceRecognizer(80, 1000));
-            FaceRecognizers.Add(new FisherFaceRecognizer(80, 1500));
+            //Can't recognize unknown
+            FaceRecognizers.Add(new FisherFaceRecognizer(80, 2500));
 
             FaceRecognizers.Add(new LBPHFaceRecognizer(1, 8, 8, 9, 50));
             FaceRecognizers.Add(new LBPHFaceRecognizer(1, 8, 8, 9, 100));
-            FaceRecognizers.Add(new LBPHFaceRecognizer(1, 8, 8, 9, 150));
+            //Can't recognize unknown
+            FaceRecognizers.Add(new LBPHFaceRecognizer(1, 8, 8, 9, 250));
 
             List<TestSingleResult> Results = new List<TestSingleResult>();
 
@@ -249,7 +255,7 @@ namespace FaceRecAutomationTesting
                 {
                     String ImageName = GetResult(FilePath);
                     int ID = NameList.IndexOf(ImageName);
-                    if (ID != -1 && ImageName.Equals(PersonName))
+                    if (ID != -1 && ImageName.Equals(PersonName) && IDList.Count(num => num == ID) < NumberOfTrainingImage)
                     {
                         Image<Gray, byte> Image = new Image<Gray, byte>(FilePath);
                         Image._EqualizeHist();
