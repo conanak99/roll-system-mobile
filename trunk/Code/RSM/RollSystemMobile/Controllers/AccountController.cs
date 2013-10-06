@@ -26,6 +26,7 @@ namespace RollSystemMobile.Controllers
             {
                 using (RSMEntities db = new RSMEntities())
                 {
+
                     //Tim user active trong database
                     User user = db.Users.FirstOrDefault(u => u.Username.Equals(model.Username)
                                                         && u.Password.Equals(model.Password)
