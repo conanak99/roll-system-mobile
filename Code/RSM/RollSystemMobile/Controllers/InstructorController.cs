@@ -10,7 +10,7 @@ using RollSystemMobile.Models.ViewModels;
 
 namespace RollSystemMobile.Controllers
 {
-    [Authorize(Roles = "Instructor")]
+
     public class InstructorController : Controller
     {
         //
@@ -18,10 +18,17 @@ namespace RollSystemMobile.Controllers
 
         private RSMEntities _db = new RSMEntities();
 
+
+        public InstructorController()
+        {
+
+        }
+
         public ActionResult RollCallList()
         {
             //Neu bam vao mon dang day, moi ra index
             //Tim instructor da dang nhạp vao
+
             string Username = this.HttpContext.User.Identity.Name;
             User User = _db.Users.First(u => u.Username.Equals(Username));
             Instructor AuthorizedInstructor = _db.Instructors.First(i => i.UserID == User.UserID);

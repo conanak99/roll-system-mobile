@@ -17,6 +17,11 @@ namespace RollSystemMobile.Models.BusinessObject
 
         public AttendanceLog WriteAttendanceAutoLog(int RollCallID, List<RecognizerResult> RecognizerResults)
         {
+            if (RecognizerResults.Count == 0)
+            {
+                return null;
+            }
+
             AttendanceLog Log = null;
             //Tim xem da co log auto cho hom nay chua
             Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1

@@ -127,6 +127,7 @@
     <Compile Include="Controllers\InstructorController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RollCallController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -311,6 +312,8 @@
     <Content Include="Views\Instructor\RollCallList.cshtml" />
     <Content Include="Views\Instructor\_ViewStart.cshtml" />
     <Content Include="Views\Instructor\_Layout.cshtml" />
+    <Content Include="Views\RollCall\RollCallStudentList.cshtml" />
+    <Content Include="Views\RollCall\Studentlist.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
