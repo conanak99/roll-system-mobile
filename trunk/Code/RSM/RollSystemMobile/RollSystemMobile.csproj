@@ -152,6 +152,21 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\custom.css" />
+    <Content Include="Content\DataTable\dataTables.bootstrap.js" />
+    <Content Include="Content\DataTable\DT_bootstrap.css" />
+    <Content Include="Content\DataTable\images\back_disabled.png" />
+    <Content Include="Content\DataTable\images\back_enabled.png" />
+    <Content Include="Content\DataTable\images\back_enabled_hover.png" />
+    <Content Include="Content\DataTable\images\favicon.ico" />
+    <Content Include="Content\DataTable\images\forward_disabled.png" />
+    <Content Include="Content\DataTable\images\forward_enabled.png" />
+    <Content Include="Content\DataTable\images\forward_enabled_hover.png" />
+    <Content Include="Content\DataTable\images\sort_asc.png" />
+    <Content Include="Content\DataTable\images\sort_asc_disabled.png" />
+    <Content Include="Content\DataTable\images\sort_both.png" />
+    <Content Include="Content\DataTable\images\sort_desc.png" />
+    <Content Include="Content\DataTable\images\sort_desc_disabled.png" />
+    <Content Include="Content\DataTable\jquery.dataTables.js" />
     <Content Include="Content\MasterPage.css" />
     <Content Include="Content\select2-spinner.gif" />
     <Content Include="Content\select2.css" />
@@ -286,6 +301,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RSMModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Content\DataTable\images\Sorting icons.psd" />
     <None Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
@@ -302,7 +318,6 @@
     <Content Include="Views\Instructor\CheckAttendanceAuto.cshtml" />
     <Content Include="Views\Instructor\RollCallDetail.cshtml" />
     <Content Include="Views\Instructor\_LogDetail.cshtml" />
-    <Content Include="Views\Staff\ClassList.cshtml" />
     <Content Include="Views\Staff\ImportExcelFileToDatabase.cshtml" />
     <Content Include="Views\RollCall\Index.cshtml" />
     <Content Include="Views\RollCall\Details.cshtml" />

@@ -2,10 +2,22 @@
 @{
     ViewBag.Title = "Student List";
 }
+
+@section ExtraHead {
+  <style>
+  body 
+  {
+      background-color: White;
+  }
+  </style>
+
+  
+}
+
 <h2>
     Student List</h2>
 
-<div class="pull-right">
+<div>
 @using (@Html.BeginForm("StudentList", "Admin", FormMethod.Get))
 {
 <span class="dropdown-label">Class:</span> @Html.DropDownList("ClassID",(SelectList)ViewBag.ClassID)
@@ -15,7 +27,7 @@
 
 @if (Model.Count() > 0)
 {
-<table class="table table-bordered">
+<table class="table table-bordered table-striped table-condensed" id="example">
     <thead>
         <tr>
             <th class="text-right">
@@ -73,3 +85,17 @@ else
     <p>This class has no student</p>
 }
 
+<script>
+
+    /* Table initialisation */
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page"
+            },
+            "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [3,5] } ]
+        });
+    });
+</script>

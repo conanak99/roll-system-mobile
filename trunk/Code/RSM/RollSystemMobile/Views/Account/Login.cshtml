@@ -5,14 +5,7 @@
 
 
 
-@if (User.Identity.IsAuthenticated)
-{
-    <p>You don't have permision to access this page.</p>
-    <a href="javascript: history.go(-1)">Go Back</a>
-}
-else
-{
-    using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
     {
     <fieldset>
         <div id="legend">
@@ -55,4 +48,3 @@ else
     @Html.HiddenFor(model => model.ReturnUrl)
         }
     }
-}
