@@ -13,8 +13,8 @@ namespace RollSystemMobile.Models.BusinessObject
     {
         private static HaarCascade Haar;
         //Luc add, co the dung alt2
-        //Luc detect, nen dung alt_tree neu can chinh xac cao, can nhieu van dung alt2
-        private static String HaarXML = "haarcascade_frontalface_alt_tree.xml"; //"haarcascade_frontalface_alt2.xml"
+        //Luc detect, nen dung alt_tree neu can chinh xac cao, can nhieu van dung alt
+        private static String HaarXML = "haarcascade_frontalface_alt.xml"; //"haarcascade_frontalface_alt2.xml"
         private static double DETECT_SCALE = 1.1;
         private static int MIN_NEIGHBOR = 3;
         private static int MIN_SIZE = 20;
@@ -153,7 +153,8 @@ namespace RollSystemMobile.Models.BusinessObject
         private static FaceRecognizer CreateRollCallRecognizer(int RollCallID)
         {
             //Tu rollcall ID, tao face recognizer, train
-            FaceRecognizer FaceRec = new LBPHFaceRecognizer(1, 8, 8, 8, 75);
+            //FaceRecognizer FaceRec = new LBPHFaceRecognizer(1, 8, 8, 8, 75);
+            FaceRecognizer FaceRec = new FisherFaceRecognizer(80, 2500);
 
             List<int> StudentIDs = new List<int>();
             List<Image<Gray, byte>> StudentImages = new List<Image<Gray, byte>>();
