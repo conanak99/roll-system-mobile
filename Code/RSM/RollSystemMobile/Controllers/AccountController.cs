@@ -54,7 +54,12 @@ namespace RollSystemMobile.Controllers
                                     Action = "RollCallList";
                                     break;
                                 case "Staff":
+                                    Action = "Index";
+                                    Role = "RollCall";
+                                    break;
                                 case "Admin":
+                                    Action = "StudentList";
+                                    break;
                                 case "Student":
                                 default:
                                     Action = "Index";

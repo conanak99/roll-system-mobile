@@ -71,13 +71,24 @@ namespace RollSystemMobile.Models.BusinessObject
             using (Image<Bgr, byte> OldImage = new Image<Bgr, byte>(OldPath))
             {
                 //Neu anh nho, 1 trong 2 chieu < max thi ko can resize
+
                 if (OldImage.Width < RESIZE_WIDTH || OldImage.Height < RESIZE_HEIGHT)
                 {
                     OldImage.Save(NewPath);
                 }
                 else
                 {
-                    OldImage.Resize(RESIZE_WIDTH, RESIZE_HEIGHT, INTER.CV_INTER_CUBIC, true).Save(NewPath);
+                    //Anh ngang resize chieu ngang
+                    if (OldImage.Width > OldImage.Height)
+                    {
+                        OldImage.Resize(RESIZE_WIDTH, RESIZE_HEIGHT, INTER.CV_INTER_CUBIC, true).Save(NewPath);
+                    }
+                    else
+                    {
+                        //Anh doc resize chieu doc
+                        OldImage.Resize(RESIZE_HEIGHT, RESIZE_WIDTH, INTER.CV_INTER_CUBIC, true).Save(NewPath);
+                    }
+                    
                 }
             }
         }

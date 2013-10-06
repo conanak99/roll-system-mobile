@@ -96,6 +96,8 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult CheckAttendanceAuto(int RollCallID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
+            RollCall rollCall = _db.RollCalls.Single(r => r.RollCallID == RollCallID);
+
             List<String> ImagePaths = new List<string>();
             foreach (HttpPostedFileBase file in ImageFiles)
             {
@@ -103,9 +105,11 @@ namespace RollSystemMobile.Controllers
                 String OldPath = Server.MapPath("~/Content/Temp/" + file.FileName);
                 file.SaveAs(OldPath);
 
-                //Resize file anh, luu vao thu muc log, nho them ngay thang truoc
-                String NewPath = Server.MapPath("~/Content/Log/" +
-                    DateTime.Today.ToString("dd-MM-yyyy") + "_" + file.FileName);
+                //Resize file anh, luu vao thu muc log, ten mon hoc, ten lop
+                String NewPath = Server.MapPath("~/Content/Log/" 
+                    + rollCall.Class.ClassName + "_"
+                    + rollCall.Subject.ShortName + "_"
+                    + file.FileName);
                 FaceBO.ResizeImage(OldPath, NewPath);
                 ImagePaths.Add(NewPath);
 
