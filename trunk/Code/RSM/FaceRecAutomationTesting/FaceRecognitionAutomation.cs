@@ -25,6 +25,22 @@ namespace FaceRecAutomationTesting
             Console.WriteLine("3. Test the accuracy of 3 face recognizer algorithm. Each with 3 different threehold.");
             Console.WriteLine("============================================================================");
 
+            Console.Write("Enter option: ");
+            int option = int.Parse(Console.ReadLine());
+            switch (option)
+            {
+                case 1: TestPerformanceBig(); break;
+                case 2: TestPerformanceSmall(); break;
+                case 3:
+                    TestAccuracy(4);
+                    TestAccuracy(6);
+                    TestAccuracy(8);
+                    TestAccuracy(10);
+                    break;
+                default: Console.WriteLine("Good bye");
+                    break;
+            }
+
             //TestPerformanceBig();
             //TestPerformanceSmall();
             TestAccuracy(4);
