@@ -90,7 +90,7 @@ namespace RollSystemMobile.Models.BusinessObject
         }
 
 
-        public AttendanceLog WriteAttendanceManualLog(int RollCallID, DateTime Date, List<SingleAttendanceCheck> AttendanceChecks)
+        public AttendanceLog WriteAttendanceManualLog(String username, int RollCallID, DateTime Date, List<SingleAttendanceCheck> AttendanceChecks)
         {
             AttendanceLog Log = null;
             //Tim xem da co log manual cho ngay du vao chua
@@ -126,8 +126,23 @@ namespace RollSystemMobile.Models.BusinessObject
                 else
                 {
                     //Neu da co roi thi chi sua present
-                    Attendance.Note = AttendanceCheck.Note;
-                    Attendance.IsPresent = AttendanceCheck.IsPresent;
+                    //Attendance.Note = AttendanceCheck.Note;
+                    
+                    //Neu sua attendance moi viet note, con ko sua thi viet node lam gi
+                    if (Attendance.IsPresent != AttendanceCheck.IsPresent || Attendance.Note != AttendanceCheck.Note)
+                    {
+                        if (Attendance.IsPresent)
+                        {
+                            Attendance.Note = String.Format("({0}) P->A : {1}",username,AttendanceCheck.Note);
+                        }
+                        else
+                        {
+                            Attendance.Note = String.Format("({0}) A->P : {1}", username, AttendanceCheck.Note);
+                        }
+                        Attendance.IsPresent = AttendanceCheck.IsPresent;
+                        
+                    }
+                    
                 }
             }
 
@@ -196,6 +211,23 @@ namespace RollSystemMobile.Models.BusinessObject
             return AttendanceLogs;
         }
 
+        public List<int> GetStudentIDList(List<RecognizerResult> RecognizerResults)
+        {
+            HashSet<int> StudentIDs = new HashSet<int>();
+            foreach (var result in RecognizerResults)
+            {
+                foreach (var face in result.FaceList)
+                {
+                    //ID phai khac -1, moi tinh la nhan duoc
+                    if (face.StudentID != -1)
+                    {
+                        StudentIDs.Add(face.StudentID);
+                    }
+                }
+            }
+
+            return StudentIDs.ToList();
+        }
 
 
     }

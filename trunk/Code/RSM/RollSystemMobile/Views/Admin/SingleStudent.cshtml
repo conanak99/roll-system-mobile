@@ -31,6 +31,19 @@ else
     <h6>
         No images. Please upload some.</h6>
 }
+
+@if (ViewBag.Errors != null)
+{
+    <div>
+    <ul>
+    @foreach (var Error in (List<String>)ViewBag.Errors)
+    {
+        <li>@Error</li>
+    }
+    </ul>
+    </div>
+}
+
 <div id="upload-div">
     @using (Html.BeginForm("SingleStudent", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {

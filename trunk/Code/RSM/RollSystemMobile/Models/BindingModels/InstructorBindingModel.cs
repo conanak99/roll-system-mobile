@@ -12,6 +12,7 @@ namespace RollSystemMobile.Models.BindingModels
     public class CheckAttendanceManualBindModel
     {
         public int RollCallID { get; set; }
+        public String Username { get; set; }
         public DateTime Date { get; set; }
         public List<SingleAttendanceCheck> AttendanceChecks { get; set; }
         public String ReturnUrl { get; set; }

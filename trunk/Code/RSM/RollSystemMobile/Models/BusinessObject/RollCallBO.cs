@@ -166,11 +166,11 @@ namespace RollSystemMobile.Models.BusinessObject
             Worksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
 
             TimeSpan TotalDate = RollCall.EndDate - RollCall.BeginDate;
-            int SessionNumber = (TotalDate.Days + 1) / 7 * 5; //1 tuan 7 ngay hoc 5 buoi
-            int FinalColumnIndex = 4 + SessionNumber;
+            int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days/ 7) * 5; //1 tuan 7 ngay hoc 5 buoi
+            int FinalColumnIndex = 4 + NumberOfSlot;
 
             //Tinh % di hoc cua moi SV
-            String Formula = "COUNTIF(D11:" + ExcelReader.NumberToText(3 + SessionNumber) + "11, \"X\")/20";
+            String Formula = "COUNTIF(D11:" + ExcelReader.NumberToText(3 + NumberOfSlot) + "11, \"X\")/" + NumberOfSlot;
             Worksheet.Cells[11, FinalColumnIndex, 11 + Students.Count - 1, FinalColumnIndex].Formula = Formula;
 
             ExcelWriter.WriteExcelFile(Package, FileName);
@@ -244,8 +244,9 @@ namespace RollSystemMobile.Models.BusinessObject
             }
 
             TimeSpan TotalDate = RollCall.EndDate - RollCall.BeginDate;
-            int SessionNumber = (TotalDate.Days + 1) / 7 * 5; //1 tuan 7 ngay hoc 5 buoi
-            int FinalColumnIndex = 4 + SessionNumber;
+            double dTotalDate = TotalDate.Days;
+            int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days /  7) * 5;  //1 tuan 7 ngay hoc 5 buoi
+            int FinalColumnIndex = 4 + NumberOfSlot;
             //Bat dau ke o tu Cell[4,10]
 
 

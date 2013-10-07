@@ -26,7 +26,7 @@ namespace RollSystemMobile.Controllers
 
             if (ClassID == null)
             {
-                Students = _db.Students.Include("Class").Where(st => st.IsActive == true).Take(30).ToList();
+                Students = _db.Students.Include("Class").Where(st => st.IsActive == true).ToList();
             }
             else
             {
@@ -42,6 +42,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult SingleStudent(int StudentID)
         {
             var Student = _db.Students.SingleOrDefault(s => s.StudentID == StudentID);
+            ViewBag.Errors = TempData["Errors"];
             return View(Student);
         }
 

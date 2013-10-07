@@ -37,14 +37,14 @@ namespace RollSystemMobile.Controllers
             DateTime Today = DateTime.Now;
             var RollCalls = _db.RollCalls.Where(r => r.InstructorTeachings.
                                        Any(inte => inte.InstructorID == AuthorizedInstructor.InstructorID)
-                                       && r.BeginDate < Today && r.EndDate > Today);
+                                       && r.BeginDate <= Today && r.EndDate >= Today);
 
             //Mon dang day vao thoi diem dang nhap
             RollCall CurrentRollCall = null;
             TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
             if (RollCalls.Count() > 0)
             {
-                CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime < CurrentTime && r.EndTime > CurrentTime);
+                CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime <= CurrentTime && r.EndTime >= CurrentTime);
             }
 
             InstructorViewModel model = new InstructorViewModel();
@@ -113,9 +113,9 @@ namespace RollSystemMobile.Controllers
                 FaceBO.ResizeImage(OldPath, NewPath);
                 ImagePaths.Add(NewPath);
 
-                //Nhan dien tung khuon mat trong anh
+                
             }
-
+            //Nhan dien tung khuon mat trong anh
             List<RecognizerResult> Result = FaceBO.RecognizeStudentForAttendance(RollCallID, ImagePaths);
             //Dua reseult nay cho AttendanceBO xu ly
             AttendanceBO attendanceBO = new AttendanceBO();
@@ -154,7 +154,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult CheckAttendanceManual(CheckAttendanceManualBindModel Model)
         {
             AttendanceBO AttendanceBO = new AttendanceBO();
-            AttendanceBO.WriteAttendanceManualLog(Model.RollCallID, Model.Date, Model.AttendanceChecks);
+            AttendanceBO.WriteAttendanceManualLog(Model.Username, Model.RollCallID, Model.Date, Model.AttendanceChecks);
 
             String returnUrl = Model.ReturnUrl;
 
