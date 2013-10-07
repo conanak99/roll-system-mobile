@@ -152,22 +152,37 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\custom.css" />
-    <Content Include="Content\DataTable\dataTables.bootstrap.js" />
-    <Content Include="Content\DataTable\DT_bootstrap.css" />
-    <Content Include="Content\DataTable\images\back_disabled.png" />
-    <Content Include="Content\DataTable\images\back_enabled.png" />
-    <Content Include="Content\DataTable\images\back_enabled_hover.png" />
-    <Content Include="Content\DataTable\images\favicon.ico" />
-    <Content Include="Content\DataTable\images\forward_disabled.png" />
-    <Content Include="Content\DataTable\images\forward_enabled.png" />
-    <Content Include="Content\DataTable\images\forward_enabled_hover.png" />
-    <Content Include="Content\DataTable\images\sort_asc.png" />
-    <Content Include="Content\DataTable\images\sort_asc_disabled.png" />
-    <Content Include="Content\DataTable\images\sort_both.png" />
-    <Content Include="Content\DataTable\images\sort_desc.png" />
-    <Content Include="Content\DataTable\images\sort_desc_disabled.png" />
-    <Content Include="Content\DataTable\jquery.dataTables.js" />
+    <Content Include="Content\Plug-in\DataTable\dataTables.bootstrap.js" />
+    <Content Include="Content\Plug-in\DataTable\DT_bootstrap.css" />
+    <Content Include="Content\Plug-in\DataTable\images\back_disabled.png" />
+    <Content Include="Content\Plug-in\DataTable\images\back_enabled.png" />
+    <Content Include="Content\Plug-in\DataTable\images\back_enabled_hover.png" />
+    <Content Include="Content\Plug-in\DataTable\images\favicon.ico" />
+    <Content Include="Content\Plug-in\DataTable\images\forward_disabled.png" />
+    <Content Include="Content\Plug-in\DataTable\images\forward_enabled.png" />
+    <Content Include="Content\Plug-in\DataTable\images\forward_enabled_hover.png" />
+    <Content Include="Content\Plug-in\DataTable\images\sort_asc.png" />
+    <Content Include="Content\Plug-in\DataTable\images\sort_asc_disabled.png" />
+    <Content Include="Content\Plug-in\DataTable\images\sort_both.png" />
+    <Content Include="Content\Plug-in\DataTable\images\sort_desc.png" />
+    <Content Include="Content\Plug-in\DataTable\images\sort_desc_disabled.png" />
+    <Content Include="Content\Plug-in\DataTable\jquery.dataTables.js" />
     <Content Include="Content\MasterPage.css" />
+    <Content Include="Content\Plug-in\fancybox\blank.gif" />
+    <Content Include="Content\Plug-in\fancybox\fancybox_loading%402x.gif" />
+    <Content Include="Content\Plug-in\fancybox\fancybox_loading.gif" />
+    <Content Include="Content\Plug-in\fancybox\fancybox_overlay.png" />
+    <Content Include="Content\Plug-in\fancybox\fancybox_sprite%402x.png" />
+    <Content Include="Content\Plug-in\fancybox\fancybox_sprite.png" />
+    <Content Include="Content\Plug-in\fancybox\helpers\fancybox_buttons.png" />
+    <Content Include="Content\Plug-in\fancybox\helpers\jquery.fancybox-buttons.css" />
+    <Content Include="Content\Plug-in\fancybox\helpers\jquery.fancybox-buttons.js" />
+    <Content Include="Content\Plug-in\fancybox\helpers\jquery.fancybox-media.js" />
+    <Content Include="Content\Plug-in\fancybox\helpers\jquery.fancybox-thumbs.css" />
+    <Content Include="Content\Plug-in\fancybox\helpers\jquery.fancybox-thumbs.js" />
+    <Content Include="Content\Plug-in\fancybox\jquery.fancybox.css" />
+    <Content Include="Content\Plug-in\fancybox\jquery.fancybox.js" />
+    <Content Include="Content\Plug-in\fancybox\jquery.fancybox.pack.js" />
     <Content Include="Content\select2-spinner.gif" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\select2.png" />
@@ -301,7 +316,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RSMModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Content\DataTable\images\Sorting icons.psd" />
+    <None Include="Content\Plug-in\DataTable\images\Sorting icons.psd" />
     <None Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />

@@ -19,14 +19,12 @@ using System.Runtime.Serialization;
 #region EDM Relationship Metadata
 
 [assembly: EdmRelationshipAttribute("RSMModel", "AttendanceLog_LogImage_FK1", "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.AttendanceLog), "LogImage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.LogImage), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "AttendanceLog_StudentAttendance_FK1", "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.AttendanceLog), "StudentAttendance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentAttendance), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "LogType_AttendanceLog_FK1", "LogType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.LogType), "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.AttendanceLog), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "Class_Student_FK1", "Class", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Class), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_Class_Major", "Major", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Major), "Class", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Class), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "User_Instructor_FK1", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.User), "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Instructor), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "Role_User_FK1", "Role", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Role), "User", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.User), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "User_Staff_FK1", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.User), "Staff", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Staff), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "Student_StudentAttendance_FK1", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Student), "StudentAttendance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentAttendance), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "Student_StudentImage_FK1", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Student), "StudentImage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentImage), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "User_Student_FK1", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.User), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "SubjectMajorMapping", "Major", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Major), "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Subject))]
@@ -37,6 +35,8 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RSMModel", "StudentInRollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student))]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_InstructorTeaching_Instructor", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Instructor), "InstructorTeaching", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.InstructorTeaching), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_InstructorTeaching_RollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.RollCall), "InstructorTeaching", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.InstructorTeaching), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "AttendanceLog_StudentAttendance_FK1", "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.AttendanceLog), "StudentAttendance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentAttendance), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "Student_StudentAttendance_FK1", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Student), "StudentAttendance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentAttendance), true)]
 
 #endregion
 
@@ -251,22 +251,6 @@ namespace RollSystemMobile.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<StudentAttendance> StudentAttendances
-        {
-            get
-            {
-                if ((_StudentAttendances == null))
-                {
-                    _StudentAttendances = base.CreateObjectSet<StudentAttendance>("StudentAttendances");
-                }
-                return _StudentAttendances;
-            }
-        }
-        private ObjectSet<StudentAttendance> _StudentAttendances;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<StudentImage> StudentImages
         {
             get
@@ -359,6 +343,22 @@ namespace RollSystemMobile.Models
             }
         }
         private ObjectSet<InstructorTeaching> _InstructorTeachings;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<StudentAttendance> StudentAttendances
+        {
+            get
+            {
+                if ((_StudentAttendances == null))
+                {
+                    _StudentAttendances = base.CreateObjectSet<StudentAttendance>("StudentAttendances");
+                }
+                return _StudentAttendances;
+            }
+        }
+        private ObjectSet<StudentAttendance> _StudentAttendances;
 
         #endregion
         #region AddTo Methods
@@ -444,14 +444,6 @@ namespace RollSystemMobile.Models
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the StudentAttendances EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToStudentAttendances(StudentAttendance studentAttendance)
-        {
-            base.AddObject("StudentAttendances", studentAttendance);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the StudentImages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToStudentImages(StudentImage studentImage)
@@ -497,6 +489,14 @@ namespace RollSystemMobile.Models
         public void AddToInstructorTeachings(InstructorTeaching instructorTeaching)
         {
             base.AddObject("InstructorTeachings", instructorTeaching);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the StudentAttendances EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToStudentAttendances(StudentAttendance studentAttendance)
+        {
+            base.AddObject("StudentAttendances", studentAttendance);
         }
 
         #endregion
@@ -668,28 +668,6 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "AttendanceLog_StudentAttendance_FK1", "StudentAttendance")]
-        public EntityCollection<StudentAttendance> StudentAttendances
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudentAttendance>("RSMModel.AttendanceLog_StudentAttendance_FK1", "StudentAttendance");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudentAttendance>("RSMModel.AttendanceLog_StudentAttendance_FK1", "StudentAttendance", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("RSMModel", "LogType_AttendanceLog_FK1", "LogType")]
         public LogType LogType
         {
@@ -756,6 +734,28 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RollCall>("RSMModel.RollCall_AttendanceLog_FK1", "RollCall", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "AttendanceLog_StudentAttendance_FK1", "StudentAttendance")]
+        public EntityCollection<StudentAttendance> StudentAttendances
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudentAttendance>("RSMModel.AttendanceLog_StudentAttendance_FK1", "StudentAttendance");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudentAttendance>("RSMModel.AttendanceLog_StudentAttendance_FK1", "StudentAttendance", value);
                 }
             }
         }
@@ -3122,28 +3122,6 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "Student_StudentAttendance_FK1", "StudentAttendance")]
-        public EntityCollection<StudentAttendance> StudentAttendances
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudentAttendance>("RSMModel.Student_StudentAttendance_FK1", "StudentAttendance");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudentAttendance>("RSMModel.Student_StudentAttendance_FK1", "StudentAttendance", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("RSMModel", "Student_StudentImage_FK1", "StudentImage")]
         public EntityCollection<StudentImage> StudentImages
         {
@@ -3216,6 +3194,28 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RollCall>("RSMModel.StudentInRollCall", "RollCall", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "Student_StudentAttendance_FK1", "StudentAttendance")]
+        public EntityCollection<StudentAttendance> StudentAttendances
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudentAttendance>("RSMModel.Student_StudentAttendance_FK1", "StudentAttendance");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudentAttendance>("RSMModel.Student_StudentAttendance_FK1", "StudentAttendance", value);
                 }
             }
         }
@@ -3601,13 +3601,17 @@ namespace RollSystemMobile.Models
         /// <param name="fullName">Initial value of the FullName property.</param>
         /// <param name="numberOfSlot">Initial value of the NumberOfSlot property.</param>
         /// <param name="isActive">Initial value of the IsActive property.</param>
-        public static Subject CreateSubject(global::System.Int32 subjectID, global::System.String fullName, global::System.Int32 numberOfSlot, global::System.Boolean isActive)
+        /// <param name="numberOfSession">Initial value of the NumberOfSession property.</param>
+        /// <param name="isSlotFixed">Initial value of the IsSlotFixed property.</param>
+        public static Subject CreateSubject(global::System.Int32 subjectID, global::System.String fullName, global::System.Int32 numberOfSlot, global::System.Boolean isActive, global::System.Int32 numberOfSession, global::System.Boolean isSlotFixed)
         {
             Subject subject = new Subject();
             subject.SubjectID = subjectID;
             subject.FullName = fullName;
             subject.NumberOfSlot = numberOfSlot;
             subject.IsActive = isActive;
+            subject.NumberOfSession = numberOfSession;
+            subject.IsSlotFixed = isSlotFixed;
             return subject;
         }
 
@@ -3760,6 +3764,54 @@ namespace RollSystemMobile.Models
         private global::System.Boolean _IsActive;
         partial void OnIsActiveChanging(global::System.Boolean value);
         partial void OnIsActiveChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 NumberOfSession
+        {
+            get
+            {
+                return _NumberOfSession;
+            }
+            set
+            {
+                OnNumberOfSessionChanging(value);
+                ReportPropertyChanging("NumberOfSession");
+                _NumberOfSession = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("NumberOfSession");
+                OnNumberOfSessionChanged();
+            }
+        }
+        private global::System.Int32 _NumberOfSession;
+        partial void OnNumberOfSessionChanging(global::System.Int32 value);
+        partial void OnNumberOfSessionChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsSlotFixed
+        {
+            get
+            {
+                return _IsSlotFixed;
+            }
+            set
+            {
+                OnIsSlotFixedChanging(value);
+                ReportPropertyChanging("IsSlotFixed");
+                _IsSlotFixed = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsSlotFixed");
+                OnIsSlotFixedChanged();
+            }
+        }
+        private global::System.Boolean _IsSlotFixed;
+        partial void OnIsSlotFixedChanging(global::System.Boolean value);
+        partial void OnIsSlotFixedChanged();
 
         #endregion
     

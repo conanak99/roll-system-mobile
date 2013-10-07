@@ -95,5 +95,12 @@ img.thumbnail
 }
 
 .image-log {
-	width: 350px;
+	width: 100px;
+	padding: 10px;
+}
+
+.input-prepend span.note-prepend 
+{
+    width: 110px;
+    font-size: 13px;
 }

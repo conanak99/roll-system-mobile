@@ -15,8 +15,11 @@
         <th style="width:50px;">
             Class
         </th>
-        <th style="width:250px;">
+        <th style="width:100px;">
             Subject
+        </th>
+        <th style="width:200px;">
+            Instructor
         </th>
         <th style="width:250px;">
             Date
@@ -24,7 +27,7 @@
         <th style="width:200px;">
             Time
         </th>
-        <th style="width:150px;">
+        <th style="width:100px;">
             Student List
         </th>
         <th style="width:50px;">
@@ -35,7 +38,7 @@
         </th>
     </tr>
     @{ int index = 1;}
-    @foreach (var item in Model)
+    @foreach (var item in Model.OrderByDescending(r => r.RollCallID).OrderByDescending(r=>r.BeginDate))
     {
         <tr>
             <td style="text-align:right;">
@@ -45,13 +48,16 @@
                 @Html.DisplayFor(modelItem => item.Class.ClassName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Subject.FullName)
+                @Html.DisplayFor(modelItem => item.Subject.ShortName)
             </td>
             <td>
-                @item.BeginDate.ToShortDateString()-@item.EndDate.ToShortDateString()
+            @item.InstructorTeachings.ToList().Last().Instructor.Fullname
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.StartTime)- @Html.DisplayFor(modelItem => item.EndTime)
+                @item.BeginDate.ToString("dd-MM-yyyy") to @item.EndDate.ToString("dd-MM-yyyy")
+            </td>
+            <td>
+                @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
             </td>
             <td>
                 @Html.ActionLink("Show", "RollCallStudentList", new { RollCallID = item.RollCallID })

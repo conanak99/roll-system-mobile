@@ -2,197 +2,203 @@
 @{
     ViewBag.Title = "Instructor Page";
 }
-
-<a href="@Url.Action("RollCallList")" class="btn btn-primary"><i class="icon-white icon-chevron-left"></i> Back</a>
-
-<h4>Current Roll Call</h4>
-        @if (Model.CurrentRollCall != null)
-        {
-            <dl class="dl-horizontal">
-                <dt>Roll Call</dt>
-                <dd>@Model.CurrentRollCall.RollCallID</dd>
-                <dt>Subject</dt>
-                <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
-                <dt>Instructor</dt>
-                <dd>@Model.AuthorizedInstructor.Fullname</dd>
-                <dt>Class</dt>
-                <dd>@Model.CurrentRollCall.Class.ClassName</dd>
-                <dt>Date</dt>
-                <dd>
-                    From @Model.CurrentRollCall.BeginDate.ToString("dd-MM-yyyy") to @Model.CurrentRollCall.EndDate.ToString("dd-MM-yyyy")</dd>
-                <dt>Time</dt>
-                <dd>@Model.CurrentRollCall.StartTime.ToString(@"hh\:mm") - @Model.CurrentRollCall.EndTime.ToString(@"hh\:mm")</dd>
-                <dt class="margin-top-12">Student List</dt>
-                <dd style="margin-top: 8px;">
-                    <div class="accordion-group" style="width: 550px">
-                        <div class="accordion-heading" style="height: 35px">
-                            <a class="accordion-toggle" data-toggle="collapse" href="#studentList" style="margin-top: -3px">
-                                Show</a>
-                        </div>
-                        <div id="studentList" class="accordion-body collapse">
-                            <div class="accordion-inner">
-                                @if (Model.CurrentAttendanceLog == null)
-                                { 
-                                    <table class="table table-striped table-condensed">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-right">
-                                                    No
-                                                </th>
-                                                <th>
-                                                    Student ID
-                                                </th>
-                                                <th>
-                                                    Student Name
-                                                </th>
-                                                <th>
-                                                    Status
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{int index = 1;}
-                                            @foreach (var Student in Model.CurrentRollCall.Students)
-                                            {
-                                                <tr>
-                                                    <td class="text-right">
-                                                        @index
-                                                    </td>
-                                                    <td>
-                                                        @Student.StudentCode
-                                                    </td>
-                                                    <td>
-                                                        @Student.FullName
-                                                    </td>
-                                                    <td>
-                                                        Uncheck
-                                                    </td>
-                                                </tr>
-                                                { index++; }
-                                            }
-                                            <tr>
-                                                <td colspan="4" class="text-right">
-                                                    <strong>Please upload image to check attendance.</strong>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                }
-                                else
-                                {
-                                    using (Html.BeginForm("CheckAttendanceManual", "Instructor", FormMethod.Post))
+<a href="@Url.Action("RollCallList")" class="btn btn-primary"><i class="icon-white icon-chevron-left">
+</i>Back</a>
+<h4>
+    Current Roll Call</h4>
+@if (Model.CurrentRollCall != null)
+{
+    <dl class="dl-horizontal">
+        <dt>Roll Call</dt>
+        <dd>@Model.CurrentRollCall.RollCallID</dd>
+        <dt>Subject</dt>
+        <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
+        <dt>Instructor</dt>
+        <dd>@Model.AuthorizedInstructor.Fullname</dd>
+        <dt>Class</dt>
+        <dd>@Model.CurrentRollCall.Class.ClassName</dd>
+        <dt>Date</dt>
+        <dd>
+            From @Model.CurrentRollCall.BeginDate.ToString("dd-MM-yyyy") to @Model.CurrentRollCall.EndDate.ToString("dd-MM-yyyy")</dd>
+        <dt>Time</dt>
+        <dd>@Model.CurrentRollCall.StartTime.ToString(@"hh\:mm") - @Model.CurrentRollCall.EndTime.ToString(@"hh\:mm")</dd>
+        <dt class="margin-top-12">Student List</dt>
+        <dd style="margin-top: 8px;">
+            <div class="accordion-group" style="width: 600px">
+                <div class="accordion-heading" style="height: 35px">
+                    <a class="accordion-toggle" data-toggle="collapse" href="#studentList" style="margin-top: -3px">
+                        Show</a>
+                </div>
+                <div id="studentList" class="accordion-body collapse">
+                    <div class="accordion-inner">
+                        @if (Model.CurrentAttendanceLog == null)
+                        { 
+                            <table class="table table-striped table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="text-right">
+                                            No
+                                        </th>
+                                        <th>
+                                            Student ID
+                                        </th>
+                                        <th>
+                                            Student Name
+                                        </th>
+                                        <th>
+                                            Status
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{int index = 1;}
+                                    @foreach (var Student in Model.CurrentRollCall.Students)
                                     {
-                                    <table class="table table-striped table-condensed">
-                                        <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
-                                        <input type="hidden" name="Date" value="@DateTime.Today" />
-                                        <!-- Tao form check attendace dua tren log hien tai -->
-                                        <thead>
-                                            <tr>
-                                                <th class="text-right">
-                                                    No
-                                                </th>
-                                                <th>
-                                                    Student Name
-                                                </th>
-                                                <th>
-                                                    Present
-                                                </th>
-                                                <th>
-                                                    Absent
-                                                </th>
-                                                <th>
-                                                    Note
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @{int AttendIndex = 1;
-                                              int CheckIndex = 0;
-                                            }
-                                            @foreach (var Student in Model.CurrentRollCall.Students)
-                                            {
-                                                <tr>
-                                                    <input type="hidden" name="AttendanceChecks.Index" value="@CheckIndex" />
-                                                    <input type="hidden" name="AttendanceChecks[@CheckIndex].StudentID" value="@Student.StudentID" />
-                                                    <td class="text-right">
-                                                        @AttendIndex
-                                                    </td>
-                                                    <td>
-                                                        @Student.FullName
-                                                    </td>
-                                                    @{ //Tim attendance cua log
-                                                RollSystemMobile.Models.StudentAttendance Attendance = Model.CurrentAttendanceLog.StudentAttendances.
-                                                FirstOrDefault(attend => attend.StudentID == Student.StudentID);
-                                                bool falseCheck = Attendance == null || !Attendance.IsPresent;
-                                                    }
-                                                    <td class="text-center">
-                                                        <input type="radio" name="AttendanceChecks[@CheckIndex].IsPresent" value="true"
-                                                                @(falseCheck ? "" : "checked") />
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <input type="radio" name="AttendanceChecks[@CheckIndex].IsPresent" value="false"
-                                                                @(falseCheck ? "checked" : "")/>
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="AttendanceChecks[@CheckIndex].Note" class="span2" 
-                                                                value="@(Attendance == null ? "" : @Attendance.Note)" />
-                                                    </td>
-                                                </tr>
-                                                { AttendIndex++; CheckIndex++; }
-                                            }
-                                            <tr>
-                                                <td>
-                                                </td>
-                                                <td>
-                                                </td>
-                                                <td class="text-center">
-                                                    <input type="radio" name="totalRadio" id="PresentRadio" /><br />
-                                                    Present All
-                                                </td>
-                                                <td class="text-center">
-                                                    <input type="radio" name="totalRadio" id="AbsentRadio" /><br />
-                                                    Absent All
-                                                </td>
-                                                <td>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5" class="text-right">
-                                                    <strong>Present: @Model.CurrentAttendanceLog.StudentAttendances.Count(attend => attend.IsPresent == true)/@Model.CurrentRollCall.Students.Count</strong>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="5" class="text-center">
-                                                    <button class="btn btn-info">
-                                                        Submit Attendance</button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                        <tr>
+                                            <td class="text-right">
+                                                @index
+                                            </td>
+                                            <td>
+                                                @Student.StudentCode
+                                            </td>
+                                            <td>
+                                                @Student.FullName
+                                            </td>
+                                            <td>
+                                                Uncheck
+                                            </td>
+                                        </tr>
+                                        { index++; }
                                     }
-                                }
-                            </div>
-                        </div>
+                                    <tr>
+                                        <td colspan="4" class="text-right">
+                                            <strong>Please upload image to check attendance.</strong>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                        else
+                        {
+                            using (Html.BeginForm("CheckAttendanceManual", "Instructor", FormMethod.Post))
+                            {
+                            <input type="hidden" name="Username" value="@User.Identity.Name" />
+                            <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
+                            <input type="hidden" name="Date" value="@DateTime.Today" />
+                            <table class="table table-striped table-condensed">
+                                <!-- Tao form check attendace dua tren log hien tai -->
+                                <thead>
+                                    <tr>
+                                        <th class="text-right">
+                                            No
+                                        </th>
+                                        <th>
+                                            Student Name
+                                        </th>
+                                        <th>
+                                            Present
+                                        </th>
+                                        <th>
+                                            Absent
+                                        </th>
+                                        <th class="text-center">
+                                            Note
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{int AttendIndex = 1;
+                                      int CheckIndex = 0;
+                                    }
+                                    @foreach (var Student in Model.CurrentRollCall.Students)
+                                    {
+                                        <tr>
+                                            <input type="hidden" name="AttendanceChecks.Index" value="@CheckIndex" />
+                                            <input type="hidden" name="AttendanceChecks[@CheckIndex].StudentID" value="@Student.StudentID" />
+                                            <td class="text-right">
+                                                @AttendIndex
+                                            </td>
+                                            <td>
+                                                @Student.FullName
+                                            </td>
+                                            @{ //Tim attendance cua log
+                                        RollSystemMobile.Models.StudentAttendance Attendance = Model.CurrentAttendanceLog.StudentAttendances.
+                                        FirstOrDefault(attend => attend.StudentID == Student.StudentID);
+                                        bool falseCheck = Attendance == null || !Attendance.IsPresent;
+                                            }
+                                            <td class="text-center">
+                                                <input type="radio" name="AttendanceChecks[@CheckIndex].IsPresent" value="true"
+                                                                @(falseCheck ? "" : "checked") />
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="radio" name="AttendanceChecks[@CheckIndex].IsPresent" value="false"
+                                                                @(falseCheck ? "checked" : "")/>
+                                            </td>
+                                            <td>
+                                                <div class="input-prepend">
+                                                    <span class="add-on note-prepend">@(Attendance == null || Attendance.Note == null  || Attendance.Note.Split(':').Length < 1 ?
+                                                    "" : @Attendance.Note.Split(':')[0])</span>
+                                                    <input type="text" name="AttendanceChecks[@CheckIndex].Note" class="span2" 
+                                                                value="@(Attendance == null || Attendance.Note == null  || Attendance.Note.Split(':').Length < 1 ?
+                                                                "" : @Attendance.Note.Split(':')[1].Trim())" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        { AttendIndex++; CheckIndex++; }
+                                    }
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td>
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="radio" name="totalRadio" id="PresentRadio" /><br />
+                                            Present All
+                                        </td>
+                                        <td class="text-center">
+                                            <input type="radio" name="totalRadio" id="AbsentRadio" /><br />
+                                            Absent All
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right">
+                                            <strong>Present: @Model.CurrentAttendanceLog.StudentAttendances.Count(attend => attend.IsPresent == true)/@Model.CurrentRollCall.Students.Count</strong>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <button class="btn btn-info">
+                                                Submit Attendance</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            }
+                        }
                     </div>
-                </dd>
-                <dt class="margin-top-12">Upload Image for<br />
-                    Attendance Check</dt>
-                <dd style="margin-top: 8px;">
-                    @using (Html.BeginForm("CheckAttendanceAuto", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                    {
-                        <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
-                        <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
-                        <button class="btn" id="btnUpload">
-                            Upload</button>
-                    }
-                </dd>
-            </dl>
-        }
-        else
-        {
-            <h3>
-                You aren't teaching any class at present.</h3>
-        }
+                </div>
+            </div>
+        </dd>
+        <dt class="margin-top-12">Upload Image for<br />
+            Attendance Check</dt>
+        <dd style="margin-top: 8px;">
+            @using (Html.BeginForm("CheckAttendanceAuto", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
+                <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
+                <button class="btn" id="btnUpload">
+                    Upload</button>
+            }
+        </dd>
+    </dl>
+}
+else
+{
+    <h3>
+        You aren't teaching any class at present.</h3>
+}
 <script type="text/javascript">
     $('#PresentRadio').change(function () {
         $("input:radio[value=true]").prop("checked", true);

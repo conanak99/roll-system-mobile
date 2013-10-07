@@ -60,18 +60,8 @@ namespace RollSystemMobile.Controllers
             AttendanceLog Log = attendanceBO.WriteAttendanceAutoLog(RollCallID, Results);
             //Danh sach sinh vien trong log
 
-            HashSet<int> StudentIDs = new HashSet<int>();
-            foreach (var result in Results)
-            {
-                foreach (var face in result.FaceList)
-                {
-                    //ID phai khac -1, moi tinh la nhan duoc
-                    if (face.StudentID != -1)
-                    {
-                        StudentIDs.Add(face.StudentID);
-                    }
-                }
-            }
+            List<int> StudentIDs = attendanceBO.GetStudentIDList(Results);
+
             //Lay danh sach sinh vien da nhan
             List<Student> Students = db.Students.Where(stu => StudentIDs.Contains(stu.StudentID)).ToList();
 
@@ -88,13 +78,13 @@ namespace RollSystemMobile.Controllers
             DateTime Today = DateTime.Now;
             var RollCalls = db.RollCalls.Where(r => r.InstructorTeachings.
                                        Any(inte => inte.InstructorID == InstructorID)
-                                       && r.BeginDate < Today && r.EndDate > Today).OrderBy(roll => roll.StartTime);
+                                       && r.BeginDate <= Today && r.EndDate >= Today).OrderBy(roll => roll.StartTime);
             //Mon dang day vao thoi diem dang nhap
             RollCall CurrentRollCall = null;
             TimeSpan CurrentTime = DateTime.Now.TimeOfDay;
             if (RollCalls.Count() > 0)
             {
-                CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime < CurrentTime && r.EndTime > CurrentTime);
+                CurrentRollCall = RollCalls.FirstOrDefault(r => r.StartTime <= CurrentTime && r.EndTime >= CurrentTime);
             }
 
             var RollCallJson = RollCalls.ToList().Select(r => new

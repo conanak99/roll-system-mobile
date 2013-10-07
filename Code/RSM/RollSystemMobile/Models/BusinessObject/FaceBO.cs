@@ -95,7 +95,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
         public static void SaveTrainingData(string ImagePath, int FaceID, int StudentID)
         {
-            //O ngoai ko check, ko save
+            //Ben ngoai ko check, ko save
             if (FaceID == -1)
             {
                 return;
@@ -116,13 +116,20 @@ namespace RollSystemMobile.Models.BusinessObject
                 String ImageName = System.IO.Path.GetFileNameWithoutExtension(ImagePath);
                 String FileName = String.Format("{0}_face_{1}.jpg", ImageName, FaceID);
 
-                FaceImage.Save(TRAINING_FOLDER_PATH + "/" + FileName);
+                if (db.StudentImages.Any(i => i.ImageLink.Equals(FileName) && i.StudentID == StudentID))
+                {
+                    throw new Exception(String.Format("Face {0} of image {1} already in database. Not save.", FaceID, ImageName));
+                }
+                else
+                {
+                    FaceImage.Save(TRAINING_FOLDER_PATH + "/" + FileName);
 
-                StudentImage StuIma = new StudentImage();
-                StuIma.StudentID = StudentID;
-                StuIma.ImageLink = FileName;
-                db.StudentImages.AddObject(StuIma);
-                db.SaveChanges();
+                    StudentImage StuIma = new StudentImage();
+                    StuIma.StudentID = StudentID;
+                    StuIma.ImageLink = FileName;
+                    db.StudentImages.AddObject(StuIma);
+                    db.SaveChanges();
+                }
             }
             Image.Dispose();
         }
