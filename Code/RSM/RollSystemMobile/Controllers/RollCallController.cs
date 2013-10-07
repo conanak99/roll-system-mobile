@@ -18,7 +18,7 @@ namespace RollSystemMobile.Controllers
         public ViewResult Index()
         {
             var rollcalls = db.RollCalls.Include("Class").Include("Semester").Include("Subject");
-            return View(rollcalls.ToList());
+            return View(rollcalls.OrderBy(i => i.BeginDate).ToList());
         }
         //student list cho trang create new rollcall
         public ActionResult Studentlist(int? ClassID)

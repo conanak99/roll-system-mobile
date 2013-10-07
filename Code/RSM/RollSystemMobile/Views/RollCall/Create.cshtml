@@ -14,27 +14,27 @@
                 <div class="editor-label">
                     <b>Major :</b>
                 </div>
-                <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("MajorID")
+                <div class="editor-field " style="margin-left: 10px">
+                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID ,new { style = "width: 230px;" } )
                 </div>
                 <div class="editor-label">
                     <b>Subject</b>
                 </div>
-                <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("SubjectID")
+                <div class="editor-field" style="margin-left: 10px ;">
+                    @Html.DropDownList("SubjectID", (SelectList)ViewBag.SubjectID, new { style = "width: 100px;" })
                 </div>
                 <div class="editor-label">
                     <b>Class</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID)<br />
+                    @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, new { style = "width: 130px;"})<br />
                     <a onclick="ViewStudentList();" href="#">Click to view student in this class</a>
                 </div>
                 <div class="editor-label">
                     <b>Instructor</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("InstructorID")
+                    @Html.DropDownList("InstructorID", (SelectList)ViewBag.MajoInstructorrID, new { style = "width: 230px;" })
                 </div>
             </td>
             <td>
@@ -42,7 +42,7 @@
                     <b>Semester</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("SemesterID")
+                    @Html.DropDownList("SemesterID", (SelectList)ViewBag.SemeseterID, new { style = "width: 160px;" })
                     @Html.ValidationMessageFor(model => model.SemesterID)
                 </div>
                 <div class="editor-label">
@@ -51,13 +51,13 @@
                 <div class="editor-field" id="a" style="margin-left: 10px">
                     @Html.DropDownList("StartTime", new List<SelectListItem> 
        { 
-           new SelectListItem { Text = "7:00", Value = "7:00" ,Selected=true}, 
+           new SelectListItem { Text = "7:00", Value = "7:00" }, 
            new SelectListItem { Text = "8:45", Value = "8:45" },
            new SelectListItem { Text = "10:30", Value = "10:30" }, 
            new SelectListItem { Text = "12:30", Value = "12:30" }, 
            new SelectListItem { Text = "14:15", Value = "14:15" }, 
            new SelectListItem { Text = "16:00", Value = "16:00" } 
-       })
+       }, new { style = "width: 100px;" })
                     @Html.ValidationMessageFor(model => model.StartTime)
                 </div>
                 <div class="editor-label">
