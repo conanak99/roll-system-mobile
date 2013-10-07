@@ -10,13 +10,13 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th class="text-right"style="width:50px;">
+                <th class="text-right" style="width: 50px;">
                     No.
                 </th>
-                <th  style="width:150px;">
+                <th style="width: 150px;">
                     Student Code
                 </th>
-                <th style="width:500px;">
+                <th style="width: 500px;">
                     Full Name
                 </th>
             </tr>
@@ -26,7 +26,7 @@
             @foreach (var item in Model)
             {
                 <tr>
-                    <td class="text-right" >
+                    <td class="text-right">
                         @index
                     </td>
                     <td>
@@ -39,6 +39,7 @@
                    { index++; }
             }
         </tbody>
+        <b style="margin-left: 5px;">Toltal Student: </b>@Model.Count()
     </table>
     
 }

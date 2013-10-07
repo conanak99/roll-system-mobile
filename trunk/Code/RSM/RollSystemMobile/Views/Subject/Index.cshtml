@@ -1,0 +1,52 @@
+﻿@model IEnumerable<RollSystemMobile.Models.Subject>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+<h2>
+    Subject List</h2>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            No.
+        </th>
+        <th>
+            Short Name
+        </th>
+        <th>
+            Full Name
+        </th>
+        <th>
+            Number Of Slot
+        </th>
+        <th>
+        </th>
+    </tr>
+    @{int index = 1;}
+    @foreach (var item in Model)
+    {
+        <tr>
+        <td>
+                @index
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShortName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfSlot)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.SubjectID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
+            </td>
+        </tr>
+        { index++; }
+    }
+</table>

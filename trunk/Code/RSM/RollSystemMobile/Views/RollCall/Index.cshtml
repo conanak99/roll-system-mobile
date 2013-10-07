@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Staff/_Layout.cshtml";
-    
 }
 <h1>Roll Call List</h1>
 <p>
@@ -11,25 +10,28 @@
 <table class="table" id="test">
     <tr>
         <th style="width:50px;">
-            Index
+            No.
         </th>
         <th style="width:50px;">
             Class
         </th>
-        <th style="width:200px;">
+        <th style="width:250px;">
             Subject
         </th>
-        <th style="width:200px;">
+        <th style="width:250px;">
             Date
         </th>
         <th style="width:200px;">
             Time
         </th>
-        <th style="width:100px;">
+        <th style="width:150px;">
             Student List
         </th>
-        <th style="width:100px;">
-            Edit
+        <th style="width:50px;">
+            Detail
+        </th>
+        <th style="width:50px;">
+            Delete
         </th>
     </tr>
     @{ int index = 1;}
@@ -46,7 +48,7 @@
                 @Html.DisplayFor(modelItem => item.Subject.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.BeginDate)-@Html.DisplayFor(modelItem => item.EndDate)
+                @item.BeginDate.ToShortDateString()-@item.EndDate.ToShortDateString()
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartTime)- @Html.DisplayFor(modelItem => item.EndTime)
@@ -55,7 +57,10 @@
                 @Html.ActionLink("Show", "RollCallStudentList", new { RollCallID = item.RollCallID })
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID })
+                @Html.ActionLink("Detail", "Edit", new { id = item.RollCallID })
+            </td>
+            <td>
+                @Html.ActionLink("Detele", "Delete", new { id = item.RollCallID })
             </td>
         </tr>
         { index++; }

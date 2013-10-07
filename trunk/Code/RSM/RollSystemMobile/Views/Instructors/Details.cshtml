@@ -1,0 +1,40 @@
+﻿@model RollSystemMobile.Models.Instructor
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Instructor</legend>
+
+    <div class="display-label">Fullname</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Fullname)
+    </div>
+
+    <div class="display-label">Email</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">Phone</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Phone)
+    </div>
+
+    <div class="display-label">IsActive</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsActive)
+    </div>
+
+    <div class="display-label">User</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.User.Username)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.InstructorID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
