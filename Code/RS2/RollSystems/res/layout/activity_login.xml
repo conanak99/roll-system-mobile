@@ -1,0 +1,96 @@
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_login"
+    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="108dp"
+        android:layout_y="20dp"
+        android:src="@drawable/logo1" />
+
+    <EditText
+        android:id="@+id/txtPassword"
+        android:layout_width="255dp"
+        android:layout_height="38dp"
+        android:layout_x="35dp"
+        android:layout_y="125dp"
+        android:background="@drawable/box_login"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:padding="12dp"
+        android:textColor="#194f1e"
+        android:textColorHint="#888888"
+        android:textSize="14sp" />
+
+    <EditText
+        android:id="@+id/txtUsername"
+        android:layout_width="255dp"
+        android:layout_height="38dp"
+        android:layout_x="35dp"
+        android:layout_y="85dp"
+        android:background="@drawable/box_login"
+        android:ems="10"
+        android:hint="Username"
+        android:padding="12dp"
+        android:textColor="#194f1e"
+        android:textColorHint="#888888"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="262dp"
+        android:layout_height="35dp"
+        android:layout_x="36dp"
+        android:layout_y="194dp"
+        android:background="@drawable/bton_log"
+        android:text="Login"
+        android:textColor="#ffffff" />
+
+    <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="160dp"
+        android:layout_height="15dp"
+        android:layout_x="40dp"
+        android:layout_y="164dp"
+        android:checked="false"
+        android:text="Saving Password"
+        android:textColor="#3dab52"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textViewLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="98dp"
+        android:layout_y="373dp"
+        android:text="Copyright © by Bitu, 2013"
+        android:textColor="#194f1e"
+        android:textSize="12sp" />
+
+    <ViewAnimator
+        android:id="@+id/viewAnimator1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="118dp"
+        android:layout_y="277dp" >
+
+    </ViewAnimator>
+
+    <ProgressBar
+        android:id="@+id/progressBarLogin"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_x="150dp"
+        android:layout_y="240dp"
+        android:alpha=".5"
+        android:background="@layout/progress"
+        android:indeterminateBehavior="cycle" />
+
+</AbsoluteLayout>

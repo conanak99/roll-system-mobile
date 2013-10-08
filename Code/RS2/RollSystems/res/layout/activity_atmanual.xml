@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/txtClassAt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="0dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtSubjectAt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="114dp"
+        android:layout_y="0dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtInstructorAt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="15dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtTimeAt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="30dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/txtDateAt1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="120dp"
+        android:layout_y="30dp"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="86dp"
+        android:layout_y="0dp"
+        android:text="--" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="86dp"
+        android:layout_y="30dp"
+        android:text="--" />
+
+    <ListView
+        android:id="@+id/listAtStudent"
+        android:layout_width="match_parent"
+        android:layout_height="275dp"
+        android:layout_x="0dp"
+        android:layout_y="141dp" >
+    </ListView>
+
+    <TextView
+        android:id="@+id/textView31"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="0dp"
+        android:layout_y="126dp"
+        android:text="Student List" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="2dp"
+        android:layout_y="44dp"
+        android:text="Attendance Log" />
+
+    <ListView
+        android:id="@+id/listAtLog"
+        android:layout_width="match_parent"
+        android:layout_height="67dp"
+        android:layout_x="0dp"
+        android:layout_y="60dp" >
+    </ListView>
+
+    <Button
+        android:id="@+id/btSubmitAt"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_x="95dp"
+        android:layout_y="413dp"
+        android:text="Submit Attendance" />
+
+</AbsoluteLayout>
