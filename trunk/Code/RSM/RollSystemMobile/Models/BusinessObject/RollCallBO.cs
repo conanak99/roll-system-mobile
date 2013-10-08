@@ -165,8 +165,11 @@ namespace RollSystemMobile.Models.BusinessObject
             //Tinh so sinh vien di hoc
             Worksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
 
+            /*
             TimeSpan TotalDate = RollCall.EndDate - RollCall.BeginDate;
             int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days/ 7) * 5; //1 tuan 7 ngay hoc 5 buoi
+            */
+            int NumberOfSlot = RollCall.Subject.NumberOfSession;
             int FinalColumnIndex = 4 + NumberOfSlot;
 
             //Tinh % di hoc cua moi SV
@@ -182,7 +185,7 @@ namespace RollSystemMobile.Models.BusinessObject
             ExcelPackage Package = new ExcelPackage();
             RollCall RollCall = db.RollCalls.First(r => r.RollCallID == RollCallID);
             String SheetName = RollCall.Class.ClassName + "_" + RollCall.Subject.ShortName;
-
+            int NumberOfSlot = RollCall.Subject.NumberOfSession;
 
             ExcelWorksheet Worksheet = Package.Workbook.Worksheets.Add(SheetName);
             //Set chieu ngang cac cot
@@ -202,9 +205,10 @@ namespace RollSystemMobile.Models.BusinessObject
             Worksheet.Cells["E2"].Value = "Semester: ";
             Worksheet.Cells["E3"].Value = "Class: ";
             Worksheet.Cells["E4"].Value = "Subject: ";
-            Worksheet.Cells["E5"].Value = "Time: ";
-            Worksheet.Cells["E6"].Value = "Date: ";
-            Worksheet.Cells["E7"].Value = "Instructor: ";
+            Worksheet.Cells["E5"].Value = "Session: ";
+            Worksheet.Cells["E6"].Value = "Time: ";
+            Worksheet.Cells["E7"].Value = "Date: ";
+            Worksheet.Cells["E8"].Value = "Instructor: ";
 
             //Merge tu G toi K de show
             for (int i = 2; i <= 7; i++)
@@ -214,15 +218,16 @@ namespace RollSystemMobile.Models.BusinessObject
             Worksheet.Cells["G2"].Value = RollCall.Semester.SemesterName;
             Worksheet.Cells["G3"].Value = RollCall.Class.ClassName;
             Worksheet.Cells["G4"].Value = RollCall.Subject.ShortName;
-            Worksheet.Cells["G5"].Value = String.Format("{0} - {1}",
+            Worksheet.Cells["G5"].Value = NumberOfSlot;
+            Worksheet.Cells["G6"].Value = String.Format("{0} - {1}",
                 RollCall.StartTime.ToString(@"hh\:mm"), RollCall.EndTime.ToString(@"hh\:mm"));
-            Worksheet.Cells["G6"].Value = String.Format("{0} to {1}",
+            Worksheet.Cells["G7"].Value = String.Format("{0} to {1}",
                 RollCall.BeginDate.ToString("dd-MM-yyyy"), RollCall.EndDate.ToString("dd-MM-yyyy"));
-            Worksheet.Cells["G7"].Value = RollCall.InstructorTeachings.ToList().Last().Instructor.Fullname;
+            Worksheet.Cells["G8"].Value = RollCall.InstructorTeachings.ToList().Last().Instructor.Fullname;
 
             //Set size cho cac ki tu con lai
-            Worksheet.Cells["E2:K7"].Style.Font.Size = 12;
-            Worksheet.Cells["E2:K7"].Style.Font.Bold = true;
+            Worksheet.Cells["E2:K8"].Style.Font.Size = 12;
+            Worksheet.Cells["E2:K8"].Style.Font.Bold = true;
 
             //Bat dau ghi tu o A10
             Worksheet.Cells["A10"].Value = "No.";
@@ -243,9 +248,12 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
             }
 
+            /*
             TimeSpan TotalDate = RollCall.EndDate - RollCall.BeginDate;
-            double dTotalDate = TotalDate.Days;
             int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days /  7) * 5;  //1 tuan 7 ngay hoc 5 buoi
+            */
+
+           
             int FinalColumnIndex = 4 + NumberOfSlot;
             //Bat dau ke o tu Cell[4,10]
 

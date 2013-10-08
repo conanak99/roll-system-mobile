@@ -71,6 +71,48 @@ namespace RollSystemMobile.Controllers
             return View("UploadResult", Results);
         }
 
-       
+        public ActionResult AddImages()
+        {
+            if (TempData["FacesAdded"] != null)
+            {
+                //Lay cai gia tri da duoc add, show ra
+                List<FaceAdded> FacesAdded = (List<FaceAdded>)TempData["FacesAdded"];
+                FacesAdded = FacesAdded.OrderBy(fa => fa.StudentID).ToList();
+                var StudentIDs = FacesAdded.Select(fa => fa.StudentID).Distinct().ToList();
+
+                List<Student> Students = _db.Students.Where(st => StudentIDs.Contains(st.StudentID)).ToList();
+
+                ViewBag.Students = Students;
+                ViewBag.FacesAdded = FacesAdded;
+            }
+
+            ViewBag.Errors = TempData["Errors"];
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddImages(IEnumerable<HttpPostedFileBase> ImageFiles)
+        {
+            List<RecognizerResult> Results = new List<RecognizerResult>();
+
+            foreach (HttpPostedFileBase file in ImageFiles)
+            {
+                //Save file anh xuong
+                String OldPath = Server.MapPath("~/Content/Temp/" + file.FileName);
+                file.SaveAs(OldPath);
+
+                //Resize file anh
+                String NewPath = Server.MapPath("~/Content/Temp/Resized/" + file.FileName);
+                FaceBO.ResizeImage(OldPath, NewPath);
+
+                //Nhan dien khuon mat, cho vao danh sach
+                RecognizerResult SingleResult = FaceBO.DetectFromImage(NewPath);
+                Results.Add(SingleResult);
+            }
+
+            //Load may cai selectbox vao day
+
+            return View("UploadMultiResult", Results);
+        }
     }
 }

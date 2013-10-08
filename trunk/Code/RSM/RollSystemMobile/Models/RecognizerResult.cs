@@ -35,4 +35,12 @@ namespace RollSystemMobile.Models
             this.Height = Height;
         }
     }
+
+    //Sau khi add face xuong DB, tra ra cai nay
+    public class FaceAdded
+    {
+        public String FaceLink { get; set; }
+        public int StudentID { get; set; }
+        public int ImageID { get; set; }
+    }
 }
