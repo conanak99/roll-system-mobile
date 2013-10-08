@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <AbsoluteLayout
+        android:id="@+id/AbsoluteLayout1"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_cell_camera" >
+
+        <TextView
+            android:id="@+id/txtTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="2dp"
+            android:layout_y="46dp"
+            android:text="TextView"
+            android:textColor="#194f1e" />
+
+        <TextView
+            android:id="@+id/txtSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="2dp"
+            android:layout_y="1dp"
+            android:text="TextView"
+            android:textColor="#194f1e" />
+
+        <TextView
+            android:id="@+id/txtClass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="3dp"
+            android:layout_y="22dp"
+            android:text="TextView"
+            android:textColor="#194f1e" />
+
+        <TextView
+            android:id="@+id/txtDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="153dp"
+            android:layout_y="49dp"
+            android:text="TextView"
+            android:textColor="#194f1e" />
+
+        <TextView
+            android:id="@+id/txtCurrent"
+            android:layout_width="95dp"
+            android:layout_height="wrap_content"
+            android:layout_x="182dp"
+            android:layout_y="12dp"
+            android:textColor="#194f1e" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_x="290dp"
+            android:layout_y="28dp" />
+
+    </AbsoluteLayout>
+
+</LinearLayout>
