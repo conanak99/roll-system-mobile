@@ -76,6 +76,7 @@ img.thumbnail
     position: absolute;
     opacity: 0.7;
     border-radius: 0;
+    vertical-align:middle;
 }
 
 .face-region:hover
@@ -103,4 +104,23 @@ img.thumbnail
 {
     width: 110px;
     font-size: 13px;
+}
+
+.avatar {
+	height: 40px;
+	width: 40px;
+}
+
+.mini-text {
+	font-size: 12px;
+}
+
+.face-region div.invi
+{
+   visibility:hidden;
+}
+
+.face-region div.drop-in-region {
+	margin-left: -50%;
+	margin-top: 35%;
 }
