@@ -111,6 +111,8 @@ namespace RollSystemMobile.Controllers
             }
 
             //Load may cai selectbox vao day
+            var Students = _db.Students.Where(st => st.IsActive).ToList();
+            ViewBag.Students = Students;
 
             return View("UploadMultiResult", Results);
         }

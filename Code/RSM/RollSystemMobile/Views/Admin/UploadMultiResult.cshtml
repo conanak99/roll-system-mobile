@@ -5,16 +5,35 @@
 <h4>
     Select students face from Image
 </h4>
+<div id="dataHolder" style="display: none">
+    <option></option>
+    @{ List<RollSystemMobile.Models.Student> Students = ViewBag.Students;
+       List<String> SelectListIDs = new List<string>();
+    }
+    @foreach (var Student in Students)
+    {
+        if (Student.StudentImages.Count == 0)
+        {
+        <option value="@Student.StudentID" data-img="40x40.gif" >@Student.StudentCode - @Student.FullName</option>
+        }
+        else
+        {
+            var ImageLink = Student.StudentImages.First().ImageLink;
+        <option value="@Student.StudentID" data-img="@ImageLink" >@Student.StudentCode - @Student.FullName</option>
+        }
+    }
+</div>
 @using (@Html.BeginForm("SaveImageMulti", "Image", FormMethod.Post))
 {
 
     for (int ImageIndex = 0; ImageIndex < Model.Count(); ImageIndex++)
     {
+
         var Image = Model.ElementAt(ImageIndex);
     <input type="hidden" name="ImageModels.Index" value="@ImageIndex"/>
     <input type="hidden" name="ImageModels[@ImageIndex].ImageLink" value="@Image.ImageLink"/>
     <div class="img-holder">
-        @for (int FaceIndex = 0; FaceIndex < Image.FaceList.Count ; FaceIndex++)
+        @for (int FaceIndex = 0; FaceIndex < Image.FaceList.Count; FaceIndex++)
         {
             var Face = Image.FaceList.ElementAt(FaceIndex);
             <input type="hidden" name="ImageModels[@ImageIndex].FaceIndexs.Index" value="@FaceIndex"/>
@@ -25,8 +44,12 @@
             <input type="hidden" name="ImageModels[@ImageIndex].ImageLink" value="@Image.ImageLink"/>
             <div class="face-region" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
                                        Face.X, Face.Y, Face.Width, Face.Height);">
-            
-             <input name="ImageModels[@ImageIndex].StudentIDs[@FaceIndex]" value=""/>
+                @{ String SelectListID = "e" + ImageIndex + FaceIndex;
+                   SelectListIDs.Add(SelectListID);
+                }
+                <select name="ImageModels[@ImageIndex].StudentIDs[@FaceIndex]"
+               id="@SelectListID" data-placeholder="Select a student" class="invi datafill drop-in-region">
+                </select>
             </div>
         }
         <img src="@Url.Content("~/Content/Temp/Resized/" + Image.ImageLink)" />
@@ -35,3 +58,41 @@
     
     <input type="submit" class="btn btn-primary" value="Submit Result" />
 }
+<script>
+    //Chuyen data tu datafile vao cac dropbox
+    var fillHtml = $('#dataHolder').html();
+    $('.datafill').html(fillHtml);
+
+    //Ham de format entry trong selectbox
+    function format(student) {
+        var originalOption = student.element;
+        return "<div><img class='avatar' src='@Url.Content("~/Content/Training Data/")" + $(originalOption).data('img') + "'/><span class='text-left mini-text'> " + student.text + "</span></div>";
+    }
+
+    @{
+        String SelectString = "";
+        if (SelectListIDs.Count() > 0)
+        {
+            foreach (var ID in SelectListIDs)
+            {
+                SelectString += "#" + ID + ",";
+            }
+            SelectString = SelectString.Substring(0, SelectString.Length - 1);
+        }
+    }
+
+    $('@SelectString').select2({
+	    placeholder: "Select a Student",
+        allowClear: true,
+        formatResult: format,
+        width: 270
+	});
+
+    $('.face-region').hover(function() {
+   var select = $(this).children('select');
+   select.removeClass('invi');
+}, function(){
+     var select = $(this).children('select');
+   select.addClass('invi');
+});
+</script>

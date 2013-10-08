@@ -27,7 +27,8 @@ namespace FaceRecAutomationTesting
                 case 2: CompareHaarTimes(); break;
                 case 3: CompareHaarTimesBigImage(); break;
                 case 4: CompareHaarTimesBigImageResized(); break;
-                case 5: CompareFacePostivieDetection(); break;
+                case 5: CompareAccuracySingleImage(); break;
+                case 6: CompareFacePostivieDetection(); break;
                 default: Console.WriteLine("Good bye");
                     break;
             }
