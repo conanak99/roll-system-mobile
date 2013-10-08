@@ -1,0 +1,37 @@
+﻿@model IEnumerable<RollSystemMobile.Models.RecognizerResult>
+@{
+    ViewBag.Title = "Upload Result";
+}
+<h4>
+    Select students face from Image
+</h4>
+@using (@Html.BeginForm("SaveImageMulti", "Image", FormMethod.Post))
+{
+
+    for (int ImageIndex = 0; ImageIndex < Model.Count(); ImageIndex++)
+    {
+        var Image = Model.ElementAt(ImageIndex);
+    <input type="hidden" name="ImageModels.Index" value="@ImageIndex"/>
+    <input type="hidden" name="ImageModels[@ImageIndex].ImageLink" value="@Image.ImageLink"/>
+    <div class="img-holder">
+        @for (int FaceIndex = 0; FaceIndex < Image.FaceList.Count ; FaceIndex++)
+        {
+            var Face = Image.FaceList.ElementAt(FaceIndex);
+            <input type="hidden" name="ImageModels[@ImageIndex].FaceIndexs.Index" value="@FaceIndex"/>
+            <input type="hidden" name="ImageModels[@ImageIndex].StudentIDs.Index" value="@FaceIndex"/>
+            
+            <input type="hidden" name="ImageModels[@ImageIndex].FaceIndexs[@FaceIndex]" value="@FaceIndex"/>
+            
+            <input type="hidden" name="ImageModels[@ImageIndex].ImageLink" value="@Image.ImageLink"/>
+            <div class="face-region" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
+                                       Face.X, Face.Y, Face.Width, Face.Height);">
+            
+             <input name="ImageModels[@ImageIndex].StudentIDs[@FaceIndex]" value=""/>
+            </div>
+        }
+        <img src="@Url.Content("~/Content/Temp/Resized/" + Image.ImageLink)" />
+    </div>
+    }
+    
+    <input type="submit" class="btn btn-primary" value="Submit Result" />
+}

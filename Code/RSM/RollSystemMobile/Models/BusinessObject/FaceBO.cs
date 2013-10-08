@@ -122,49 +122,66 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
                 else
                 {
+                    //Save file anh xuong
                     FaceImage.Save(TRAINING_FOLDER_PATH + "/" + FileName);
-
-                    StudentImage StuIma = new StudentImage();
-                    StuIma.StudentID = StudentID;
-                    StuIma.ImageLink = FileName;
+                    //Save xuong DB
+                    StudentImage StuIma = new StudentImage() { StudentID = StudentID, ImageLink = FileName };
                     db.StudentImages.AddObject(StuIma);
-                    db.SaveChanges();
                 }
             }
+            db.SaveChanges();
             Image.Dispose();
         }
 
-        public static void SaveTrainingData(string ImagePath, int[] FaceIDs, int[] StudentIDs)
+        public static List<FaceAdded> SaveTrainingData(string ImagePath, int[] FaceIDs, int[] StudentIDs)
         {
             RSMEntities db = new RSMEntities();
-            Image<Gray, byte> Image = new Image<Bgr, byte>(ImagePath).Convert<Gray, byte>();
 
-            var FacesDetected = Image.DetectHaarCascade(Haar, DETECT_SCALE, MIN_NEIGHBOR,
-                                0, new System.Drawing.Size(MIN_SIZE, MIN_SIZE))[0];
-            foreach (int FaceID in FaceIDs)
+            Image<Bgr, byte> Image = new Image<Bgr, byte>(ImagePath);
+            List<FaceAdded> FacesAdded = new List<FaceAdded>();
+
+            using( Image<Gray, byte> GrayImage = Image.Clone().Convert<Gray,byte>())
             {
-                //Neu ko phai unknow thi moi save, la unknow thi bo qua
-                if (StudentIDs[FaceID] != -1)
+                var FacesDetected = GrayImage.DetectHaarCascade(Haar, DETECT_SCALE, MIN_NEIGHBOR,
+                                0, new System.Drawing.Size(MIN_SIZE, MIN_SIZE))[0];
+                foreach (int FaceID in FaceIDs)
                 {
-                    var Face = FacesDetected[FaceID];
-                    Image<Gray, byte> FaceImage = Image.Copy(Face.rect).Resize(TRAINING_DATA_SIZE, TRAINING_DATA_SIZE, INTER.CV_INTER_CUBIC);
-                    FaceImage._EqualizeHist();
+                    int StudentID = StudentIDs[FaceID];
+                    //Neu ko phai unknow thi moi save, la unknown thi bo qua
+                    if (StudentID != 0)
+                    {
+                        var Face = FacesDetected[FaceID];
+                        Image<Bgr, byte> FaceImage = Image.Copy(Face.rect)
+                                                      .Resize(TRAINING_DATA_SIZE, TRAINING_DATA_SIZE,
+                                                      INTER.CV_INTER_CUBIC);
 
-                    //Tao ten file
-                    String ImageName = System.IO.Path.GetFileNameWithoutExtension(ImagePath);
-                    String FileName = String.Format("{0}_face_{1}.jpg", ImageName, FaceID);
-
-                    FaceImage.Save(TRAINING_FOLDER_PATH + FileName);
-
-                    ////Luu gia tri ten file, userid xuong db
-                    //TrainingData TraDa = new TrainingData();
-                    //TraDa.UserID = StudentIDs[FaceID];
-                    //TraDa.ImageLink = FileName;
-                    //db.TrainingDatas.AddObject(TraDa);
+                        //Tao ten file
+                        String ImageName = System.IO.Path.GetFileNameWithoutExtension(ImagePath);
+                        String FileName = String.Format("{0}_face_{1}.jpg", ImageName, FaceID);
+                        
+                        //Save anh, ghi xuong database
+                        if (db.StudentImages.Any(i => i.ImageLink.Equals(FileName) && i.StudentID == StudentID))
+                        {
+                            throw new Exception(String.Format("Face {0} of image {1} already in database. Not save.", FaceID, ImageName));
+                        }
+                        else
+                        {
+                            //Save file anh xuong
+                            FaceImage.Save(TRAINING_FOLDER_PATH + "/" + FileName);
+                            //Save xuong DB
+                            StudentImage StuIma = new StudentImage() { StudentID = StudentID, ImageLink = FileName };
+                            db.StudentImages.AddObject(StuIma);
+                            db.SaveChanges();
+                            //Dua KQ tra ra
+                            FacesAdded.Add(new FaceAdded() { FaceLink = FileName, StudentID = StudentID, ImageID= StuIma.ImageID });
+                        }
+                    }
                 }
-
             }
-            db.SaveChanges();
+            
+            Image.Dispose();
+
+            return FacesAdded;
         }
 
 

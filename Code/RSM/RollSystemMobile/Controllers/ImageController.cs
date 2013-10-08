@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
 using RollSystemMobile.Models.BusinessObject;
+using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Controllers
 {
@@ -37,9 +38,45 @@ namespace RollSystemMobile.Controllers
                 }
             }
             TempData["Errors"] = ErrorList;
-            //Cat image ra, cat face index ra, lam tro tiep
+            //Cat image ra, cat face index ra, gui lai trang single
             return RedirectToAction("SingleStudent","Admin", new { StudentID = StudentID });
         }
+
+        [HttpPost]
+        public ActionResult SaveImageMulti(ImageBindingModel model)
+        {
+            List<String> ErrorList = new List<String>();
+            List<FaceAdded> FacesAdded = new List<FaceAdded>();
+
+            foreach (var SingeImageModel in model.ImageModels)
+            {
+                //Lay file name, lay cac gia tri face va value
+                String ImageLink = SingeImageModel.ImageLink;
+                int[] FaceIndexs = SingeImageModel.FaceIndexs.ToArray();
+                int[] UserIDs = SingeImageModel.StudentIDs.ToArray();
+
+                String ImagePath = Server.MapPath("~/Content/Temp/Resized/" + ImageLink);
+                if (FaceIndexs != null && UserIDs != null)
+                {
+                    try
+                    {
+                        //Lay danh sach, dua ra
+                        FacesAdded.AddRange(FaceBO.SaveTrainingData(ImagePath, FaceIndexs, UserIDs));
+                    }
+                    catch (Exception e)
+                    {
+                        ErrorList.Add(e.Message);
+                    }
+                }
+
+            }
+
+            FacesAdded.OrderBy(fa => fa.StudentID);
+            TempData["FacesAdded"] = FacesAdded;
+            TempData["Errors"] = ErrorList;
+            return RedirectToAction("AddImages", "Admin");
+        }
+
 
         public ActionResult DeleteTrainingImage(int ImageID)
         {
