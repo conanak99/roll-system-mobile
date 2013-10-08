@@ -1,0 +1,334 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Student List</title>
+<link href="bootstrap/css/bootstrap.css" rel="stylesheet" />
+<link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+<link href="bootstrap/css/select2.css" rel="stylesheet" />
+<script src="bootstrap/js/jquery-2.0.3.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+<script src="bootstrap/js/select2.js"></script>
+<style>
+.tab-pane-content {
+	padding: 30px;
+}
+li.search-li {
+	float: right;
+}
+li.search-li form {
+	margin: 0;
+	margin-top: 3px;
+}
+img.thumbnail {
+	width: 50px;
+	height: 50px;
+	display: inline;
+}
+.thumbnail-holder {
+	display: inline;
+	position: relative;
+	margin: 4px;
+}
+.thumb {
+	height: 100px;
+	border: 1px solid #000;
+	margin: 10px 5px 0 0;
+}
+button.btn-delete {
+	position: absolute;
+	top: -24px;
+	right: 6px;
+	color: gray;
+	opacity: 0.75;
+	font-size: 25px;
+}
+button.btn-delete:hover {
+	color: red;
+	opacity: 1;
+}
+.img-resized {
+	height: 350px;
+	margin-top: 10px;
+}
+.face-region {
+	position: absolute;
+	border-style: solid;
+	border-color: white;
+	background-color: rgba(255, 255, 255, 0.3);
+	opacity: 0.7;
+}
+.face-region.selected {
+	background-color: rgba(255, 255, 255, 0.7);
+	opacity: 1;
+}
+.face-region:hover {
+	background-color: rgba(255, 255, 255, 0.7);
+	opacity: 1;
+}
+div.list_item_container {
+	width: 230px;
+	padding: 5px;
+}
+div.value {
+	font-size: 80%;
+	font-weight: bold;
+}
+div.image {
+	margin-right: 10px;
+	margin-bottom: 10px;
+	clear: left;
+	float: left;
+}
+div.image img {
+	width: 50px;
+	height: 50px;
+}
+div.description {
+	font-style: italic;
+	font-size: 0.8em;
+	color: gray;
+}
+.popover {
+	background-color: rgba(255, 255, 255, 0);
+}
+.popover-content {
+	height: 25px;
+	padding: 0;
+}
+.student-text {
+	width: 250px;
+	height: 15px;
+}
+.select2-choices {
+	min-height: 150px;
+	max-height: 150px;
+	overflow-y: auto;
+}
+ul.select2-results {
+	max-height: 200px;
+}
+.invi {
+	display: none;
+}
+
+.flag {
+	height: 40px;
+	width: 40px;
+}
+
+.mini-text {
+	font-size: 12px;
+}
+
+.abc {
+	margin-left: -105px;
+	margin-top: 15px;
+}
+
+</style>
+</head>
+<body>
+<div id="dumbData">
+ <option></option>
+    <option data-img="hoang_1.jpg" data-text="SE60740 - Pham Huy Hoang">SE60740 - Pham Huy Hoang</option>
+    <option data-img="vi_1.jpg" data-text="Nguyen Hieu Trieu Vi">Nguyen Hieu Trieu Vi</option>
+    <option data-img="binh_1.jpg" data-text="Dang Tieu Binh">Dang Tieu Binh</option>
+    <option data-img="minh_1.jpg" data-text="Trinh Hoang Minh">Trinh Hoang Minh</option>
+
+</div>
+
+  <div id="upload-div">
+    <h5>Upload Students's Images:</h5>
+    <input type="file" id="files" name="files[]" multiple />
+    <br/>
+    <output id="list"></output>
+    <button class="btn" id="btnUpload">Upload</button>
+  </div>
+  <div id="result-div">
+    <h5>Select students's faces from images </h5>
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_1.jpg" />
+      <div class="face-region" style="top:-105px;left:140px;width:45px;height:50px">
+          <select id="e1" data-placeholder="Select a student" class="invi abc">
+    
+        </select>
+  
+      </div>
+      <div class="face-region" style="top:-80px;left:195px;width:45px;height:50px">
+      <select id="e2" data-placeholder="Select a student" class="invi abc">
+   
+          </select>
+      </div>
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_2.jpg" />
+      <div class="face-region" style="top:-105px;left:160px;width:65px;height:70px"></div>
+      <div class="popover bottom">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <select data-placeholder="Select a student" class="invi">
+          </select>
+        </div>
+      </div>
+      <div class="face-region" style="top:-50px;left:255px;width:60px;height:65px"></div>
+      <div class="popover bottom">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <select data-placeholder="Select a student" class="invi">
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_3.jpg" />
+      <div class="face-region" style="top:-120px;left:190px;width:70px;height:75px"></div>
+      <div class="popover bottom">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <select data-placeholder="Select a student" class="invi">
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="thumbnail-holder"><img class="img-resized" src="Sample Image/sample_4.jpg" />
+      <div class="face-region" style="top:-50px;left:35px;width:80px;height:85px"></div>
+      <div class="popover bottom">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <select data-placeholder="Select a student" class="invi">
+          </select>
+        </div>
+      </div>
+      <div class="face-region" style="top:0px;left:150px;width:72px;height:80px"></div>
+      <div class="popover bottom">
+        <div class="arrow"></div>
+        <div class="popover-content">
+          <select data-placeholder="Select a student" class="invi">
+          </select>
+        </div>
+      </div>
+    </div>
+    <button class="btn" id="btnSave" onclick="window.location.href='Student List.html';">Save Result</button>
+  </div>
+</div>
+</body>
+
+
+
+<script>
+var files;
+var studentsImage = [
+			{
+                value: "Pham Huy Hoang",
+                label: "SE60740 - Pham Huy Hoang",
+                description: "Class: SE672",
+                image: "data/hoang_1.jpg"
+            },
+            {
+                value: "Nguyen Hieu Trieu Vi",
+                label: "SE60530 - Nguyen Hieu Trieu Vi",
+                description: "Class: SE0692",
+                image: "data/vi_1.jpg"
+            },
+			{
+                value: "Trinh Hoang Minh",
+                label: "SE60569 - Trinh Hoang Minh",
+                description: "Class: SE0592",
+                image: "data/minh_1.jpg"
+            },
+			{
+                value: "Nguyen Thanh Binh",
+                label: "SE60562 - Nguyen Thanh Binh",
+                description: "Class: SE0591",
+                image: "data/binh_1.jpg"
+            }
+];
+
+/*
+$('.student-text').each(function(){
+       $(this).autocomplete({ source: studentsImage}).data("ui-autocomplete")._renderItem = function( ul, item ) {
+        var inner_html = '<a><div class="list_item_container"><div class="image"><img src="' + item.image + '"></div><div class="value">' + item.label + '</div><div class="description">' + item.description + '</div></div></a>';
+        return $( "<li></li>" )
+            .data( "item.autocomplete", item )
+            .append(inner_html)
+            .appendTo( ul );
+    };
+});
+*/
+
+ function format(student) {
+	 var originalOption = student.element;
+	 return "<div><img class='flag' src='data/" + $(originalOption).data('img') + "'/><span class='text-left mini-text'>" + student.text +"</span></div>";
+        }
+		
+var htmll = $('#dumbData').html();
+$('.abc').html(htmll);
+
+
+$('#e1, #e2').select2({
+	 placeholder: "Select a State",
+allowClear: true,
+ formatResult: format,
+width: 220
+	});
+
+
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+$('#result-div').hide();
+
+function closeWindow()
+{
+     opener.location.href = 'Student List.html';
+     window.close(); 
+}
+
+function handleFileSelect(evt) {
+    files = evt.target.files; // FileList object
+
+    document.getElementById('list').innerHTML = "";
+    // Loop through the FileList and render image files as thumbnails.
+    for (var i = 0, f; f = files[i]; i++) {
+      parseFile(f);
+  }
+}
+  
+function parseFile(file)
+{
+   // Only process image files.
+      if (!file.type.match('image.*')) {
+        return;
+      }
+	  
+      var reader = new FileReader();
+      // Closure to capture the file information.
+      reader.onload = function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(file.name), '"/>'].join('');			
+          document.getElementById('list').insertBefore(span, null);
+       }
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(file);
+}
+
+
+
+
+$('#btnUpload').click(function(){
+    
+     $('#upload-div').slideUp(1000, function(){
+	 	 $('#result-div').slideDown(1000);
+	 });
+	
+});
+
+$('.face-region').hover(function() {
+   var select = $(this).children('select');
+   select.removeClass('invi');
+}, function(){
+     var select = $(this).children('select');
+   select.addClass('invi');
+});
+
+
+
+</script>
+</html>
