@@ -15,19 +15,19 @@
                     <b>Major :</b>
                 </div>
                 <div class="editor-field " style="margin-left: 10px">
-                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID ,new { style = "width: 230px;" } )
+                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, new { style = "width: 230px;" })
                 </div>
                 <div class="editor-label">
                     <b>Subject</b>
                 </div>
-                <div class="editor-field" style="margin-left: 10px ;">
+                <div class="editor-field" style="margin-left: 10px;">
                     @Html.DropDownList("SubjectID", (SelectList)ViewBag.SubjectID, new { style = "width: 100px;" })
                 </div>
                 <div class="editor-label">
                     <b>Class</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, new { style = "width: 130px;"})<br />
+                    @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, new { style = "width: 130px;" })<br />
                     <a onclick="ViewStudentList();" href="#">Click to view student in this class</a>
                 </div>
                 <div class="editor-label">
@@ -57,7 +57,8 @@
            new SelectListItem { Text = "12:30", Value = "12:30" }, 
            new SelectListItem { Text = "14:15", Value = "14:15" }, 
            new SelectListItem { Text = "16:00", Value = "16:00" } 
-       }, new { style = "width: 100px;" })
+       }, new { @id = "2" })
+                    <div id="1">@Html.EditorFor(model => model.StartTime)</div>
                     @Html.ValidationMessageFor(model => model.StartTime)
                 </div>
                 <div class="editor-label">
@@ -90,9 +91,19 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#2").width(100);
         //create datepicker
         $("#begindate").datepicker();
         $("#enddate").datepicker();
+        //
+        var value = $('#SubjectID :selected').text();
+        if (value == "XML") {
+            $("#2").hide();
+            document.getElementById("1").style.display = "block";
+        } else {
+            $("#2").show();
+            document.getElementById("1").style.display = "none";
+        }
     });
     //set selected start time on reload page
     $('#StartTime').change(function () {
@@ -102,6 +113,26 @@
     window.onload = function () {
         document.getElementById('StartTime').selectedIndex = localStorage.a;
     };
+
+
+    var time1 = $('#1').clone();
+    var time2 = $('#2').clone();
+    //change startime to text if subject is capnstone
+    $('#SubjectID').change(function () {
+        var value = $('#SubjectID :selected').text();
+        $('#1').remove();
+        $('#2').remove();
+        if (value == "XML") {
+            $('#a').append(time1);
+            //  $("#2").hide();
+            //  document.getElementById("1").style.display = "block";
+        } else {
+            $('#a').append(time2);
+            //  $("#2").show();
+            //  document.getElementById("1").style.display = "none";
+        }
+    });
+
 
     //dom not only ready, but everything is loaded
     function ViewStudentList() {
