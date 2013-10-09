@@ -12,17 +12,18 @@ namespace RollSystemMobile.Models.BusinessObject
 {
     public class RollCallBusiness: GenericBusiness<RollCall>
     {
-        private RSMEntities db;
+
+        private InstructorTeachingBusiness InsTeaBO;
 
         public RollCallBusiness()
         {
-            db = new RSMEntities();
+            InsTeaBO = new InstructorTeachingBusiness(this.RollSystemDB);
         }
 
         public RollCallBusiness(RSMEntities DB)
             : base(DB)
         {
-            
+            InsTeaBO = new InstructorTeachingBusiness(DB);
         }
 
 
@@ -41,24 +42,27 @@ namespace RollSystemMobile.Models.BusinessObject
         }
 
 
-        public void InsertRollCall(RollCall InRollCall)
+
+        public bool Delete(RollCall Rollcall)
         {
-            db.RollCalls.AddObject(InRollCall);
-            db.SaveChanges();
+            foreach (var InstructorTeaching in Rollcall.InstructorTeachings.ToList())
+            {
+                InsTeaBO.Delete(InstructorTeaching);
+            }
+
+            foreach (var Student in Rollcall.Students.ToList())
+            {
+                Rollcall.Students.Remove(Student);
+            }
+
+            return base.Delete(Rollcall);
         }
 
-        public void UpdateRollCall(RollCall InRollCall)
-        {
-            db.RollCalls.Attach(InRollCall);
-            db.ObjectStateManager.ChangeObjectState(InRollCall, System.Data.EntityState.Modified);
-            db.SaveChanges();
-        }
 
-        public RollCall ChangeRollCallInstructor(RollCall InRollCall, int NewInstructorID)
+        public bool ChangeRollCallInstructor(RollCall InRollCall, int NewInstructorID)
         {
             RollCall rollcall = InRollCall;
-            var RollCallInstructorTeaching = db.InstructorTeachings.
-                Where(it => it.RollCallID == InRollCall.RollCallID).ToList();
+            var RollCallInstructorTeaching = InsTeaBO.GetByRollCallID(InRollCall.RollCallID);
 
             int CurrentInstructorID = RollCallInstructorTeaching.Last().InstructorID;
             //Neu co doi giao vien, doi gia tri field cu, them field moi
@@ -77,7 +81,7 @@ namespace RollSystemMobile.Models.BusinessObject
                     newIt.BeginDate = DateTime.Today;
                     newIt.EndDate = rollcall.EndDate;
                     newIt.RollCallID = rollcall.RollCallID;
-                    db.InstructorTeachings.AddObject(newIt);
+                    InsTeaBO.Insert(newIt);
                 }
                 else
                 {
@@ -85,22 +89,29 @@ namespace RollSystemMobile.Models.BusinessObject
                     //Neu nhu doi ngay trong ngay, van goi ham nay
                     it.InstructorID = NewInstructorID;
                 }
-
             }
 
-            return rollcall;
+            return Update(rollcall);
         }
 
 
-        public RollCall FillRollCallInfo(RollCall InRollCall, int InstructorID)
+        public bool Insert(RollCall InRollCall, int InstructorID)
         {
+            SubjectBusiness SubBO = new SubjectBusiness(this.RollSystemDB);
+            ClassBusiness ClassBO = new ClassBusiness(this.RollSystemDB);
+
             RollCall rollcall = InRollCall;
             //Set thoi gian EndTime, dua vao start time
-            var rollSubject = db.Subjects.First(s => s.SubjectID == rollcall.SubjectID);
+            var rollSubject = SubBO.GetSubjectByID(InRollCall.SubjectID);
             rollcall.EndTime = rollcall.StartTime.Add(TimeSpan.FromMinutes(45 * rollSubject.NumberOfSlot));
 
+            //VD: 20 slot se la 28 ngay. 15 slot la 21 ngay, 18 slot van 28 ngay
+            int TotalDate = (int)Math.Ceiling((double)rollSubject.NumberOfSession / 5) * 7;
+            //Tru 1 ngay de ket thuc vao chu nhat
+            rollcall.EndDate = rollcall.BeginDate.AddDays(TotalDate).AddDays(-1);
+
             //Dua toan bo hoc sinh hien tai cua class vao
-            var rollClass = db.Classes.First(c => c.ClassID == rollcall.ClassID);
+            var rollClass = ClassBO.GetClassByID(InRollCall.ClassID);
             foreach (var Student in rollClass.Students)
             {
                 rollcall.Students.Add(Student);
@@ -114,16 +125,17 @@ namespace RollSystemMobile.Models.BusinessObject
             rollcall.InstructorTeachings.Add(it);
             rollcall.Status = 0;
 
-            return rollcall;
-
+           return base.Insert(rollcall);
         }
 
 
         public List<String> ValidRollCall(RollCall InRollCall)
         {
+            SubjectBusiness SubBO = new SubjectBusiness(this.RollSystemDB);
+            ClassBusiness ClassBO = new ClassBusiness(this.RollSystemDB);
             List<string> ErrorList = new List<string>();
 
-            var rollSubject = db.Subjects.First(s => s.SubjectID == InRollCall.SubjectID);
+            var rollSubject = SubBO.GetSubjectByID(InRollCall.SubjectID);
             //Check may cai nhu gio hoc, giao vien dang day v...v trong nay
             if ((InRollCall.StartTime.ToString(@"hh\:mm") == "10:45:"
                 || InRollCall.StartTime.ToString(@"hh\:mm") == "16:00") &&
@@ -162,7 +174,7 @@ namespace RollSystemMobile.Models.BusinessObject
             ExcelWorksheet Worksheet = Package.Workbook.Worksheets[1];
 
             //Bat dau dien info vao roll call book do
-            RollCall RollCall = db.RollCalls.Single(r => r.RollCallID == RollCallID);
+            RollCall RollCall = GetRollCallByID(RollCallID);
             var Students = RollCall.Students.ToList();
 
             AttendanceBusiness BO = new AttendanceBusiness();
@@ -209,7 +221,7 @@ namespace RollSystemMobile.Models.BusinessObject
         private ExcelPackage CreateRollCallBookPackage(int RollCallID)
         {
             ExcelPackage Package = new ExcelPackage();
-            RollCall RollCall = db.RollCalls.First(r => r.RollCallID == RollCallID);
+            RollCall RollCall = GetRollCallByID(RollCallID);
             String SheetName = RollCall.Class.ClassName + "_" + RollCall.Subject.ShortName;
             int NumberOfSlot = RollCall.Subject.NumberOfSession;
 

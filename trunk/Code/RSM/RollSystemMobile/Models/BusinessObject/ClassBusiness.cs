@@ -31,5 +31,14 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.GetList().Where(c => c.IsActive).ToList();
         }
 
+        public List<Class> GetClassByMajor(int MajorID)
+        {
+            return base.GetList().Where(ca => ca.MajorID == MajorID && ca.IsActive).OrderBy(ca => ca.ClassName).ToList();
+        }
+
+        public Class GetClassByID(int id)
+        {
+            return base.GetList().SingleOrDefault(c => c.ClassID == id);
+        }
     }
 }

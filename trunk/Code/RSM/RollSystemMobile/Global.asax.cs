@@ -39,8 +39,8 @@ namespace RollSystemMobile
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
-            FaceBO.SetXMLPath(Server.MapPath("~/"));
-            FaceBO.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
+            FaceBusiness.SetXMLPath(Server.MapPath("~/"));
+            FaceBusiness.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
         }
 
 

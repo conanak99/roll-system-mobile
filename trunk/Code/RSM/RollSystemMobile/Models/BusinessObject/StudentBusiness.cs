@@ -39,5 +39,11 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             return base.GetList().SingleOrDefault(s => s.StudentID == StudentID);
         }
+
+        public List<Student> GetStudentsNotInRollCall(int RollCallID)
+        {
+            return base.GetList().Where(s => !s.RollCalls.Any(d => d.RollCallID == RollCallID)).
+                OrderBy(s => s.StudentID).ToList();
+        }
     }
 }

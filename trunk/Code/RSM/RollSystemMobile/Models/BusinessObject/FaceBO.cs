@@ -88,7 +88,7 @@ namespace RollSystemMobile.Models.BusinessObject
                         //Anh doc resize chieu doc
                         OldImage.Resize(RESIZE_HEIGHT, RESIZE_WIDTH, INTER.CV_INTER_CUBIC, true).Save(NewPath);
                     }
-                    
+
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 return;
             }
 
-            RSMEntities db = new RSMEntities();
+            StudentImageBusiness StuImaBO = new StudentImageBusiness();
 
             Image<Bgr, byte> Image = new Image<Bgr, byte>(ImagePath);
             using (Image<Gray, byte> GrayImage = Image.Clone().Convert<Gray, byte>())
@@ -116,7 +116,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 String ImageName = System.IO.Path.GetFileNameWithoutExtension(ImagePath);
                 String FileName = String.Format("{0}_face_{1}.jpg", ImageName, FaceID);
 
-                if (db.StudentImages.Any(i => i.ImageLink.Equals(FileName) && i.StudentID == StudentID))
+                if (StuImaBO.ImageExist(StudentID, FileName))
                 {
                     throw new Exception(FileName);
                 }
@@ -126,21 +126,19 @@ namespace RollSystemMobile.Models.BusinessObject
                     FaceImage.Save(TRAINING_FOLDER_PATH + "/" + FileName);
                     //Save xuong DB
                     StudentImage StuIma = new StudentImage() { StudentID = StudentID, ImageLink = FileName };
-                    db.StudentImages.AddObject(StuIma);
+                    StuImaBO.Insert(StuIma);
                 }
             }
-            db.SaveChanges();
             Image.Dispose();
         }
 
         public static List<FaceAdded> SaveTrainingData(string ImagePath, int[] FaceIDs, int[] StudentIDs)
         {
-            RSMEntities db = new RSMEntities();
-
             Image<Bgr, byte> Image = new Image<Bgr, byte>(ImagePath);
             List<FaceAdded> FacesAdded = new List<FaceAdded>();
 
-            using( Image<Gray, byte> GrayImage = Image.Clone().Convert<Gray,byte>())
+            StudentImageBusiness StuImaBO = new StudentImageBusiness();
+            using (Image<Gray, byte> GrayImage = Image.Clone().Convert<Gray, byte>())
             {
                 var FacesDetected = GrayImage.DetectHaarCascade(Haar, DETECT_SCALE, MIN_NEIGHBOR,
                                 0, new System.Drawing.Size(MIN_SIZE, MIN_SIZE))[0];
@@ -158,9 +156,9 @@ namespace RollSystemMobile.Models.BusinessObject
                         //Tao ten file
                         String ImageName = System.IO.Path.GetFileNameWithoutExtension(ImagePath);
                         String FileName = String.Format("{0}_face_{1}.jpg", ImageName, FaceID);
-                        
+
                         //Save anh, ghi xuong database
-                        if (db.StudentImages.Any(i => i.ImageLink.Equals(FileName) && i.StudentID == StudentID))
+                        if (StuImaBO.ImageExist(StudentID, FileName))
                         {
                             throw new Exception(FileName);
                         }
@@ -170,15 +168,14 @@ namespace RollSystemMobile.Models.BusinessObject
                             FaceImage.Save(TRAINING_FOLDER_PATH + "/" + FileName);
                             //Save xuong DB
                             StudentImage StuIma = new StudentImage() { StudentID = StudentID, ImageLink = FileName };
-                            db.StudentImages.AddObject(StuIma);
-                            db.SaveChanges();
+                            StuImaBO.Insert(StuIma);
                             //Dua KQ tra ra
-                            FacesAdded.Add(new FaceAdded() { FaceLink = FileName, StudentID = StudentID, ImageID= StuIma.ImageID });
+                            FacesAdded.Add(new FaceAdded() { FaceLink = FileName, StudentID = StudentID, ImageID = StuIma.ImageID });
                         }
                     }
                 }
             }
-            
+
             Image.Dispose();
 
             return FacesAdded;
@@ -194,25 +191,24 @@ namespace RollSystemMobile.Models.BusinessObject
             List<int> StudentIDs = new List<int>();
             List<Image<Gray, byte>> StudentImages = new List<Image<Gray, byte>>();
 
-            using (RSMEntities _db = new RSMEntities())
+            RollCallBusiness RollBO = new RollCallBusiness();
+            //Load danh sach student cua roll call
+            RollCall RollCall = RollBO.GetRollCallByID(RollCallID);
+            foreach (var Student in RollCall.Students)
             {
-                //Load danh sach student cua roll call
-                RollCall RollCall = _db.RollCalls.First(roll => roll.RollCallID == RollCallID);
-                foreach (var Student in RollCall.Students)
+                foreach (var Image in Student.StudentImages)
                 {
-                    foreach (var Image in Student.StudentImages)
-                    {
-                        //Load ID va anh de train cho bo recognizer
-                        StudentIDs.Add(Image.StudentID);
-                        String TrainingImagePath = TRAINING_FOLDER_PATH + "/" + Image.ImageLink;
-                        Image<Gray, byte> TrainingImage = new Image<Gray, byte>(TrainingImagePath);
+                    //Load ID va anh de train cho bo recognizer
+                    StudentIDs.Add(Image.StudentID);
+                    String TrainingImagePath = TRAINING_FOLDER_PATH + "/" + Image.ImageLink;
+                    Image<Gray, byte> TrainingImage = new Image<Gray, byte>(TrainingImagePath);
 
-                        TrainingImage._EqualizeHist();
-                        StudentImages.Add(TrainingImage);
+                    TrainingImage._EqualizeHist();
+                    StudentImages.Add(TrainingImage);
 
-                    }
                 }
             }
+
 
             FaceRec.Train(StudentImages.ToArray(), StudentIDs.ToArray());
 
@@ -261,11 +257,10 @@ namespace RollSystemMobile.Models.BusinessObject
             }
             else
             {
-                using (RSMEntities _db = new RSMEntities())
-                {
-                    var Student = _db.Students.First(s => s.StudentID == PR.Label);
-                    return Student.StudentCode + " - " + Student.FullName;
-                }
+                StudentBusiness StuBO = new StudentBusiness();
+                var Student = StuBO.GetStudentByID(PR.Label);
+                return Student.StudentCode + " - " + Student.FullName;
+
             }
         }
 

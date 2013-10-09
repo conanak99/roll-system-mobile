@@ -140,6 +140,10 @@
     <Compile Include="Models\BindingModels\InstructorBindingModel.cs" />
     <Compile Include="Models\BusinessObject\ClassBusiness.cs" />
     <Compile Include="Models\BusinessObject\AccountBusiness.cs" />
+    <Compile Include="Models\BusinessObject\SelectListFactory.cs" />
+    <Compile Include="Models\BusinessObject\SubjectBusiness.cs" />
+    <Compile Include="Models\BusinessObject\InstructorTeachingBusiness.cs" />
+    <Compile Include="Models\BusinessObject\StudentImageBusiness.cs" />
     <Compile Include="Models\BusinessObject\InstructorBusiness.cs" />
     <Compile Include="Models\BusinessObject\StudentBusiness.cs" />
     <Compile Include="Models\BusinessObject\GenericBusiness.cs" />
