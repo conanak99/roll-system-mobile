@@ -20,6 +20,7 @@
                     @Html.EditorFor(model => model.Fullname)
                     @Html.ValidationMessageFor(model => model.Fullname)
                 </div>
+                <span class="help-block">Name of instructor.</span>
                 <div class="editor-label">
                     <b>Email</b>
                 </div>
@@ -27,22 +28,25 @@
                     @Html.EditorFor(model => model.Email)
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
+                <span class="help-block">Email of instructor( Example: Huynq@fpt.edu.vn).</span>
                 </td>
                 <td>
                 <div class="editor-label">
                      <b>Phone number</b>
                 </div>
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.Phone)
+                    @Html.TextBoxFor(model => model.Phone, new { style = "width: 150px;"})
                     @Html.ValidationMessageFor(model => model.Phone)
                 </div>
+                <span class="help-block">Phone of instructor.( Example: 090xxxxxxx).</span>
                 <div class="editor-label">
                      <b>User</b>
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("UserID", (SelectList)ViewBag.InstructorID, new { style = "width: 100px;" })
+                    @Html.DropDownList("UserID", String.Empty)
                     @Html.ValidationMessageFor(model => model.UserID)
                 </div>
+                <span class="help-block">Select the user for instructor.</span>
             </td>
         </tr>
     </table>

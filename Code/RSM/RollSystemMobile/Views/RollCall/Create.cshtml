@@ -28,7 +28,7 @@
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                     @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, new { style = "width: 130px;" })<br />
-                    <a onclick="ViewStudentList();" href="#">Click to view student in this class</a>
+                    <a id="classList" target="_blank" href="">Click to view student in this class</a>
                 </div>
                 <div class="editor-label">
                     <b>Instructor</b>
@@ -139,6 +139,12 @@
         var classID = $('#ClassID :selected').attr("value");
         window.location.href = "Studentlist?ClassID=" + classID;
     }
+
+    $('#ClassID').change(function () {
+        var classID = $('#ClassID :selected').attr("value");
+        $('#classList').attr('href',"Studentlist?ClassID=" + classID);
+    });
+
     $('#MajorID').change(function () {
         var majorID = $('#MajorID :selected').attr("value");
 

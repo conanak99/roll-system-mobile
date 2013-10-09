@@ -6,19 +6,24 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
+using RollSystemMobile.Models.BusinessObject;
 
 namespace RollSystemMobile.Controllers
 { 
     public class SubjectController : Controller
     {
-        private RSMEntities db = new RSMEntities();
-
+        private SubjectBusiness SubBO;
         //
         // GET: /Subject/
 
+        public SubjectController()
+        {
+            SubBO = new SubjectBusiness();
+        }
+
         public ViewResult Index()
         {
-            return View(db.Subjects.ToList());
+            return View(SubBO.GetActiveSubject());
         }
 
         //
@@ -26,7 +31,7 @@ namespace RollSystemMobile.Controllers
 
         public ViewResult Details(int id)
         {
-            Subject subject = db.Subjects.Single(s => s.SubjectID == id);
+            Subject subject = SubBO.GetSubjectByID(id);
             return View(subject);
         }
 
@@ -46,11 +51,9 @@ namespace RollSystemMobile.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Subjects.AddObject(subject);
-                db.SaveChanges();
+                SubBO.Insert(subject);
                 return RedirectToAction("Index");  
             }
-
             return View(subject);
         }
         
@@ -59,7 +62,7 @@ namespace RollSystemMobile.Controllers
  
         public ActionResult Edit(int id)
         {
-            Subject subject = db.Subjects.Single(s => s.SubjectID == id);
+            Subject subject = SubBO.GetSubjectByID(id);
             return View(subject);
         }
 
@@ -71,9 +74,7 @@ namespace RollSystemMobile.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Subjects.Attach(subject);
-                db.ObjectStateManager.ChangeObjectState(subject, EntityState.Modified);
-                db.SaveChanges();
+                SubBO.Update(subject);
                 return RedirectToAction("Index");
             }
             return View(subject);
@@ -84,7 +85,7 @@ namespace RollSystemMobile.Controllers
  
         public ActionResult Delete(int id)
         {
-            Subject subject = db.Subjects.Single(s => s.SubjectID == id);
+            Subject subject = SubBO.GetSubjectByID(id);
             return View(subject);
         }
 
@@ -93,16 +94,15 @@ namespace RollSystemMobile.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
-            Subject subject = db.Subjects.Single(s => s.SubjectID == id);
-            db.Subjects.DeleteObject(subject);
-            db.SaveChanges();
+        {
+            Subject subject = SubBO.GetSubjectByID(id);
+            SubBO.Delete(subject);
             return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
         {
-            db.Dispose();
+           
             base.Dispose(disposing);
         }
     }

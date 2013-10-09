@@ -6,7 +6,7 @@
 <h2>
     Subject List</h2>
 <p>
-    @Html.MenuLink("Create New", "Create","Subject")
+    @Html.MenuLink("Create New", "Create", "Subject")
 </p>
 <table class="table">
     <tr>
@@ -20,6 +20,9 @@
             Full Name
         </th>
         <th>
+            Number Of Session
+        </th>
+        <th>
             Number Of Slot
         </th>
         <th>
@@ -29,7 +32,7 @@
     @foreach (var item in Model)
     {
         <tr>
-        <td>
+            <td style="text-align:right;">
                 @index
             </td>
             <td>
@@ -38,15 +41,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FullName)
             </td>
-            <td>
+            <td style="text-align:right;">
+                @Html.DisplayFor(modelItem => item.NumberOfSession)
+            </td>
+            <td style="text-align:right;">
                 @Html.DisplayFor(modelItem => item.NumberOfSlot)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.SubjectID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
             </td>
         </tr>
-        { index++; }
+           { index++; }
     }
 </table>

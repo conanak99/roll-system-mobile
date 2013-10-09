@@ -1,67 +1,63 @@
 ﻿@model RollSystemMobile.Models.Subject
-
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Staff/_Layout.cshtml";
 }
-
-<h2>Edit</h2>
-
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Subject</legend>
-
-        @Html.HiddenFor(model => model.SubjectID)
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ShortName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.ShortName)
-            @Html.ValidationMessageFor(model => model.ShortName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.FullName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.FullName)
-            @Html.ValidationMessageFor(model => model.FullName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.NumberOfSlot)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.NumberOfSlot)
-            @Html.ValidationMessageFor(model => model.NumberOfSlot)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Description)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Description)
-            @Html.ValidationMessageFor(model => model.Description)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsActive)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsActive)
-            @Html.ValidationMessageFor(model => model.IsActive)
-        </div>
-
-        <p>
-            <input type="submit" value="Save" />
-        </p>
-    </fieldset>
+    <h2>
+        Edit Subject</h2>
+    <table class="table">
+        <tr>
+            <td style="width: 400px;">
+                <div class="editor-label">
+                    <b>Short Name</b>
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.ShortName, new { style = "width:70px" })
+                    @Html.ValidationMessageFor(model => model.ShortName)
+                </div>
+                <span class="help-block">Acronyms of subject ( Example : OS, XML ...).</span>
+                <div class="editor-label">
+                    <b>Full Name</b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.FullName)
+                    @Html.ValidationMessageFor(model => model.FullName)
+                </div>
+                <span class="help-block">Full Name of subject ( Example : Operating System ...).</span>
+            </td>
+            <td>
+                <div class="editor-label">
+                    <b>Number Of Session</b>
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.NumberOfSession, new { style = "width:70px" })
+                    @Html.ValidationMessageFor(model => model.NumberOfSession)
+                </div>
+                <span class="help-block">Number session of subject in a block.</span>
+                <div class="editor-label">
+                    <b>Number of slot</b>
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("NumberOfSlot", new List<SelectListItem> 
+       { 
+           new SelectListItem { Text = "1", Value = "1" }, 
+           new SelectListItem { Text = "2", Value = "2" },
+       }, new { style = "width: 70px;" })
+                    @Html.ValidationMessageFor(model => model.NumberOfSlot)
+                </div>
+                <span class="help-block">Number slot of subject in day.</span>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <input class="btn btn-primary" type="submit" value="Save" />
+    </p>
 }
-
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
