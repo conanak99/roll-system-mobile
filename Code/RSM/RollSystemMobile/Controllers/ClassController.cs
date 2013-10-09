@@ -13,11 +13,13 @@ namespace RollSystemMobile.Controllers
     public class ClassController : Controller
     {
          private ClassBusiness ClassBO;
+         SelectListFactory slFactory ;
         //
         // GET: /Subject/
 
          public ClassController()
         {
+            slFactory = new SelectListFactory();
             ClassBO = new ClassBusiness();
         }
 
@@ -41,7 +43,6 @@ namespace RollSystemMobile.Controllers
         public ActionResult Create()
         {
             SelectListFactory slFactory = new SelectListFactory();
-            //ViewBag.MajorID = new SelectList(, "MajorID", "Shortname");
             ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "ShortName");
             return View();
         } 
@@ -66,6 +67,9 @@ namespace RollSystemMobile.Controllers
         public ActionResult Edit(int id)
         {
             Class cls = ClassBO.GetClassByID(id);
+
+            int MajorID = cls.MajorID;
+            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "FullName", MajorID);
             return View(cls);
         }
 
@@ -80,6 +84,8 @@ namespace RollSystemMobile.Controllers
                 ClassBO.Update(cls);
                 return RedirectToAction("Index");
             }
+            int MajorID = cls.MajorID;
+            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "FullName", MajorID);
             return View(cls);
         }
 
