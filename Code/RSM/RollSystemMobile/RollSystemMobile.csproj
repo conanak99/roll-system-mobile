@@ -136,12 +136,14 @@
     </Compile>
     <Compile Include="Models\BindingModels\AccountModel.cs" />
     <Compile Include="Models\BindingModels\AdminBindingModel.cs" />
-    <Compile Include="Models\BusinessObject\AttendanceBO.cs" />
+    <Compile Include="Models\BusinessObject\AttendanceBusiness.cs" />
     <Compile Include="Models\BindingModels\InstructorBindingModel.cs" />
     <Compile Include="Models\BusinessObject\ClassBusiness.cs" />
+    <Compile Include="Models\BusinessObject\AccountBusiness.cs" />
+    <Compile Include="Models\BusinessObject\InstructorBusiness.cs" />
     <Compile Include="Models\BusinessObject\StudentBusiness.cs" />
     <Compile Include="Models\BusinessObject\GenericBusiness.cs" />
-    <Compile Include="Models\BusinessObject\RollCallBO.cs" />
+    <Compile Include="Models\BusinessObject\RollCallBusiness.cs" />
     <Compile Include="Models\BusinessObject\FaceBO.cs" />
     <Compile Include="Models\HelperClass\MyHtmlHelper.cs" />
     <Compile Include="Models\HelperClass\ExcelReader.cs" />

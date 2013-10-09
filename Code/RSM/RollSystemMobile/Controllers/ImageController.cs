@@ -30,7 +30,7 @@ namespace RollSystemMobile.Controllers
                 int FaceID = int.Parse(FaceIDs[i]);
                 try
                 {
-                    FaceBO.SaveTrainingData(ImagePath, FaceID, StudentID);
+                    FaceBusiness.SaveTrainingData(ImagePath, FaceID, StudentID);
                 }
                 catch (Exception e)
                 {
@@ -61,7 +61,7 @@ namespace RollSystemMobile.Controllers
                     try
                     {
                         //Lay danh sach, dua ra
-                        FacesAdded.AddRange(FaceBO.SaveTrainingData(ImagePath, FaceIndexs, UserIDs));
+                        FacesAdded.AddRange(FaceBusiness.SaveTrainingData(ImagePath, FaceIndexs, UserIDs));
                     }
                     catch (Exception e)
                     {

@@ -21,7 +21,7 @@ namespace RollSystemMobile.Controllers
             String FileName = RollCall.Class.ClassName + "_" + RollCall.Subject.ShortName
                 + "_" + DateTime.Today.ToString("dd-MM-yyyy") + ".xlsx";
 
-            RollCallBO BO = new RollCallBO();
+            RollCallBusiness BO = new RollCallBusiness();
             String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
             BO.CreateRollCallReport(id, FilePath);
 

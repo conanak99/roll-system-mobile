@@ -109,7 +109,7 @@ namespace RollSystemMobile.Controllers
         {
             if (ModelState.IsValid)
             {
-                RollCallBO BO = new RollCallBO();
+                RollCallBusiness BO = new RollCallBusiness();
                 List<string> ErrorList = BO.ValidRollCall(rollcall);
                 if (ErrorList.Count == 0)
                 {
@@ -166,7 +166,7 @@ namespace RollSystemMobile.Controllers
         {
             if (ModelState.IsValid)
             {
-                RollCallBO BO = new RollCallBO();
+                RollCallBusiness BO = new RollCallBusiness();
                 List<string> ErrorList = BO.ValidRollCall(rollcall);
                 if (ErrorList.Count == 0)
                 {

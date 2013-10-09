@@ -44,6 +44,11 @@ namespace RollSystemMobile.Models.BusinessObject
             return RollSystemDB.CreateObjectSet<T>().Where(predicate).ToList();
         }
 
+        public T FindSingle(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+            return RollSystemDB.CreateObjectSet<T>().FirstOrDefault(predicate);
+        }
+
         /// <summary>
         /// Insert entity which is instance of T class
         /// </summary>

@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Security;
 using RollSystemMobile.Models;
 using RollSystemMobile.Models.BindingModels;
+using RollSystemMobile.Models.BusinessObject;
 
 namespace RollSystemMobile.Controllers
 {
@@ -13,6 +14,12 @@ namespace RollSystemMobile.Controllers
     {
         //
         // GET: /Account/
+        private AccountBusiness AccBO;
+
+        public AccountController()
+        {
+            this.AccBO = new AccountBusiness();
+        }
 
         public ActionResult Login()
         {
@@ -28,9 +35,7 @@ namespace RollSystemMobile.Controllers
                 {
 
                     //Tim user active trong database
-                    User user = db.Users.FirstOrDefault(u => u.Username.Equals(model.Username)
-                                                        && u.Password.Equals(model.Password)
-                                                        && u.IsActive == true);
+                    User user = AccBO.CheckLogin(model.Username, model.Password);
                     if (user != null)
                     {
                         //Thuc hien dang nhap
