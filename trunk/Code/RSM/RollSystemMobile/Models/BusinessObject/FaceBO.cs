@@ -9,7 +9,7 @@ using Emgu.CV.CvEnum;
 
 namespace RollSystemMobile.Models.BusinessObject
 {
-    public class FaceBO
+    public class FaceBusiness
     {
         private static HaarCascade Haar;
         //Luc add, co the dung alt2

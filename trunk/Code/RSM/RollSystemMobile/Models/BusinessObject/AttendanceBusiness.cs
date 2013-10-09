@@ -6,14 +6,19 @@ using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Models.BusinessObject
 {
-    public class AttendanceBO
+    public class AttendanceBusiness: GenericBusiness<AttendanceLog>
     {
-        private RSMEntities _db;
-
-        public AttendanceBO()
+        public AttendanceBusiness()
         {
-            _db = new RSMEntities();
         }
+
+        public AttendanceBusiness(RSMEntities DB)
+            : base(DB)
+        {
+            
+        }
+
+        
 
         public AttendanceLog WriteAttendanceAutoLog(int RollCallID, List<RecognizerResult> RecognizerResults)
         {
@@ -22,10 +27,8 @@ namespace RollSystemMobile.Models.BusinessObject
                 return null;
             }
 
-            AttendanceLog Log = null;
             //Tim xem da co log auto cho hom nay chua
-            Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1
-                && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
+            AttendanceLog Log = GetAttendanceLogAtDate(RollCallID, DateTime.Today, 1);
             bool LogExist = true;
             if (Log == null)
             {
@@ -77,14 +80,12 @@ namespace RollSystemMobile.Models.BusinessObject
             //Neu log chua co thi them vao, da co thi edit lai
             if (LogExist)
             {
-                _db.AttendanceLogs.ApplyCurrentValues(Log);
+                Update(Log);
             }
             else
             {
-                _db.AttendanceLogs.AddObject(Log);
+                Insert(Log);
             }
-            _db.SaveChanges();
-
             //Tra Log ra de show
             return Log;
         }
@@ -92,10 +93,9 @@ namespace RollSystemMobile.Models.BusinessObject
 
         public AttendanceLog WriteAttendanceManualLog(String username, int RollCallID, DateTime Date, List<SingleAttendanceCheck> AttendanceChecks)
         {
-            AttendanceLog Log = null;
-            //Tim xem da co log manual cho ngay du vao chua
-            Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 2
-                && log.LogDate == Date && log.RollCallID == RollCallID);
+            
+            //Tim xem da co log manual cho ngay dua vao chua
+            AttendanceLog Log = GetAttendanceLogAtDate(RollCallID, DateTime.Today, 2);
             bool LogExist = true;
             if (Log == null)
             {
@@ -129,7 +129,7 @@ namespace RollSystemMobile.Models.BusinessObject
                     //Attendance.Note = AttendanceCheck.Note;
                     
                     //Neu sua attendance moi viet note, con ko sua thi viet node lam gi
-                    if (Attendance.IsPresent != AttendanceCheck.IsPresent || Attendance.Note != AttendanceCheck.Note)
+                    if (Attendance.IsPresent != AttendanceCheck.IsPresent)
                     {
                         if (Attendance.IsPresent)
                         {
@@ -149,34 +149,14 @@ namespace RollSystemMobile.Models.BusinessObject
             //Neu log chua co thi them vao, da co thi edit lai
             if (LogExist)
             {
-                _db.AttendanceLogs.ApplyCurrentValues(Log);
+                Update(Log);
             }
             else
             {
-                _db.AttendanceLogs.AddObject(Log);
+                Insert(Log);
             }
-            _db.SaveChanges();
 
             //Tra Log ra de show
-            return Log;
-        }
-
-
-        //Ham nay dung hien log attendace hom nay trong tab Auto Attendace trang instructor
-        public AttendanceLog GetCurrentAttendanceLog(int RollCallID)
-        {
-            AttendanceLog Log = null;
-            //Tim xem da co uu tien tim log manual
-            Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 2
-                && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
-            if (Log == null)
-            {
-                //Ko co log manual thi tim log auto
-                Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1
-                && log.LogDate == DateTime.Today && log.RollCallID == RollCallID);
-            }
-
-            //Neu van ko co log thi xem nhu bang null
             return Log;
         }
 
@@ -184,12 +164,12 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             AttendanceLog Log = null;
             //Tim xem da co uu tien tim log manual
-            Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 2
+            Log = base.GetList().FirstOrDefault(log => log.TypeID == 2
                 && log.LogDate == Date && log.RollCallID == RollCallID);
             if (Log == null)
             {
                 //Ko co log manual thi tim log auto
-                Log = _db.AttendanceLogs.FirstOrDefault(log => log.TypeID == 1
+                Log = base.GetList().FirstOrDefault(log => log.TypeID == 1
                 && log.LogDate == Date && log.RollCallID == RollCallID);
             }
 
@@ -197,9 +177,19 @@ namespace RollSystemMobile.Models.BusinessObject
             return Log;
         }
 
+        public AttendanceLog GetAttendanceLogAtDate(int RollCallID, DateTime Date, int LogTypeID)
+        {
+            return base.GetList().FirstOrDefault(log => log.TypeID == LogTypeID
+                && log.LogDate == Date && log.RollCallID == RollCallID);
+        }
+
         public List<AttendanceLog> GetRollCallAttendanceLog(int RollCallID)
         {
-            RollCall RollCall = _db.RollCalls.FirstOrDefault(roll => roll.RollCallID == RollCallID);
+            //Lay roll call ra
+            RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
+            RollCall RollCall = RollBO.GetRollCallByID(RollCallID);
+            
+            //Lay cac ngay trong roll call
             var Dates = RollCall.AttendanceLogs.OrderBy(roll => roll.LogDate).Select(roll => roll.LogDate).Distinct();
             List<AttendanceLog> AttendanceLogs = new List<AttendanceLog>();
             foreach (DateTime Date in Dates)

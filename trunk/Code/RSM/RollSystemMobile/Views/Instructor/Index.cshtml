@@ -136,10 +136,10 @@
                                             </td>
                                             <td>
                                                 <div class="input-prepend">
-                                                    <span class="add-on note-prepend">@(Attendance == null || Attendance.Note == null  || Attendance.Note.Split(':').Length < 1 ?
+                                                    <span class="add-on note-prepend">@(Attendance == null || Attendance.Note == null  || Attendance.Note.Split(':').Length < 2 ?
                                                     "" : @Attendance.Note.Split(':')[0])</span>
                                                     <input type="text" name="AttendanceChecks[@CheckIndex].Note" class="span2" 
-                                                                value="@(Attendance == null || Attendance.Note == null  || Attendance.Note.Split(':').Length < 1 ?
+                                                                value="@(Attendance == null || Attendance.Note == null  || Attendance.Note.Split(':').Length < 2 ?
                                                                 "" : @Attendance.Note.Split(':')[1].Trim())" />
                                                 </div>
                                             </td>

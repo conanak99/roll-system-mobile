@@ -10,14 +10,36 @@ using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Models.BusinessObject
 {
-    public class RollCallBO
+    public class RollCallBusiness: GenericBusiness<RollCall>
     {
         private RSMEntities db;
 
-        public RollCallBO()
+        public RollCallBusiness()
         {
             db = new RSMEntities();
         }
+
+        public RollCallBusiness(RSMEntities DB)
+            : base(DB)
+        {
+            
+        }
+
+
+        public List<RollCall> GetInstructorCurrentRollCalls(int InstructorID)
+        {
+            DateTime Today = DateTime.Now;
+
+            return base.GetList().Where(r => r.InstructorTeachings.
+                                       Any(inte => inte.InstructorID == InstructorID)
+                                       && r.BeginDate <= Today && r.EndDate >= Today).ToList();
+        }
+
+        public RollCall GetRollCallByID(int ID)
+        {
+            return base.GetList().FirstOrDefault(r => r.RollCallID == ID);
+        }
+
 
         public void InsertRollCall(RollCall InRollCall)
         {
@@ -121,6 +143,9 @@ namespace RollSystemMobile.Models.BusinessObject
         }
 
 
+
+
+
         public void CreateRollCallBook(int RollCallID, String FileName)
         {
             //Tao 1 roll call book rong
@@ -140,7 +165,7 @@ namespace RollSystemMobile.Models.BusinessObject
             RollCall RollCall = db.RollCalls.Single(r => r.RollCallID == RollCallID);
             var Students = RollCall.Students.ToList();
 
-            AttendanceBO BO = new AttendanceBO();
+            AttendanceBusiness BO = new AttendanceBusiness();
             var AttendanceLogs = BO.GetRollCallAttendanceLog(RollCallID);
 
             for (int i = 0; i < 30; i++)
@@ -304,7 +329,6 @@ namespace RollSystemMobile.Models.BusinessObject
             Worksheet.Cells[11, FinalColumnIndex, 31, FinalColumnIndex].Style.Numberformat.Format = "0.00%";
             return Package;
         }
-
 
     }
 }

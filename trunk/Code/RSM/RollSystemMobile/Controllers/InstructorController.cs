@@ -16,12 +16,16 @@ namespace RollSystemMobile.Controllers
         //
         // GET: /Instructor/
 
-        private RSMEntities _db = new RSMEntities();
 
+        private InstructorBusiness InsBO;
+        private AccountBusiness AccBO;
+        private RollCallBusiness RollBO;
 
         public InstructorController()
         {
-
+            InsBO = new InstructorBusiness();
+            AccBO = new AccountBusiness();
+            RollBO = new RollCallBusiness();
         }
 
         public ActionResult RollCallList()
@@ -30,14 +34,11 @@ namespace RollSystemMobile.Controllers
             //Tim instructor da dang nhạp vao
 
             string Username = this.HttpContext.User.Identity.Name;
-            User User = _db.Users.First(u => u.Username.Equals(Username));
-            Instructor AuthorizedInstructor = _db.Instructors.First(i => i.UserID == User.UserID);
+            User User = AccBO.GetUserByUsername(Username);
+            Instructor AuthorizedInstructor = InsBO.GetInstructorByUserID(User.UserID);
 
             //Nhung mon ma instructor nay dang day, sau nay phai check status
-            DateTime Today = DateTime.Now;
-            var RollCalls = _db.RollCalls.Where(r => r.InstructorTeachings.
-                                       Any(inte => inte.InstructorID == AuthorizedInstructor.InstructorID)
-                                       && r.BeginDate <= Today && r.EndDate >= Today);
+            var RollCalls = RollBO.GetInstructorCurrentRollCalls(AuthorizedInstructor.InstructorID);
 
             //Mon dang day vao thoi diem dang nhap
             RollCall CurrentRollCall = null;
@@ -52,7 +53,6 @@ namespace RollSystemMobile.Controllers
             model.CurrentRollCall = CurrentRollCall;
             model.TeachingRollCall = RollCalls;
             return View(model);
-
         }
 
 
@@ -60,14 +60,12 @@ namespace RollSystemMobile.Controllers
         {
             //Tim instructor da dang nhạp vao
             string Username = this.HttpContext.User.Identity.Name;
-            User User = _db.Users.First(u => u.Username.Equals(Username));
-            Instructor AuthorizedInstructor = _db.Instructors.First(i => i.UserID == User.UserID);
+            User User = AccBO.GetUserByUsername(Username);
+            Instructor AuthorizedInstructor = InsBO.GetInstructorByUserID(User.UserID);
 
             //Nhung mon ma instructor nay dang day, sau nay phai check status
             DateTime Today = DateTime.Now;
-            var RollCalls = _db.RollCalls.Where(r => r.InstructorTeachings.
-                                       Any(inte => inte.InstructorID == AuthorizedInstructor.InstructorID)
-                                       && r.BeginDate < Today && r.EndDate > Today);
+            var RollCalls = RollBO.GetInstructorCurrentRollCalls(AuthorizedInstructor.InstructorID);
 
             //Mon dang day vao thoi diem dang nhap
             RollCall CurrentRollCall = null;
@@ -81,8 +79,8 @@ namespace RollSystemMobile.Controllers
             AttendanceLog CurrentAttendanceLog = null;
             if (CurrentRollCall != null)
             {
-                AttendanceBO AttendanceBO = new AttendanceBO();
-                CurrentAttendanceLog = AttendanceBO.GetCurrentAttendanceLog(CurrentRollCall.RollCallID);
+                AttendanceBusiness AttendanceBO = new AttendanceBusiness();
+                CurrentAttendanceLog = AttendanceBO.GetAttendanceLogAtDate(CurrentRollCall.RollCallID, DateTime.Today);
             }
 
             InstructorViewModel model = new InstructorViewModel();
@@ -96,7 +94,7 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult CheckAttendanceAuto(int RollCallID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
-            RollCall rollCall = _db.RollCalls.Single(r => r.RollCallID == RollCallID);
+            RollCall rollCall = RollBO.GetRollCallByID(RollCallID);
 
             List<String> ImagePaths = new List<string>();
             foreach (HttpPostedFileBase file in ImageFiles)
@@ -110,20 +108,23 @@ namespace RollSystemMobile.Controllers
                     + rollCall.Class.ClassName + "_"
                     + rollCall.Subject.ShortName + "_"
                     + file.FileName);
-                FaceBO.ResizeImage(OldPath, NewPath);
+                FaceBusiness.ResizeImage(OldPath, NewPath);
                 ImagePaths.Add(NewPath);
 
                 
             }
             //Nhan dien tung khuon mat trong anh
-            List<RecognizerResult> Result = FaceBO.RecognizeStudentForAttendance(RollCallID, ImagePaths);
+            List<RecognizerResult> Result = FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths);
             //Dua reseult nay cho AttendanceBO xu ly
-            AttendanceBO attendanceBO = new AttendanceBO();
-            AttendanceLog Log = attendanceBO.WriteAttendanceAutoLog(RollCallID, Result);
+            AttendanceBusiness AttenBO = new AttendanceBusiness();
+            AttendanceLog Log = AttenBO.WriteAttendanceAutoLog(RollCallID, Result);
+            
+            
             //Danh sach sinh vien trong log
-            List<Student> Students = _db.Students.Where(stu => stu.StudentAttendances.
+            StudentBusiness StuBO = new StudentBusiness();
+            List<Student> Students = StuBO.Find(stu => stu.StudentAttendances.
                 Any(attend => attend.LogID == Log.LogID)).ToList();
-            RollCall CurrentRollCall = _db.RollCalls.First(roll => roll.RollCallID == RollCallID);
+            RollCall CurrentRollCall = RollBO.GetRollCallByID(RollCallID);
 
             //Tao model de show trong view
             AttendanceViewModel model = new AttendanceViewModel();
@@ -136,9 +137,9 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult RollCallDetail(int id)
         {
-            RollCall RollCall = _db.RollCalls.FirstOrDefault(roll => roll.RollCallID == id);
+            RollCall RollCall = RollBO.GetRollCallByID(id);
 
-            AttendanceBO AttendanceBO = new AttendanceBO();
+            AttendanceBusiness AttendanceBO = new AttendanceBusiness();
             //Lay danh sach nhung log cua roll call nay, tu luc bat dau
             List<AttendanceLog> AttendanceLogs = AttendanceBO.GetRollCallAttendanceLog(id);
 
@@ -153,7 +154,7 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult CheckAttendanceManual(CheckAttendanceManualBindModel Model)
         {
-            AttendanceBO AttendanceBO = new AttendanceBO();
+            AttendanceBusiness AttendanceBO = new AttendanceBusiness();
             AttendanceBO.WriteAttendanceManualLog(Model.Username, Model.RollCallID, Model.Date, Model.AttendanceChecks);
 
             String returnUrl = Model.ReturnUrl;
@@ -169,14 +170,13 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult LogDetail(int RollCallID, DateTime Date)
         {
+            AttendanceBusiness AttenBO = new AttendanceBusiness();
+
             //1 ngay, 1 roll call co the co 2 loai log, log manual va auto, do do phai lay ca 2
-            AttendanceLog AutoLog = _db.AttendanceLogs.FirstOrDefault(
-                                    log => log.RollCallID == RollCallID && log.LogDate == Date
-                                    && log.TypeID == 1);
-            AttendanceLog ManualLog = _db.AttendanceLogs.FirstOrDefault(
-                                    log => log.RollCallID == RollCallID && log.LogDate == Date
-                                    && log.TypeID == 2);
-            RollCall RollCall = _db.RollCalls.First(roll => roll.RollCallID == RollCallID);
+            AttendanceLog AutoLog = AttenBO.GetAttendanceLogAtDate(RollCallID, Date, 1);
+
+            AttendanceLog ManualLog = AttenBO.GetAttendanceLogAtDate(RollCallID, Date, 2);
+            RollCall RollCall = RollBO.GetRollCallByID(RollCallID);
 
             LogDetailViewModel Model = new LogDetailViewModel();
             Model.RollCall = RollCall;

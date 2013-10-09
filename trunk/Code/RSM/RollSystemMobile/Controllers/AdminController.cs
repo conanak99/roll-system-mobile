@@ -68,10 +68,10 @@ namespace RollSystemMobile.Controllers
 
                 //Resize file anh
                 String NewPath = Server.MapPath("~/Content/Temp/Resized/" + file.FileName);
-                FaceBO.ResizeImage(OldPath, NewPath);
+                FaceBusiness.ResizeImage(OldPath, NewPath);
 
                 //Nhan dien khuon mat, cho vao danh sach
-                RecognizerResult SingleResult = FaceBO.DetectFromImage(NewPath);
+                RecognizerResult SingleResult = FaceBusiness.DetectFromImage(NewPath);
                 Results.Add(SingleResult);
             }
             return View("UploadResult", Results);
@@ -109,10 +109,10 @@ namespace RollSystemMobile.Controllers
 
                 //Resize file anh
                 String NewPath = Server.MapPath("~/Content/Temp/Resized/" + file.FileName);
-                FaceBO.ResizeImage(OldPath, NewPath);
+                FaceBusiness.ResizeImage(OldPath, NewPath);
 
                 //Nhan dien khuon mat, cho vao danh sach
-                RecognizerResult SingleResult = FaceBO.DetectFromImage(NewPath);
+                RecognizerResult SingleResult = FaceBusiness.DetectFromImage(NewPath);
                 Results.Add(SingleResult);
             }
 
