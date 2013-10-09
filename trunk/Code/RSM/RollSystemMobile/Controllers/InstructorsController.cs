@@ -10,17 +10,19 @@ using RollSystemMobile.Models.BindingModels;
 using RollSystemMobile.Models.BusinessObject;
 
 namespace RollSystemMobile.Controllers
-{ 
+{
     public class InstructorsController : Controller
     {
-        
-       private InstructorBusiness InsBO;
+
+        private InstructorBusiness InsBO;
+        SelectListFactory slFactory; 
         //
         // GET: /Subject/
 
-       public InstructorsController()
+        public InstructorsController()
         {
             InsBO = new InstructorBusiness();
+            slFactory = new SelectListFactory();
         }
 
         public ViewResult Index()
@@ -42,8 +44,10 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult Create()
         {
+            SelectListFactory slFactory = new SelectListFactory();
+            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
             return View();
-        } 
+        }
 
         //
         // POST: /Default1/Create
@@ -54,20 +58,22 @@ namespace RollSystemMobile.Controllers
             if (ModelState.IsValid)
             {
                 InsBO.Insert(instructor);
-                return RedirectToAction("Index");  
+                return RedirectToAction("Index");
             }
 
-            var ins = InsBO.GetAllInstructor();
-            ViewBag.UserID = new SelectList(ins, "UserID", "Username");
+            
+            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
             return View(instructor);
         }
-        
+
         //
         // GET: /Default1/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
             Instructor instructor = InsBO.GetInstructorByID(id);
+            int UserID = instructor.User.UserID;
+            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username", UserID);
             return View(instructor);
         }
 
@@ -82,12 +88,14 @@ namespace RollSystemMobile.Controllers
                 InsBO.Update(instructor);
                 return RedirectToAction("Index");
             }
+            int UserID = instructor.User.UserID;
+            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username", UserID);
             return View(instructor);
         }
 
         //
         // GET: /Default1/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
             Instructor instructor = InsBO.GetInstructorByID(id);

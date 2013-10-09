@@ -13,12 +13,14 @@ namespace RollSystemMobile.Controllers
     public class SubjectController : Controller
     {
         private SubjectBusiness SubBO;
+        SelectListFactory slFactory; 
         //
         // GET: /Subject/
 
         public SubjectController()
         {
             SubBO = new SubjectBusiness();
+            slFactory = new SelectListFactory();
         }
 
         public ViewResult Index()
@@ -63,6 +65,8 @@ namespace RollSystemMobile.Controllers
         public ActionResult Edit(int id)
         {
             Subject subject = SubBO.GetSubjectByID(id);
+            int NumberOfSlot = subject.NumberOfSlot;
+            ViewBag.NumberOfSlot = slFactory.MakeSelectList<Subject>("SubjectID", "NumberOfSlot", NumberOfSlot);
             return View(subject);
         }
 
@@ -77,6 +81,8 @@ namespace RollSystemMobile.Controllers
                 SubBO.Update(subject);
                 return RedirectToAction("Index");
             }
+            int NumberOfSlot = subject.NumberOfSlot;
+            ViewBag.NumberOfSlot = slFactory.MakeSelectList<Subject>("SubjectID", "NumberOfSlot", NumberOfSlot);
             return View(subject);
         }
 

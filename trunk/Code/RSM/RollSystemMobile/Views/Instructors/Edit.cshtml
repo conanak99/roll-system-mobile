@@ -43,7 +43,7 @@
                     <b>User</b>
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("UserID", (SelectList)ViewBag.InstructorID, new { style = "width: 100px;" })
+                    @Html.DropDownList("UserID")
                     @Html.ValidationMessageFor(model => model.UserID)
                 </div>
                 <span class="help-block">Select the user for instructor.</span>
