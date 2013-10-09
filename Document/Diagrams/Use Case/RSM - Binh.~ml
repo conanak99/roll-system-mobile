@@ -22,10 +22,10 @@
 <XPD:REF name="DiagramOwner">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
 <XPD:OBJ name="DiagramView" type="UMLUseCaseDiagramView" guid="IbwfL9T7I0GCRgFNUqk4wQAA">
 <XPD:REF name="Diagram">mSbUh1k6Pk2Q1ydYmKwk2QAA</XPD:REF>
-<XPD:ATTR name="#OwnedViews" type="integer">16</XPD:ATTR>
+<XPD:ATTR name="#OwnedViews" type="integer">14</XPD:ATTR>
 <XPD:OBJ name="OwnedViews[0]" type="UMLSystemBoundaryView" guid="Yao6MfrNPEuy+WQdu4gFTQAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
-<XPD:ATTR name="FillColor" type="string">clSilver</XPD:ATTR>
+<XPD:ATTR name="FillColor" type="string">$00FFFFD5</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">184</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">8</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">673</XPD:ATTR>
@@ -131,14 +131,14 @@
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">260</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">316</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">209</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">312</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">278</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
 <XPD:REF name="Model">asnu4Y/+EUmVGeZPcz0eTwAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="K78ZB1ClZEWv1Zi5L6oBawAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="UD64ictlZ0WK2C+HVx1HGQAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Report Attendance Rate</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Report Attendance by Class</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="oVKTjm6poEqCQ0eVK1m4RQAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -247,7 +247,7 @@
 <XPD:OBJ name="OwnedViews[6]" type="UMLAssociationView" guid="fTgneCv420awAHFDqn5YzAAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">136,256;303,316</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">136,254;326,312</XPD:ATTR>
 <XPD:REF name="Model">S7fPqW4DO0uQUKSglzy2NAAA</XPD:REF>
 <XPD:REF name="Head">FEKcRfrP3Em1oBqHQZMSbgAA</XPD:REF>
 <XPD:REF name="Tail">YmmVicPaC0KKPjWt3NBR2QAA</XPD:REF>
@@ -446,66 +446,7 @@
 <XPD:REF name="Model">YMyj2e1TiUiCRgf9gMgbwAAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="OwnedViews[11]" type="UMLUseCaseView" guid="YQ19KprR3U2aqN/ec807IQAA">
-<XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
-<XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">584</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">352</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">138</XPD:ATTR>
-<XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
-<XPD:REF name="Model">j5VGX90e/UaFmOQIf8EPGwAA</XPD:REF>
-<XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="YD1aSBAlG0KcPK25oCVg4gAA">
-<XPD:OBJ name="NameLabel" type="LabelView" guid="8W/B2CvCwk+bvTtAnTST8QAA">
-<XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Report by Class</XPD:ATTR>
-</XPD:OBJ>
-<XPD:OBJ name="StereotypeLabel" type="LabelView" guid="KZmnKKRmS0SeIROr6N9XfAAA">
-<XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-</XPD:OBJ>
-<XPD:OBJ name="PropertyLabel" type="LabelView" guid="KoQHw9OfhE2OQZ4WWUYSGwAA">
-<XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-</XPD:OBJ>
-</XPD:OBJ>
-<XPD:OBJ name="AttributeCompartment" type="UMLAttributeCompartmentView" guid="YKCcovm79U6+HpjV6sOKMgAA">
-<XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-<XPD:REF name="Model">j5VGX90e/UaFmOQIf8EPGwAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="OperationCompartment" type="UMLOperationCompartmentView" guid="1THbp6ROC0u8UiAYEQzmAgAA">
-<XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-<XPD:REF name="Model">j5VGX90e/UaFmOQIf8EPGwAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="ExtensionPointCompartment" type="UMLExtensionPointCompartmentView" guid="L7RvoW/9AkmikqpWDSSK8gAA">
-<XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-<XPD:REF name="Model">j5VGX90e/UaFmOQIf8EPGwAA</XPD:REF>
-</XPD:OBJ>
-</XPD:OBJ>
-<XPD:OBJ name="OwnedViews[12]" type="UMLGeneralizationView" guid="d0papRYyKUS2AUPQSgaFNwAA">
-<XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
-<XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">584,366;468,351</XPD:ATTR>
-<XPD:REF name="Model">W6ccYRU7yEmidpYzt/KDzgAA</XPD:REF>
-<XPD:REF name="Head">FEKcRfrP3Em1oBqHQZMSbgAA</XPD:REF>
-<XPD:REF name="Tail">YQ19KprR3U2aqN/ec807IQAA</XPD:REF>
-<XPD:OBJ name="NameLabel" type="EdgeLabelView" guid="flJ5HQgHX02iHWs82NZ/ZwAA">
-<XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-<XPD:ATTR name="Alpha" type="real">1.5707963267949</XPD:ATTR>
-<XPD:ATTR name="Distance" type="real">15</XPD:ATTR>
-<XPD:REF name="Model">W6ccYRU7yEmidpYzt/KDzgAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="StereotypeLabel" type="EdgeLabelView" guid="xw2WCzBJr0yrZg1SidsFHAAA">
-<XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-<XPD:ATTR name="Alpha" type="real">1.5707963267949</XPD:ATTR>
-<XPD:ATTR name="Distance" type="real">30</XPD:ATTR>
-<XPD:REF name="Model">W6ccYRU7yEmidpYzt/KDzgAA</XPD:REF>
-</XPD:OBJ>
-<XPD:OBJ name="PropertyLabel" type="EdgeLabelView" guid="/3JmfvlWNUq1sEuVy9tVegAA">
-<XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
-<XPD:ATTR name="Alpha" type="real">-1.5707963267949</XPD:ATTR>
-<XPD:ATTR name="Distance" type="real">15</XPD:ATTR>
-<XPD:REF name="Model">W6ccYRU7yEmidpYzt/KDzgAA</XPD:REF>
-</XPD:OBJ>
-</XPD:OBJ>
-<XPD:OBJ name="OwnedViews[13]" type="UMLIncludeView" guid="I8++HoQhnkysU8P0ADGchwAA">
+<XPD:OBJ name="OwnedViews[11]" type="UMLIncludeView" guid="I8++HoQhnkysU8P0ADGchwAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Points" type="Points">657,204;606,252</XPD:ATTR>
@@ -531,7 +472,7 @@
 <XPD:REF name="Model">O9v7jx0NQUq4srt4l2evuQAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="OwnedViews[14]" type="UMLUseCaseView" guid="v+8S8513LkuhYgZCwPfPkgAA">
+<XPD:OBJ name="OwnedViews[12]" type="UMLUseCaseView" guid="v+8S8513LkuhYgZCwPfPkgAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">309</XPD:ATTR>
@@ -564,7 +505,7 @@
 <XPD:REF name="Model">E9uLMoYLd0KK5hCuhQPQvwAA</XPD:REF>
 </XPD:OBJ>
 </XPD:OBJ>
-<XPD:OBJ name="OwnedViews[15]" type="UMLAssociationView" guid="tuEQwU0PAku0Fn5op7dn+wAA">
+<XPD:OBJ name="OwnedViews[13]" type="UMLAssociationView" guid="tuEQwU0PAku0Fn5op7dn+wAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Points" type="Points">136,218;321,101</XPD:ATTR>
@@ -658,7 +599,7 @@
 <XPD:ATTR name="#OwnedViews" type="integer">16</XPD:ATTR>
 <XPD:OBJ name="OwnedViews[0]" type="UMLSystemBoundaryView" guid="7k7zyv4S9kWkomaYrrrktwAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
-<XPD:ATTR name="FillColor" type="string">clSilver</XPD:ATTR>
+<XPD:ATTR name="FillColor" type="string">$00FFFFD5</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">212</XPD:ATTR>
 <XPD:ATTR name="Top" type="integer">64</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">737</XPD:ATTR>
@@ -698,14 +639,14 @@
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
 <XPD:ATTR name="Left" type="integer">252</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">292</XPD:ATTR>
-<XPD:ATTR name="Width" type="integer">190</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">288</XPD:ATTR>
+<XPD:ATTR name="Width" type="integer">254</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
 <XPD:REF name="Model">BUIR3RE1qEWcWPURReuZsQAA</XPD:REF>
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="uE5EQkJYjEGAx3d+Xyq4uAAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="69OJL1fqU0qipL7YcShfPQAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Check Present Rate by Course</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Check Present by Course</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="UF5zRH3ORESU6DLy7TnYDwAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -763,7 +704,7 @@
 <XPD:OBJ name="OwnedViews[4]" type="UMLGeneralizationView" guid="UPf/kjdokEOoar0xboIXtAAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">546,156;374,292</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">549,156;402,288</XPD:ATTR>
 <XPD:REF name="Model">5vobGUahXEWXSbTWa1ZtoQAA</XPD:REF>
 <XPD:REF name="Head">J5VmABB3Tki/oow8jeBYeAAA</XPD:REF>
 <XPD:REF name="Tail">v3BI/kuLh0We1dIUngpcjgAA</XPD:REF>
@@ -789,7 +730,7 @@
 <XPD:OBJ name="OwnedViews[5]" type="UMLAssociationView" guid="E4AhcM/o8EKJ3bP8gNaG5wAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">189,283;252,295</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">189,281;252,291</XPD:ATTR>
 <XPD:REF name="Model">0eTjbR+i9EWuukOrKLIBbwAA</XPD:REF>
 <XPD:REF name="Head">J5VmABB3Tki/oow8jeBYeAAA</XPD:REF>
 <XPD:REF name="Tail">UIlQeF4Rg0+hYP9TrJLG2AAA</XPD:REF>
@@ -906,8 +847,8 @@
 <XPD:OBJ name="OwnedViews[7]" type="UMLUseCaseView" guid="h3QNK3IIgUieTCEf20u8DwAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Left" type="integer">468</XPD:ATTR>
-<XPD:ATTR name="Top" type="integer">252</XPD:ATTR>
+<XPD:ATTR name="Left" type="integer">472</XPD:ATTR>
+<XPD:ATTR name="Top" type="integer">236</XPD:ATTR>
 <XPD:ATTR name="Width" type="integer">179</XPD:ATTR>
 <XPD:ATTR name="Height" type="integer">45</XPD:ATTR>
 <XPD:REF name="Model">gDvCNXu+MUysKm6W14A09AAA</XPD:REF>
@@ -939,7 +880,7 @@
 <XPD:OBJ name="OwnedViews[8]" type="UMLGeneralizationView" guid="QQamrMxEJUmp10eNE5bmQwAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">468,291;441,296</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">484,280;456,288</XPD:ATTR>
 <XPD:REF name="Model">2gjiB7fkkUOcfSVBhSYjlQAA</XPD:REF>
 <XPD:REF name="Head">J5VmABB3Tki/oow8jeBYeAAA</XPD:REF>
 <XPD:REF name="Tail">h3QNK3IIgUieTCEf20u8DwAA</XPD:REF>
@@ -998,7 +939,7 @@
 <XPD:OBJ name="OwnedViews[10]" type="UMLGeneralizationView" guid="/5TUJgB1Ekmd+97hojsDigAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">504,396;388,336</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">513,396;413,332</XPD:ATTR>
 <XPD:REF name="Model">/+tVUPkyRUCSExcUPXtxuQAA</XPD:REF>
 <XPD:REF name="Head">J5VmABB3Tki/oow8jeBYeAAA</XPD:REF>
 <XPD:REF name="Tail">ACU+rAJP0kmth0cja0S1ZQAA</XPD:REF>
@@ -1050,7 +991,7 @@
 <XPD:OBJ name="OwnedViews[12]" type="UMLExtendView" guid="Tip1kgXaTEyDYTv8gIHbAAAA">
 <XPD:ATTR name="LineColor" type="string">clMaroon</XPD:ATTR>
 <XPD:ATTR name="FillColor" type="string">$00B9FFFF</XPD:ATTR>
-<XPD:ATTR name="Points" type="Points">717,232;641,252</XPD:ATTR>
+<XPD:ATTR name="Points" type="Points">691,232;650,240</XPD:ATTR>
 <XPD:REF name="Model">kTD5WUJ+tUaw5gLnNVslXwAA</XPD:REF>
 <XPD:REF name="Head">h3QNK3IIgUieTCEf20u8DwAA</XPD:REF>
 <XPD:REF name="Tail">6A83Gy1ZcUC2mqOX67PELAAA</XPD:REF>
@@ -3027,7 +2968,7 @@
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="p/NlieyTUkqd7KGp/0fRQgAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="ud6EN7I6UUyvNT5rBfmhJAAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Report Attendance Rate</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Report Attendance Rate by Class</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="pIFfiI3EG0iKRigKRMVpcgAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -5268,7 +5209,7 @@
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="dOemIKovnkuulVhpjpJTYgAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="BxwYpAayk0umZzQew9IJnAAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Report Attendance Rate</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Report Attendance Rate by Class</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="wmmUPfNReEKR23zYXoTCigAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -9274,7 +9215,7 @@
 <XPD:OBJ name="NameCompartment" type="UMLNameCompartmentView" guid="GXtz54YfTkmvbbbocYDHRAAA">
 <XPD:OBJ name="NameLabel" type="LabelView" guid="xdB+N02amEqW4iZJZoyRSQAA">
 <XPD:ATTR name="FontStyle" type="integer">1</XPD:ATTR>
-<XPD:ATTR name="Text" type="string">Report Attendance Rate by Class</XPD:ATTR>
+<XPD:ATTR name="Text" type="string">Report Attendance by Class</XPD:ATTR>
 </XPD:OBJ>
 <XPD:OBJ name="StereotypeLabel" type="LabelView" guid="7NDz75h8bEe2Uy78yv66UgAA">
 <XPD:ATTR name="Visible" type="boolean">False</XPD:ATTR>
@@ -10722,7 +10663,7 @@
 <XPD:REF name="Includers[0]">O9v7jx0NQUq4srt4l2evuQAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[3]" type="UMLUseCase" guid="asnu4Y/+EUmVGeZPcz0eTwAA">
-<XPD:ATTR name="Name" type="string">Report Attendance Rate by Class</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Report Attendance by Class</XPD:ATTR>
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">16</XPD:ATTR>
 <XPD:REF name="Views[0]">FEKcRfrP3Em1oBqHQZMSbgAA</XPD:REF>
@@ -10961,15 +10902,11 @@
 <XPD:OBJ name="OwnedElements[11]" type="UMLUseCase" guid="j5VGX90e/UaFmOQIf8EPGwAA">
 <XPD:ATTR name="Name" type="string">Report by Class</XPD:ATTR>
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
-<XPD:ATTR name="#Views" type="integer">8</XPD:ATTR>
-<XPD:REF name="Views[0]">YQ19KprR3U2aqN/ec807IQAA</XPD:REF>
-<XPD:REF name="Views[1]">YKCcovm79U6+HpjV6sOKMgAA</XPD:REF>
-<XPD:REF name="Views[2]">1THbp6ROC0u8UiAYEQzmAgAA</XPD:REF>
-<XPD:REF name="Views[3]">L7RvoW/9AkmikqpWDSSK8gAA</XPD:REF>
-<XPD:REF name="Views[4]">3hlutov3YkO/jPBTZYlR9QAA</XPD:REF>
-<XPD:REF name="Views[5]">cOD3YckryEuh0Wb1BWzrRAAA</XPD:REF>
-<XPD:REF name="Views[6]">BZ2NvEcGYUyxNWOfCCv9ewAA</XPD:REF>
-<XPD:REF name="Views[7]">FtHVzg6DC0ehV3gshWbm3QAA</XPD:REF>
+<XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
+<XPD:REF name="Views[0]">3hlutov3YkO/jPBTZYlR9QAA</XPD:REF>
+<XPD:REF name="Views[1]">cOD3YckryEuh0Wb1BWzrRAAA</XPD:REF>
+<XPD:REF name="Views[2]">BZ2NvEcGYUyxNWOfCCv9ewAA</XPD:REF>
+<XPD:REF name="Views[3]">FtHVzg6DC0ehV3gshWbm3QAA</XPD:REF>
 <XPD:ATTR name="#Generalizations" type="integer">2</XPD:ATTR>
 <XPD:REF name="Generalizations[0]">W6ccYRU7yEmidpYzt/KDzgAA</XPD:REF>
 <XPD:REF name="Generalizations[1]">/4Z9mntLP0qbynvF1tgUGQAA</XPD:REF>
@@ -10994,11 +10931,6 @@
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
 <XPD:REF name="Child">j5VGX90e/UaFmOQIf8EPGwAA</XPD:REF>
 <XPD:REF name="Parent">asnu4Y/+EUmVGeZPcz0eTwAA</XPD:REF>
-<XPD:ATTR name="#Views" type="integer">4</XPD:ATTR>
-<XPD:REF name="Views[0]">d0papRYyKUS2AUPQSgaFNwAA</XPD:REF>
-<XPD:REF name="Views[1]">flJ5HQgHX02iHWs82NZ/ZwAA</XPD:REF>
-<XPD:REF name="Views[2]">xw2WCzBJr0yrZg1SidsFHAAA</XPD:REF>
-<XPD:REF name="Views[3]">/3JmfvlWNUq1sEuVy9tVegAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[14]" type="UMLGeneralization" guid="qtS6WL3eo0mKEw7ecfSLaQAA">
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
@@ -11085,7 +11017,7 @@
 <XPD:REF name="Extends[0]">VZ5Zzcs2Vk+fZTZp4uJmtQAA</XPD:REF>
 </XPD:OBJ>
 <XPD:OBJ name="OwnedElements[18]" type="UMLUseCase" guid="BUIR3RE1qEWcWPURReuZsQAA">
-<XPD:ATTR name="Name" type="string">Check Present Rate by Course</XPD:ATTR>
+<XPD:ATTR name="Name" type="string">Check Present by Course</XPD:ATTR>
 <XPD:REF name="Namespace">rsrLJaSXTkGixtglEdoT1gAA</XPD:REF>
 <XPD:ATTR name="#Views" type="integer">12</XPD:ATTR>
 <XPD:REF name="Views[0]">J5VmABB3Tki/oow8jeBYeAAA</XPD:REF>
