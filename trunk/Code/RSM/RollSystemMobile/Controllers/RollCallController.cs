@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using RollSystemMobile.Models;
 using System.Drawing;
 using RollSystemMobile.Models.BusinessObject;
+
 namespace RollSystemMobile.Controllers
 {
     public class RollCallController : Controller
