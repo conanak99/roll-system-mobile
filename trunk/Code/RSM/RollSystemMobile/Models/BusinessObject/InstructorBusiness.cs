@@ -20,6 +20,13 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             
         }
+
+        public List<Instructor> GetAllInstructor()
+        {
+            return base.GetList().ToList();
+        }
+
+
         public List<Instructor> GetActiveInstructor()
         {
             return base.GetList().Where(i => i.IsActive).ToList();

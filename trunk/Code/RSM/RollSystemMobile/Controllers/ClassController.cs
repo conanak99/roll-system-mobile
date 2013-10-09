@@ -6,102 +6,100 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
-using RollSystemMobile.Models.BindingModels;
 using RollSystemMobile.Models.BusinessObject;
 
 namespace RollSystemMobile.Controllers
 { 
-    public class InstructorsController : Controller
+    public class ClassController : Controller
     {
-        
-       private InstructorBusiness InsBO;
+         private ClassBusiness ClassBO;
         //
         // GET: /Subject/
 
-       public InstructorsController()
+         public ClassController()
         {
-            InsBO = new InstructorBusiness();
+            ClassBO = new ClassBusiness();
         }
 
         public ViewResult Index()
         {
-            return View(InsBO.GetList().ToList());
+            return View(ClassBO.GetAllClasses().ToList());
         }
 
         //
-        // GET: /Default1/Details/5
+        // GET: /Class/Details/5
 
         public ViewResult Details(int id)
         {
-            Instructor instructor = InsBO.GetInstructorByID(id);
-            return View(instructor);
+            Class cls = ClassBO.GetClassByID(id);
+            return View(cls);
         }
 
         //
-        // GET: /Default1/Create
+        // GET: /Class/Create
 
         public ActionResult Create()
         {
+            SelectListFactory slFactory = new SelectListFactory();
+            //ViewBag.MajorID = new SelectList(, "MajorID", "Shortname");
+            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "ShortName");
             return View();
         } 
 
         //
-        // POST: /Default1/Create
+        // POST: /Class/Create
 
         [HttpPost]
-        public ActionResult Create(Instructor instructor)
+        public ActionResult Create(Class cls)
         {
             if (ModelState.IsValid)
             {
-                InsBO.Insert(instructor);
+                ClassBO.Insert(cls);
                 return RedirectToAction("Index");  
             }
-
-            var ins = InsBO.GetAllInstructor();
-            ViewBag.UserID = new SelectList(ins, "UserID", "Username");
-            return View(instructor);
+            return View(cls);
         }
         
         //
-        // GET: /Default1/Edit/5
+        // GET: /Class/Edit/5
  
         public ActionResult Edit(int id)
         {
-            Instructor instructor = InsBO.GetInstructorByID(id);
-            return View(instructor);
+            Class cls = ClassBO.GetClassByID(id);
+            return View(cls);
         }
 
         //
-        // POST: /Default1/Edit/5
+        // POST: /Class/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Instructor instructor)
+        public ActionResult Edit(Class cls)
         {
             if (ModelState.IsValid)
             {
-                InsBO.Update(instructor);
+                ClassBO.Update(cls);
                 return RedirectToAction("Index");
             }
-            return View(instructor);
+            return View(cls);
         }
 
         //
-        // GET: /Default1/Delete/5
+        // GET: /Class/Delete/5
  
         public ActionResult Delete(int id)
         {
-            Instructor instructor = InsBO.GetInstructorByID(id);
-            return View(instructor);
+            Class cls = ClassBO.GetClassByID(id);
+            return View(cls);
         }
 
         //
-        // POST: /Default1/Delete/5
+        // POST: /Class/Delete/5
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {
-            Instructor instructor = InsBO.GetInstructorByID(id);
-            InsBO.Delete(instructor);
+        {            
+            Class cls = ClassBO.GetClassByID(id);
+            ClassBO.Delete(cls);
             return RedirectToAction("Index");
         }
 

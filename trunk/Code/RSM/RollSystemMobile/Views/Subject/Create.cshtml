@@ -12,15 +12,15 @@
     @Html.ValidationSummary(true)
     <table class="table">
         <tr>
-            <td>
+            <td style="width: 400px;">
                 <div class="editor-label">
                     <b>Short Name</b>
                 </div>
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.ShortName)
+                    @Html.TextBoxFor(model => model.ShortName, new { style = "width:70px" })
                     @Html.ValidationMessageFor(model => model.ShortName)
                 </div>
-                <span class="help-block">Acronyms of subject ( Example : OS, XML ...)</span>
+                <span class="help-block">Acronyms of subject ( Example : OS, XML ...).</span>
                 <div class="editor-label">
                     <b>Full Name</b>
                 </div>
@@ -28,7 +28,17 @@
                     @Html.EditorFor(model => model.FullName)
                     @Html.ValidationMessageFor(model => model.FullName)
                 </div>
-                <span class="help-block">Full Name of subject ( Example : OS, XML ...)</span>
+                <span class="help-block">Full Name of subject ( Example : Operating System ...).</span>
+            </td>
+            <td>
+                <div class="editor-label">
+                    <b>Number Of Session</b>
+                </div>
+                <div class="editor-field">
+                    @Html.TextBoxFor(model => model.NumberOfSession, new { style = "width:70px" })
+                    @Html.ValidationMessageFor(model => model.NumberOfSession)
+                </div>
+                <span class="help-block">Number session of subject in a block.</span>
                 <div class="editor-label">
                     <b>Number of slot</b>
                 </div>
@@ -40,6 +50,7 @@
        }, new { style = "width: 70px;" })
                     @Html.ValidationMessageFor(model => model.NumberOfSlot)
                 </div>
+                <span class="help-block">Number slot of subject in day.</span>
             </td>
         </tr>
     </table>
