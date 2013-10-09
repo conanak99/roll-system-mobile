@@ -22,7 +22,7 @@
                 @foreach (var Face in FacesAdded.Where(fa => fa.StudentID == Student.StudentID))
                 {
                     <div class="thumbnail-holder">
-                        <img class="thumbnail" src="@Url.Content("~/Content/Training Data/" + Face.FaceLink)" />
+                        <img class="thumbnail" src="@Url.TrainingImage(Face.FaceLink)" />
                         <button type="button" class="close btn-delete" imageID="@Face.ImageID" data-dismiss="modal" aria-hidden="true">
                             ×</button>
                     </div>
@@ -33,12 +33,18 @@
 }
 @if (ViewBag.Errors != null)
 {
-    <ul>
-        @foreach (var Error in (List<String>)ViewBag.Errors)
-        {
-            <li>@Error</li>
-        }
-    </ul>
+    <div>
+        <ul>
+            <li>Images: 
+                @foreach (var Error in (List<String>)ViewBag.Errors)
+                {
+                <div class="thumbnail-holder">
+                        <img class="thumbnail" src="@Url.TrainingImage(Error)" />
+                    </div>
+                }
+                 existed in database. Not save.</li>
+        </ul>
+    </div>
 }
 <div id="message">
 </div>

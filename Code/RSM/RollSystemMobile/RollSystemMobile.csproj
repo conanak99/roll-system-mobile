@@ -125,10 +125,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
+    <Compile Include="Controllers\InstructorsController.cs" />
     <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\RollCallController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -136,9 +138,12 @@
     <Compile Include="Models\BindingModels\AdminBindingModel.cs" />
     <Compile Include="Models\BusinessObject\AttendanceBO.cs" />
     <Compile Include="Models\BindingModels\InstructorBindingModel.cs" />
-    <Compile Include="Models\BusinessObject\ClassBO.cs" />
+    <Compile Include="Models\BusinessObject\ClassBusiness.cs" />
+    <Compile Include="Models\BusinessObject\StudentBusiness.cs" />
+    <Compile Include="Models\BusinessObject\GenericBusiness.cs" />
     <Compile Include="Models\BusinessObject\RollCallBO.cs" />
     <Compile Include="Models\BusinessObject\FaceBO.cs" />
+    <Compile Include="Models\HelperClass\MyHtmlHelper.cs" />
     <Compile Include="Models\HelperClass\ExcelReader.cs" />
     <Compile Include="Models\HelperClass\ExcelWriter.cs" />
     <Compile Include="Models\RecognizerResult.cs" />
@@ -300,7 +305,9 @@
     <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -347,6 +354,16 @@
     <Content Include="Views\RollCall\Studentlist.cshtml" />
     <Content Include="Views\Admin\AddImages.cshtml" />
     <Content Include="Views\Admin\UploadMultiResult.cshtml" />
+    <Content Include="Views\Instructors\Create.cshtml" />
+    <Content Include="Views\Instructors\Delete.cshtml" />
+    <Content Include="Views\Instructors\Details.cshtml" />
+    <Content Include="Views\Instructors\Edit.cshtml" />
+    <Content Include="Views\Instructors\Index.cshtml" />
+    <Content Include="Views\Subject\Create.cshtml" />
+    <Content Include="Views\Subject\Delete.cshtml" />
+    <Content Include="Views\Subject\Details.cshtml" />
+    <Content Include="Views\Subject\Edit.cshtml" />
+    <Content Include="Views\Subject\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

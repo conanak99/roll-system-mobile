@@ -118,7 +118,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
                 if (db.StudentImages.Any(i => i.ImageLink.Equals(FileName) && i.StudentID == StudentID))
                 {
-                    throw new Exception(String.Format("Face {0} of image {1} already in database. Not save.", FaceID, ImageName));
+                    throw new Exception(FileName);
                 }
                 else
                 {
@@ -162,7 +162,7 @@ namespace RollSystemMobile.Models.BusinessObject
                         //Save anh, ghi xuong database
                         if (db.StudentImages.Any(i => i.ImageLink.Equals(FileName) && i.StudentID == StudentID))
                         {
-                            throw new Exception(String.Format("Face {0} of image {1} already in database. Not save.", FaceID, ImageName));
+                            throw new Exception(FileName);
                         }
                         else
                         {

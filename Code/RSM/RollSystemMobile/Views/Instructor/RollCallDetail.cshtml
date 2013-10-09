@@ -33,9 +33,9 @@
     <dd>@Model.RollCall.Class.ClassName</dd>
     <dt>Date</dt>
     <dd>
-        From @Model.RollCall.BeginDate.ToString("dd-MM-yyyy") to @Model.RollCall.EndDate.ToString("dd-MM-yyyy")</dd>
+        From @Html.FormatDate(@Model.RollCall.BeginDate) to @Html.FormatDate(@Model.RollCall.EndDate)</dd>
     <dt>Time</dt>
-    <dd>@Model.RollCall.StartTime.ToString(@"hh\:mm") - @Model.RollCall.EndTime.ToString(@"hh\:mm")</dd>
+    <dd>@Html.FormatTime(@Model.RollCall.StartTime) - @Html.FormatTime(@Model.RollCall.EndTime)</dd>
     <dt class="margin-top-12">Student List</dt>
     <dd style="margin-top: 8px;">
         <div class="accordion-group" style="width: 400px">
