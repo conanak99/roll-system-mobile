@@ -44,10 +44,10 @@
                         @RollCall.Subject.ShortName
                     </td>
                     <td>
-                        @RollCall.StartTime.ToString(@"hh\:mm") - @RollCall.EndTime.ToString(@"hh\:mm")
+                       @Html.FormatTime(@RollCall.StartTime) -  @Html.FormatTime(@RollCall.EndTime)
                     </td>
                     <td>
-                        @RollCall.BeginDate.ToString("dd-MM-yyyy") to @RollCall.EndDate.ToString("dd-MM-yyyy")
+                        @Html.FormatDate(@RollCall.BeginDate) to @Html.FormatDate(@RollCall.EndDate)
                     </td>
                     <td class="text-center">
                         @if (!IsCurrentRollCall)

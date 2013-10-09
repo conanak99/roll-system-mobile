@@ -60,6 +60,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 else
                 {
                     //Neu truoc start date, chi doi bt
+                    //Neu nhu doi ngay trong ngay, van goi ham nay
                     it.InstructorID = NewInstructorID;
                 }
 

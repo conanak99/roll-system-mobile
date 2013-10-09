@@ -74,10 +74,10 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult GetCurrentRollCalls(int InstructorID)
         {
-            //Nhung mon ma instructor nay dang day, sau nay phai check status
+            //Nhung mon ma instructor nay dang day, sau nay phai check status, instructor teaching phai them ngay thang
             DateTime Today = DateTime.Now;
             var RollCalls = db.RollCalls.Where(r => r.InstructorTeachings.
-                                       Any(inte => inte.InstructorID == InstructorID)
+                                       Any(inte => inte.InstructorID == InstructorID && inte.BeginDate <= Today && r.EndDate >= Today)
                                        && r.BeginDate <= Today && r.EndDate >= Today).OrderBy(roll => roll.StartTime);
             //Mon dang day vao thoi diem dang nhap
             RollCall CurrentRollCall = null;

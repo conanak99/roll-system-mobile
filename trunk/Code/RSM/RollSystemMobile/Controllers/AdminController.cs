@@ -12,8 +12,14 @@ namespace RollSystemMobile.Controllers
     public class AdminController : Controller
     {
         // GET: /Admin/
-        private RSMEntities _db = new RSMEntities();
+        private StudentBusiness StuBO;
+        private ClassBusiness ClaBO;
 
+        public AdminController()
+        {
+            StuBO = new StudentBusiness();
+            ClaBO = new ClassBusiness();
+        }
 
         public ActionResult Index()
         {
@@ -26,22 +32,22 @@ namespace RollSystemMobile.Controllers
 
             if (ClassID == null)
             {
-                Students = _db.Students.Include("Class").Where(st => st.IsActive == true).ToList();
+                Students = StuBO.GetActiveStudents();
             }
             else
             {
-                Students = _db.Students.Include("Class").Where(st => st.IsActive == true && st.ClassID == ClassID).ToList();
+                Students = StuBO.GetStudentInClass(ClassID.Value);
             }
 
 
-            var Classes = _db.Classes.Where(c => c.IsActive == true);
+            var Classes = ClaBO.GetActiveClasses();
             ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
             return View(Students);
         }
 
         public ActionResult SingleStudent(int StudentID)
         {
-            var Student = _db.Students.SingleOrDefault(s => s.StudentID == StudentID);
+            var Student = StuBO.GetStudentByID(StudentID);
             ViewBag.Errors = TempData["Errors"];
             return View(Student);
         }
@@ -50,7 +56,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult SingleStudent(int StudentID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
             ViewBag.StudentID = StudentID;
-            ViewBag.StudentName = _db.Students.First(s => s.StudentID == StudentID).FullName;
+            ViewBag.StudentName = StuBO.GetStudentByID(StudentID).FullName;
 
             List<RecognizerResult> Results = new List<RecognizerResult>();
 
@@ -80,7 +86,7 @@ namespace RollSystemMobile.Controllers
                 FacesAdded = FacesAdded.OrderBy(fa => fa.StudentID).ToList();
                 var StudentIDs = FacesAdded.Select(fa => fa.StudentID).Distinct().ToList();
 
-                List<Student> Students = _db.Students.Where(st => StudentIDs.Contains(st.StudentID)).ToList();
+                List<Student> Students = StuBO.Find(st => StudentIDs.Contains(st.StudentID));
 
                 ViewBag.Students = Students;
                 ViewBag.FacesAdded = FacesAdded;
@@ -111,7 +117,7 @@ namespace RollSystemMobile.Controllers
             }
 
             //Load may cai selectbox vao day
-            var Students = _db.Students.Where(st => st.IsActive).ToList();
+            var Students = StuBO.GetActiveStudents();
             ViewBag.Students = Students;
 
             return View("UploadMultiResult", Results);

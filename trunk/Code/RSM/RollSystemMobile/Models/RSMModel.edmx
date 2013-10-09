@@ -1240,7 +1240,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram Name="RSMModel">
+      <Diagram Name="RSMModel" ZoomLevel="74">
         <EntityTypeShape EntityType="RSMModel.AttendanceLog" Width="1.5" PointX="7.5" PointY="11.25" Height="2.5571907552083317" IsExpanded="true" />
         <EntityTypeShape EntityType="RSMModel.Class" Width="1.5" PointX="3" PointY="5.875" Height="2.3648893229166674" IsExpanded="true" />
         <EntityTypeShape EntityType="RSMModel.Instructor" Width="1.5" PointX="8.25" PointY="2.25" Height="2.5571907552083335" IsExpanded="true" />

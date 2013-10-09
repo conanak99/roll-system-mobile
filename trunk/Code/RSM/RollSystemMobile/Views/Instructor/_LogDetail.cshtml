@@ -19,7 +19,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
         <h3 id="myModalLabel">
-            Roll Call at @Model.AutoLog.LogDate.ToString("dd-MM-yyyy")</h3>
+            Roll Call at @Html.FormatDate(@Model.AutoLog.LogDate)</h3>
     </div>
     <div class="modal-body" id='modal-body'>
         <legend>Roll Call Info</legend>
@@ -28,7 +28,7 @@
                 <dt>Roll Call</dt>
                 <dd>@Model.RollCall.RollCallID</dd>
                 <dt>Date</dt>
-                <dd>@Model.AutoLog.LogDate.ToString("dd-MM-yyyy")</dd>
+                <dd>@Html.FormatDate(@Model.AutoLog.LogDate)</dd>
                 <dt>Subject</dt>
                 <dd>@Model.RollCall.Subject.ShortName</dd>
                 <dt>Class</dt>
@@ -132,7 +132,7 @@ else
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
         <h3 id="myModalLabel">
-            Roll Call at @Model.AutoLog.LogDate.ToString("dd-MM-yyyy")</h3>
+            Roll Call at @Html.FormatDate(@Model.AutoLog.LogDate)</h3>
     </div>
     <div class="modal-body" id='modal-body'>
         <legend>Roll Call Info</legend>
@@ -141,7 +141,7 @@ else
                 <dt>Roll Call</dt>
                 <dd>@Model.RollCall.RollCallID</dd>
                 <dt>Date</dt>
-                <dd>@Model.AutoLog.LogDate.ToString("dd-MM-yyyy")</dd>
+                <dd>@Html.FormatDate(@Model.AutoLog.LogDate)</dd>
                 <dt>Subject</dt>
                 <dd>@Model.RollCall.Subject.ShortName</dd>
                 <dt>Class</dt>

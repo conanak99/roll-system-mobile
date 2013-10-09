@@ -19,7 +19,7 @@
                     <dt>Roll Call</dt>
                     <dd>@Model.CurrentRollCall.RollCallID</dd>
                     <dt>Date</dt>
-                    <dd>@DateTime.Today.ToString("dd-MM-yyyy")</dd>
+                    <dd>@Html.FormatDate(@DateTime.Today)</dd>
                     <dt>Subject</dt>
                     <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
                     <dt>Class</dt>

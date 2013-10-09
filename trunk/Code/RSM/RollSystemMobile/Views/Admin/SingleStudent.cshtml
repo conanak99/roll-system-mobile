@@ -2,48 +2,50 @@
 @{
     ViewBag.Title = Model.StudentCode + " - " + Model.FullName + " Image Data";
 }
-
 @section ExtraHead {
-  <style>
-  body 
-  {
-      background-color: White;
-  }
-  </style>
+    <style>
+        body
+        {
+            background-color: White;
+        }
+    </style>
 }
-
 <h4>@Model.FullName Image Data
 </h4>
 @if (Model.StudentImages.Count > 0)
 {
+
     foreach (var image in Model.StudentImages)
     {
     <div class="thumbnail-holder">
-        <img class="thumbnail" src="@Url.Content("~/Content/Training Data/" + image.ImageLink)" />
+        <img class="thumbnail" src="@Url.TrainingImage(image.ImageLink)" />
         <button type="button" class="close btn-delete" imageID="@image.ImageID" data-dismiss="modal" aria-hidden="true">
             ×</button>
     </div>
     }
-    <div id="message"></div>
+    <div id="message">
+    </div>
 }
 else
 {
     <h6>
         No images. Please upload some.</h6>
 }
-
 @if (ViewBag.Errors != null)
 {
     <div>
-    <ul>
-    @foreach (var Error in (List<String>)ViewBag.Errors)
-    {
-        <li>@Error</li>
-    }
-    </ul>
+        <ul>
+            <li style="padding-top: 5px">Images: 
+                @foreach (var Error in (List<String>)ViewBag.Errors)
+                {
+                <div class="thumbnail-holder">
+                        <img class="thumbnail" src="@Url.TrainingImage(Error)" />
+                    </div>
+                }
+                 existed in database. Not save.</li>
+        </ul>
     </div>
 }
-
 <div id="upload-div">
     @using (Html.BeginForm("SingleStudent", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
