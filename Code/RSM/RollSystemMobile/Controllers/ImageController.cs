@@ -11,8 +11,12 @@ namespace RollSystemMobile.Controllers
 {
     public class ImageController : Controller
     {
+        private StudentImageBusiness StuImaBO;
 
-        private RSMEntities _db = new RSMEntities();
+        public ImageController()
+        {
+            StuImaBO = new StudentImageBusiness();
+        }
 
         // GET: /Image/ 
         [HttpPost]
@@ -80,12 +84,11 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult DeleteTrainingImage(int ImageID)
         {
-            var TrainingImage = _db.StudentImages.FirstOrDefault(i => i.ImageID == ImageID);
+            var TrainingImage = StuImaBO.FindImageByID(ImageID);
             String message = "";
             if (TrainingImage != null)
             {
-                _db.StudentImages.DeleteObject(TrainingImage);
-                _db.SaveChanges();
+                StuImaBO.Delete(TrainingImage);
                 message = TrainingImage.ImageLink + " deleted.";
             }
             else
