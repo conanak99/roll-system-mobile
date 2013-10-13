@@ -91,8 +91,30 @@ namespace RollSystemMobile.Controllers
                 isCurrent = CurrentRollCall != null && CurrentRollCall.RollCallID == r.RollCallID  ? true : false   
             });
 
+
+
+            var a = new { id = CurrentRollCall.BeginDate, studentlist = CurrentRollCall.Students.Select(s => new { }) };
+
             return Json(RollCallJson, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult GetRollCallInfo(int RollCallID)
+        {
+            RollCallBusiness RollBO = new RollCallBusiness();
+            RollCall rollcall = RollBO.GetRollCallByID(RollCallID);
+
+
+            var RollJson = new
+            {
+                rollID = rollcall.RollCallID,
+                subject = rollcall.Subject.FullName,
+                classes = rollcall.Class.ClassName,
+                time = rollcall.StartTime.ToString(@"hh\:mm") + " - " + rollcall.EndTime.ToString(@"hh\:mm"),
+                date = rollcall.BeginDate.ToString("dd-MM-yyyy") + " to " + rollcall.EndDate.ToString("dd-MM-yyyy"),
+                studentList = rollcall.Students.Select(st => new { studentID = st.StudentID, studentCode = st.StudentCode, studentName = st.FullName })
+            };
+
+            return Json(RollJson, JsonRequestBehavior.AllowGet);
+        }
     }
 }
