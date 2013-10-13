@@ -91,10 +91,6 @@ namespace RollSystemMobile.Controllers
                 isCurrent = CurrentRollCall != null && CurrentRollCall.RollCallID == r.RollCallID  ? true : false   
             });
 
-
-
-            var a = new { id = CurrentRollCall.BeginDate, studentlist = CurrentRollCall.Students.Select(s => new { }) };
-
             return Json(RollCallJson, JsonRequestBehavior.AllowGet);
         }
 
