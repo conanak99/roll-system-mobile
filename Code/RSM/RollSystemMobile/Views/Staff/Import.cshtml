@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "Import";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+<h2>
+    Import data</h2>
+@using (Html.BeginForm("ImportExcel", "Staff", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{  
+    <input id="FileUpload" name="FileUpload" type="file" />
+    <br />
+    <br />
+    <input class="btn btn-primary" type="submit" id="Submit" name="Submit" value="Submit" />
+    
+}
+<label>@ViewData["test"]</label>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(":file").filestyle();
+    });
+        $('form').submit(function () {
+            var selectedFile = $('#FileUpload').val();
+            var matches = selectedFile.match(/\.(xlsx?)$/i);
+            if (matches == null) {
+                alert('please select an Excel file');
+                return false;
+            }
+            return true;
+       
+    });
+</script>

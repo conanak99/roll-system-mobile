@@ -4,13 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 using Excel = Microsoft.Office.Interop.Excel;
 using System.Data.OleDb;
 using System.Data;
 using RollSystemMobile.Models;
+using System.Data.SqlClient;
 namespace RollSystemMobile.Controllers
 {
-    public class StaffController : Controller
+    public class StaffController : Controller 
     {
         private RSMEntities _db = new RSMEntities();
         //
@@ -20,16 +23,13 @@ namespace RollSystemMobile.Controllers
         {
             return View();
         }
-        //class layout
-        public ActionResult ClassList()
+        public ActionResult Import()
         {
             return View();
         }
-    
         [HttpPost]
-        public ActionResult ImportExcelFileToDatabase(HttpPostedFileBase file)
+        public ActionResult ImportExcel(HttpPostedFileBase file)
         {
-
             if (Request.Files["FileUpload"].ContentLength > 0)
             {
                 string fileExtension =
@@ -90,26 +90,61 @@ namespace RollSystemMobile.Controllers
                     {
                         dataAdapter.Fill(ds);
                     }
+                    Class dbclass;
+                    Student dbStudent;
+                    String tmp;
+                    int majorID;
+                    int classID;
+                    String value;
+                    
+                    // insert tung dong cua file
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
+                      //insert class
+                        dbclass = new Class();
+                        //lay gia tri majorid dua tren majorshorname
+                        tmp = ds.Tables[0].Rows[i]["Major"].ToString();
+                        majorID = _db.Majors.SingleOrDefault(m => m.ShortName == tmp).MajorID;
+                        //check class da duoc ton tai trong database
+                        dbclass.MajorID = majorID;
+                        dbclass.ClassName = ds.Tables[0].Rows[i]["ClassName"].ToString();
+                        value = dbclass.ClassName;
+                        bool isExist = _db.Classes.AsEnumerable().Any(row => row.ClassName == value);
+                        if (isExist == false)
+                        {
+                            _db.Classes.AddObject(dbclass);
+                            _db.SaveChanges();
+                        }
+                        //insert student
 
-
-                        Class dbclass = new Class();
-                        dbclass.MajorID = int.Parse(ds.Tables[0].Rows[i]["MajorID"].ToString());
-                        dbclass.ClassName = ds.Tables[0].Rows[i]["Class"].ToString();
-                        _db.Classes.AddObject(dbclass);
-                        _db.SaveChanges();
+                        tmp = ds.Tables[0].Rows[i]["ClassName"].ToString();
+                        classID = _db.Classes.SingleOrDefault(c => c.ClassName == tmp).ClassID;
+                        dbStudent = new Student();
+                        dbStudent.ClassID = classID;
+                        dbStudent.FullName = ds.Tables[0].Rows[i]["FullName"].ToString();
+                        dbStudent.StudentCode = ds.Tables[0].Rows[i]["StudentCode"].ToString();
+                        dbStudent.Birthdate = DateTime.Parse(ds.Tables[0].Rows[i]["Birthdate"].ToString());
+                        dbStudent.CitizenID = ds.Tables[0].Rows[i]["CitizenID"].ToString();
+                        value = dbStudent.StudentCode;
+                        bool test = _db.Students.AsEnumerable().Any(d => d.StudentCode == value);
+                        if (test == false)
+                        {
+                            _db.Students.AddObject(dbStudent);
+                            _db.SaveChanges();
+                        }
                     }
-                    ViewBag.message = "Information saved successfully.";
+                    
+                    ds.Dispose();
+                    excelConnection.Close();
                 }
 
                 else
                 {
-                    ModelState.AddModelError("", "Plese select Excel File.");
+                   
                 }
             }
-            return View();
+            return RedirectToAction("Import");
+            
         }
-
     }
 }
