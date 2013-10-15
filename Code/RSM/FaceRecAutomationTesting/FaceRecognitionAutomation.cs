@@ -23,6 +23,7 @@ namespace FaceRecAutomationTesting
             Console.WriteLine("1. Load a recognizer with 250 images, 25 labels. Test performance of checking.");
             Console.WriteLine("2. Load a recognizer with 600 images, 30 labels. Test performance of checking.");
             Console.WriteLine("3. Test the accuracy of 3 face recognizer algorithm. Each with 3 different threehold.");
+            Console.WriteLine("4. Test the accuracy the gender recognition algorithm.");
             Console.WriteLine("============================================================================");
 
             Console.Write("Enter option: ");
@@ -37,16 +38,16 @@ namespace FaceRecAutomationTesting
                     TestAccuracy(8);
                     TestAccuracy(10);
                     break;
+                case 4:
+                    TestGenderRecognitionAccuracy(50);
+                    TestGenderRecognitionAccuracy(100);
+                    TestGenderRecognitionAccuracy(150);
+                    TestGenderRecognitionAccuracy(180);
+                    break;
                 default: Console.WriteLine("Good bye");
                     break;
             }
-
-            //TestPerformanceBig();
-            //TestPerformanceSmall();
-            TestAccuracy(4);
-            TestAccuracy(6);
-            TestAccuracy(8);
-            TestAccuracy(10);
+           
         }
 
 
@@ -335,6 +336,115 @@ namespace FaceRecAutomationTesting
             System.IO.File.WriteAllText(UnknownFilePath, UnknownResultString, Encoding.UTF8);
             Console.Write("Done");
         }
+
+
+        private static void TestGenderRecognitionAccuracy(int NumberOfTrainingImage)
+        {
+            //Khoi tao 9 bo face recognizer
+            FaceRecognizers = new List<FaceRecognizer>();
+            FaceRecognizers.Add(new EigenFaceRecognizer(80, 2000));
+            FaceRecognizers.Add(new EigenFaceRecognizer(80, 3500));
+            //Can't recognize unknown
+            FaceRecognizers.Add(new EigenFaceRecognizer(80, 8000));
+
+            FaceRecognizers.Add(new FisherFaceRecognizer(80, 500));
+            FaceRecognizers.Add(new FisherFaceRecognizer(80, 1000));
+            //Can't recognize unknown
+            FaceRecognizers.Add(new FisherFaceRecognizer(80, 2500));
+
+            FaceRecognizers.Add(new LBPHFaceRecognizer(1, 8, 8, 9, 50));
+            FaceRecognizers.Add(new LBPHFaceRecognizer(1, 8, 8, 9, 100));
+            //Can't recognize unknown
+            FaceRecognizers.Add(new LBPHFaceRecognizer(1, 8, 8, 9, 250));
+
+            List<TestSingleResult> Results = new List<TestSingleResult>();
+
+
+            Console.WriteLine("This time we will check the accuracy of the 3 algorithm.");
+            Console.Write("Press Enter to continue: ");
+            Console.ReadLine();
+            NameList = new string[] {"Nam", "Nu" }.ToList();
+
+            String TrainingDataPath = @"C:\Users\Hoang\Documents\Visual Studio 2010\Projects\RollSystemMobile\FaceRecAutomationTesting\Gender Recognition\Training Data";
+
+            List<Image<Gray, byte>> TrainingImageList = new List<Image<Gray, byte>>();
+            List<int> IDList = new List<int>();
+
+            Console.WriteLine("Begin Training Face Recognizer");
+            foreach (var FilePath in Directory.GetFiles(TrainingDataPath, "*.jpg", SearchOption.TopDirectoryOnly))
+            {
+                foreach (var PersonName in NameList)
+                {
+                    String ImageName = GetResult(FilePath);
+                    int ID = NameList.IndexOf(ImageName);
+                    if (ID != -1 && ImageName.Equals(PersonName) && IDList.Count(num => num == ID) < NumberOfTrainingImage)
+                    {
+                        Image<Gray, byte> Image = new Image<Gray, byte>(FilePath);
+                        Image._EqualizeHist();
+                        TrainingImageList.Add(Image);
+
+                        IDList.Add(ID);
+                    }
+                }
+            }
+
+            foreach (var FaceRec in FaceRecognizers)
+            {
+                FaceRec.Train(TrainingImageList.ToArray(), IDList.ToArray());
+            }
+
+            Console.WriteLine(TrainingImageList.Count + " images loaded.");
+            Console.Write("Press Enter to continue: ");
+            Console.ReadLine();
+
+            Console.WriteLine("Begin Testing Recognition:");
+            String TestDataPath = @"C:\Users\Hoang\Documents\Visual Studio 2010\Projects\RollSystemMobile\FaceRecAutomationTesting\Gender Recognition\Test Data";
+            int imageRecognized = 1;
+            foreach (var FilePath in Directory.GetFiles(TestDataPath, "*.jpg", SearchOption.TopDirectoryOnly))
+            {
+                //Load hinh tu duong dan
+                Image<Gray, byte> Face = new Image<Gray, byte>(FilePath);
+                Face._EqualizeHist();
+
+                //Lay result tu ten file
+                TestSingleResult TestResult = new TestSingleResult();
+                TestResult.Result = GetResult(FilePath);
+
+                //Lay 9 ket qua tu eigen face, set vao object
+                //Lay 9 properties cua result, tuong ung voi 9 bo face recognizer
+                var Properties = TestResult.GetType().GetProperties();
+                for (int i = 0; i < FaceRecognizers.Count; i++)
+                {
+                    FaceRecognizer.PredictionResult PR = FaceRecognizers.ElementAt(i).Predict(Face);
+                    String NameFound = PR.Label == -1 ? "Unknown" : NameList.ElementAt(PR.Label);
+                    Properties[i].SetValue(TestResult, NameFound, null);
+                }
+                //Dua result da tim dc vao danh sach, sau nay tinh tiep
+                Results.Add(TestResult);
+                Console.WriteLine(imageRecognized + " images recognized");
+                imageRecognized++;
+            }
+
+            Console.Write("Completed. Enter path to export report: ");
+            String ReportPath = Console.ReadLine();
+
+            String MixedFilePath = ReportPath + "Mixed.txt";
+            String MixedResultString = GetResultString(Results);
+            System.IO.File.WriteAllText(MixedFilePath, MixedResultString, Encoding.UTF8);
+
+            String KnownFilePath = ReportPath + "Known.txt";
+            String KnownResultString = GetResultString(Results.Where(result => !result.Result.Equals("Unknown")).ToList());
+            System.IO.File.WriteAllText(KnownFilePath, KnownResultString, Encoding.UTF8);
+
+            String UnknownFilePath = ReportPath + "Unknown.txt";
+            String UnknownResultString = GetResultString(Results.Where(result => result.Result.Equals("Unknown")).ToList());
+            System.IO.File.WriteAllText(UnknownFilePath, UnknownResultString, Encoding.UTF8);
+            Console.Write("Done");
+        }
+
+
+
+
 
         private static String GenerateHeaderLine(int Length)
         {

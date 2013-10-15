@@ -122,7 +122,7 @@ namespace RollSystemMobile.Controllers
         // POST: /RollCall/Create
 
         [HttpPost]
-        public ActionResult Create(RollCall rollcall, int MajorID, int InstructorID, int ClassID)
+        public ActionResult Create(RollCall rollcall, int MajorID, int ClassID)
         {
             if (ModelState.IsValid)
             {
@@ -130,7 +130,7 @@ namespace RollSystemMobile.Controllers
                 List<string> ErrorList = RollBO.ValidRollCall(rollcall);
                 if (ErrorList.Count == 0)
                 {
-                    RollBO.Insert(rollcall, InstructorID);
+                    RollBO.Insert(rollcall);
                     return RedirectToAction("Index");
                 }
                 else
@@ -142,7 +142,7 @@ namespace RollSystemMobile.Controllers
                 }
             }
 
-            ViewBag.InstructorID = SlFactory.MakeSelectList<Instructor>("InstructorID", "FullName", InstructorID);
+            ViewBag.InstructorID = SlFactory.MakeSelectList<Instructor>("InstructorID", "FullName", rollcall.InstructorID);
             ViewBag.MajorID = SlFactory.MakeSelectList<Instructor>("MajorID", "FullName", MajorID);
             ViewBag.ClassID = new SelectList(ClaBO.GetClassByMajor(MajorID),
                 "ClassID", "ClassName", rollcall.ClassID);
@@ -160,7 +160,7 @@ namespace RollSystemMobile.Controllers
             RollCall rollcall = RollBO.GetRollCallByID(id);
 
             int MajorID = rollcall.Class.MajorID;
-            int InstructorID = rollcall.InstructorTeachings.ToList().Last().InstructorID;
+            int InstructorID = rollcall.InstructorID;
             ViewBag.InstructorID = SlFactory.MakeSelectList<Instructor>("InstructorID", "FullName", InstructorID);
             ViewBag.MajorID = SlFactory.MakeSelectList<Major>("MajorID", "FullName", MajorID);
             ViewBag.ClassID = new SelectList(ClaBO.GetClassByMajor(MajorID),
@@ -176,7 +176,7 @@ namespace RollSystemMobile.Controllers
         // POST: /RollCall/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(RollCall rollcall, int InstructorID)
+        public ActionResult Edit(RollCall rollcall)
         {
             if (ModelState.IsValid)
             {
@@ -184,7 +184,7 @@ namespace RollSystemMobile.Controllers
                 if (ErrorList.Count == 0)
                 {
                     // Kiem tra xem co doi giao vien hay ko
-                    RollBO.ChangeRollCallInstructor(rollcall, InstructorID);
+                    RollBO.Update(rollcall);
                     return RedirectToAction("Index");
                 }
                 else
@@ -197,7 +197,7 @@ namespace RollSystemMobile.Controllers
             }
 
             int MajorID = rollcall.Class.MajorID;
-            ViewBag.InstructorID = SlFactory.MakeSelectList<Instructor>("InstructorID", "FullName", InstructorID);
+            ViewBag.InstructorID = SlFactory.MakeSelectList<Instructor>("InstructorID", "FullName", rollcall.InstructorID);
             ViewBag.MajorID = SlFactory.MakeSelectList<Major>("MajorID", "FullName", MajorID);
             ViewBag.ClassID = new SelectList(ClaBO.GetClassByMajor(MajorID),
                 "ClassID", "ClassName", rollcall.ClassID);
@@ -253,6 +253,26 @@ namespace RollSystemMobile.Controllers
             var option = StuBO.GetStudentsNotInRollCall(RollCallID).
                Select(d => new { id = d.StudentID, name = d.FullName, code = d.StudentCode });
             return Json(option, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ChangeSchedule(int id)
+        {
+            RollCall rollCall = RollBO.GetRollCallByID(id);
+            ViewBag.RollCallID = id;
+            return View("RollCallSchedule", rollCall);
+        }
+
+        public ActionResult GetStudySession(int id)
+        {
+            RollCall rollCall = RollBO.GetRollCallByID(id);
+            var TimeAndName = rollCall.StudySessions.Select(s => new { 
+            id = s.SessionID,
+            title = s.StartTime.ToString(@"hh\:mm") + " - " + s.EndTime.ToString(@"hh\:mm") + "\n" 
+                    + "Ins:" + s.Instructor.Fullname,
+            start = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.StartTime.ToString(@"hh\:mm"),
+            end = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.EndTime.ToString(@"hh\:mm")
+            });
+            return Json(TimeAndName.ToList(), JsonRequestBehavior.AllowGet);
         }
     }
 }

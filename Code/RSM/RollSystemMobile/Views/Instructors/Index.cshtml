@@ -21,6 +21,9 @@
         </th>
         <th>
         </th>
+        <th>
+        Schedule
+        </th>
     </tr>
     @{ int index = 1;}
     @foreach (var item in Model)
@@ -38,6 +41,10 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.InstructorID }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.InstructorID })
+            </td>
+            <td>
+
+            @Html.ActionLink("Teaching Schedule", "Schedule", new { id = item.InstructorID })
             </td>
         </tr>
            { index++; }

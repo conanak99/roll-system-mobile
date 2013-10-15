@@ -122,6 +122,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ClassController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
     <Compile Include="Controllers\InstructorController.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Controllers\RollCallController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\StudySessionController.cs" />
     <Compile Include="Controllers\SubjectController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -140,15 +142,16 @@
     <Compile Include="Models\BindingModels\InstructorBindingModel.cs" />
     <Compile Include="Models\BusinessObject\ClassBusiness.cs" />
     <Compile Include="Models\BusinessObject\AccountBusiness.cs" />
+    <Compile Include="Models\BusinessObject\StudySessionBusiness.cs" />
     <Compile Include="Models\BusinessObject\SelectListFactory.cs" />
     <Compile Include="Models\BusinessObject\SubjectBusiness.cs" />
-    <Compile Include="Models\BusinessObject\InstructorTeachingBusiness.cs" />
     <Compile Include="Models\BusinessObject\StudentImageBusiness.cs" />
     <Compile Include="Models\BusinessObject\InstructorBusiness.cs" />
     <Compile Include="Models\BusinessObject\StudentBusiness.cs" />
     <Compile Include="Models\BusinessObject\GenericBusiness.cs" />
     <Compile Include="Models\BusinessObject\RollCallBusiness.cs" />
-    <Compile Include="Models\BusinessObject\FaceBO.cs" />
+    <Compile Include="Models\BusinessObject\FaceBusiness.cs" />
+    <Compile Include="Models\HelperClass\OtherHelper.cs" />
     <Compile Include="Models\HelperClass\MyHtmlHelper.cs" />
     <Compile Include="Models\HelperClass\ExcelReader.cs" />
     <Compile Include="Models\HelperClass\ExcelWriter.cs" />
@@ -164,6 +167,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\custom.css" />
+    <Content Include="Content\Plug-in\FullCalendar\fullcalendar.css" />
+    <Content Include="Content\Plug-in\FullCalendar\fullcalendar.print.css" />
     <Content Include="Content\Plug-in\DataTable\dataTables.bootstrap.js" />
     <Content Include="Content\Plug-in\DataTable\DT_bootstrap.css" />
     <Content Include="Content\Plug-in\DataTable\images\back_disabled.png" />
@@ -278,7 +283,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-filestyle.js" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Content\Plug-in\FullCalendar\js\fullcalendar.js" />
+    <Content Include="Content\Plug-in\FullCalendar\js\fullcalendar.min.js" />
+    <Content Include="Content\Plug-in\FullCalendar\js\gcal.js" />
     <Content Include="Scripts\resize-face-region.js" />
     <Content Include="Scripts\jquery-2.0.3-vsdoc.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
@@ -370,6 +379,14 @@
     <Content Include="Views\Subject\Details.cshtml" />
     <Content Include="Views\Subject\Edit.cshtml" />
     <Content Include="Views\Subject\Index.cshtml" />
+    <Content Include="Views\Class\Create.cshtml" />
+    <Content Include="Views\Class\Delete.cshtml" />
+    <Content Include="Views\Class\Details.cshtml" />
+    <Content Include="Views\Class\Edit.cshtml" />
+    <Content Include="Views\Class\Index.cshtml" />
+    <Content Include="Views\RollCall\RollCallSchedule.cshtml" />
+    <Content Include="Views\StudySession\_SessionDetail.cshtml" />
+    <Content Include="Views\Instructors\Schedule.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

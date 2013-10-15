@@ -1,0 +1,137 @@
+﻿@model RollSystemMobile.Models.RollCall
+@{
+    ViewBag.Title = "Change Schedule";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+@section ExtraHead {
+    <style>
+        #calendar
+        {
+            width: 650px;
+            margin: 0 auto;
+            font-size: 85%;
+        }
+        
+        .fc-event-inner
+        {
+            line-height: normal;
+            text-align: center;
+        }
+        
+        .datepicker{z-index:1151;}
+    </style>
+    <link href="@Url.Content("~/Content/Plug-in/FullCalendar/fullcalendar.css")" rel="stylesheet"
+        type="text/css" />
+    <script src="@Url.Content("~/Content/Plug-in/FullCalendar/js/fullcalendar.js")" 
+    type="text/javascript"></script>
+}
+<h4>
+    Roll Call @Model.RollCallID Schedule</h4>
+<dl class="dl-horizontal">
+    <dt>Roll Call</dt>
+    <dd>@Model.RollCallID</dd>
+    <dt>Subject</dt>
+    <dd>@Model.Subject.FullName</dd>
+    <dt>Class</dt>
+    <dd>@Model.Class.ClassName</dd>
+    <dt>Date</dt>
+    <dd>
+        From @Html.FormatDate(@Model.BeginDate) to @Html.FormatDate(@Model.EndDate)</dd>
+    <dt>Time</dt>
+    <dd>@Html.FormatTime(@Model.StartTime) - @Html.FormatTime(@Model.EndTime)</dd>
+</dl>
+<div id='calendar'>
+</div>
+<script>
+    $(document).ready(function () {
+
+        $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            editable: false,
+            events: '@Url.Action("GetStudySession", new { id = Model.RollCallID })',
+            eventClick: function (calEvent, jsEvent, view) {
+                if (isPastDay(calEvent.start)) {
+                    //Ko bao gi tuc ko click dc
+                }
+                else {
+                    $.ajax({
+                        type: "GET",
+                        url: '@Url.Action("SessionDetail","StudySession")' + "/" + calEvent.id,
+                        success: function (data) {
+                            $('#modal-body').html(data);
+                            $('#myModal').modal('show');
+                        }
+                    });
+                }
+            },
+            eventRender: function (event, element) {
+                if (isPastDay(event.start)) {
+                    //Chuyen qua mau xam
+                    element.css('background-color', 'gray');
+                    element.css('border', '1px solid gray');
+                }
+                else {
+                    element.css('cursor', 'pointer');
+                }
+            }
+        });
+
+    });
+
+    function isPastDay(day) {
+        var check = $.fullCalendar.formatDate(day, 'yyyy-MM-dd');
+        var today = $.fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');
+        if (check <= today) return true;
+        else return false;
+    }
+</script>
+
+@using(Html.BeginForm("Edit","StudySession", FormMethod.Post, new {@class="AjaxForm"})){
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h3 id="myModalLabel"> Change Schedule
+           </h3>
+    </div>
+    <div class="modal-body" id='modal-body'>
+       
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" id="btnSave">
+            Save</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+    </div>
+
+</div>
+}
+
+<script>
+    $('.AjaxForm').submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var url = $(this).attr("action");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            success: function (data) {
+                if (data.message == "Success") {
+                    $('#myModal').modal('hide');
+                    $('#calendar').fullCalendar("refetchEvents");
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+    });
+
+
+</script>

@@ -33,7 +33,49 @@ namespace RollSystemMobile.Models.HelperClass
             return htmlHelper.ActionLink(linkText, actionName, controllerName);
         }
 
+        public static List<SelectListItem> TimeSelectList(this HtmlHelper htmlHelper, TimeSpan time)
+        {
+            List<SelectListItem> TimeList = new List<SelectListItem> 
+       { 
+           new SelectListItem { Text = "07:00", Value = "07:00" }, 
+           new SelectListItem { Text = "08:45", Value = "08:45" },
+           new SelectListItem { Text = "10:30", Value = "10:30" }, 
+           new SelectListItem { Text = "12:30", Value = "12:30" }, 
+           new SelectListItem { Text = "14:15", Value = "14:15" }, 
+           new SelectListItem { Text = "16:00", Value = "16:00" },
+           new SelectListItem { Text = "18:45", Value = "18:45" },
+           new SelectListItem { Text = "19:00", Value = "19:00" } 
+       };
+            foreach (var item in TimeList)
+            {
+                if (item.Value.Equals(time.ToString(@"hh\:mm")))
+                {
+                    item.Selected = true;
+                }
+            }
+            return TimeList;
+        }
+
+        public static List<SelectListItem> TimeSelectList(this HtmlHelper htmlHelper)
+        {
+            List<SelectListItem> TimeList = new List<SelectListItem> 
+       { 
+           new SelectListItem { Text = "7:00", Value = "7:00" }, 
+           new SelectListItem { Text = "8:45", Value = "8:45" },
+           new SelectListItem { Text = "10:30", Value = "10:30" }, 
+           new SelectListItem { Text = "12:30", Value = "12:30" }, 
+           new SelectListItem { Text = "14:15", Value = "14:15" }, 
+           new SelectListItem { Text = "16:00", Value = "16:00" },
+           new SelectListItem { Text = "18:45", Value = "18:45" },
+           new SelectListItem { Text = "19:00", Value = "19:00" } 
+       };
+
+            return TimeList;
+        }
+
     }
+
+
 
     public static class MyUrlHelper
     {

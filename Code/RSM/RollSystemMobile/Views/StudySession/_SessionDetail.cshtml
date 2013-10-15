@@ -1,0 +1,36 @@
+﻿@model RollSystemMobile.Models.StudySession
+@{
+    Layout = null;
+}
+<fieldset style="margin: 0 0 -20px -20px">
+    <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.SessionID)
+        <dt>Instructor</dt>
+        <dd>@Html.DropDownList("InstructorID")</dd>
+        <dt>Date</dt>
+        <dd>
+            <div class="input-append date" data-date="@Model.SessionDate.ToString("dd-MM-yyyy")" id="begindate" data-date-format="dd-mm-yyyy">
+                <input class="span2" name="_SessionDate" style="width: 100px" size="16" type="text"
+                    value="@Model.SessionDate.ToString("dd-MM-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </dd>
+        <dt>StartTime</dt>
+        <dd>@Html.DropDownList("_StartTime", Html.TimeSelectList(Model.StartTime), new { style = "width:80px;" })</dd>
+        <dt>Class</dt>
+        <dd>@Model.RollCall.Class.ClassName</dd>
+    </dl>
+</fieldset>
+<script>
+    var now = new Date();
+    var endDate = new Date('@Model.RollCall.EndDate.ToLongDateString()');
+    //Nam trong hom nay toi end date, tru chu nhat
+    $("#begindate").datepicker({
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ||
+    date.valueOf() > endDate.valueOf()
+    || date.getDay() == 0
+    ? 'disabled' : '';
+        }
+
+    });
+</script>

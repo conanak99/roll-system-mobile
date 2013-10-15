@@ -8,6 +8,11 @@
         {
             background-color: White;
         }
+        
+        input[disabled]
+        {
+            margin-top:10px;
+        }
     </style>
 }
 <h4>@Model.FullName Image Data
@@ -54,12 +59,20 @@ else
     
         <h5>
             Add more Image Data:</h5>
-        <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
-        <button class="btn" id="btnUpload">
+        <input type="file" id="files" name="ImageFiles" 
+        class="filestyle" accept="image/*" multiple />
+        <button class="btn btn-primary" id="btnUpload">
             Upload</button>
         <br />
         <output id="list"></output>
     }
+
+ 
+<script type="text/javascript">
+    $('input[id=lefile]').change(function () {
+        $('#photoCover').val($(this).val());
+    });
+</script>
 </div>
 <script>
 
@@ -131,5 +144,5 @@ else
         }
     }
 
-
+    $(":file").filestyle({ buttonText: "Select student's images" });
 </script>
