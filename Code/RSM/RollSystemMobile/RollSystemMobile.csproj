@@ -435,6 +435,7 @@
     <Content Include="Views\RollCall\RollCallSchedule.cshtml" />
     <Content Include="Views\StudySession\_SessionDetail.cshtml" />
     <Content Include="Views\Instructors\Schedule.cshtml" />
+    <Content Include="Views\StudySession\_NewSession.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

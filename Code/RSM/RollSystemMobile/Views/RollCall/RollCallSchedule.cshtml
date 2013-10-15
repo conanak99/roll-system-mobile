@@ -53,7 +53,9 @@
 <div class="fc-event fc-event-hori fc-event-start fc-event-end" style="width: 35px;height: 20px; display:inline-block">
 
 </div> Present and future study session, click to change instructor or date, time.
-
+<h4>More Action</h4>
+<a href="@Url.Action("AddSession","StudySession", new {RollCallID = Model.RollCallID })" id="new-ses" class="btn btn-success">Add Session</a>
+<button id="change-ins" class="btn btn-info">Change Instructor</button>
 </div>
 
 <div id='calendar'>
@@ -112,6 +114,20 @@
         if (check <= today) return true;
         else return false;
     }
+
+
+    $('#new-ses').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: $(this).attr('href'),
+            success: function (data) {
+                $('#new-ses-modal-body').html(data);
+                $('#newSessionModal').modal('show');
+            }
+        });
+    });
+    
 </script>
 
 
@@ -122,8 +138,8 @@
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
-        <h3 id="myModalLabel"> Change Schedule
-           </h3>
+        <h4 id="myModalLabel"> Change Schedule
+           </h4>
     </div>
     <div class="modal-body" id='modal-body'>
        
@@ -137,6 +153,30 @@
 
 </div>
 }
+
+@using(Html.BeginForm("AddSession","StudySession", FormMethod.Post, new {@class="AjaxForm_2"})){
+<div id="newSessionModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            ×</button>
+        <h4 id=""> Add Study Session for Roll Call @Model.RollCallID
+           </h4>
+    </div>
+    <div class="modal-body" id='new-ses-modal-body'>
+       
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-info" id="btnSave">
+            Add</button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">
+            Close</button>
+    </div>
+
+</div>
+}
+
+
 
 <script>
     $('.AjaxForm').submit(function (e) {
@@ -159,5 +199,23 @@
         });
     });
 
+    $('.AjaxForm_2').submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var url = $(this).attr("action");
 
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            success: function (data) {
+                if (data.message == "Success") {
+                    $('#newSessionModal').modal('hide');
+                    $('#calendar').fullCalendar("refetchEvents");
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+    });
 </script>

@@ -32,6 +32,12 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.GetList().Where(i => i.IsActive).ToList();
         }
 
+        public List<Instructor> GetInstructorOfRollCall(int RollCallID)
+        {
+            RollCallBusiness RollBO = new RollCallBusiness();
+            var rollCall = RollBO.GetRollCallByID(RollCallID);
+            return rollCall.Subject.SubjectType.Instructors.ToList();
+        }
 
         public Instructor GetInstructorByID(int ID)
         {
