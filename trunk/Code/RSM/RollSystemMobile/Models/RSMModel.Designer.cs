@@ -28,15 +28,19 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RSMModel", "Student_StudentImage_FK1", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Student), "StudentImage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentImage), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "User_Student_FK1", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.User), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "SubjectMajorMapping", "Major", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Major), "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Subject))]
-[assembly: EdmRelationshipAttribute("RSMModel", "RollCall_AttendanceLog_FK1", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.RollCall), "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.AttendanceLog), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Class", "Class", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Class), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Semester", "Semester", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Semester), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Subject", "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Subject), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "StudentInRollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student))]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_InstructorTeaching_Instructor", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Instructor), "InstructorTeaching", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.InstructorTeaching), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_InstructorTeaching_RollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.RollCall), "InstructorTeaching", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.InstructorTeaching), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "AttendanceLog_StudentAttendance_FK1", "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.AttendanceLog), "StudentAttendance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentAttendance), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "Student_StudentAttendance_FK1", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Student), "StudentAttendance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentAttendance), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_StudySession_Class", "Class", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Class), "StudySession", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudySession), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_StudySession_Instructor", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Instructor), "StudySession", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudySession), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_Instructor_SubjectType", "SubjectType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.SubjectType), "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Instructor), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_Subject_SubjectType", "SubjectType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.SubjectType), "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Subject), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "RollCall_AttendanceLog_FK1", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.RollCall), "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.AttendanceLog), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Class", "Class", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Class), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Instructor", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Instructor), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Semester", "Semester", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Semester), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Subject", "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Subject), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_StudySession_RollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.RollCall), "StudySession", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudySession), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "StudentInRollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student))]
 
 #endregion
 
@@ -315,38 +319,6 @@ namespace RollSystemMobile.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<RollCall> RollCalls
-        {
-            get
-            {
-                if ((_RollCalls == null))
-                {
-                    _RollCalls = base.CreateObjectSet<RollCall>("RollCalls");
-                }
-                return _RollCalls;
-            }
-        }
-        private ObjectSet<RollCall> _RollCalls;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        public ObjectSet<InstructorTeaching> InstructorTeachings
-        {
-            get
-            {
-                if ((_InstructorTeachings == null))
-                {
-                    _InstructorTeachings = base.CreateObjectSet<InstructorTeaching>("InstructorTeachings");
-                }
-                return _InstructorTeachings;
-            }
-        }
-        private ObjectSet<InstructorTeaching> _InstructorTeachings;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<StudentAttendance> StudentAttendances
         {
             get
@@ -359,6 +331,54 @@ namespace RollSystemMobile.Models
             }
         }
         private ObjectSet<StudentAttendance> _StudentAttendances;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<StudySession> StudySessions
+        {
+            get
+            {
+                if ((_StudySessions == null))
+                {
+                    _StudySessions = base.CreateObjectSet<StudySession>("StudySessions");
+                }
+                return _StudySessions;
+            }
+        }
+        private ObjectSet<StudySession> _StudySessions;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SubjectType> SubjectTypes
+        {
+            get
+            {
+                if ((_SubjectTypes == null))
+                {
+                    _SubjectTypes = base.CreateObjectSet<SubjectType>("SubjectTypes");
+                }
+                return _SubjectTypes;
+            }
+        }
+        private ObjectSet<SubjectType> _SubjectTypes;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<RollCall> RollCalls
+        {
+            get
+            {
+                if ((_RollCalls == null))
+                {
+                    _RollCalls = base.CreateObjectSet<RollCall>("RollCalls");
+                }
+                return _RollCalls;
+            }
+        }
+        private ObjectSet<RollCall> _RollCalls;
 
         #endregion
         #region AddTo Methods
@@ -476,27 +496,35 @@ namespace RollSystemMobile.Models
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the RollCalls EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToRollCalls(RollCall rollCall)
-        {
-            base.AddObject("RollCalls", rollCall);
-        }
-    
-        /// <summary>
-        /// Deprecated Method for adding a new object to the InstructorTeachings EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToInstructorTeachings(InstructorTeaching instructorTeaching)
-        {
-            base.AddObject("InstructorTeachings", instructorTeaching);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the StudentAttendances EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToStudentAttendances(StudentAttendance studentAttendance)
         {
             base.AddObject("StudentAttendances", studentAttendance);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the StudySessions EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToStudySessions(StudySession studySession)
+        {
+            base.AddObject("StudySessions", studySession);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SubjectTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSubjectTypes(SubjectType subjectType)
+        {
+            base.AddObject("SubjectTypes", subjectType);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the RollCalls EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToRollCalls(RollCall rollCall)
+        {
+            base.AddObject("RollCalls", rollCall);
         }
 
         #endregion
@@ -706,6 +734,28 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "AttendanceLog_StudentAttendance_FK1", "StudentAttendance")]
+        public EntityCollection<StudentAttendance> StudentAttendances
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudentAttendance>("RSMModel.AttendanceLog_StudentAttendance_FK1", "StudentAttendance");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudentAttendance>("RSMModel.AttendanceLog_StudentAttendance_FK1", "StudentAttendance", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("RSMModel", "RollCall_AttendanceLog_FK1", "RollCall")]
         public RollCall RollCall
         {
@@ -734,28 +784,6 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RollCall>("RSMModel.RollCall_AttendanceLog_FK1", "RollCall", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "AttendanceLog_StudentAttendance_FK1", "StudentAttendance")]
-        public EntityCollection<StudentAttendance> StudentAttendances
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudentAttendance>("RSMModel.AttendanceLog_StudentAttendance_FK1", "StudentAttendance");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudentAttendance>("RSMModel.AttendanceLog_StudentAttendance_FK1", "StudentAttendance", value);
                 }
             }
         }
@@ -962,6 +990,28 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_StudySession_Class", "StudySession")]
+        public EntityCollection<StudySession> StudySessions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudySession>("RSMModel.FK_StudySession_Class", "StudySession");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudySession>("RSMModel.FK_StudySession_Class", "StudySession", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_RollCall_Class", "RollCall")]
         public EntityCollection<RollCall> RollCalls
         {
@@ -997,12 +1047,14 @@ namespace RollSystemMobile.Models
         /// <param name="instructorID">Initial value of the InstructorID property.</param>
         /// <param name="fullname">Initial value of the Fullname property.</param>
         /// <param name="isActive">Initial value of the IsActive property.</param>
-        public static Instructor CreateInstructor(global::System.Int32 instructorID, global::System.String fullname, global::System.Boolean isActive)
+        /// <param name="subjectTypeID">Initial value of the SubjectTypeID property.</param>
+        public static Instructor CreateInstructor(global::System.Int32 instructorID, global::System.String fullname, global::System.Boolean isActive, global::System.Int32 subjectTypeID)
         {
             Instructor instructor = new Instructor();
             instructor.InstructorID = instructorID;
             instructor.Fullname = fullname;
             instructor.IsActive = isActive;
+            instructor.SubjectTypeID = subjectTypeID;
             return instructor;
         }
 
@@ -1155,6 +1207,30 @@ namespace RollSystemMobile.Models
         private Nullable<global::System.Int32> _UserID;
         partial void OnUserIDChanging(Nullable<global::System.Int32> value);
         partial void OnUserIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SubjectTypeID
+        {
+            get
+            {
+                return _SubjectTypeID;
+            }
+            set
+            {
+                OnSubjectTypeIDChanging(value);
+                ReportPropertyChanging("SubjectTypeID");
+                _SubjectTypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SubjectTypeID");
+                OnSubjectTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _SubjectTypeID;
+        partial void OnSubjectTypeIDChanging(global::System.Int32 value);
+        partial void OnSubjectTypeIDChanged();
 
         #endregion
     
@@ -1204,218 +1280,18 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_InstructorTeaching_Instructor", "InstructorTeaching")]
-        public EntityCollection<InstructorTeaching> InstructorTeachings
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_StudySession_Instructor", "StudySession")]
+        public EntityCollection<StudySession> StudySessions
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InstructorTeaching>("RSMModel.FK_InstructorTeaching_Instructor", "InstructorTeaching");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudySession>("RSMModel.FK_StudySession_Instructor", "StudySession");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InstructorTeaching>("RSMModel.FK_InstructorTeaching_Instructor", "InstructorTeaching", value);
-                }
-            }
-        }
-
-        #endregion
-    }
-    
-    /// <summary>
-    /// No Metadata Documentation available.
-    /// </summary>
-    [EdmEntityTypeAttribute(NamespaceName="RSMModel", Name="InstructorTeaching")]
-    [Serializable()]
-    [DataContractAttribute(IsReference=true)]
-    public partial class InstructorTeaching : EntityObject
-    {
-        #region Factory Method
-    
-        /// <summary>
-        /// Create a new InstructorTeaching object.
-        /// </summary>
-        /// <param name="id">Initial value of the ID property.</param>
-        /// <param name="instructorID">Initial value of the InstructorID property.</param>
-        /// <param name="rollCallID">Initial value of the RollCallID property.</param>
-        /// <param name="beginDate">Initial value of the BeginDate property.</param>
-        /// <param name="endDate">Initial value of the EndDate property.</param>
-        public static InstructorTeaching CreateInstructorTeaching(global::System.Int32 id, global::System.Int32 instructorID, global::System.Int32 rollCallID, global::System.DateTime beginDate, global::System.DateTime endDate)
-        {
-            InstructorTeaching instructorTeaching = new InstructorTeaching();
-            instructorTeaching.ID = id;
-            instructorTeaching.InstructorID = instructorID;
-            instructorTeaching.RollCallID = rollCallID;
-            instructorTeaching.BeginDate = beginDate;
-            instructorTeaching.EndDate = endDate;
-            return instructorTeaching;
-        }
-
-        #endregion
-        #region Primitive Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 ID
-        {
-            get
-            {
-                return _ID;
-            }
-            set
-            {
-                if (_ID != value)
-                {
-                    OnIDChanging(value);
-                    ReportPropertyChanging("ID");
-                    _ID = StructuralObject.SetValidValue(value);
-                    ReportPropertyChanged("ID");
-                    OnIDChanged();
-                }
-            }
-        }
-        private global::System.Int32 _ID;
-        partial void OnIDChanging(global::System.Int32 value);
-        partial void OnIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 InstructorID
-        {
-            get
-            {
-                return _InstructorID;
-            }
-            set
-            {
-                OnInstructorIDChanging(value);
-                ReportPropertyChanging("InstructorID");
-                _InstructorID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("InstructorID");
-                OnInstructorIDChanged();
-            }
-        }
-        private global::System.Int32 _InstructorID;
-        partial void OnInstructorIDChanging(global::System.Int32 value);
-        partial void OnInstructorIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 RollCallID
-        {
-            get
-            {
-                return _RollCallID;
-            }
-            set
-            {
-                OnRollCallIDChanging(value);
-                ReportPropertyChanging("RollCallID");
-                _RollCallID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("RollCallID");
-                OnRollCallIDChanged();
-            }
-        }
-        private global::System.Int32 _RollCallID;
-        partial void OnRollCallIDChanging(global::System.Int32 value);
-        partial void OnRollCallIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime BeginDate
-        {
-            get
-            {
-                return _BeginDate;
-            }
-            set
-            {
-                OnBeginDateChanging(value);
-                ReportPropertyChanging("BeginDate");
-                _BeginDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("BeginDate");
-                OnBeginDateChanged();
-            }
-        }
-        private global::System.DateTime _BeginDate;
-        partial void OnBeginDateChanging(global::System.DateTime value);
-        partial void OnBeginDateChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.DateTime EndDate
-        {
-            get
-            {
-                return _EndDate;
-            }
-            set
-            {
-                OnEndDateChanging(value);
-                ReportPropertyChanging("EndDate");
-                _EndDate = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("EndDate");
-                OnEndDateChanged();
-            }
-        }
-        private global::System.DateTime _EndDate;
-        partial void OnEndDateChanging(global::System.DateTime value);
-        partial void OnEndDateChanged();
-
-        #endregion
-    
-        #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_InstructorTeaching_Instructor", "Instructor")]
-        public Instructor Instructor
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_InstructorTeaching_Instructor", "Instructor").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_InstructorTeaching_Instructor", "Instructor").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<Instructor> InstructorReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_InstructorTeaching_Instructor", "Instructor");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Instructor>("RSMModel.FK_InstructorTeaching_Instructor", "Instructor", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudySession>("RSMModel.FK_StudySession_Instructor", "StudySession", value);
                 }
             }
         }
@@ -1426,16 +1302,16 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_InstructorTeaching_RollCall", "RollCall")]
-        public RollCall RollCall
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Instructor_SubjectType", "SubjectType")]
+        public SubjectType SubjectType
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RollCall>("RSMModel.FK_InstructorTeaching_RollCall", "RollCall").Value;
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Instructor_SubjectType", "SubjectType").Value;
             }
             set
             {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RollCall>("RSMModel.FK_InstructorTeaching_RollCall", "RollCall").Value = value;
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Instructor_SubjectType", "SubjectType").Value = value;
             }
         }
         /// <summary>
@@ -1443,17 +1319,39 @@ namespace RollSystemMobile.Models
         /// </summary>
         [BrowsableAttribute(false)]
         [DataMemberAttribute()]
-        public EntityReference<RollCall> RollCallReference
+        public EntityReference<SubjectType> SubjectTypeReference
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RollCall>("RSMModel.FK_InstructorTeaching_RollCall", "RollCall");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Instructor_SubjectType", "SubjectType");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RollCall>("RSMModel.FK_InstructorTeaching_RollCall", "RollCall", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SubjectType>("RSMModel.FK_Instructor_SubjectType", "SubjectType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_RollCall_Instructor", "RollCall")]
+        public EntityCollection<RollCall> RollCalls
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RollCall>("RSMModel.FK_RollCall_Instructor", "RollCall");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RollCall>("RSMModel.FK_RollCall_Instructor", "RollCall", value);
                 }
             }
         }
@@ -1993,7 +1891,8 @@ namespace RollSystemMobile.Models
         /// <param name="classID">Initial value of the ClassID property.</param>
         /// <param name="semesterID">Initial value of the SemesterID property.</param>
         /// <param name="status">Initial value of the Status property.</param>
-        public static RollCall CreateRollCall(global::System.Int32 rollCallID, global::System.TimeSpan startTime, global::System.TimeSpan endTime, global::System.DateTime beginDate, global::System.DateTime endDate, global::System.Int32 subjectID, global::System.Int32 classID, global::System.Int32 semesterID, global::System.Int32 status)
+        /// <param name="instructorID">Initial value of the InstructorID property.</param>
+        public static RollCall CreateRollCall(global::System.Int32 rollCallID, global::System.TimeSpan startTime, global::System.TimeSpan endTime, global::System.DateTime beginDate, global::System.DateTime endDate, global::System.Int32 subjectID, global::System.Int32 classID, global::System.Int32 semesterID, global::System.Int32 status, global::System.Int32 instructorID)
         {
             RollCall rollCall = new RollCall();
             rollCall.RollCallID = rollCallID;
@@ -2005,6 +1904,7 @@ namespace RollSystemMobile.Models
             rollCall.ClassID = classID;
             rollCall.SemesterID = semesterID;
             rollCall.Status = status;
+            rollCall.InstructorID = instructorID;
             return rollCall;
         }
 
@@ -2229,6 +2129,30 @@ namespace RollSystemMobile.Models
         private global::System.Int32 _Status;
         partial void OnStatusChanging(global::System.Int32 value);
         partial void OnStatusChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 InstructorID
+        {
+            get
+            {
+                return _InstructorID;
+            }
+            set
+            {
+                OnInstructorIDChanging(value);
+                ReportPropertyChanging("InstructorID");
+                _InstructorID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InstructorID");
+                OnInstructorIDChanged();
+            }
+        }
+        private global::System.Int32 _InstructorID;
+        partial void OnInstructorIDChanging(global::System.Int32 value);
+        partial void OnInstructorIDChanged();
 
         #endregion
     
@@ -2290,6 +2214,44 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Class>("RSMModel.FK_RollCall_Class", "Class", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_RollCall_Instructor", "Instructor")]
+        public Instructor Instructor
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_RollCall_Instructor", "Instructor").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_RollCall_Instructor", "Instructor").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Instructor> InstructorReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_RollCall_Instructor", "Instructor");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Instructor>("RSMModel.FK_RollCall_Instructor", "Instructor", value);
                 }
             }
         }
@@ -2376,6 +2338,28 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_StudySession_RollCall", "StudySession")]
+        public EntityCollection<StudySession> StudySessions
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<StudySession>("RSMModel.FK_StudySession_RollCall", "StudySession");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudySession>("RSMModel.FK_StudySession_RollCall", "StudySession", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("RSMModel", "StudentInRollCall", "Student")]
         public EntityCollection<Student> Students
         {
@@ -2388,28 +2372,6 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Student>("RSMModel.StudentInRollCall", "Student", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_InstructorTeaching_RollCall", "InstructorTeaching")]
-        public EntityCollection<InstructorTeaching> InstructorTeachings
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<InstructorTeaching>("RSMModel.FK_InstructorTeaching_RollCall", "InstructorTeaching");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<InstructorTeaching>("RSMModel.FK_InstructorTeaching_RollCall", "InstructorTeaching", value);
                 }
             }
         }
@@ -3182,28 +3144,6 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "StudentInRollCall", "RollCall")]
-        public EntityCollection<RollCall> RollCalls
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RollCall>("RSMModel.StudentInRollCall", "RollCall");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RollCall>("RSMModel.StudentInRollCall", "RollCall", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("RSMModel", "Student_StudentAttendance_FK1", "StudentAttendance")]
         public EntityCollection<StudentAttendance> StudentAttendances
         {
@@ -3216,6 +3156,28 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<StudentAttendance>("RSMModel.Student_StudentAttendance_FK1", "StudentAttendance", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "StudentInRollCall", "RollCall")]
+        public EntityCollection<RollCall> RollCalls
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RollCall>("RSMModel.StudentInRollCall", "RollCall");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RollCall>("RSMModel.StudentInRollCall", "RollCall", value);
                 }
             }
         }
@@ -3587,6 +3549,334 @@ namespace RollSystemMobile.Models
     /// <summary>
     /// No Metadata Documentation available.
     /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RSMModel", Name="StudySession")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class StudySession : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new StudySession object.
+        /// </summary>
+        /// <param name="sessionID">Initial value of the SessionID property.</param>
+        /// <param name="rollCallID">Initial value of the RollCallID property.</param>
+        /// <param name="instructorID">Initial value of the InstructorID property.</param>
+        /// <param name="sessionDate">Initial value of the SessionDate property.</param>
+        /// <param name="startTime">Initial value of the StartTime property.</param>
+        /// <param name="endTime">Initial value of the EndTime property.</param>
+        /// <param name="classID">Initial value of the ClassID property.</param>
+        public static StudySession CreateStudySession(global::System.Int32 sessionID, global::System.Int32 rollCallID, global::System.Int32 instructorID, global::System.DateTime sessionDate, global::System.TimeSpan startTime, global::System.TimeSpan endTime, global::System.Int32 classID)
+        {
+            StudySession studySession = new StudySession();
+            studySession.SessionID = sessionID;
+            studySession.RollCallID = rollCallID;
+            studySession.InstructorID = instructorID;
+            studySession.SessionDate = sessionDate;
+            studySession.StartTime = startTime;
+            studySession.EndTime = endTime;
+            studySession.ClassID = classID;
+            return studySession;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 SessionID
+        {
+            get
+            {
+                return _SessionID;
+            }
+            set
+            {
+                if (_SessionID != value)
+                {
+                    OnSessionIDChanging(value);
+                    ReportPropertyChanging("SessionID");
+                    _SessionID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("SessionID");
+                    OnSessionIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _SessionID;
+        partial void OnSessionIDChanging(global::System.Int32 value);
+        partial void OnSessionIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 RollCallID
+        {
+            get
+            {
+                return _RollCallID;
+            }
+            set
+            {
+                OnRollCallIDChanging(value);
+                ReportPropertyChanging("RollCallID");
+                _RollCallID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RollCallID");
+                OnRollCallIDChanged();
+            }
+        }
+        private global::System.Int32 _RollCallID;
+        partial void OnRollCallIDChanging(global::System.Int32 value);
+        partial void OnRollCallIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 InstructorID
+        {
+            get
+            {
+                return _InstructorID;
+            }
+            set
+            {
+                OnInstructorIDChanging(value);
+                ReportPropertyChanging("InstructorID");
+                _InstructorID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("InstructorID");
+                OnInstructorIDChanged();
+            }
+        }
+        private global::System.Int32 _InstructorID;
+        partial void OnInstructorIDChanging(global::System.Int32 value);
+        partial void OnInstructorIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime SessionDate
+        {
+            get
+            {
+                return _SessionDate;
+            }
+            set
+            {
+                OnSessionDateChanging(value);
+                ReportPropertyChanging("SessionDate");
+                _SessionDate = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SessionDate");
+                OnSessionDateChanged();
+            }
+        }
+        private global::System.DateTime _SessionDate;
+        partial void OnSessionDateChanging(global::System.DateTime value);
+        partial void OnSessionDateChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.TimeSpan StartTime
+        {
+            get
+            {
+                return _StartTime;
+            }
+            set
+            {
+                OnStartTimeChanging(value);
+                ReportPropertyChanging("StartTime");
+                _StartTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("StartTime");
+                OnStartTimeChanged();
+            }
+        }
+        private global::System.TimeSpan _StartTime;
+        partial void OnStartTimeChanging(global::System.TimeSpan value);
+        partial void OnStartTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.TimeSpan EndTime
+        {
+            get
+            {
+                return _EndTime;
+            }
+            set
+            {
+                OnEndTimeChanging(value);
+                ReportPropertyChanging("EndTime");
+                _EndTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("EndTime");
+                OnEndTimeChanged();
+            }
+        }
+        private global::System.TimeSpan _EndTime;
+        partial void OnEndTimeChanging(global::System.TimeSpan value);
+        partial void OnEndTimeChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ClassID
+        {
+            get
+            {
+                return _ClassID;
+            }
+            set
+            {
+                OnClassIDChanging(value);
+                ReportPropertyChanging("ClassID");
+                _ClassID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("ClassID");
+                OnClassIDChanged();
+            }
+        }
+        private global::System.Int32 _ClassID;
+        partial void OnClassIDChanging(global::System.Int32 value);
+        partial void OnClassIDChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_StudySession_Class", "Class")]
+        public Class Class
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Class>("RSMModel.FK_StudySession_Class", "Class").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Class>("RSMModel.FK_StudySession_Class", "Class").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Class> ClassReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Class>("RSMModel.FK_StudySession_Class", "Class");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Class>("RSMModel.FK_StudySession_Class", "Class", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_StudySession_Instructor", "Instructor")]
+        public Instructor Instructor
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_StudySession_Instructor", "Instructor").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_StudySession_Instructor", "Instructor").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Instructor> InstructorReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Instructor>("RSMModel.FK_StudySession_Instructor", "Instructor");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Instructor>("RSMModel.FK_StudySession_Instructor", "Instructor", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_StudySession_RollCall", "RollCall")]
+        public RollCall RollCall
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RollCall>("RSMModel.FK_StudySession_RollCall", "RollCall").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RollCall>("RSMModel.FK_StudySession_RollCall", "RollCall").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<RollCall> RollCallReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<RollCall>("RSMModel.FK_StudySession_RollCall", "RollCall");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<RollCall>("RSMModel.FK_StudySession_RollCall", "RollCall", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
     [EdmEntityTypeAttribute(NamespaceName="RSMModel", Name="Subject")]
     [Serializable()]
     [DataContractAttribute(IsReference=true)]
@@ -3603,7 +3893,8 @@ namespace RollSystemMobile.Models
         /// <param name="isActive">Initial value of the IsActive property.</param>
         /// <param name="numberOfSession">Initial value of the NumberOfSession property.</param>
         /// <param name="isSlotFixed">Initial value of the IsSlotFixed property.</param>
-        public static Subject CreateSubject(global::System.Int32 subjectID, global::System.String fullName, global::System.Int32 numberOfSlot, global::System.Boolean isActive, global::System.Int32 numberOfSession, global::System.Boolean isSlotFixed)
+        /// <param name="typeID">Initial value of the TypeID property.</param>
+        public static Subject CreateSubject(global::System.Int32 subjectID, global::System.String fullName, global::System.Int32 numberOfSlot, global::System.Boolean isActive, global::System.Int32 numberOfSession, global::System.Boolean isSlotFixed, global::System.Int32 typeID)
         {
             Subject subject = new Subject();
             subject.SubjectID = subjectID;
@@ -3612,6 +3903,7 @@ namespace RollSystemMobile.Models
             subject.IsActive = isActive;
             subject.NumberOfSession = numberOfSession;
             subject.IsSlotFixed = isSlotFixed;
+            subject.TypeID = typeID;
             return subject;
         }
 
@@ -3812,6 +4104,30 @@ namespace RollSystemMobile.Models
         private global::System.Boolean _IsSlotFixed;
         partial void OnIsSlotFixedChanging(global::System.Boolean value);
         partial void OnIsSlotFixedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TypeID
+        {
+            get
+            {
+                return _TypeID;
+            }
+            set
+            {
+                OnTypeIDChanging(value);
+                ReportPropertyChanging("TypeID");
+                _TypeID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("TypeID");
+                OnTypeIDChanged();
+            }
+        }
+        private global::System.Int32 _TypeID;
+        partial void OnTypeIDChanging(global::System.Int32 value);
+        partial void OnTypeIDChanged();
 
         #endregion
     
@@ -3845,6 +4161,44 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Subject_SubjectType", "SubjectType")]
+        public SubjectType SubjectType
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Subject_SubjectType", "SubjectType").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Subject_SubjectType", "SubjectType").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<SubjectType> SubjectTypeReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Subject_SubjectType", "SubjectType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SubjectType>("RSMModel.FK_Subject_SubjectType", "SubjectType", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_RollCall_Subject", "RollCall")]
         public EntityCollection<RollCall> RollCalls
         {
@@ -3857,6 +4211,134 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RollCall>("RSMModel.FK_RollCall_Subject", "RollCall", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RSMModel", Name="SubjectType")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class SubjectType : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new SubjectType object.
+        /// </summary>
+        /// <param name="typeID">Initial value of the TypeID property.</param>
+        /// <param name="typeName">Initial value of the TypeName property.</param>
+        public static SubjectType CreateSubjectType(global::System.Int32 typeID, global::System.String typeName)
+        {
+            SubjectType subjectType = new SubjectType();
+            subjectType.TypeID = typeID;
+            subjectType.TypeName = typeName;
+            return subjectType;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 TypeID
+        {
+            get
+            {
+                return _TypeID;
+            }
+            set
+            {
+                if (_TypeID != value)
+                {
+                    OnTypeIDChanging(value);
+                    ReportPropertyChanging("TypeID");
+                    _TypeID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("TypeID");
+                    OnTypeIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _TypeID;
+        partial void OnTypeIDChanging(global::System.Int32 value);
+        partial void OnTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String TypeName
+        {
+            get
+            {
+                return _TypeName;
+            }
+            set
+            {
+                OnTypeNameChanging(value);
+                ReportPropertyChanging("TypeName");
+                _TypeName = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("TypeName");
+                OnTypeNameChanged();
+            }
+        }
+        private global::System.String _TypeName;
+        partial void OnTypeNameChanging(global::System.String value);
+        partial void OnTypeNameChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Instructor_SubjectType", "Instructor")]
+        public EntityCollection<Instructor> Instructors
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Instructor>("RSMModel.FK_Instructor_SubjectType", "Instructor");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Instructor>("RSMModel.FK_Instructor_SubjectType", "Instructor", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Subject_SubjectType", "Subject")]
+        public EntityCollection<Subject> Subjects
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Subject>("RSMModel.FK_Subject_SubjectType", "Subject");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Subject>("RSMModel.FK_Subject_SubjectType", "Subject", value);
                 }
             }
         }

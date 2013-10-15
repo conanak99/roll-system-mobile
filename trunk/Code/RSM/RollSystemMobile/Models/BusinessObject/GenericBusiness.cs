@@ -78,21 +78,30 @@ namespace RollSystemMobile.Models.BusinessObject
             try
             {
                 RollSystemDB.CreateObjectSet<T>().Attach(entity);
-                RollSystemDB.ObjectStateManager.ChangeObjectState(entity, System.Data.EntityState.Modified);
-                
-                
-                // .Entry(entity).State = System.Data.EntityState.Modified;
-                
-                
+                RollSystemDB.ObjectStateManager.ChangeObjectState(entity, System.Data.EntityState.Modified);        
+                // .Entry(entity).State = System.Data.EntityState.Modified;          
                 RollSystemDB.SaveChanges();
                 return true;
             }
-            catch
+            catch(Exception e)
             {
-
-                return false;
+                throw e;    
             }
         }
+
+        public bool Detach(T entity)
+        {
+            try
+            {
+                RollSystemDB.CreateObjectSet<T>().Detach(entity);
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
+
 
         /// <summary>
         /// Delete entity which is instance of T class

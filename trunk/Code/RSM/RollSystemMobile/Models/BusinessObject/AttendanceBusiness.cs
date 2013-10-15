@@ -95,7 +95,7 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             
             //Tim xem da co log manual cho ngay dua vao chua
-            AttendanceLog Log = GetAttendanceLogAtDate(RollCallID, DateTime.Today, 2);
+            AttendanceLog Log = GetAttendanceLogAtDate(RollCallID, Date, 2);
             bool LogExist = true;
             if (Log == null)
             {

@@ -24,4 +24,13 @@ namespace RollSystemMobile.Models.BindingModels
         public bool IsPresent { get; set; }
         public String Note { get; set; }
     }
+
+    //Show trong calendar
+    public class Event
+    {
+        public String id { get; set; }
+        public String title { get; set; }
+        public String start { get; set; }
+        public String end { get; set; }
+    }
 }

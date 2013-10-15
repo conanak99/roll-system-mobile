@@ -1,6 +1,11 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@section ExtraHead {
+   @RenderSection("ExtraHead", required: false)
+}
+
 <div id="wrapper">
     <div id="menu_top">
         <ul class="nav nav-pills">

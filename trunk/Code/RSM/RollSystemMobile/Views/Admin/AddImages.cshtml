@@ -7,6 +7,10 @@
         {
             background-color: White;
         }
+                input[disabled]
+        {
+            margin-top:10px;
+        }
     </style>
 }
 @if (ViewBag.Students != null && ViewBag.FacesAdded != null)
@@ -54,7 +58,7 @@
         <h5>
             Select students images:</h5>
         <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
-        <button class="btn" id="btnUpload">
+        <button class="btn btn-primary" id="btnUpload">
             Upload</button>
         <br />
         <output id="list"></output>
@@ -130,4 +134,5 @@
         }
     }
 
+    $(":file").filestyle({ buttonText: "Select students's images" });
 </script>

@@ -10,30 +10,54 @@ using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Models.BusinessObject
 {
-    public class RollCallBusiness: GenericBusiness<RollCall>
+    public class RollCallBusiness : GenericBusiness<RollCall>
     {
-
-        private InstructorTeachingBusiness InsTeaBO;
 
         public RollCallBusiness()
         {
-            InsTeaBO = new InstructorTeachingBusiness(this.RollSystemDB);
+
         }
 
         public RollCallBusiness(RSMEntities DB)
             : base(DB)
         {
-            InsTeaBO = new InstructorTeachingBusiness(DB);
+
         }
 
 
         public List<RollCall> GetInstructorCurrentRollCalls(int InstructorID)
         {
             DateTime Today = DateTime.Now;
+            StudySessionBusiness StuSesBO = new StudySessionBusiness(this.RollSystemDB);
 
-            return base.GetList().Where(r => r.InstructorTeachings.
-                                       Any(inte => inte.InstructorID == InstructorID)
-                                       && r.BeginDate <= Today && r.EndDate >= Today).ToList();
+            var TodaySession = StuSesBO.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate == DateTime.Today);
+            if (TodaySession == null)
+            {
+                return null;
+            }
+            else
+            {
+                var TodayRollCall = TodaySession.Select(s => s.RollCall).ToList();
+                foreach (var RollCall in TodayRollCall)
+                {
+                    StudySession TdSes = TodaySession.FirstOrDefault(ss => ss.RollCallID == RollCall.RollCallID);
+                    //Set lai thoi gian
+                    RollCall.StartTime = TdSes.StartTime;
+                    RollCall.EndTime = TdSes.EndTime;
+                }
+                return TodayRollCall.OrderBy(r => r.StartTime).ToList();
+            }
+        }
+
+
+        public List<RollCall> GetInstructorFutureRollCalls(int InstructorID)
+        {
+            DateTime Today = DateTime.Now;
+            StudySessionBusiness StuSesBO = new StudySessionBusiness(this.RollSystemDB);
+
+            var TodaySession = StuSesBO.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate >= DateTime.Today);
+            return TodaySession.Select(ss => ss.RollCall).Distinct().ToList();
+
         }
 
         public RollCall GetRollCallByID(int ID)
@@ -45,9 +69,9 @@ namespace RollSystemMobile.Models.BusinessObject
 
         public bool Delete(RollCall Rollcall)
         {
-            foreach (var InstructorTeaching in Rollcall.InstructorTeachings.ToList())
+            foreach (var Session in Rollcall.StudySessions.ToList())
             {
-                InsTeaBO.Delete(InstructorTeaching);
+                Rollcall.StudySessions.Remove(Session);
             }
 
             foreach (var Student in Rollcall.Students.ToList())
@@ -58,44 +82,60 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.Delete(Rollcall);
         }
 
-
-        public bool ChangeRollCallInstructor(RollCall InRollCall, int NewInstructorID)
+        public bool Update(RollCall InRollCall)
         {
-            RollCall rollcall = InRollCall;
-            var RollCallInstructorTeaching = InsTeaBO.GetByRollCallID(InRollCall.RollCallID);
+            StudySessionBusiness StuSesBO = new StudySessionBusiness(this.RollSystemDB);
+            //Ko cho sua lop, chi cho sua instructor, thoi gian, ngay thang
+            RollCall rollCall = GetRollCallByID(InRollCall.RollCallID);
 
-            int CurrentInstructorID = RollCallInstructorTeaching.Last().InstructorID;
-            //Neu co doi giao vien, doi gia tri field cu, them field moi
-            if (NewInstructorID != CurrentInstructorID)
+            //Doi giao vien va thoi gian
+            rollCall.InstructorID = InRollCall.InstructorID;
+            rollCall.StartTime = InRollCall.StartTime;
+            rollCall.EndTime = rollCall.StartTime.
+                Add(TimeSpan.FromMinutes(90 * rollCall.Subject.NumberOfSlot)).
+                Add(TimeSpan.FromMinutes(15 * (rollCall.Subject.NumberOfSlot - 1)));
+
+            //Doi ngay thang
+            rollCall.BeginDate = InRollCall.BeginDate;
+            //VD: 20 slot se la 28 ngay. 15 slot la 21 ngay, 18 slot van 28 ngay
+            int TotalDate = (int)Math.Ceiling((double)rollCall.Subject.NumberOfSession / 5) * 7;
+            //Tru 1 ngay de ket thuc vao chu nhat
+            rollCall.EndDate = rollCall.BeginDate.AddDays(TotalDate).AddDays(-1);
+
+
+            //Xoa het studysesion cu
+            foreach (var Session in rollCall.StudySessions.ToList())
             {
-                InstructorTeaching it = RollCallInstructorTeaching.Last(inte => inte.InstructorID == CurrentInstructorID);
-
-                //Neu nhu doi giao vien sau start date thi ghi log
-                //SAU NAY KO CHECK START DATE, CHECK BANG GIA TRI STATUS 0,1,2
-                if (DateTime.Today > it.BeginDate)
-                {
-                    it.EndDate = DateTime.Today.AddDays(-1); //Ngay ket thuc la hom qua
-                    
-                    InstructorTeaching newIt = new InstructorTeaching();
-                    newIt.InstructorID = NewInstructorID;
-                    newIt.BeginDate = DateTime.Today;
-                    newIt.EndDate = rollcall.EndDate;
-                    newIt.RollCallID = rollcall.RollCallID;
-                    InsTeaBO.Insert(newIt);
-                }
-                else
-                {
-                    //Neu truoc start date, chi doi bt
-                    //Neu nhu doi ngay trong ngay, van goi ham nay
-                    it.InstructorID = NewInstructorID;
-                }
+                rollCall.StudySessions.Remove(Session);
+                StuSesBO.Delete(Session);
             }
 
-            return Update(rollcall);
+            //Them studysession moi
+            DateTime SessionDate = rollCall.BeginDate;
+            for (int i = 0; i < rollCall.Subject.NumberOfSession; i++)
+            {
+                StudySession StuSes = new StudySession()
+                {
+                    InstructorID = rollCall.InstructorID,
+                    ClassID = rollCall.ClassID,
+                    StartTime = rollCall.StartTime,
+                    EndTime = rollCall.EndTime,
+                    SessionDate = SessionDate
+                };
+                rollCall.StudySessions.Add(StuSes);
+                do
+                {
+                    SessionDate = SessionDate.AddDays(1);
+                } while (SessionDate.DayOfWeek == DayOfWeek.Saturday || SessionDate.DayOfWeek == DayOfWeek.Sunday);
+            }
+            base.Detach(rollCall);
+            return base.Update(rollCall);
         }
 
 
-        public bool Insert(RollCall InRollCall, int InstructorID)
+
+
+        public bool Insert(RollCall InRollCall)
         {
             SubjectBusiness SubBO = new SubjectBusiness(this.RollSystemDB);
             ClassBusiness ClassBO = new ClassBusiness(this.RollSystemDB);
@@ -103,7 +143,9 @@ namespace RollSystemMobile.Models.BusinessObject
             RollCall rollcall = InRollCall;
             //Set thoi gian EndTime, dua vao start time
             var rollSubject = SubBO.GetSubjectByID(InRollCall.SubjectID);
-            rollcall.EndTime = rollcall.StartTime.Add(TimeSpan.FromMinutes(45 * rollSubject.NumberOfSlot));
+            rollcall.EndTime = rollcall.StartTime.
+                Add(TimeSpan.FromMinutes(90 * rollSubject.NumberOfSlot)).
+                Add(TimeSpan.FromMinutes(15 * (rollSubject.NumberOfSlot - 1)));
 
             //VD: 20 slot se la 28 ngay. 15 slot la 21 ngay, 18 slot van 28 ngay
             int TotalDate = (int)Math.Ceiling((double)rollSubject.NumberOfSession / 5) * 7;
@@ -117,15 +159,26 @@ namespace RollSystemMobile.Models.BusinessObject
                 rollcall.Students.Add(Student);
             }
 
-            // Them 1 truong vao bang instructor teaching
-            InstructorTeaching it = new InstructorTeaching();
-            it.InstructorID = InstructorID;
-            it.BeginDate = rollcall.BeginDate;
-            it.EndDate = rollcall.EndDate;
-            rollcall.InstructorTeachings.Add(it);
-            rollcall.Status = 0;
+            //Tao cac studying session cua roll call nay
+            DateTime SessionDate = rollcall.BeginDate;
+            for (int i = 0; i < rollSubject.NumberOfSession; i++)
+            {
+                StudySession StuSes = new StudySession()
+                    {
+                        InstructorID = InRollCall.InstructorID,
+                        ClassID = rollcall.ClassID,
+                        StartTime = rollcall.StartTime,
+                        EndTime = rollcall.EndTime,
+                        SessionDate = SessionDate
+                    };
+                rollcall.StudySessions.Add(StuSes);
+                do
+                {
+                    SessionDate = SessionDate.AddDays(1);
+                } while (SessionDate.DayOfWeek == DayOfWeek.Saturday || SessionDate.DayOfWeek == DayOfWeek.Sunday);
+            }
 
-           return base.Insert(rollcall);
+            return base.Insert(rollcall);
         }
 
 
@@ -261,7 +314,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 RollCall.StartTime.ToString(@"hh\:mm"), RollCall.EndTime.ToString(@"hh\:mm"));
             Worksheet.Cells["G7"].Value = String.Format("{0} to {1}",
                 RollCall.BeginDate.ToString("dd-MM-yyyy"), RollCall.EndDate.ToString("dd-MM-yyyy"));
-            Worksheet.Cells["G8"].Value = RollCall.InstructorTeachings.ToList().Last().Instructor.Fullname;
+            Worksheet.Cells["G8"].Value = RollCall.Instructor.Fullname;
 
             //Set size cho cac ki tu con lai
             Worksheet.Cells["E2:K8"].Style.Font.Size = 12;
@@ -291,7 +344,7 @@ namespace RollSystemMobile.Models.BusinessObject
             int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days /  7) * 5;  //1 tuan 7 ngay hoc 5 buoi
             */
 
-           
+
             int FinalColumnIndex = 4 + NumberOfSlot;
             //Bat dau ke o tu Cell[4,10]
 

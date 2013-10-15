@@ -32,6 +32,9 @@
         </th>
         <th style="width:200px;">
         </th>
+        <th>
+        Change Schedule
+        </th>
     </tr>
     @{ int index = 1;}
     @foreach (var item in Model.OrderByDescending(r => r.RollCallID).OrderByDescending(r=>r.BeginDate))
@@ -47,7 +50,7 @@
                 @Html.DisplayFor(modelItem => item.Subject.ShortName)
             </td>
             <td>
-                @item.InstructorTeachings.ToList().Last().Instructor.Fullname
+                @item.Instructor.Fullname
             </td>
             <td>
                 @item.BeginDate.ToString("dd-MM-yyyy") to @item.EndDate.ToString("dd-MM-yyyy")
@@ -61,6 +64,9 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) |
                  @Html.ActionLink("Detele", "Delete", new { id = item.RollCallID })
+            </td>
+            <td>
+            @Html.ActionLink("Change Schedule", "ChangeSchedule", new { id = item.RollCallID})
             </td>
         </tr>
         { index++; }
