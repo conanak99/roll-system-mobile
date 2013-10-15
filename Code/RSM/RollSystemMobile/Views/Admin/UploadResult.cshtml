@@ -2,10 +2,25 @@
 @{
     ViewBag.Title = "Upload Result";
 }
+<ul class="breadcrumb">
+	<li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+	<li class="divider"></li>
+	<li><a href="@Url.Action("StudentList")">Student List</a> </li>
+    <li class="divider"></li>
+    <li><a href="@Url.Action("SingleStudent", new { StudentID = ViewBag.StudentID })">Student @ViewBag.StudentCode</a></li>
+    <li class="divider"></li>
+    <li>Upload Result</li>
+</ul>
 
-<h4>
-    Select @ViewBag.StudentName face from Image
-</h4>
+                <div class="separator bottom"></div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture">
+                <i></i> Select @ViewBag.StudentName face from Image</h3>
+        </div>
+        <div class="widget-body">
+
 @using (@Html.BeginForm("SaveImageSingle", "Image", FormMethod.Post))
 {
     
@@ -27,10 +42,9 @@
     </div>
     }
     
-    <input type="submit" class="btn btn-primary" value="Submit Result" />
+    <input type="submit" class="btn btn-primary btn-large" value="Submit Result" />
 }
-
-
+</div>
 <script>
 
     $('.face-region').click(function () {

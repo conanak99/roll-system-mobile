@@ -56,7 +56,9 @@ namespace RollSystemMobile.Controllers
         public ActionResult SingleStudent(int StudentID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
             ViewBag.StudentID = StudentID;
-            ViewBag.StudentName = StuBO.GetStudentByID(StudentID).FullName;
+            var student = StuBO.GetStudentByID(StudentID);
+            ViewBag.StudentCode = student.StudentCode;
+            ViewBag.StudentName = student.FullName;
 
             List<RecognizerResult> Results = new List<RecognizerResult>();
 

@@ -7,61 +7,80 @@
         {
             background-color: White;
         }
-                input[disabled]
+        input[disabled]
         {
-            margin-top:10px;
+            margin-top: 10px;
         }
     </style>
 }
-@if (ViewBag.Students != null && ViewBag.FacesAdded != null)
-{
-    List<RollSystemMobile.Models.Student> Students = ViewBag.Students;
-    List<RollSystemMobile.Models.FaceAdded> FacesAdded = ViewBag.FacesAdded;
-    <h4>
-        Result</h4>
-    <ul>
-        @foreach (var Student in Students)
-        {
-            <li style="padding-bottom: 5px">Added images :
-                @foreach (var Face in FacesAdded.Where(fa => fa.StudentID == Student.StudentID))
+
+<ul class="breadcrumb">
+	<li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+	<li class="divider"></li>
+    <li>Upload Students Image</li>
+</ul>
+<div class="separator bottom"></div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture">
+                <i></i>Select students image</h3>
+        </div>
+        <div class="widget-body">
+            <div id="upload-div">
+                @using (Html.BeginForm("AddImages", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    <div class="thumbnail-holder">
-                        <img class="thumbnail" src="@Url.TrainingImage(Face.FaceLink)" />
-                        <button type="button" class="close btn-delete" imageID="@Face.ImageID" data-dismiss="modal" aria-hidden="true">
-                            ×</button>
-                    </div>
+                    <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
+                    <button class="btn btn-primary" id="btnUpload">
+                        Upload</button>
+                    <br />
+                    <output id="list"></output>
                 }
-                for student: @Student.StudentCode - @Student.FullName </li>
-        }
-    </ul>
-}
-@if (ViewBag.Errors != null)
-{
-    <div>
-        <ul>
-            <li>Images: 
-                @foreach (var Error in (List<String>)ViewBag.Errors)
-                {
-                <div class="thumbnail-holder">
-                        <img class="thumbnail" src="@Url.TrainingImage(Error)" />
-                    </div>
-                }
-                 existed in database. Not save.</li>
-        </ul>
+            </div>
+        </div>
     </div>
-}
-<div id="message">
-</div>
-<div id="upload-div">
-    @using (Html.BeginForm("AddImages", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @if (ViewBag.Errors != null && ((List<String>)ViewBag.Errors).Count > 0)
     {
-        <h5>
-            Select students images:</h5>
-        <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
-        <button class="btn btn-primary" id="btnUpload">
-            Upload</button>
-        <br />
-        <output id="list"></output>
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                &times;</button>
+            <strong>Warning!</strong> Images:
+            @foreach (var Error in (List<String>)ViewBag.Errors)
+            {
+                <div class="thumbnail-holder">
+                    <img class="thumbnail" src="@Url.TrainingImage(Error)" />
+                </div>
+            }
+            existed in database. Not save.
+        </div>
+    }
+    @if (ViewBag.Students != null && ViewBag.FacesAdded != null)
+    {
+        List<RollSystemMobile.Models.Student> Students = ViewBag.Students;
+        List<RollSystemMobile.Models.FaceAdded> FacesAdded = ViewBag.FacesAdded;
+        <div class="widget">
+            <div class="widget-head">
+                <h3 class="heading glyphicons picture">
+                    <i></i>Result</h3>
+            </div>
+            <div class="widget-body">
+                <ul>
+                    @foreach (var Student in Students)
+                    {
+                        <li style="padding-bottom: 5px">Added images :
+                            @foreach (var Face in FacesAdded.Where(fa => fa.StudentID == Student.StudentID))
+                            {
+                                <div class="thumbnail-holder">
+                                    <img class="thumbnail" src="@Url.TrainingImage(Face.FaceLink)" />
+                                    <button type="button" class="close btn-delete" imageID="@Face.ImageID" data-dismiss="modal" aria-hidden="true">
+                                        ×</button>
+                                </div>
+                            }
+                            for student: @Student.StudentCode - @Student.FullName </li>
+                    }
+                </ul>
+            </div>
+        </div>
     }
 </div>
 <script>
