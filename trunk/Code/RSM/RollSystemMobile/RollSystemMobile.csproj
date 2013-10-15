@@ -166,6 +166,33 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Admin\bootstrap-extend\bootstrap-hover-dropdown\twitter-bootstrap-hover-dropdown.js" />
+    <Content Include="Content\Admin\bootstrap-extend\bootstrap-hover-dropdown\twitter-bootstrap-hover-dropdown.min.js" />
+    <Content Include="Content\Admin\bootstrap-extend\bootstrap-select\bootstrap-select.css" />
+    <Content Include="Content\Admin\bootstrap-extend\bootstrap-select\bootstrap-select.js" />
+    <Content Include="Content\Admin\bootstrap-extend\bootstrap-toggle-buttons\static\js\jquery.min.js" />
+    <Content Include="Content\Admin\bootstrap-extend\bootstrap-toggle-buttons\static\js\jquery.toggle.buttons.js" />
+    <Content Include="Content\Admin\bootstrap-extend\bootstrap-toggle-buttons\static\stylesheets\bootstrap-toggle-buttons.css" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\css\jasny-bootstrap-responsive.css" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\css\jasny-bootstrap-responsive.min.css" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\css\jasny-bootstrap.css" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\css\jasny-bootstrap.min.css" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_fill.svg" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_stroke.svg" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\js\bootstrap-fileupload.js" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\js\jasny-bootstrap.js" />
+    <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\js\jasny-bootstrap.min.js" />
+    <Content Include="Content\Admin\css\green-theme.css" />
+    <Content Include="Content\Admin\css\glyphicons.css" />
+    <Content Include="Content\Admin\css\style.css" />
+    <Content Include="Content\Admin\css\style.min.css" />
+    <Content Include="Content\Admin\fonts\glyphicons-regular.svg" />
+    <Content Include="Content\Admin\images\pattern1.png" />
+    <Content Include="Content\Admin\images\pattern2.png" />
+    <Content Include="Content\Admin\images\sample.gif" />
+    <Content Include="Content\Admin\scripts\jquery-1.8.2.min.js" />
+    <Content Include="Content\Admin\scripts\jquery.cookie.js" />
+    <Content Include="Content\Admin\scripts\load.js" />
     <Content Include="Content\custom.css" />
     <Content Include="Content\Plug-in\FullCalendar\fullcalendar.css" />
     <Content Include="Content\Plug-in\FullCalendar\fullcalendar.print.css" />
@@ -340,6 +367,26 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>RSMModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Content\Admin\bootstrap-extend\bootstrap-select\README.md" />
+    <None Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_fill.eot" />
+    <None Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_fill.otf" />
+    <None Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_fill.ttf" />
+    <None Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_fill.woff" />
+    <None Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_stroke.eot" />
+    <None Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_stroke.otf" />
+    <None Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_stroke.ttf" />
+    <None Include="Content\Admin\bootstrap-extend\jasny-bootstrap\fonts\iconic_stroke.woff" />
+    <None Include="Content\Admin\fonts\glyphicons-regular.eot" />
+    <None Include="Content\Admin\fonts\glyphicons-regular.otf" />
+    <None Include="Content\Admin\fonts\glyphicons-regular.ttf" />
+    <None Include="Content\Admin\fonts\glyphicons-regular.woff" />
+    <None Include="Content\Admin\fonts\OpenSans-Bold.ttf" />
+    <None Include="Content\Admin\fonts\OpenSans-ExtraBold.ttf" />
+    <None Include="Content\Admin\fonts\OpenSans-Regular.ttf" />
+    <None Include="Content\Admin\fonts\OpenSans-Semibold.ttf" />
+    <None Include="Content\Admin\fonts\Raleway-Bold.ttf" />
+    <None Include="Content\Admin\fonts\Raleway-Regular.ttf" />
+    <None Include="Content\Admin\fonts\Raleway-SemiBold.ttf" />
     <None Include="Content\Plug-in\DataTable\images\Sorting icons.psd" />
     <None Include="Scripts\jquery-2.0.3.min.map" />
     <Content Include="Views\Home\Index.cshtml" />

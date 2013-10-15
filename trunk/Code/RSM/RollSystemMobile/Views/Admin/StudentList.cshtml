@@ -2,100 +2,108 @@
 @{
     ViewBag.Title = "Student List";
 }
-
 @section ExtraHead {
-  <style>
-  body 
-  {
-      background-color: White;
-  }
-  </style>
-
-  
-}
-
-<h2>
-    Student List</h2>
-
-<div>
-@using (@Html.BeginForm("StudentList", "Admin", FormMethod.Get))
-{
-<span class="dropdown-label">Class:</span> @Html.DropDownList("ClassID",(SelectList)ViewBag.ClassID)
-<input type="submit" class="btn btn-primary btn-with-dropdown" value="Select" />
-}
-</div>
-
-@if (Model.Count() > 0)
-{
-<table class="table table-bordered table-striped table-condensed" id="example">
-    <thead>
-        <tr>
-            <th class="text-right">
-                No.
-            </th>
-            <th>
-                Student Code
-            </th>
-            <th>
-                Full Name
-            </th>
-            <th>
-                Email
-            </th>
-            <th>
-                Class
-            </th>
-            <th class="text-center">
-                Images
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @{ int index = 1;}
-        @foreach (var item in Model)
+    <style>
+        body
         {
-            <tr>
-                <td class="text-right">
-                    @index
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StudentCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FullName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                 <td>
-                    @Html.DisplayFor(modelItem => item.Class.ClassName)
-                </td>
-                <td class="text-center">
-                    <a class="btn btn-info" target="_blank" href="@Url.Action("SingleStudent", new { StudentID = @item.StudentID })">Detail</a>
-                    
-                </td>
-            </tr>
+            background-color: White;
+        }
+    </style>
+}
+
+<ul class="breadcrumb">
+	<li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+	<li class="divider"></li>
+	<li>Student List</li>
+</ul>
+<div class="separator bottom"></div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons user">
+                <i></i>Student List</h3>
+        </div>
+        <div class="widget-body">
+            <div>
+                @using (@Html.BeginForm("StudentList", "Admin", FormMethod.Get))
+{
+                    <span class="dropdown-label">Class:</span> @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID)
+                    <input type="submit" class="btn btn-primary btn-with-dropdown" value="Select" />
+}
+            </div>
+            @if (Model.Count() > 0)
+{
+                <table class="table table-bordered table-striped table-condensed" id="example">
+                    <thead>
+                        <tr>
+                            <th class="text-right">
+                                No.
+                            </th>
+                            <th>
+                                Student Code
+                            </th>
+                            <th>
+                                Full Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Class
+                            </th>
+                            <th class="text-center">
+                                Images
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int index = 1;}
+                        @foreach (var item in Model)
+        {
+                            <tr>
+                                <td class="text-right">
+                                    @index
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.StudentCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FullName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Class.ClassName)
+                                </td>
+                                <td class="text-center">
+                                    <a class="btn btn-info" target="_blank" href="@Url.Action("SingleStudent", new { StudentID = @item.StudentID })">
+                                        Detail</a>
+                                </td>
+                            </tr>
             { index++; }
         }
-    </tbody>
-</table>
+                    </tbody>
+                </table>
 }
 else
 {
-    <p>This class has no student</p>
+                <p>
+                    This class has no student</p>
 }
+        </div>
+    </div>
+    <script>
 
-<script>
-
-    /* Table initialisation */
-    $(document).ready(function () {
-        $('#example').dataTable({
-            "sDom": "<'row'<'span6'l><'span6'f>r>t<'row'<'span6'i><'span6'p>>",
-            "sPaginationType": "bootstrap",
-            "oLanguage": {
-                "sLengthMenu": "_MENU_ records per page"
-            },
-            "aoColumnDefs": [ { 'bSortable': false, 'aTargets': [3,5] } ]
+        /* Table initialisation */
+        $(document).ready(function () {
+            $('#example').dataTable({
+                "sDom": "<'row'<'span5'l><'span5'f>r>t<'row'<'span5'i><'span5'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ records per page"
+                },
+                "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3, 5]}]
+            });
         });
-    });
-</script>
+    </script>

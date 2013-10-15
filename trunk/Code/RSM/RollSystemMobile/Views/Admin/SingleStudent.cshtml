@@ -11,68 +11,83 @@
         
         input[disabled]
         {
-            margin-top:10px;
+            margin-top: 10px;
         }
     </style>
 }
-<h4>@Model.FullName Image Data
-</h4>
-@if (Model.StudentImages.Count > 0)
-{
 
-    foreach (var image in Model.StudentImages)
-    {
-    <div class="thumbnail-holder">
-        <img class="thumbnail" src="@Url.TrainingImage(image.ImageLink)" />
-        <button type="button" class="close btn-delete" imageID="@image.ImageID" data-dismiss="modal" aria-hidden="true">
-            ×</button>
-    </div>
-    }
-    <div id="message">
-    </div>
-}
-else
-{
-    <h6>
-        No images. Please upload some.</h6>
-}
-@if (ViewBag.Errors != null)
-{
-    <div>
-        <ul>
-            <li style="padding-top: 5px">Images: 
-                @foreach (var Error in (List<String>)ViewBag.Errors)
+<ul class="breadcrumb">
+	<li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+	<li class="divider"></li>
+	<li><a href="@Url.Action("StudentList")">Student List</a> </li>
+    <li class="divider"></li>
+    <li>Student @Model.StudentCode</li>
+</ul>
+<div class="separator bottom"></div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture">
+                <i></i>@Model.FullName Image Data</h3>
+        </div>
+        <div class="widget-body">
+            @if (Model.StudentImages.Count > 0)
+            {
+
+                foreach (var image in Model.StudentImages)
                 {
                 <div class="thumbnail-holder">
-                        <img class="thumbnail" src="@Url.TrainingImage(Error)" />
-                    </div>
+                    <img class="thumbnail" src="@Url.TrainingImage(image.ImageLink)" />
+                    <button type="button" class="close btn-delete" imageID="@image.ImageID" data-dismiss="modal" aria-hidden="true">
+                        ×</button>
+                </div>
                 }
-                 existed in database. Not save.</li>
-        </ul>
+                <div id="message">
+                </div>
+            }
+            else
+            {
+                <h6>
+                    No images. Please upload some.</h6>
+            }
+        </div>
     </div>
-}
-<div id="upload-div">
-    @using (Html.BeginForm("SingleStudent", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @if (ViewBag.Errors != null && ((List<String>)ViewBag.Errors).Count > 0)
     {
-    
-        @Html.Hidden("StudentID", @Model.StudentID)
-    
-        <h5>
-            Add more Image Data:</h5>
-        <input type="file" id="files" name="ImageFiles" 
-        class="filestyle" accept="image/*" multiple />
-        <button class="btn btn-primary" id="btnUpload">
-            Upload</button>
-        <br />
-        <output id="list"></output>
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                &times;</button>
+            <strong>Warning!</strong> Images:
+            @foreach (var Error in (List<String>)ViewBag.Errors)
+            {
+                <div class="thumbnail-holder">
+                    <img class="thumbnail" src="@Url.TrainingImage(Error)" />
+                </div>
+            }
+            existed in database. Not save.
+        </div>
     }
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture">
+                <i></i>Add image for student</h3>
+        </div>
+        <div class="widget-body">
+            <div id="upload-div">
+                @using (Html.BeginForm("SingleStudent", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.Hidden("StudentID", @Model.StudentID)
 
- 
-<script type="text/javascript">
-    $('input[id=lefile]').change(function () {
-        $('#photoCover').val($(this).val());
-    });
-</script>
+                    <input type="file" id="files" name="ImageFiles" class="filestyle" accept="image/*"
+                        multiple />
+                    <button class="btn btn-primary" id="btnUpload">
+                        Upload</button>
+                    <br />
+                    <output id="list"></output>
+                }
+            </div>
+        </div>
+    </div>
 </div>
 <script>
 
