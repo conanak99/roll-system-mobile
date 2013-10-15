@@ -270,7 +270,8 @@ namespace RollSystemMobile.Controllers
             title = s.StartTime.ToString(@"hh\:mm") + " - " + s.EndTime.ToString(@"hh\:mm") + "\n" 
                     + "Ins:" + s.Instructor.Fullname,
             start = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.StartTime.ToString(@"hh\:mm"),
-            end = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.EndTime.ToString(@"hh\:mm")
+            end = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.EndTime.ToString(@"hh\:mm"),
+            note = "abc"
             });
             return Json(TimeAndName.ToList(), JsonRequestBehavior.AllowGet);
         }

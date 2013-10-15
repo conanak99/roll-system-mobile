@@ -34,12 +34,28 @@
     <dd>@Model.Subject.FullName</dd>
     <dt>Class</dt>
     <dd>@Model.Class.ClassName</dd>
+        <dt>Instructor</dt>
+    <dd>@Model.Instructor.Fullname</dd>
     <dt>Date</dt>
     <dd>
         From @Html.FormatDate(@Model.BeginDate) to @Html.FormatDate(@Model.EndDate)</dd>
     <dt>Time</dt>
     <dd>@Html.FormatTime(@Model.StartTime) - @Html.FormatTime(@Model.EndTime)</dd>
 </dl>
+
+<div class="pull-right" style="margin: 0 70px 15px 0">
+<h4>Help</h4>
+
+<div class="fc-event fc-event-hori fc-event-start fc-event-end" style=" background-color:Gray;width: 35px;height: 20px; display:inline-block">
+</div> Past study session, not clickable
+<br />
+
+<div class="fc-event fc-event-hori fc-event-start fc-event-end" style="width: 35px;height: 20px; display:inline-block">
+
+</div> Present and future study session, click to change instructor or date, time.
+
+</div>
+
 <div id='calendar'>
 </div>
 <script>
@@ -77,6 +93,14 @@
                 else {
                     element.css('cursor', 'pointer');
                 }
+
+                var title = event.title;
+                var normalTime = '@Html.FormatTime(@Model.StartTime) - @Html.FormatTime(@Model.EndTime)';
+                if (title.indexOf('@Html.Raw(@Model.Instructor.Fullname)') > -1
+                && title.indexOf(normalTime) > -1) {
+                    //Neu nhu day la ngay bt, ko phai day them hay bu
+                    element.find('.fc-event-title').html("Study Session at normal time.");
+                }
             }
         });
 
@@ -89,6 +113,8 @@
         else return false;
     }
 </script>
+
+
 
 @using(Html.BeginForm("Edit","StudySession", FormMethod.Post, new {@class="AjaxForm"})){
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"

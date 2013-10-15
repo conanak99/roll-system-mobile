@@ -32,5 +32,6 @@ namespace RollSystemMobile.Models.BindingModels
         public String title { get; set; }
         public String start { get; set; }
         public String end { get; set; }
+        public String note { get; set; }
     }
 }

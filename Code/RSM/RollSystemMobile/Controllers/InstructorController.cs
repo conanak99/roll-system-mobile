@@ -110,8 +110,6 @@ namespace RollSystemMobile.Controllers
                     + file.FileName);
                 FaceBusiness.ResizeImage(OldPath, NewPath);
                 ImagePaths.Add(NewPath);
-
-                
             }
             //Nhan dien tung khuon mat trong anh
             List<RecognizerResult> Result = FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths);
