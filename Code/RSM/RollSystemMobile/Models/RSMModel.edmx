@@ -274,6 +274,7 @@
           <Property Name="StartTime" Type="time" Nullable="false" />
           <Property Name="EndTime" Type="time" Nullable="false" />
           <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="Note" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Subject">
           <Key>
@@ -1083,6 +1084,7 @@
           <NavigationProperty Name="Class" Relationship="RSMModel.FK_StudySession_Class" FromRole="StudySession" ToRole="Class" />
           <NavigationProperty Name="Instructor" Relationship="RSMModel.FK_StudySession_Instructor" FromRole="StudySession" ToRole="Instructor" />
           <NavigationProperty Name="RollCall" Relationship="RSMModel.FK_StudySession_RollCall" FromRole="StudySession" ToRole="RollCall" />
+          <Property Type="String" Name="Note" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_StudySession_Class">
           <End Type="RSMModel.Class" Role="Class" Multiplicity="1" />
@@ -1361,6 +1363,7 @@
           <EntitySetMapping Name="StudySessions">
             <EntityTypeMapping TypeName="RSMModel.StudySession">
               <MappingFragment StoreEntitySet="StudySession">
+                <ScalarProperty Name="Note" ColumnName="Note" />
                 <ScalarProperty Name="ClassID" ColumnName="ClassID" />
                 <ScalarProperty Name="EndTime" ColumnName="EndTime" />
                 <ScalarProperty Name="StartTime" ColumnName="StartTime" />
