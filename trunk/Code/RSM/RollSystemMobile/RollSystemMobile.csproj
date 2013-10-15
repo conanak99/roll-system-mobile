@@ -271,6 +271,7 @@
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\themes\img\glyphicons-halflings-white.png" />
     <Content Include="Content\themes\img\glyphicons-halflings.png" />
+    <Content Include="Content\themes\img\classroom.jpg" />
     <Content Include="Content\Training Data\40x40.gif" />
     <Content Include="Dll\Emgu.CV.dll" />
     <Content Include="Dll\Emgu.CV.UI.dll" />
@@ -439,7 +440,7 @@
         <WebProjectProperties>
           <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>5935</DevelopmentServerPort>
+          <DevelopmentServerPort>35728</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>
           </IISUrl>

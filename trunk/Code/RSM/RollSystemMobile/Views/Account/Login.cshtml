@@ -2,49 +2,69 @@
 @{
     ViewBag.Title = "Login";
 }
-
-
-
+@section ExtraHead 
+{
+    <style>
+        body
+        {
+            background-color: rgb(245,245,245);
+            background-image: url("/Content/themes/img/classroom.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        #Username, #Password
+        {
+            padding: 7px 9px;
+            font-size: 18px;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius:0;
+            width: 330px;
+        }
+        
+        .input-prepend .add-on:first-child 
+        {
+            border-radius: 0;
+        }
+        
+        .input-prepend .add-on 
+        {
+            padding: 8px 9px;
+        }
+        
+    </style>
+}
+<div id="login">
     @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal" }))
     {
-    <fieldset>
-        <div id="legend">
-            <legend class="">Login</legend>
-        </div>
-        <div class="control-group">
-            <!-- Username -->
-            <label class="control-label" for="Username">
-                Username</label>
-            <div class="controls">
-                @Html.EditorFor(model => model.Username)
+        <fieldset>
+            <div id="legend" style="width: 300px; margin-bottom: 15px">
+                <h2>
+                    Login</h2>
+            </div>
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-user"></i></span>
+                <!-- Username -->
+                @Html.TextBoxFor(model => model.Username, new { placeholder = "Username" })
                 @Html.ValidationMessageFor(model => model.Username)
             </div>
-        </div>
-        <div class="control-group">
-            <!-- Password-->
-            <label class="control-label" for="password">
-                Password</label>
-            <div class="controls">
-                @Html.EditorFor(model => model.Password)
+            <div class="input-prepend">
+                <span class="add-on"><i class="icon-lock"></i></span>
+                <!-- Password-->
+                @Html.TextBoxFor(model => model.Password, new { placeholder = "Password" })
                 @Html.ValidationMessageFor(model => model.Password)
             </div>
             @Html.ValidationMessage("Error")
-        </div>
-        <div class="control-group">
-            <!-- Button -->
-            <div class="controls">
-                <br />
-                <button class="btn btn-success">
-                    Login</button>
-            </div>
-        </div>
-    </fieldset>
+                    <button class="btn btn-primary btn-large" style="margin-top:10px">
+                        Login</button>
+        </fieldset>
         if (@Request.Params["ReturnUrl"] != null)
         {
-    <input type="hidden" name="returnUrl" value="@Request.Params["ReturnUrl"]"/> 
+        <input type="hidden" name="returnUrl" value="@Request.Params["ReturnUrl"]"/> 
         }
         else
         {
-    @Html.HiddenFor(model => model.ReturnUrl)
+        @Html.HiddenFor(model => model.ReturnUrl)
         }
     }
+</div>
