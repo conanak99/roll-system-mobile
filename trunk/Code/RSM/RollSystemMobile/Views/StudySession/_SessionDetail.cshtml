@@ -23,6 +23,8 @@
 <script>
     var now = new Date();
     var endDate = new Date('@Model.RollCall.EndDate.ToLongDateString()');
+    //Tru them 1 ngay, ko lay ngay thu 7 cuoi cung
+    endDate.setDate(endDate.getDate() - 2);
     //Nam trong hom nay toi end date, tru chu nhat
     $("#begindate").datepicker({
         onRender: function (date) {

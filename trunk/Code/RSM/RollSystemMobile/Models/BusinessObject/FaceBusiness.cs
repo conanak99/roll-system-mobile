@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Drawing;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
@@ -228,7 +229,8 @@ namespace RollSystemMobile.Models.BusinessObject
             }
 
             //Chuyen anh trang den roi bat dau recognize
-            Image<Gray, byte> Image = new Image<Gray, byte>(ImagePath);
+            Image<Bgr, byte> RawImage = new Image<Bgr, byte>(ImagePath);
+            Image<Gray, byte> Image = RawImage.Clone().Convert<Gray, byte>();
 
             var FacesDetected = Image.DetectHaarCascade(Haar, DETECT_SCALE, MIN_NEIGHBOR,
                                 0, new System.Drawing.Size(MIN_SIZE, MIN_SIZE))[0];
@@ -246,6 +248,10 @@ namespace RollSystemMobile.Models.BusinessObject
                 FaceReg.StudentName = GetUserName(PR);
                 Result.FaceList.Add(FaceReg);
             }
+
+            //Save de len file goc?
+
+
             return Result;
         }
 

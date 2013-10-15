@@ -260,7 +260,7 @@ namespace RollSystemMobile.Models.BusinessObject
             TimeSpan TotalDate = RollCall.EndDate - RollCall.BeginDate;
             int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days/ 7) * 5; //1 tuan 7 ngay hoc 5 buoi
             */
-            int NumberOfSlot = RollCall.Subject.NumberOfSession;
+            int NumberOfSlot = RollCall.StudySessions.Count; //RollCall.Subject.NumberOfSession;
             int FinalColumnIndex = 4 + NumberOfSlot;
 
             //Tinh % di hoc cua moi SV
@@ -276,7 +276,7 @@ namespace RollSystemMobile.Models.BusinessObject
             ExcelPackage Package = new ExcelPackage();
             RollCall RollCall = GetRollCallByID(RollCallID);
             String SheetName = RollCall.Class.ClassName + "_" + RollCall.Subject.ShortName;
-            int NumberOfSlot = RollCall.Subject.NumberOfSession;
+            int NumberOfSlot = RollCall.StudySessions.Count; //RollCall.Subject.NumberOfSession;
 
             ExcelWorksheet Worksheet = Package.Workbook.Worksheets.Add(SheetName);
             //Set chieu ngang cac cot
