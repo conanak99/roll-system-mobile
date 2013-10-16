@@ -52,9 +52,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult AddSession(int RollCallID)
         {
             var rollCall = RollBO.GetRollCallByID(RollCallID);
-            SelectListFactory slFactory = new SelectListFactory();
-            ViewBag.InstructorID = slFactory.MakeSelectList<Instructor>("InstructorID", "FullName", rollCall.InstructorID);
-
+            
             return View("_NewSession", rollCall);
         }
 
@@ -99,6 +97,23 @@ namespace RollSystemMobile.Controllers
 
             var Result = AllInstructors.Select(ins => new { id = ins.InstructorID, name = ins.Fullname });
             return Json(Result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult ChangeInstructor(int RollCallID)
+        {
+            var rollCall = RollBO.GetRollCallByID(RollCallID);
+
+            return View("_NewSession", rollCall);
+        }
+
+        [HttpPost]
+        public ActionResult ChangeInstructor(StudySession Model, String InFromDate, String InToDate)
+        {
+            int RollCallID = Model.RollCallID;
+            int InstructorID = Model.InstructorID;
+            var rollCall = RollBO.GetRollCallByID(RollCallID);
+
+            return View("_NewSession", rollCall);
         }
     }
 }

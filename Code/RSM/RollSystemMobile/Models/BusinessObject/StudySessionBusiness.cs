@@ -268,5 +268,21 @@ namespace RollSystemMobile.Models.BusinessObject
             }
             return AllInstructors;
         }
+
+        public void ChangeInstructor(int RollCallID, int InstructorID, DateTime FromDate, DateTime ToDate)
+        {
+            RollCallBusiness RollBO = new RollCallBusiness();
+            var rollCall = RollBO.GetRollCallByID(RollCallID);
+
+            foreach (var StudySession in rollCall.StudySessions.ToList())
+            {
+                if (StudySession.SessionDate >= FromDate && StudySession.SessionDate <= ToDate)
+                {
+                    StudySession.InstructorID = InstructorID;
+                    base.Detach(StudySession);
+                    base.Update(StudySession);
+                }
+            }
+        }
     }
 }
