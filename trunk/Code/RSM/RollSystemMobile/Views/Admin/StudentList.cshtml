@@ -77,7 +77,7 @@
                                     @Html.DisplayFor(modelItem => item.Class.ClassName)
                                 </td>
                                 <td class="text-center">
-                                    <a class="btn btn-info" target="_blank" href="@Url.Action("SingleStudent", new { StudentID = @item.StudentID })">
+                                    <a class="btn btn-info" href="@Url.Action("SingleStudent", new { StudentID = @item.StudentID })">
                                         Detail</a>
                                 </td>
                             </tr>

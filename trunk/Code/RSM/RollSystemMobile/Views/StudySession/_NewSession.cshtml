@@ -6,36 +6,25 @@
     <dl class="dl-horizontal">
         @Html.HiddenFor(model => model.RollCallID)
         @Html.HiddenFor(model => model.ClassID)
-        <dt>Date</dt>
+        <dt class="martop-5">Date</dt>
         <dd>
-            @{ DateTime TimeShow;
-               if (DateTime.Today > Model.BeginDate)
-               {
-                   TimeShow = DateTime.Today.AddDays(1);
-
-               }
-               else
-               {
-                   TimeShow = Model.BeginDate;
-               }
-            }
-            <div class="input-append date" data-date="@Html.FormatDate(TimeShow)" id="begindate" data-date-format="dd-mm-yyyy">
+            <div class="input-append date" data-date="@Html.FormatDate(DateTime.Today)" id="begindate_New" data-date-format="dd-mm-yyyy">
                 <input class="span2" name="_SessionDate" id="SessionDate" style="width: 100px" size="16" type="text"
-                    value="@Html.FormatDate(TimeShow)" readonly><span class="add-on"><i class="icon-th"></i></span>
+                    value="@Html.FormatDate(DateTime.Today)" readonly><span class="add-on"><i class="icon-th"></i></span>
             </div>
         </dd>
-        <dt>StartTime</dt>
+        <dt class="martop-5">StartTime</dt>
         <dd>
-            <select id="_StartTime" name="_StartTime">
+            <select id="_StartTime_New" name="_StartTime" style="width:80px">
             </select>
         </dd>
-        <dt>Instructor</dt>
+        <dt class="martop-5">Instructor</dt>
         <dd>
-            <select id="InstructorID" name="InstructorID">
+            <select id="InstructorID_New" name="InstructorID">
             </select></dd>
-        <dt>Note</dt>
+        <dt class="martop-5">Note</dt>
         <dd>
-            <input name="Note" class="span3" /></dd>
+            <input type="text" name="Note" class="span3" /></dd>
     </dl>
 </fieldset>
 <script>
@@ -44,7 +33,7 @@
     //Tru them 1 ngay, ko lay ngay thu 7 cuoi cung
     endDate.setDate(endDate.getDate() - 2);
     //Nam trong hom nay toi end date, tru chu nhat
-    $("#begindate").datepicker({
+    $("#begindate_New").datepicker({
         onRender: function (date) {
             return date.valueOf() < now.valueOf() ||
                    date.valueOf() > endDate.valueOf()
@@ -53,25 +42,25 @@
     }).on('changeDate', function (ev) {
         var selectedDate = ev.date;
         var formatedSelectedDate = (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate() + '-' + selectedDate.getFullYear();
-        findAvaiableTime(formatedSelectedDate);
+        findAvaiableTime(formatedSelectedDate, formatedSelectedDate);
     });
 
-    $('#_StartTime').change(function () {
-        var selectedTime = $('#_StartTime :selected').attr("value");
+    $('#_StartTime_New').change(function () {
+        var selectedTime = $('#_StartTime_New :selected').attr("value");
         var selectedDate = $('#SessionDate').val();
 
-        findAvaibleInstructor(selectedTime, selectedDate);
+        findAvaibleInstructor(selectedTime, selectedDate, selectedDate);
     });
 
 
-    function findAvaiableTime(selectedDate)
+    function findAvaiableTime(fromDate, toDate)
     {
         var rollID = '@Model.RollCallID';
         //Lay data de gui
-        var data = 'RollCallID=' + rollID + '&SelectedDate=' + selectedDate;
+        var data = 'RollCallID=' + rollID + '&FromDate=' + fromDate + '&ToDate=' + toDate;
 
         //Clear 2 cai select
-        $('#_StartTime, InstructorID').html('');
+        $('#_StartTime_New, #InstructorID_New').html('');
 
         //Dua ket qua vao select List
         $.getJSON('@Url.Action("GetAvaibleSessionTime")', data, function (result) {
@@ -79,16 +68,22 @@
             $.each(result, function (index, item_result) {
                 html += ('<option value="' + item_result.time + '" >' + item_result.time + '</option>');
             });
-            $("#_StartTime").html(html);
+            $("#_StartTime_New").html(html);
+
+            //Hien luon select list cho instructor
+            var selectedTime = $("#_StartTime_New").val();
+            var selectedDate = $('#SessionDate').val();
+            findAvaibleInstructor(selectedTime, selectedDate, selectedDate);
         });
     }
 
-    function findAvaibleInstructor(selectedTime, selectedDate) {
+    function findAvaibleInstructor(selectedTime, fromDate, toDate) {
         var rollID = '@Model.RollCallID';
-        var data = 'RollCallID=' + rollID + '&SelectedTime=' + selectedTime + '&InSelectedDate=' + selectedDate;
+        var data = 'RollCallID=' + rollID + '&SelectedTime=' + selectedTime
+                   + '&InFromDate=' + fromDate + '&InToDate=' + toDate;
 
         //Clear instructor select
-        $('#InstructorID').html('');
+        $('#InstructorID_New').html('');
 
         //Dua ket qua vao select List
         $.getJSON('@Url.Action("GetAvaibleInstructor")', data, function (result) {
@@ -96,17 +91,17 @@
             $.each(result, function (index, item_result) {
                 html += ('<option value="' + item_result.id + '" >' + item_result.name + '</option>');
             });
-            $("#InstructorID").html(html);
+            $("#InstructorID_New").html(html);
         });
     }
 
     //Thuc hien load select list
     $(document).ready(function () {
-        findAvaiableTime('@TimeShow.ToString("MM-dd-yyyy")');
+        findAvaiableTime('@DateTime.Today.ToString("MM-dd-yyyy")', '@DateTime.Today.ToString("MM-dd-yyyy")');
         setTimeout(function () {
-            var selectedTime = $("#_StartTime").val();
+            var selectedTime = $("#_StartTime_New").val();
             var selectedDate = $('#SessionDate').val();
-            findAvaibleInstructor(selectedTime, selectedDate);    
+            findAvaibleInstructor(selectedTime, selectedDate, selectedDate);    
          }, 500);
     });
 </script>

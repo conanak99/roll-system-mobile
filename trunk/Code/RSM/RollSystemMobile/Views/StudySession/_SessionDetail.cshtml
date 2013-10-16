@@ -5,20 +5,26 @@
 <fieldset style="margin: 0 0 -20px -20px">
     <dl class="dl-horizontal">
         @Html.HiddenFor(model => model.SessionID)
+        @Html.HiddenFor(model => model.InstructorID)
         <dt>Class</dt>
         <dd>@Model.RollCall.Class.ClassName</dd>
         <dt>Instructor</dt>
-        <dd>@Html.DropDownList("InstructorID")</dd>
-        <dt>Date</dt>
-        <dd>
+        <dd>@Model.Instructor.Fullname</dd>
+        <dt style="margin-top: 12px">Date</dt>
+        <dd style="margin-top: 7px">
             <div class="input-append date" data-date="@Model.SessionDate.ToString("dd-MM-yyyy")" id="begindate" data-date-format="dd-mm-yyyy">
                 <input class="span2" name="_SessionDate" style="width: 100px" size="16" type="text"
                     value="@Model.SessionDate.ToString("dd-MM-yyyy")" readonly><span class="add-on"><i
                         class="icon-th"></i></span>
             </div>
         </dd>
-        <dt>StartTime</dt>
-        <dd>@Html.DropDownList("_StartTime", Html.TimeSelectList(Model.StartTime), new { style = "width:80px;" })</dd>
+        <dt class="martop-5">StartTime</dt>
+        <dd>
+            <select id="_StartTime" name="_StartTime" style="width: 80px">
+            </select></dd>
+        <dt class="martop-5">Note</dt>
+        <dd>
+            <input type="text" name="Note" class="span3" value="@Model.Note" /></dd>
     </dl>
 </fieldset>
 <script>
@@ -29,11 +35,35 @@
     //Nam trong hom nay toi end date, tru chu nhat
     $("#begindate").datepicker({
         onRender: function (date) {
-            return date.valueOf() < now.valueOf() ||
-    date.valueOf() > endDate.valueOf()
-    || date.getDay() == 0
-    ? 'disabled' : '';
+            return date.valueOf() < now.valueOf() || date.valueOf() > endDate.valueOf()
+                  || date.getDay() == 0 ? 'disabled' : '';
         }
+    }).on('changeDate', function (ev) {
+        var selectedDate = ev.date;
+        var formatedSelectedDate = (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate() + '-' + selectedDate.getFullYear();
+        findAvaiableChangeTime(formatedSelectedDate);
+    });
 
+    function findAvaiableChangeTime(selectedDate) {
+        var rollID = '@Model.RollCallID';
+        //Lay data de gui
+        var data = 'RollCallID=' + rollID + '&SelectedDate=' + selectedDate;
+
+        //Clear 2 cai select
+        $('#_StartTime').html('');
+
+        //Dua ket qua vao select List
+        $.getJSON('@Url.Action("GetAvaibleChangeTime")', data, function (result) {
+            var html = "";
+            $.each(result, function (index, item_result) {
+                html += ('<option value="' + item_result.time + '" >' + item_result.time + '</option>');
+            });
+            $("#_StartTime").html(html);
+        });
+
+    }
+
+    $(document).ready(function () {
+        findAvaiableChangeTime('@DateTime.Today.ToString("MM-dd-yyyy")');
     });
 </script>

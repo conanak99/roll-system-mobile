@@ -66,6 +66,7 @@ namespace RollSystemMobile.Models.BusinessObject
             StudySession Session = base.GetList().FirstOrDefault(s => s.SessionID == StuSes.SessionID);
 
             Session.InstructorID = StuSes.InstructorID;
+            Session.Note = StuSes.Note;
 
             int NumberOfSlot = Session.RollCall.Subject.NumberOfSlot;
 
@@ -135,6 +136,66 @@ namespace RollSystemMobile.Models.BusinessObject
             }
         }
 
+        /// <summary>
+        /// Lấy thời gian rảnh trong ngày. Chỉ tính constrains, ko tính constrain giáo viên
+        /// </summary>
+        /// <param name="RollCallID"></param>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <returns></returns>
+        public List<TimeSpan> FindAvaibleSessionTime(int RollCallID, DateTime FromDate, DateTime ToDate)
+        {
+            RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
+            var rollCall = RollBO.GetRollCallByID(RollCallID);
+
+            //Tao 1 danh sach cac thoi gian
+            TimeSpan time1 = new TimeSpan(7, 00, 00);
+            TimeSpan time2 = new TimeSpan(8, 45, 00);
+            TimeSpan time3 = new TimeSpan(10, 30, 00);
+
+            TimeSpan time4 = new TimeSpan(12, 30, 00);
+            TimeSpan time5 = new TimeSpan(14, 15, 00);
+            TimeSpan time6 = new TimeSpan(16, 00, 00);
+
+            List<TimeSpan> TimeList = new List<TimeSpan>();
+            TimeList.Add(time1);
+            TimeList.Add(time2);
+            TimeList.Add(time3);
+            TimeList.Add(time4);
+            TimeList.Add(time5);
+            TimeList.Add(time6);
+            //Loai bo dan
+            //Loai bo theo mon
+            if (rollCall.Subject.NumberOfSlot == 2)
+            {
+                TimeList.Remove(time3);
+                TimeList.Remove(time6);
+            }
+
+            //Loai tiep nhung slot trong khoang thoi gian dc chon
+            for (DateTime SelectedDate = FromDate; SelectedDate <= ToDate; SelectedDate = SelectedDate.AddDays(1))
+            {
+                foreach (var Time in rollCall.Class.StudySessions.
+                Where(ss => ss.SessionDate == SelectedDate).Select(ss => ss.StartTime))
+                {
+                    if (TimeList.Contains(Time))
+                    {
+                        TimeList.Remove(Time);
+                    }
+                }
+            }
+
+            return TimeList;
+        }
+
+        /// <summary>
+        /// Lấy thời gian rảnh trong ngày. 
+        /// Tính cả constrains giáo viên, dùng khi đổi time của session
+        /// </summary>
+        /// <param name="RollCallID"></param>
+        /// <param name="FromDate"></param>
+        /// <param name="ToDate"></param>
+        /// <returns></returns>
         public List<TimeSpan> FindAvaibleSessionTime(int RollCallID, DateTime SelectedDate)
         {
             RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
@@ -164,9 +225,19 @@ namespace RollSystemMobile.Models.BusinessObject
                 TimeList.Remove(time6);
             }
 
-            //Loai tiep nhung slot da hoc trong ngay cua lop
+            //Loai tiep nhung slot trong khoang thoi gian dc chon
+
             foreach (var Time in rollCall.Class.StudySessions.
-                Where(ss => ss.SessionDate == SelectedDate).Select(ss => ss.StartTime))
+            Where(ss => ss.SessionDate == SelectedDate).Select(ss => ss.StartTime))
+            {
+                if (TimeList.Contains(Time))
+                {
+                    TimeList.Remove(Time);
+                }
+            }
+
+            foreach (var Time in rollCall.Instructor.StudySessions.
+            Where(ss => ss.SessionDate == SelectedDate).Select(ss => ss.StartTime))
             {
                 if (TimeList.Contains(Time))
                 {
@@ -175,6 +246,27 @@ namespace RollSystemMobile.Models.BusinessObject
             }
 
             return TimeList;
+        }
+
+
+
+        public List<Instructor> GetAvaibleInstructor(int RollCallID, TimeSpan SelectedTime, DateTime FromDate, DateTime ToDate)
+        {
+            InstructorBusiness InsBO = new InstructorBusiness();
+            //Lay nhung giao vien ko ban day vao ngay, gio
+            var AllInstructors = InsBO.GetInstructorOfRollCall(RollCallID).ToList();
+
+            for (DateTime SelectedDate = FromDate; SelectedDate <= ToDate; SelectedDate = SelectedDate.AddDays(1))
+            {
+                var BusyInstructors = AllInstructors.Where(ins => ins.StudySessions.Any(ss =>
+                    ss.StartTime == SelectedTime && ss.SessionDate == SelectedDate)).ToList();
+
+                foreach (var Ins in BusyInstructors)
+                {
+                    AllInstructors.Remove(Ins);
+                }
+            }
+            return AllInstructors;
         }
     }
 }
