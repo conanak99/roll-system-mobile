@@ -1,0 +1,97 @@
+﻿@model RollSystemMobile.Models.RollCall
+@{
+    Layout = null;
+}
+<fieldset style="margin: 0 0 -20px -20px">
+    <dl class="dl-horizontal">
+        @Html.HiddenFor(model => model.RollCallID)
+        <dt>Class</dt>
+        <dd>
+            @Model.Class.ClassName
+        </dd>
+        <dt>Time</dt>
+        <dd>
+            @Model.StartTime.ToString(@"hh\:mm")
+        </dd>
+        <dt style="margin-top: 12px">From</dt>
+        <dd style="margin-top: 7px">
+            <div class="input-append date" data-date="@Html.FormatDate(DateTime.Today.AddDays(1))" id="beginDate" data-date-format="dd-mm-yyyy">
+                <input class="span2" name="InFromDate" id="InFromDate" style="width: 100px" size="16" type="text"
+                    value="@Html.FormatDate(DateTime.Today.AddDays(1))" readonly><span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </dd>
+        <dt class="martop-5">To</dt>
+        <dd>
+            <div class="input-append date" data-date="@Html.FormatDate(DateTime.Today.AddDays(1))" id="endDate" data-date-format="dd-mm-yyyy">
+                <input class="span2" name="InToDate" id="InToDate" style="width: 100px" size="16" type="text"
+                    value="@Html.FormatDate(DateTime.Today.AddDays(1))" readonly><span class="add-on"><i class="icon-th"></i></span>
+            </div>
+        </dd>
+        <dt class="martop-5">Instructor</dt>
+        <dd>
+            <select id="InstructorID_Change" name="InstructorID">
+            </select></dd>
+        <dt class="martop-5">Note</dt>
+        <dd>
+            <input type="text" name="Note" class="span3" /></dd>
+    </dl>
+</fieldset>
+<script>
+    var now = new Date();
+    var finalDate = new Date('@Model.EndDate.ToLongDateString()');
+    //Tru them 1 ngay, ko lay ngay thu 7 cuoi cung
+    finalDate.setDate(finalDate.getDate() - 2);
+    //Nam trong hom nay toi end date, tru chu nhat
+    var beginDate = $("#beginDate").datepicker({
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ||
+                   date.valueOf() > finalDate.valueOf()
+                   || date.getDay() == 0 ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        if (ev.date.valueOf() > endDate.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            endDate.setValue(newDate);
+        };
+        findAvaibleChangeInstructor();
+
+        beginDate.hide();
+    }).data('datepicker');
+
+    var endDate = $("#endDate").datepicker({
+        onRender: function (date) {
+            return date.valueOf() <= beginDate.date.valueOf() ||
+                   date.valueOf() > finalDate.valueOf()
+                   || date.getDay() == 0 ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        findAvaibleChangeInstructor();
+        endDate.hide();
+    }).data('datepicker');
+
+    function findAvaibleChangeInstructor() {
+        var rollID = '@Model.RollCallID';
+        var selectedTime = '@Model.StartTime.ToString(@"hh\:mm")';
+        var fromDate = $('#InFromDate').val();
+        var toDate = $('#InToDate').val();
+        var data = 'RollCallID=' + rollID + '&SelectedTime=' + selectedTime
+                   + '&InFromDate=' + fromDate + '&InToDate=' + toDate;
+
+        //Clear instructor select
+        $('#InstructorID_Change').html('');
+
+        //Dua ket qua vao select List
+        $.getJSON('@Url.Action("GetAvaibleInstructor")', data, function (result) {
+            var html = "";
+            $.each(result, function (index, item_result) {
+                html += ('<option value="' + item_result.id + '" >' + item_result.name + '</option>');
+            });
+            $("#InstructorID_Change").html(html);
+        });
+    }
+
+    //Thuc hien load select list
+    $(document).ready(function () {
+        findAvaibleChangeInstructor();
+    });
+</script>

@@ -59,11 +59,17 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult AddSession(StudySession Model, TimeSpan _StartTime, String _SessionDate)
         { 
-            Model.SessionDate = _SessionDate.ParseStringToDateTime();
-            Model.StartTime = _StartTime;
+            try
+            {
+                Model.SessionDate = _SessionDate.ParseStringToDateTime();
+                Model.StartTime = _StartTime;
+                StuSesBO.Insert(Model);
+            }
+            catch (Exception e)
+            {
+                return Json(new { message = "Error", error = e.Message }, JsonRequestBehavior.AllowGet);
+            }
 
-
-            StuSesBO.Insert(Model);
             return Json(new { message = "Success" }, JsonRequestBehavior.AllowGet);
         }
 
@@ -103,17 +109,17 @@ namespace RollSystemMobile.Controllers
         {
             var rollCall = RollBO.GetRollCallByID(RollCallID);
 
-            return View("_NewSession", rollCall);
+            return PartialView("_ChangeIns", rollCall);
         }
 
         [HttpPost]
         public ActionResult ChangeInstructor(StudySession Model, String InFromDate, String InToDate)
         {
-            int RollCallID = Model.RollCallID;
-            int InstructorID = Model.InstructorID;
-            var rollCall = RollBO.GetRollCallByID(RollCallID);
+            DateTime FromDate = InFromDate.ParseStringToDateTime();
+            DateTime ToDate = InToDate.ParseStringToDateTime();
+            StuSesBO.ChangeInstructor(Model.RollCallID, Model.InstructorID, Model.Note, FromDate, ToDate);
 
-            return View("_NewSession", rollCall);
+            return Json(new { message = "Success" }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -436,6 +436,7 @@
     <Content Include="Views\StudySession\_SessionDetail.cshtml" />
     <Content Include="Views\Instructors\Schedule.cshtml" />
     <Content Include="Views\StudySession\_NewSession.cshtml" />
+    <Content Include="Views\StudySession\_ChangeIns.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

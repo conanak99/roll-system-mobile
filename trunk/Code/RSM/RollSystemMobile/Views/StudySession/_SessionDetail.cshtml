@@ -33,7 +33,7 @@
     //Tru them 1 ngay, ko lay ngay thu 7 cuoi cung
     endDate.setDate(endDate.getDate() - 2);
     //Nam trong hom nay toi end date, tru chu nhat
-    $("#begindate").datepicker({
+    var begindate = $("#begindate").datepicker({
         onRender: function (date) {
             return date.valueOf() < now.valueOf() || date.valueOf() > endDate.valueOf()
                   || date.getDay() == 0 ? 'disabled' : '';
@@ -42,7 +42,8 @@
         var selectedDate = ev.date;
         var formatedSelectedDate = (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate() + '-' + selectedDate.getFullYear();
         findAvaiableChangeTime(formatedSelectedDate);
-    });
+        begindate.hide();
+    }).data('datepicker');
 
     function findAvaiableChangeTime(selectedDate) {
         var rollID = '@Model.RollCallID';
@@ -64,6 +65,6 @@
     }
 
     $(document).ready(function () {
-        findAvaiableChangeTime('@DateTime.Today.ToString("MM-dd-yyyy")');
+        findAvaiableChangeTime('@Model.SessionDate.ToString("MM-dd-yyyy")');
     });
 </script>

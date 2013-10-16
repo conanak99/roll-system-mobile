@@ -45,7 +45,7 @@
     <dt>Time</dt>
     <dd>@Html.FormatTime(@Model.StartTime) - @Html.FormatTime(@Model.EndTime)</dd>
 </dl>
-<div class="pull-right" style="margin: 0 70px 15px 0">
+<div class="text-left" style="margin: 0 0 15px 280px">
     <h4>
         Help</h4>
     <div class="fc-event fc-event-hori fc-event-start fc-event-end" style="background-color: Gray;
@@ -61,9 +61,10 @@
         More Action</h4>
     <a href="@Url.Action("AddSession", "StudySession", new { RollCallID = Model.RollCallID })" id="new-ses" class="btn btn-success">
         Add Session</a>
-    <button id="change-ins" class="btn btn-info">
-        Change Instructor</button>
+    <a href="@Url.Action("ChangeInstructor", "StudySession", new { RollCallID = Model.RollCallID })" id="change-ins" class="btn btn-info">
+        Change Instructor</a>
 </div>
+
 <div id='calendar'>
 </div>
 <script>
@@ -135,7 +136,19 @@
             }
         });
     });
-    
+
+    $('#change-ins').click(function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: "GET",
+            url: $(this).attr('href'),
+            success: function (data) {
+                $('#changeIns-modal-body').html(data);
+                $('#changeInsModal').modal('show');
+            }
+        });
+    });
+
 </script>
 @using (Html.BeginForm("Edit", "StudySession", FormMethod.Post, new { @class = "AjaxForm" }))
 {
@@ -178,6 +191,28 @@
         </div>
     </div>
 }
+
+@using (Html.BeginForm("ChangeInstructor", "StudySession", FormMethod.Post, new { @class = "AjaxForm_3" }))
+{
+    <div id="changeInsModal" class="modal hide fade" tabindex="-2" role="dialog" aria-hidden="true" aria-labelledby="changeInsLabel">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×</button>
+            <h4 id="changeInsLabel">
+                Change Instructor for Roll Call @Model.RollCallID
+            </h4>
+        </div>
+        <div class="modal-body" id='changeIns-modal-body'>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-info">
+                Save</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Close</button>
+        </div>
+    </div>
+}
+
 <script>
     $('.AjaxForm').submit(function (e) {
         e.preventDefault();
@@ -218,4 +253,25 @@
             }
         });
     });
+
+    $('.AjaxForm_3').submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var url = $(this).attr("action");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            success: function (data) {
+                if (data.message == "Success") {
+                    $('#changeInsModal').modal('hide');
+                    $('#calendar').fullCalendar("refetchEvents");
+                } else {
+                    alert(data.error);
+                }
+            }
+        });
+    });
+
 </script>
