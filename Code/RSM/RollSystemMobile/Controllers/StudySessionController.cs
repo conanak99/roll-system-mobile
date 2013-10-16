@@ -70,8 +70,19 @@ namespace RollSystemMobile.Controllers
         }
 
 
-        public ActionResult GetAvaibleSessionTime(int RollCallID, DateTime SelectedDate)
+        public ActionResult GetAvaibleSessionTime(int RollCallID, DateTime FromDate, DateTime ToDate)
         {
+            //Lay nhung thoi gian ranh trong ngay
+            var TimeList = StuSesBO.FindAvaibleSessionTime(RollCallID, FromDate, ToDate);
+            //Dua ket qua ra
+            var result = TimeList.Select(time => new { time = time.ToString(@"hh\:mm") });
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetAvaibleChangeTime(int RollCallID, DateTime SelectedDate)
+        {
+            //Lay nhung thoi gian ranh trong ngay
             var TimeList = StuSesBO.FindAvaibleSessionTime(RollCallID, SelectedDate);
             //Dua ket qua ra
             var result = TimeList.Select(time => new { time = time.ToString(@"hh\:mm") });
@@ -79,19 +90,12 @@ namespace RollSystemMobile.Controllers
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult GetAvaibleInstructor(int RollCallID, TimeSpan SelectedTime, String InSelectedDate)
+        public ActionResult GetAvaibleInstructor(int RollCallID, TimeSpan SelectedTime, String InFromDate, String InToDate)
         {
-            DateTime SelectedDate = InSelectedDate.ParseStringToDateTime();
-            InstructorBusiness InsBO = new InstructorBusiness();
-            //Lay nhung giao vien ko ban day vao ngay, gio
-            var AllInstructors = InsBO.GetInstructorOfRollCall(RollCallID).ToList();
-            var BusyInstructors = AllInstructors.Where(ins => ins.StudySessions.Any(ss =>
-                ss.StartTime == SelectedTime && ss.SessionDate == SelectedDate)).ToList();
+            DateTime FromDate = InFromDate.ParseStringToDateTime();
+            DateTime ToDate = InToDate.ParseStringToDateTime();
 
-            foreach (var Ins in BusyInstructors)
-            {
-                AllInstructors.Remove(Ins);
-            }
+            var AllInstructors = StuSesBO.GetAvaibleInstructor(RollCallID, SelectedTime, FromDate, ToDate);
 
             var Result = AllInstructors.Select(ins => new { id = ins.InstructorID, name = ins.Fullname });
             return Json(Result, JsonRequestBehavior.AllowGet);

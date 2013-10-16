@@ -18,7 +18,10 @@
             text-align: center;
         }
         
-        .datepicker{z-index:1151;}
+        .datepicker
+        {
+            z-index: 1151;
+        }
     </style>
     <link href="@Url.Content("~/Content/Plug-in/FullCalendar/fullcalendar.css")" rel="stylesheet"
         type="text/css" />
@@ -34,7 +37,7 @@
     <dd>@Model.Subject.FullName</dd>
     <dt>Class</dt>
     <dd>@Model.Class.ClassName</dd>
-        <dt>Instructor</dt>
+    <dt>Instructor</dt>
     <dd>@Model.Instructor.Fullname</dd>
     <dt>Date</dt>
     <dd>
@@ -42,22 +45,25 @@
     <dt>Time</dt>
     <dd>@Html.FormatTime(@Model.StartTime) - @Html.FormatTime(@Model.EndTime)</dd>
 </dl>
-
 <div class="pull-right" style="margin: 0 70px 15px 0">
-<h4>Help</h4>
-
-<div class="fc-event fc-event-hori fc-event-start fc-event-end" style=" background-color:Gray;width: 35px;height: 20px; display:inline-block">
-</div> Past study session, not clickable
-<br />
-
-<div class="fc-event fc-event-hori fc-event-start fc-event-end" style="width: 35px;height: 20px; display:inline-block">
-
-</div> Present and future study session, click to change instructor or date, time.
-<h4>More Action</h4>
-<a href="@Url.Action("AddSession","StudySession", new {RollCallID = Model.RollCallID })" id="new-ses" class="btn btn-success">Add Session</a>
-<button id="change-ins" class="btn btn-info">Change Instructor</button>
+    <h4>
+        Help</h4>
+    <div class="fc-event fc-event-hori fc-event-start fc-event-end" style="background-color: Gray;
+        width: 35px; height: 20px; display: inline-block">
+    </div>
+    Past study session, not clickable
+    <br />
+    <div class="fc-event fc-event-hori fc-event-start fc-event-end" style="width: 35px;
+        height: 20px; display: inline-block">
+    </div>
+    Present and future study session, click to change date, time.
+    <h4>
+        More Action</h4>
+    <a href="@Url.Action("AddSession", "StudySession", new { RollCallID = Model.RollCallID })" id="new-ses" class="btn btn-success">
+        Add Session</a>
+    <button id="change-ins" class="btn btn-info">
+        Change Instructor</button>
 </div>
-
 <div id='calendar'>
 </div>
 <script>
@@ -78,8 +84,10 @@
                 else {
                     $.ajax({
                         type: "GET",
-                        url: '@Url.Action("SessionDetail","StudySession")' + "/" + calEvent.id,
+                        url: '@Url.Action("SessionDetail", "StudySession")' + "/" + calEvent.id,
                         success: function (data) {
+                            var date = $.fullCalendar.formatDate(calEvent.start, 'dd-MM-yyyy');
+                            $('#myModalLabel').html('Change schedule on ' + date);
                             $('#modal-body').html(data);
                             $('#myModal').modal('show');
                         }
@@ -129,55 +137,47 @@
     });
     
 </script>
-
-
-
-@using(Html.BeginForm("Edit","StudySession", FormMethod.Post, new {@class="AjaxForm"})){
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×</button>
-        <h4 id="myModalLabel"> Change Schedule
-           </h4>
+@using (Html.BeginForm("Edit", "StudySession", FormMethod.Post, new { @class = "AjaxForm" }))
+{
+    <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×</button>
+            <h4 id="myModalLabel">
+                Change Schedule
+            </h4>
+        </div>
+        <div class="modal-body" id='modal-body'>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-info">
+                Save</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Close</button>
+        </div>
     </div>
-    <div class="modal-body" id='modal-body'>
-       
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-info" id="btnSave">
-            Save</button>
-        <button class="btn" data-dismiss="modal" aria-hidden="true">
-            Close</button>
-    </div>
-
-</div>
 }
-
-@using(Html.BeginForm("AddSession","StudySession", FormMethod.Post, new {@class="AjaxForm_2"})){
-<div id="newSessionModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-    aria-hidden="true">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×</button>
-        <h4 id=""> Add Study Session for Roll Call @Model.RollCallID
-           </h4>
+@using (Html.BeginForm("AddSession", "StudySession", FormMethod.Post, new { @class = "AjaxForm_2" }))
+{
+    <div id="newSessionModal" class="modal hide fade" tabindex="-2" role="dialog" aria-hidden="true" aria-labelledby="newLabel">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                ×</button>
+            <h4 id="newLabel">
+                Add Study Session for Roll Call @Model.RollCallID
+            </h4>
+        </div>
+        <div class="modal-body" id='new-ses-modal-body'>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-info">
+                Add</button>
+            <button class="btn" data-dismiss="modal" aria-hidden="true">
+                Close</button>
+        </div>
     </div>
-    <div class="modal-body" id='new-ses-modal-body'>
-       
-    </div>
-    <div class="modal-footer">
-        <button class="btn btn-info" id="btnSave">
-            Add</button>
-        <button class="btn" data-dismiss="modal" aria-hidden="true">
-            Close</button>
-    </div>
-
-</div>
 }
-
-
-
 <script>
     $('.AjaxForm').submit(function (e) {
         e.preventDefault();
