@@ -33,7 +33,7 @@
     //Tru them 1 ngay, ko lay ngay thu 7 cuoi cung
     endDate.setDate(endDate.getDate() - 2);
     //Nam trong hom nay toi end date, tru chu nhat
-    $("#begindate_New").datepicker({
+    var begindate_New = $("#begindate_New").datepicker({
         onRender: function (date) {
             return date.valueOf() < now.valueOf() ||
                    date.valueOf() > endDate.valueOf()
@@ -43,7 +43,8 @@
         var selectedDate = ev.date;
         var formatedSelectedDate = (selectedDate.getMonth() + 1) + '-' + selectedDate.getDate() + '-' + selectedDate.getFullYear();
         findAvaiableTime(formatedSelectedDate, formatedSelectedDate);
-    });
+        begindate_New.hide();
+    }).data('datepicker');
 
     $('#_StartTime_New').change(function () {
         var selectedTime = $('#_StartTime_New :selected').attr("value");
