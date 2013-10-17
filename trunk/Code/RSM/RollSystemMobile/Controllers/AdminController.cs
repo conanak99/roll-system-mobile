@@ -124,5 +124,36 @@ namespace RollSystemMobile.Controllers
 
             return View("UploadMultiResult", Results);
         }
+
+        public ActionResult RecognizeTesting()
+        {
+            SelectListFactory slFactory = new SelectListFactory();
+            ViewBag.RollCallID = slFactory.MakeSelectList<RollCall>("RollCallID", "RollCallID");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult RecognizeTesting(int RollCallID, IEnumerable<HttpPostedFileBase> ImageFiles)
+        {
+            RollCallBusiness RollBO = new RollCallBusiness();
+            RollCall rollCall = RollBO.GetRollCallByID(RollCallID);
+
+            List<String> ImagePaths = new List<string>();
+            foreach (HttpPostedFileBase file in ImageFiles)
+            {
+                //Save file anh xuong
+                String OldPath = Server.MapPath("~/Content/Temp/" + file.FileName);
+                file.SaveAs(OldPath);
+
+                //Resize file anh, luu vao thu muc log, ten mon hoc, ten lop
+                String NewPath = Server.MapPath("~/Content/Temp/Resized/" + file.FileName);
+                FaceBusiness.ResizeImage(OldPath, NewPath);
+                ImagePaths.Add(NewPath);
+            }
+            //Nhan dien tung khuon mat trong anh
+            List<RecognizerResult> Result = FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths);
+
+            return View("RecognizeResult",Result);
+        }
     }
 }

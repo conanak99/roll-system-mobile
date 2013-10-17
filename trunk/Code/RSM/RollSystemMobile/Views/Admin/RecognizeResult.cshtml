@@ -1,0 +1,119 @@
+﻿@model IEnumerable<RollSystemMobile.Models.RecognizerResult>
+@{
+    ViewBag.Title = "Recognize Result";
+}
+@section ExtraHead {
+    <style>
+        body
+        {
+            background-color: White;
+        }
+        input[disabled]
+        {
+            margin-top: 10px;
+        }
+    </style>
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li><a href="@Url.Action("RecognizeTesting")" class="glyphicons home">Recognizer Testing</a></li>
+    <li class="divider"></li>
+    <li>Recognize Result</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture">
+                <i></i>Result</h3>
+        </div>
+        <div class="widget-body">
+            @foreach (var RecognizerResult in Model)
+            {
+                <div class="img-holder">
+                    @foreach (var Face in RecognizerResult.FaceList)
+                    {
+                        <div class="face-region" title="@Face.StudentName" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
+                                       Face.X, Face.Y, Face.Width, Face.Height);">
+                        </div>
+                    }
+                    <img src="@Url.ResizedImage(RecognizerResult.ImageLink)" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script>
+
+    var files;
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+    function handleFileSelect(evt) {
+        files = evt.target.files; // FileList object
+        if (files.length > 20) {
+            alert("Too many images. Select fewer than 20 images");
+            return false;
+        }
+        document.getElementById('list').innerHTML = "";
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+            parseFile(f);
+        }
+    }
+
+    function parseFile(file) {
+        // Only process image files.
+        if (!file.type.match('image.*')) {
+            return;
+        }
+
+        var reader = new FileReader();
+        // Closure to capture the file information.
+        reader.onload = function (e) {
+            // Render thumbnail.
+            var span = document.createElement('span');
+            span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(file.name), '"/>'].join('');
+            document.getElementById('list').insertBefore(span, null);
+        }
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(file);
+    }
+
+    $('#btnUpload').click(function () {
+        if (typeof files === "undefined" || files.length == 0) {
+            alert("Select file to upload!");
+            return false;
+        } else if (files.length > 20) {
+            alert("Too many images. Select fewer than 20 images");
+            return false;
+        } else {
+            return true;
+        }
+    });
+
+    $('button.btn-delete').click(deleteImage);
+    //Delegate toi ham nay, khi click vao thi xoa anh
+    function deleteImage() {
+        var imageName = $(this).prev().attr('src');
+        var imageID = $(this).attr('ImageID');
+        var image = $(this);
+
+        var con = confirm("Do you really want to delete?");
+        if (con) {
+            $.post('@Url.Action("DeleteTrainingImage", "Image")',
+              { ImageID: imageID }, function (data) {
+                  image.parent().hide('slow', function () {
+                      $('#message').html(data.message);
+                      $('#message').fadeIn(1000);
+                      $('#message').fadeOut(1500);
+                  });
+              }, 'json');
+
+        }
+    }
+
+    $(":file").filestyle({ buttonText: "Select students's images" });
+</script>
