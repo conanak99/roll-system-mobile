@@ -23,7 +23,7 @@
     <!-- Glyph icon and style, from smashing admin !-->
     <link href="@Url.Content("~/Content/Admin/css/glyphicons.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Admin/css/style.css")" rel="stylesheet" type="text/css" />
-        <link href="@Url.Content("~/Content/Admin/css/green-theme.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Admin/css/green-theme.css")" rel="stylesheet" type="text/css" />
     <!-- My own CSS !-->
     <link href="@Url.Content("~/Content/custom.css")" rel="stylesheet" type="text/css" />
     <!-- Necessary js !-->
@@ -62,7 +62,8 @@
                     <ul class="dropdown-menu pull-right">
                         <li><a href="#" class="glyphicons cogwheel">Change Password<i></i></a></li>
                         <li><span><a class="btn btn-default btn-small pull-right" style="padding: 2px 10px;
-                            background: #fff;" href="@Url.Action("Logout","Account")">Sign Out</a> </span></li>
+                            background: #fff;" href="@Url.Action("Logout", "Account")">Sign Out</a> </span>
+                        </li>
                     </ul>
                 </li>
             </ul>
@@ -70,26 +71,32 @@
         <div id="wrapper">
             <div id="menu" class="hidden-phone">
                 <span class="profile"><a class="img" href="my_account.html?lang=en">
-                    <img src="@Url.Content("~/Content/Admin/images/sample.gif")" /></a>
-                    <span><strong>@User.Identity.Name</strong> <a href="my_account.html?lang=en">edit account</a>
-                    </span></span>
+                    <img src="@Url.Content("~/Content/Admin/images/sample.gif")" /></a> <span><strong>@User.Identity.Name</strong>
+                        <a href="my_account.html?lang=en">edit account</a> </span></span>
                 <ul>
-                    <li class="glyphicons home"><a href="@Url.Action("Index")">
-                        <i></i><span>Admin Dashboard</span></a>
+                    <li class="glyphicons home"><a href="@Url.Action("Index")"><i></i><span>Admin Dashboard</span></a>
                     </li>
-                    <li class="glyphicons group"><a href="#menu_components">
-                        <i></i><span>Manage Account</span></a>
-                    </li>
-                    <li class="hasSubmenu glyphicons user"><a data-toggle="collapse" href="#menu_forms"><i></i><span>Manage Student</span></a>
-                        <ul class="collapse" id="menu_forms">
+                    <li class="hasSubmenu glyphicons group"><a data-toggle="collapse" href="#acc_mana"><i></i><span>
+                        Manage Account</span></a>
+                        <ul class="collapse" id="acc_mana">
+                            <li class=""><a href="@Url.Action("StaffAccountList")"><span>Staff Accounts</span></a></li>
+                            <li class=""><a href="@Url.Action("InstructorAccountList")"><span>Instructor Accounts</span></a></li>
+                            <li class=""><a href="@Url.Action("StudentAccountList")"><span>Student Accounts</span></a></li>
+                        </ul>
+                        <span class="count">></span></li>
+                    <li class="hasSubmenu glyphicons user"><a data-toggle="collapse" href="#stu_mana"><i>
+                    </i><span>Manage Student</span></a>
+                        <ul class="collapse" id="stu_mana">
                             <li class=""><a href="@Url.Action("StudentList")"><span>Student List</span></a></li>
                             <li class=""><a href="@Url.Action("AddImages")"><i></i><span>Students Images</span></a></li>
                         </ul>
                         <span class="count">></span> </li>
-                    <li class="glyphicons settings"><a href="calendar.html?lang=en"><i></i><span>Configure System</span></a></li>
-                <li class="glyphicons picture"><a href="@Url.Action("RecognizeTesting")"><i></i><span>Recognize Testing</span></a></li>
-                <div class="clearfix" style="clear: both">
-                </div>
+                    <li class="glyphicons settings"><a href="calendar.html?lang=en"><i></i><span>Configure
+                        System</span></a></li>
+                    <li class="glyphicons picture"><a href="@Url.Action("RecognizeTesting")"><i></i><span>
+                        Recognize Testing</span></a></li>
+                    <div class="clearfix" style="clear: both">
+                    </div>
             </div>
             <div id="content">
                 @RenderBody()

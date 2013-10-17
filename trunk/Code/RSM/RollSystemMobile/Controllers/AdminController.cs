@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
 using RollSystemMobile.Models.BusinessObject;
-using System.Drawing;
+using RollSystemMobile.Models.ViewModels;
 
 namespace RollSystemMobile.Controllers
 {
@@ -14,11 +14,18 @@ namespace RollSystemMobile.Controllers
         // GET: /Admin/
         private StudentBusiness StuBO;
         private ClassBusiness ClaBO;
+        private AccountBusiness AccBO;
+        private StaffBusiness StaffBO;
+        private InstructorBusiness InsBO;
 
         public AdminController()
         {
-            StuBO = new StudentBusiness();
-            ClaBO = new ClassBusiness();
+            RSMEntities db = new RSMEntities();
+            StuBO = new StudentBusiness(db);
+            ClaBO = new ClassBusiness(db);
+            AccBO = new AccountBusiness(db);
+            StaffBO = new StaffBusiness(db);
+            InsBO = new InstructorBusiness(db);
         }
 
         public ActionResult Index()
@@ -38,7 +45,6 @@ namespace RollSystemMobile.Controllers
             {
                 Students = StuBO.GetStudentInClass(ClassID.Value);
             }
-
 
             var Classes = ClaBO.GetActiveClasses();
             ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
@@ -154,6 +160,24 @@ namespace RollSystemMobile.Controllers
             List<RecognizerResult> Result = FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths);
 
             return View("RecognizeResult",Result);
+        }
+
+        public ActionResult StaffAccountList()
+        {
+            var Model = StaffBO.GetAllStaff();
+            return View(Model);
+        }
+
+        public ActionResult InstructorAccountList()
+        {
+            var Model = InsBO.GetAllInstructor();
+            return View(Model);
+        }
+
+        public ActionResult StudentAccountList()
+        {
+            var Model = StuBO.GetAllStudents();
+            return View(Model);
         }
     }
 }

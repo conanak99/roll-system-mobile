@@ -1,0 +1,117 @@
+﻿@model IEnumerable<RollSystemMobile.Models.Instructor>
+@{
+    ViewBag.Title = "Instructor Account List";
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>Instructor Account List</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons user">
+                <i></i>Instructor Account List</h3>
+        </div>
+        <div class="widget-body">
+            @using (Html.BeginForm("ProcessInstructorAccount", "Account", FormMethod.Post))
+            {
+                <div class="pull-right">
+                    <select name="action">
+                        <option>Create</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                    <button class="btn btn-primary" style="margin-top: -10px">
+                        Process</button>
+                </div>
+                <table class="table table-bordered table-striped table-condensed" id="instructor-table">
+                    <thead>
+                        <tr>
+                            <th class="text-right">
+                                ID
+                            </th>
+                            <th>
+                                Full Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Account
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Select
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var instructor in Model)
+                        {
+                            <tr>
+                                <td class="text-right">
+                                    @instructor.InstructorID
+                                </td>
+                                <td>
+                                    @instructor.Fullname
+                                </td>
+                                <td>
+                                    @instructor.Email
+                                </td>
+                                <td>
+                                    @if (instructor.User != null)
+                                    {
+                                        @instructor.User.Username
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("CreateInstructorAccount", "Account", new { InstructorID = instructor.InstructorID })" class="btn btn-info">
+                                            Create</a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (instructor.User != null)
+                                    {
+                                        if (instructor.User.IsActive)
+                                        {
+                                        <a href="@Url.Action("ChangeStatus", "Account", new { UserID = instructor.UserID, NewStatus = false, ReturnUrl ="InstructorAccountList" })" class="btn btn-danger">
+                                            In-active</a>
+                                        }
+                                        else
+                                        {
+                                        <a href="@Url.Action("ChangeStatus", "Account", new { UserID = instructor.UserID, NewStatus = true, ReturnUrl = "InstructorAccountList" })" class="btn btn-primary">
+                                            Active</a>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="selectedID" value="@instructor.InstructorID"></input>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+</div>
+<script>
+
+    /* Table initialisation */
+    $(document).ready(function () {
+
+        $('#instructor-table').dataTable({
+            "sDom": "<'row-fluid'<'span3'l><'span4'f>r>t<'row-fluid'<'span5'i><'span5'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page"
+            },
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4, 5]}]
+        });
+    });
+</script>

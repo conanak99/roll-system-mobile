@@ -1,0 +1,116 @@
+﻿@model IEnumerable<RollSystemMobile.Models.Staff>
+@{
+    ViewBag.Title = "Staff Account List";
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>Staff Account List</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons user">
+                <i></i>Staff Account List</h3>
+        </div>
+        <div class="widget-body">
+            @using (Html.BeginForm("ProcessStaffAccount", "Account", FormMethod.Post))
+            {
+                <div class="pull-right">
+                    <select name="action">
+                        <option>Create</option>
+                        <option>Active</option>
+                        <option>Inactive</option>
+                    </select>
+                    <button class="btn btn-primary" style="margin-top: -10px">
+                        Process</button>
+                </div>
+                <table class="table table-bordered table-striped table-condensed" id="staff-table">
+                    <thead>
+                        <tr>
+                            <th class="text-right">
+                                ID
+                            </th>
+                            <th>
+                                Full Name
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Account
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Select
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var staff in Model)
+                        {
+                            <tr>
+                                <td class="text-right">
+                                    @staff.StaffID
+                                </td>
+                                <td>
+                                    @staff.Fullname
+                                </td>
+                                <td>
+                                    @staff.Email
+                                </td>
+                                <td>
+                                    @if (staff.User != null)
+                                    {
+                                        @staff.User.Username
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Action("CreateStaffAccount", "Account", new { StaffID = staff.StaffID })" class="btn btn-info">
+                                            Create</a>
+                                    }
+                                </td>
+                                <td>
+                                    @if (staff.User != null)
+                                    {
+                                        if (staff.User.IsActive)
+                                        {
+                                        <a href="@Url.Action("ChangeStatus", "Account", new { UserID = staff.UserID, NewStatus = false, ReturnUrl ="StaffAccountList" })" class="btn btn-danger">
+                                            In-active</a>
+                                        }
+                                        else
+                                        {
+                                        <a href="@Url.Action("ChangeStatus", "Account", new { UserID = staff.UserID, NewStatus = true, ReturnUrl = "StaffAccountList" })" class="btn btn-primary">
+                                            Active</a>
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="selectedID" value="@staff.StaffID"></input>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        </div>
+    </div>
+    <script>
+
+        /* Table initialisation */
+        $(document).ready(function () {
+
+            $('#staff-table').dataTable({
+                "sDom": "<'row-fluid'<'span3'l><'span4'f>r>t<'row-fluid'<'span5'i><'span5'p>>",
+                "sPaginationType": "bootstrap",
+                "oLanguage": {
+                    "sLengthMenu": "_MENU_ records per page"
+                },
+                "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4, 5]}]
+            });
+        });
+    </script>
