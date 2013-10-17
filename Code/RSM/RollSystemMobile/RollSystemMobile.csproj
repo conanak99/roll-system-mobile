@@ -437,6 +437,8 @@
     <Content Include="Views\Instructors\Schedule.cshtml" />
     <Content Include="Views\StudySession\_NewSession.cshtml" />
     <Content Include="Views\StudySession\_ChangeIns.cshtml" />
+    <Content Include="Views\Admin\RecognizeTesting.cshtml" />
+    <Content Include="Views\Admin\RecognizeResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

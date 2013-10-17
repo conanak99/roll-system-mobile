@@ -55,7 +55,7 @@
             <div class="input-prepend">
                 <span class="add-on"><i class="icon-lock"></i></span>
                 <!-- Password-->
-                @Html.TextBoxFor(model => model.Password, new { placeholder = "Password" })
+                @Html.PasswordFor(model => model.Password, new { placeholder = "Password" })
             </div>
                             @Html.ValidationMessageFor(model => model.Password)
             @Html.ValidationMessage("Error")
