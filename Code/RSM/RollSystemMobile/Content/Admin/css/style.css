@@ -1,56 +1,5 @@
-
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Open Sans'), local('OpenSans');
-  src: url(../fonts/OpenSans-Regular.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Open Sans Semibold'), local('OpenSans-Semibold');
-  src: url(../fonts/OpenSans-Semibold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Open Sans Bold'), local('OpenSans-Bold');
-  src: url(../fonts/OpenSans-Bold.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Open Sans';
-  font-style: normal;
-  font-weight: 800;
-  src: local('Open Sans Extrabold'), local('OpenSans-Extrabold');
-    src: url(../fonts/OpenSans-ExtraBold.ttf) format('ttf');
-}
-
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  src: local('Raleway');
-   src: url(../fonts/Raleway-Regular.ttf) format('ttf');
-}
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 600;
-  src: local('Raleway SemiBold'), local('Raleway-SemiBold');
-   src: url(../fonts/Raleway-SemiBold.ttf) format('ttf');
-  
-}
-@font-face {
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 700;
-  src: local('Raleway Bold'), local('Raleway-Bold');
-  src: url(../fonts/Raleway-Bold.ttf) format('ttf');
-}
-
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,800,700,600&subset=latin,latin-ext);
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,600,700);
 .hideText {
   text-indent: -999em;
   letter-spacing: -999em;
@@ -2713,7 +2662,6 @@ hr.separator.bottom {
   border-bottom-color: rgba(255, 255, 255, 0.7);
 }
 .btn-danger {
-  background: #744646;
   color: #fff;
 }
 .btn-danger.glyphicons i:before {

@@ -142,6 +142,7 @@
     <Compile Include="Models\BindingModels\InstructorBindingModel.cs" />
     <Compile Include="Models\BusinessObject\ClassBusiness.cs" />
     <Compile Include="Models\BusinessObject\AccountBusiness.cs" />
+    <Compile Include="Models\BusinessObject\StaffBusiness.cs" />
     <Compile Include="Models\BusinessObject\StudySessionBusiness.cs" />
     <Compile Include="Models\BusinessObject\SelectListFactory.cs" />
     <Compile Include="Models\BusinessObject\SubjectBusiness.cs" />
@@ -439,6 +440,9 @@
     <Content Include="Views\StudySession\_ChangeIns.cshtml" />
     <Content Include="Views\Admin\RecognizeTesting.cshtml" />
     <Content Include="Views\Admin\RecognizeResult.cshtml" />
+    <Content Include="Views\Admin\StaffAccountList.cshtml" />
+    <Content Include="Views\Admin\InstructorAccountList.cshtml" />
+    <Content Include="Views\Admin\StudentAccountList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

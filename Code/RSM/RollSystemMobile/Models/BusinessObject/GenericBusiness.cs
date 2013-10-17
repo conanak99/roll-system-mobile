@@ -102,6 +102,21 @@ namespace RollSystemMobile.Models.BusinessObject
             }
         }
 
+        public bool UpdateExist(T entity)
+        {
+            try
+            {
+                RollSystemDB.CreateObjectSet<T>().Detach(entity);
+                RollSystemDB.CreateObjectSet<T>().Attach(entity);
+                RollSystemDB.ObjectStateManager.ChangeObjectState(entity, System.Data.EntityState.Modified);        
+                RollSystemDB.SaveChanges();
+                return true;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+        }
 
         /// <summary>
         /// Delete entity which is instance of T class
