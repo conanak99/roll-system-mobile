@@ -215,6 +215,17 @@
 
 <script>
     $('.AjaxForm').submit(function (e) {
+        var inp = $("#Note_Change").val();
+        if (jQuery.trim(inp).length == 0) {
+            alert("Enter reason for changing date");
+            $("#Note_Change").focus();
+            return false;
+        } else if (jQuery.trim(inp).length > 50) {
+            alert("Reason too long. Must be shorter than 50 characters");
+            $("#Note_Change").focus();
+            return false;
+        }
+
         e.preventDefault();
         var formData = $(this).serialize();
         var url = $(this).attr("action");
@@ -235,6 +246,18 @@
     });
 
     $('.AjaxForm_2').submit(function (e) {
+
+        var inp = $("#Note_New").val();
+        if (jQuery.trim(inp).length == 0) {
+            alert("Enter reason for adding session");
+            $("#Note_New").focus();
+            return false;
+        } else if (jQuery.trim(inp).length > 50) {
+            alert("Reason too long. Must be shorter than 50 characters");
+            $("#Note_New").focus();
+            return false;
+        }
+
         e.preventDefault();
         var formData = $(this).serialize();
         var url = $(this).attr("action");
@@ -255,6 +278,17 @@
     });
 
     $('.AjaxForm_3').submit(function (e) {
+        var inp = $("#Note_Ins").val();
+        if (jQuery.trim(inp).length == 0) {
+            alert("Enter reason for changing instructor");
+            $("#Note_Ins").focus();
+            return false;
+        } else if (jQuery.trim(inp).length > 50) {
+            alert("Reason too long. Must be shorter than 50 characters");
+            $("#Note_Ins").focus();
+            return false;
+        }
+
         e.preventDefault();
         var formData = $(this).serialize();
         var url = $(this).attr("action");
