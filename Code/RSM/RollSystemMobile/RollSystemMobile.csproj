@@ -411,7 +411,7 @@
     <Content Include="Views\RollCall\Create.cshtml" />
     <Content Include="Views\RollCall\Edit.cshtml" />
     <Content Include="Views\RollCall\Delete.cshtml" />
-    <Content Include="Views\Instructor\RollCallList.cshtml" />
+    <Content Include="Views\Instructor\TeachingCalendar.cshtml" />
     <Content Include="Views\Instructor\_ViewStart.cshtml" />
     <Content Include="Views\Instructor\_Layout.cshtml" />
     <Content Include="Views\RollCall\RollCallStudentList.cshtml" />
@@ -443,6 +443,7 @@
     <Content Include="Views\Admin\StaffAccountList.cshtml" />
     <Content Include="Views\Admin\InstructorAccountList.cshtml" />
     <Content Include="Views\Admin\StudentAccountList.cshtml" />
+    <Content Include="Views\Instructor\Index_Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

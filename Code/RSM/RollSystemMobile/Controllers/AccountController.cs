@@ -63,7 +63,7 @@ namespace RollSystemMobile.Controllers
                             switch (Role)
                             {
                                 case "Instructor":
-                                    Action = "RollCallList";
+                                    Action = "Index_Home";
                                     break;
                                 case "Staff":
                                     Action = "Index";
