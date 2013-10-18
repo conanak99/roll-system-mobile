@@ -195,30 +195,8 @@ namespace RollSystemMobile.Models.BusinessObject
             RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
             var rollCall = RollBO.GetRollCallByID(RollCallID);
 
-            //Tao 1 danh sach cac thoi gian
-            TimeSpan time1 = new TimeSpan(7, 00, 00);
-            TimeSpan time2 = new TimeSpan(8, 45, 00);
-            TimeSpan time3 = new TimeSpan(10, 30, 00);
-
-            TimeSpan time4 = new TimeSpan(12, 30, 00);
-            TimeSpan time5 = new TimeSpan(14, 15, 00);
-            TimeSpan time6 = new TimeSpan(16, 00, 00);
-
-            List<TimeSpan> TimeList = new List<TimeSpan>();
-            TimeList.Add(time1);
-            TimeList.Add(time2);
-            TimeList.Add(time3);
-            TimeList.Add(time4);
-            TimeList.Add(time5);
-            TimeList.Add(time6);
-            //Loai bo dan
-            //Loai bo theo mon
-            if (rollCall.Subject.NumberOfSlot == 2)
-            {
-                TimeList.Remove(time3);
-                TimeList.Remove(time6);
-            }
-
+            //Tao 1 danh sach cac thoi gian rarnh
+            List<TimeSpan> TimeList = AllAvailableTime(rollCall.Subject.NumberOfSlot);
             //Loai tiep nhung slot trong khoang thoi gian dc chon
             for (DateTime SelectedDate = FromDate; SelectedDate <= ToDate; SelectedDate = SelectedDate.AddDays(1))
             {
@@ -230,6 +208,40 @@ namespace RollSystemMobile.Models.BusinessObject
                         TimeList.Remove(Time);
                     }
                 }
+            }
+
+            return TimeList;
+        }
+
+        public List<TimeSpan> AllAvailableTime(int NumberOfSlot)
+        {
+            //Tao 1 danh sach cac thoi gian
+            TimeSpan time1 = new TimeSpan(7, 00, 00);
+            TimeSpan time2 = new TimeSpan(8, 45, 00);
+            TimeSpan time3 = new TimeSpan(10, 30, 00);
+
+            TimeSpan time4 = new TimeSpan(12, 30, 00);
+            TimeSpan time5 = new TimeSpan(14, 15, 00);
+            TimeSpan time6 = new TimeSpan(16, 00, 00);
+
+            TimeSpan time7 = new TimeSpan(18, 30, 00);
+            TimeSpan time8 = new TimeSpan(19, 00, 00);
+
+            List<TimeSpan> TimeList = new List<TimeSpan>();
+            TimeList.Add(time1);
+            TimeList.Add(time2);
+            TimeList.Add(time3);
+            TimeList.Add(time4);
+            TimeList.Add(time5);
+            TimeList.Add(time6);
+            TimeList.Add(time7);
+            TimeList.Add(time8);
+
+            //Neu 2 slot thi bo 10:30 va 16:00
+            if (NumberOfSlot == 2)
+            {
+                TimeList.Remove(time3);
+                TimeList.Remove(time6);
             }
 
             return TimeList;
@@ -248,32 +260,10 @@ namespace RollSystemMobile.Models.BusinessObject
             RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
             var rollCall = RollBO.GetRollCallByID(RollCallID);
 
-            //Tao 1 danh sach cac thoi gian
-            TimeSpan time1 = new TimeSpan(7, 00, 00);
-            TimeSpan time2 = new TimeSpan(8, 45, 00);
-            TimeSpan time3 = new TimeSpan(10, 30, 00);
-
-            TimeSpan time4 = new TimeSpan(12, 30, 00);
-            TimeSpan time5 = new TimeSpan(14, 15, 00);
-            TimeSpan time6 = new TimeSpan(16, 00, 00);
-
-            List<TimeSpan> TimeList = new List<TimeSpan>();
-            TimeList.Add(time1);
-            TimeList.Add(time2);
-            TimeList.Add(time3);
-            TimeList.Add(time4);
-            TimeList.Add(time5);
-            TimeList.Add(time6);
-            //Loai bo dan
-            //Loai bo theo mon
-            if (rollCall.Subject.NumberOfSlot == 2)
-            {
-                TimeList.Remove(time3);
-                TimeList.Remove(time6);
-            }
+            //Tao 1 danh sach cac thoi gian rarnh
+            List<TimeSpan> TimeList = AllAvailableTime(rollCall.Subject.NumberOfSlot);
 
             //Loai tiep nhung slot trong khoang thoi gian dc chon
-
             foreach (var Time in rollCall.Class.StudySessions.
             Where(ss => ss.SessionDate == SelectedDate).Select(ss => ss.StartTime))
             {

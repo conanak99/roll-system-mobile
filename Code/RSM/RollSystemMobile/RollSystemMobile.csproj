@@ -357,7 +357,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Log\" />
+    <Folder Include="Content\Log\TextLog\" />
     <Folder Include="Content\Temp\Resized\" />
   </ItemGroup>
   <ItemGroup>
