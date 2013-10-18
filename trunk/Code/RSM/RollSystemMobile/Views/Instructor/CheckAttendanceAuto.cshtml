@@ -4,62 +4,92 @@
 }
 @section ExtraHead 
 {
-    
+    <style>
+        dl.dl-horizontal
+        {
+            margin-top: -3px;
+        }
+        
+        .dl-horizontal dt
+        {
+            width: 80px;
+        }
+        
+        .dl-horizontal dd
+        {
+            margin-left: 100px;
+        }
+    </style>
 }
-<h2>
-    Attendance Checking</h2> 
-
-<a href="@Url.Action("Index")" class="btn btn-primary"><i class="icon-white icon-chevron-left"></i> Back</a>
-<div>
-    <div class="row">
-        <div class="span6">
-            <legend>Roll Call Info</legend>
-            <fieldset style="margin: 0 0 -20px -20px">
-                <dl class="dl-horizontal">
-                    <dt>Roll Call</dt>
-                    <dd>@Model.CurrentRollCall.RollCallID</dd>
-                    <dt>Date</dt>
-                    <dd>@Html.FormatDate(@DateTime.Today)</dd>
-                    <dt>Subject</dt>
-                    <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
-                    <dt>Class</dt>
-                    <dd>@Model.CurrentRollCall.Class.ClassName</dd>
-                </dl>
-            </fieldset>
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index_Home")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li><a href="@Url.Action("Index", "Instructor")">Current Roll Call</a></li>
+    <li class="divider"></li>
+    <li>Attendance Checking Result</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="widget">
+                <div class="widget-head">
+                    <h3 class="heading glyphicons notes">
+                        <i></i>Roll Call Info</h3>
+                </div>
+                <div class="widget-body">
+                    <dl class="dl-horizontal">
+                        <dt>Roll Call</dt>
+                        <dd>@Model.CurrentRollCall.RollCallID</dd>
+                        <dt>Date</dt>
+                        <dd>@Html.FormatDate(@DateTime.Today)</dd>
+                        <dt>Subject</dt>
+                        <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
+                        <dt>Class</dt>
+                        <dd>@Model.CurrentRollCall.Class.ClassName</dd>
+                    </dl>
+                </div>
+            </div>
         </div>
         <div class="span6">
-            <legend>Attendance</legend>
-            <fieldset>
-                <div>
-                    <div class="span3">
-                        @foreach (var Student in @Model.PresentStudents)
-                        {
-                            <p>@Student.StudentCode - @Student.FullName</p>
-                        }
-                        <div>
-                            <h5>
-                                Present: @Model.PresentStudents.Count / @Model.CurrentRollCall.Students.Count . 
-                            </h5>
-                        </div>
+            <div class="widget">
+                <div class="widget-head">
+                    <h3 class="heading glyphicons user">
+                        <i></i>Attendance</h3>
+                </div>
+                <div class="widget-body">
+                    @foreach (var Student in @Model.PresentStudents)
+                    {
+                        <p>@Student.StudentCode - @Student.FullName</p>
+                    }
+                    <div>
+                        <h5>
+                            Present: @Model.PresentStudents.Count / @Model.CurrentRollCall.Students.Count .
+                        </h5>
                     </div>
                 </div>
-            </fieldset>
+            </div>
         </div>
     </div>
-    <legend>Log Image</legend>
-    <fieldset class="text-center">
-        @foreach (var RecognizerResult in Model.RecognizeResult)
-        {
-            <div class="img-holder">
-                @foreach (var Face in RecognizerResult.FaceList)
-                {
-                    <div class="face-region" title="@Face.StudentName" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture">
+                <i></i>Log Image</h3>
+        </div>
+        <div class="widget-body">
+            @foreach (var RecognizerResult in Model.RecognizeResult)
+            {
+                <div class="img-holder">
+                    @foreach (var Face in RecognizerResult.FaceList)
+                    {
+                        <div class="face-region" title="@Face.StudentName" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
                                        Face.X, Face.Y, Face.Width, Face.Height);">
-                    </div>
-                }
-                <img src="@Url.Content("~/Content/Log/" + RecognizerResult.ImageLink)" />
-            </div>
-        }
-    </fieldset>
-
+                        </div>
+                    }
+                    <img src="@Url.Content("~/Content/Log/" + RecognizerResult.ImageLink)" />
+                </div>
+            }
+        </div>
+    </div>
 </div>

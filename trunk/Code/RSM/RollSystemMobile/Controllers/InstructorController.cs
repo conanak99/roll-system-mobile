@@ -28,9 +28,9 @@ namespace RollSystemMobile.Controllers
             RollBO = new RollCallBusiness();
         }
 
-        public ActionResult RollCallList()
+        public ActionResult Index_Home()
         {
-            //Neu bam vao mon dang day, moi ra index
+             //Neu bam vao mon dang day, moi ra index
             //Tim instructor da dang nhạp vao
 
             string Username = this.HttpContext.User.Identity.Name;
@@ -53,6 +53,19 @@ namespace RollSystemMobile.Controllers
             model.CurrentRollCall = CurrentRollCall;
             model.TeachingRollCall = RollCalls;
             return View(model);
+        }
+
+        public ActionResult TeachingCalendar()
+        {
+            //Neu bam vao mon dang day, moi ra index
+            //Tim instructor da dang nhạp vao
+
+            string Username = this.HttpContext.User.Identity.Name;
+            User User = AccBO.GetUserByUsername(Username);
+            Instructor AuthorizedInstructor = InsBO.GetInstructorByUserID(User.UserID);
+
+            ViewBag.InstructorID = AuthorizedInstructor.InstructorID;
+            return View();
         }
 
 

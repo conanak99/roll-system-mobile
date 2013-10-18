@@ -1,0 +1,61 @@
+﻿@model RollSystemMobile.Models.ViewModels.InstructorViewModel
+@{
+    ViewBag.Title = "Instructor Home";
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index_Home")" class="glyphicons home"><i></i>Home</a></li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons notes">
+                <i></i>Information</h3>
+        </div>
+        <div class="widget-body">
+            Hello, this is the home page for instructor. You can view your teaching calendar,
+            take attendance of existing class.
+        </div>
+    </div>
+    <div class="separator bottom">
+    </div>
+    <h3>
+        Teaching Class</h3>
+    <div class="row-fluid">
+        @foreach (var RollCall in Model.TeachingRollCall)
+        {
+            bool IsCurrentRollCall = Model.CurrentRollCall != null && RollCall.RollCallID == Model.CurrentRollCall.RollCallID;   
+            <div class="span4">
+                <div class="widget widget-3 margin-bottom-none">
+                    <div class="widget-head">
+                        <h4 class="heading">
+                            <span class="glyphicons @(IsCurrentRollCall ? "book_open" : "book")"><i></i></span>@RollCall.Subject.ShortName - @RollCall.Class.ClassName</h4>
+                    </div>
+                    <div class="widget-body large dashboard cancellations">
+                        <span><span>From</span> <span>@Html.FormatDate(RollCall.BeginDate)</span> </span>
+                        <span><span>To</span> <span>@Html.FormatDate(RollCall.EndDate)</span></span>
+                    </div>
+                    <div class="widget-footer align-center">
+                        @if (IsCurrentRollCall)
+                        {
+                            <a href="@Url.Action("Index", "Instructor")" class="glyphicons camera"><i></i>Attendance</a>
+                        }
+                        <a href="@Url.Action("RollCallDetail", "Instructor", new { id = @RollCall.RollCallID })" class="glyphicons list">
+                            <i></i>Detail</a>
+                    </div>
+                    @if (IsCurrentRollCall)
+                    {
+                        <span class="count label label-success">Current: @Html.FormatTime(@RollCall.StartTime)
+                            - @Html.FormatTime(@RollCall.EndTime) </span>
+                    }
+                    else
+                    {
+                        <span class="count label label-important">@Html.FormatTime(@RollCall.StartTime) - @Html.FormatTime(@RollCall.EndTime)
+                        </span>
+                    }
+                </div>
+            </div>      
+        }
+    </div>
+</div>

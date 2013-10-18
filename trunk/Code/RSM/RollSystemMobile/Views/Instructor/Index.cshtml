@@ -1,36 +1,95 @@
 ﻿@model RollSystemMobile.Models.ViewModels.InstructorViewModel
 @{
-    ViewBag.Title = "Instructor Page";
+    ViewBag.Title = "Current Roll Call";
 }
-<a href="@Url.Action("RollCallList")" class="btn btn-primary"><i class="icon-white icon-chevron-left">
-</i>Back</a>
-<h4>
-    Current Roll Call</h4>
-@if (Model.CurrentRollCall != null)
+
+@section ExtraHead 
 {
-    <dl class="dl-horizontal">
-        <dt>Roll Call</dt>
-        <dd>@Model.CurrentRollCall.RollCallID</dd>
-        <dt>Subject</dt>
-        <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
-        <dt>Instructor</dt>
-        <dd>@Model.AuthorizedInstructor.Fullname</dd>
-        <dt>Class</dt>
-        <dd>@Model.CurrentRollCall.Class.ClassName</dd>
-        <dt>Date</dt>
-        <dd>
-            From @Html.FormatDate(@Model.CurrentRollCall.BeginDate) to @Html.FormatDate(@Model.CurrentRollCall.EndDate)</dd>
-        <dt>Time</dt>
-        <dd>@Html.FormatTime(@Model.CurrentRollCall.StartTime) - @Html.FormatTime(@Model.CurrentRollCall.EndTime)</dd>
-        <dt class="margin-top-12">Student List</dt>
-        <dd style="margin-top: 8px;">
-            <div class="accordion-group" style="width: 600px">
-                <div class="accordion-heading" style="height: 35px">
-                    <a class="accordion-toggle" data-toggle="collapse" href="#studentList" style="margin-top: -3px">
-                        Show</a>
+    <style>
+        dl.dl-horizontal
+        {
+            margin-top: -3px;
+        }
+        
+        .dl-horizontal dt
+        {
+            width: 120px;
+        }
+        
+        .dl-horizontal dd
+        {
+            margin-left: 140px;
+        }
+        
+        .input-prepend .add-on:first-child
+        {
+            border-radius: 0;
+        }
+    </style>
+}
+
+
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index_Home")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>Current Roll Call</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="row-fluid">
+        <div class="span5">
+            <div class="widget">
+                <div class="widget-head">
+                    <h3 class="heading glyphicons notes">
+                        <i></i>Current Roll Call</h3>
                 </div>
-                <div id="studentList" class="accordion-body collapse">
-                    <div class="accordion-inner">
+                <div class="widget-body">
+                    @if (Model.CurrentRollCall != null)
+                    {
+                        <dl class="dl-horizontal">
+                            <dt>Roll Call</dt>
+                            <dd>@Model.CurrentRollCall.RollCallID</dd>
+                            <dt>Subject</dt>
+                            <dd>@Model.CurrentRollCall.Subject.ShortName</dd>
+                            <dt>Instructor</dt>
+                            <dd>@Model.AuthorizedInstructor.Fullname</dd>
+                            <dt>Class</dt>
+                            <dd>@Model.CurrentRollCall.Class.ClassName</dd>
+                            <dt>Date</dt>
+                            <dd>
+                                From @Html.FormatDate(@Model.CurrentRollCall.BeginDate) to @Html.FormatDate(@Model.CurrentRollCall.EndDate)</dd>
+                            <dt>Time</dt>
+                            <dd>@Html.FormatTime(@Model.CurrentRollCall.StartTime) - @Html.FormatTime(@Model.CurrentRollCall.EndTime)</dd>
+                            <dt class="margin-top-12">Check<br />
+                                Attendance<br />
+                                using image</dt>
+                            <dd style="margin-top: 8px;">
+                                @using (Html.BeginForm("CheckAttendanceAuto", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                {
+                                    <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
+                                    <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
+                                    <button class="btn btn-primary" id="btnUpload">
+                                        Upload</button>
+                                }
+                            </dd>
+                        </dl>
+                    }
+                    else
+                    {
+                        <h3>
+                            You aren't teaching any class at present.</h3>
+                    }
+                </div>
+            </div>
+            </div>
+            <div class="span7">
+                <div class="widget">
+                    <div class="widget-head">
+                        <h3 class="heading glyphicons user">
+                            <i></i>Student List</h3>
+                    </div>
+                    <div class="widget-body">
                         @if (Model.CurrentAttendanceLog == null)
                         { 
                             <table class="table table-striped table-condensed">
@@ -136,10 +195,10 @@
                                             </td>
                                             <td>
                                                 <div class="input-prepend">
-                                                    <span class="add-on note-prepend">@(Attendance == null || Attendance.Note == null  || Attendance.Note.Split(':').Length < 2 ?
+                                                    <span class="add-on note-prepend">@(Attendance == null || Attendance.Note == null || Attendance.Note.Split(':').Length < 2 ?
                                                     "" : @Attendance.Note.Split(':')[0])</span>
-                                                    <input type="text" name="AttendanceChecks[@CheckIndex].Note" class="span2" 
-                                                                value="@(Attendance == null || Attendance.Note == null  || Attendance.Note.Split(':').Length < 2 ?
+                                                    <input type="text" name="AttendanceChecks[@CheckIndex].Note" class="span6" 
+                                                                value="@(Attendance == null || Attendance.Note == null || Attendance.Note.Split(':').Length < 2 ?
                                                                 "" : @Attendance.Note.Split(':')[1].Trim())" />
                                                 </div>
                                             </td>
@@ -169,7 +228,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="5" class="text-center">
-                                            <button class="btn btn-info">
+                                            <button class="btn btn-primary">
                                                 Submit Attendance</button>
                                         </td>
                                     </tr>
@@ -180,30 +239,13 @@
                     </div>
                 </div>
             </div>
-        </dd>
-        <dt class="margin-top-12">Upload Image for<br />
-            Attendance Check</dt>
-        <dd style="margin-top: 8px;">
-            @using (Html.BeginForm("CheckAttendanceAuto", "Instructor", FormMethod.Post, new { enctype = "multipart/form-data" }))
-            {
-                <input type="hidden" name="RollCallID" value="@Model.CurrentRollCall.RollCallID" />
-                <input type="file" id="files" name="ImageFiles" accept="image/*" multiple />
-                <button class="btn" id="btnUpload">
-                    Upload</button>
-            }
-        </dd>
-    </dl>
-}
-else
-{
-    <h3>
-        You aren't teaching any class at present.</h3>
-}
-<script type="text/javascript">
-    $('#PresentRadio').change(function () {
-        $("input:radio[value=true]").prop("checked", true);
-    });
-    $('#AbsentRadio').change(function () {
-        $("input:radio[value=false]").prop("checked", true);
-    });
-</script>
+            <script type="text/javascript">
+                $('#PresentRadio').change(function () {
+                    $("input:radio[value=true]").prop("checked", true);
+                });
+                $('#AbsentRadio').change(function () {
+                    $("input:radio[value=false]").prop("checked", true);
+                });
+
+                $(":file").filestyle({ buttonText: "Select class image" });
+            </script>
