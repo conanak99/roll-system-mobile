@@ -256,11 +256,9 @@ namespace RollSystemMobile.Models.BusinessObject
             //Tinh so sinh vien di hoc
             Worksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
 
-            /*
-            TimeSpan TotalDate = RollCall.EndDate - RollCall.BeginDate;
-            int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days/ 7) * 5; //1 tuan 7 ngay hoc 5 buoi
-            */
             int NumberOfSlot = RollCall.StudySessions.Count; //RollCall.Subject.NumberOfSession;
+            //Lam tron number of slot, vd 17,18 thanh 20
+            NumberOfSlot = (int)Math.Ceiling((double)NumberOfSlot / 5) * 5;
             int FinalColumnIndex = 4 + NumberOfSlot;
 
             //Tinh % di hoc cua moi SV
@@ -310,6 +308,7 @@ namespace RollSystemMobile.Models.BusinessObject
             Worksheet.Cells["G3"].Value = RollCall.Class.ClassName;
             Worksheet.Cells["G4"].Value = RollCall.Subject.ShortName;
             Worksheet.Cells["G5"].Value = NumberOfSlot;
+            Worksheet.Cells["G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
             Worksheet.Cells["G6"].Value = String.Format("{0} - {1}",
                 RollCall.StartTime.ToString(@"hh\:mm"), RollCall.EndTime.ToString(@"hh\:mm"));
             Worksheet.Cells["G7"].Value = String.Format("{0} to {1}",
@@ -343,6 +342,9 @@ namespace RollSystemMobile.Models.BusinessObject
             TimeSpan TotalDate = RollCall.EndDate - RollCall.BeginDate;
             int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days /  7) * 5;  //1 tuan 7 ngay hoc 5 buoi
             */
+
+            //Lam tron number of slot, vd 17,18 thanh 20
+            NumberOfSlot = (int)Math.Ceiling((double)NumberOfSlot / 5) * 5;
 
 
             int FinalColumnIndex = 4 + NumberOfSlot;

@@ -7,6 +7,7 @@ using System.Web.Security;
 using System.Web.Routing;
 using RollSystemMobile.Models;
 using RollSystemMobile.Models.BusinessObject;
+using RollSystemMobile.Models.HelperClass;
 
 namespace RollSystemMobile
 {
@@ -41,6 +42,7 @@ namespace RollSystemMobile
 
             FaceBusiness.SetXMLPath(Server.MapPath("~/"));
             FaceBusiness.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
+            SimpleLog.SetLogFolder(Server.MapPath("~/Content/Log/TextLog"));
         }
 
 

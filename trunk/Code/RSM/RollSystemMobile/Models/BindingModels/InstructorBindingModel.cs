@@ -30,6 +30,8 @@ namespace RollSystemMobile.Models.BindingModels
     {
         public String id { get; set; }
         public String title { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public String start { get; set; }
         public String end { get; set; }
         public String note { get; set; }

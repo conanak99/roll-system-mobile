@@ -20,9 +20,18 @@
     </div>
     <div class="separator bottom">
     </div>
+        @if (Model.TeachingRollCall.Count() == 0)
+        {
+        <h3> Teaching Class: None</h3>
+        }
+        else
+        {
     <h3>
         Teaching Class</h3>
+        }
     <div class="row-fluid">
+
+
         @foreach (var RollCall in Model.TeachingRollCall)
         {
             bool IsCurrentRollCall = Model.CurrentRollCall != null && RollCall.RollCallID == Model.CurrentRollCall.RollCallID;   

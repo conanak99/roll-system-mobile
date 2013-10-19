@@ -156,6 +156,7 @@
           <Property Name="IsActive" Type="bit" Nullable="false" />
           <Property Name="UserID" Type="int" />
           <Property Name="SubjectTypeID" Type="int" Nullable="false" />
+          <Property Name="ApiToken" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="LogImage">
           <Key>
@@ -794,6 +795,7 @@
           <Property Type="Int32" Name="SubjectTypeID" Nullable="false" />
           <NavigationProperty Name="SubjectType" Relationship="RSMModel.FK_Instructor_SubjectType" FromRole="Instructor" ToRole="SubjectType" />
           <NavigationProperty Name="RollCalls" Relationship="RSMModel.FK_RollCall_Instructor" FromRole="Instructor" ToRole="RollCall" />
+          <Property Type="String" Name="ApiToken" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="LogImage">
           <Key>
@@ -1260,7 +1262,8 @@
             <ScalarProperty Name="IsActive" ColumnName="IsActive" />
           </MappingFragment></EntityTypeMapping></EntitySetMapping>
           <EntitySetMapping Name="Instructors"><EntityTypeMapping TypeName="RSMModel.Instructor"><MappingFragment StoreEntitySet="Instructor">
-            <ScalarProperty Name="SubjectTypeID" ColumnName="SubjectTypeID" />
+            <ScalarProperty Name="ApiToken" ColumnName="ApiToken" />
+                <ScalarProperty Name="SubjectTypeID" ColumnName="SubjectTypeID" />
                 <ScalarProperty Name="InstructorID" ColumnName="InstructorID" />
             <ScalarProperty Name="Fullname" ColumnName="Fullname" />
             <ScalarProperty Name="Email" ColumnName="Email" />

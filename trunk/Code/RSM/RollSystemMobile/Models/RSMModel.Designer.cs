@@ -1231,6 +1231,30 @@ namespace RollSystemMobile.Models
         private global::System.Int32 _SubjectTypeID;
         partial void OnSubjectTypeIDChanging(global::System.Int32 value);
         partial void OnSubjectTypeIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public global::System.String ApiToken
+        {
+            get
+            {
+                return _ApiToken;
+            }
+            set
+            {
+                OnApiTokenChanging(value);
+                ReportPropertyChanging("ApiToken");
+                _ApiToken = StructuralObject.SetValidValue(value, true);
+                ReportPropertyChanged("ApiToken");
+                OnApiTokenChanged();
+            }
+        }
+        private global::System.String _ApiToken;
+        partial void OnApiTokenChanging(global::System.String value);
+        partial void OnApiTokenChanged();
 
         #endregion
     

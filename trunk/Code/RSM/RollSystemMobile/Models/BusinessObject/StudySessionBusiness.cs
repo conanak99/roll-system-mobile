@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Models.BusinessObject
 {
     public class StudySessionBusiness : GenericBusiness<StudySession>
     {
+        private CalendarBusiness CalBO;
         /// <summary>
         /// Create 
         /// </summary>
         public StudySessionBusiness()
         {
-
+            CalBO = new CalendarBusiness();
         }
         public StudySessionBusiness(RSMEntities DB)
             : base(DB)
         {
-
+            CalBO = new CalendarBusiness();
         }
 
         public List<StudySession> GetRollCallStudySessions(int RollCallID)
@@ -103,6 +104,8 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
                 else
                 {
+                    //Sync calendar
+                    CalBO.SyncInstructorCalendar(Session.InstructorID);
                     return base.Insert(Session);
                 }
             }
@@ -179,6 +182,8 @@ namespace RollSystemMobile.Models.BusinessObject
                 {
                     base.Detach(Session);
                     base.Update(Session);
+                    //Sync calendar
+                    CalBO.SyncInstructorCalendar(Session.InstructorID);
                 }
             }
         }
@@ -200,13 +205,18 @@ namespace RollSystemMobile.Models.BusinessObject
             //Loai tiep nhung slot trong khoang thoi gian dc chon
             for (DateTime SelectedDate = FromDate; SelectedDate <= ToDate; SelectedDate = SelectedDate.AddDays(1))
             {
-                foreach (var Time in rollCall.Class.StudySessions.
-                Where(ss => ss.SessionDate == SelectedDate).Select(ss => ss.StartTime))
+                //Loai tiep nhung slot trong khoang thoi gian dc chon
+                foreach (var Session in rollCall.Class.StudySessions.
+                Where(ss => ss.SessionDate == SelectedDate))
                 {
-                    if (TimeList.Contains(Time))
+                    foreach (var Time in TimeList.ToList())
                     {
-                        TimeList.Remove(Time);
+                        if (Time >= Session.StartTime && Time <= Session.EndTime)
+                        {
+                            TimeList.Remove(Time);
+                        }
                     }
+
                 }
             }
 
@@ -264,28 +274,33 @@ namespace RollSystemMobile.Models.BusinessObject
             List<TimeSpan> TimeList = AllAvailableTime(rollCall.Subject.NumberOfSlot);
 
             //Loai tiep nhung slot trong khoang thoi gian dc chon
-            foreach (var Time in rollCall.Class.StudySessions.
-            Where(ss => ss.SessionDate == SelectedDate).Select(ss => ss.StartTime))
+            foreach (var Session in rollCall.Class.StudySessions.
+            Where(ss => ss.SessionDate == SelectedDate))
             {
-                if (TimeList.Contains(Time))
+                foreach (var Time in TimeList.ToList())
                 {
-                    TimeList.Remove(Time);
+                    if (Time >= Session.StartTime && Time <= Session.EndTime )
+                    {
+                        TimeList.Remove(Time);
+                    }
                 }
+                
             }
 
-            foreach (var Time in rollCall.Instructor.StudySessions.
-            Where(ss => ss.SessionDate == SelectedDate).Select(ss => ss.StartTime))
+            foreach (var Session in rollCall.Instructor.StudySessions.
+            Where(ss => ss.SessionDate == SelectedDate))
             {
-                if (TimeList.Contains(Time))
+                foreach (var Time in TimeList.ToList())
                 {
-                    TimeList.Remove(Time);
+                    if (Time >= Session.StartTime && Time <= Session.EndTime)
+                    {
+                        TimeList.Remove(Time);
+                    }
                 }
             }
 
             return TimeList;
         }
-
-
 
         public List<Instructor> GetAvaibleInstructor(int RollCallID, TimeSpan SelectedTime, DateTime FromDate, DateTime ToDate)
         {
@@ -296,7 +311,7 @@ namespace RollSystemMobile.Models.BusinessObject
             for (DateTime SelectedDate = FromDate; SelectedDate <= ToDate; SelectedDate = SelectedDate.AddDays(1))
             {
                 var BusyInstructors = AllInstructors.Where(ins => ins.StudySessions.Any(ss =>
-                    ss.StartTime == SelectedTime && ss.SessionDate == SelectedDate)).ToList();
+                    ss.StartTime <= SelectedTime && ss.EndTime >=SelectedTime && ss.SessionDate == SelectedDate)).ToList();
 
                 foreach (var Ins in BusyInstructors)
                 {
@@ -311,16 +326,45 @@ namespace RollSystemMobile.Models.BusinessObject
             RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
             var rollCall = RollBO.GetRollCallByID(RollCallID);
 
+            int OldInstructorID = 0;
             foreach (var StudySession in rollCall.StudySessions.ToList())
             {
                 if (StudySession.SessionDate >= FromDate && StudySession.SessionDate <= ToDate)
                 {
+                    OldInstructorID = StudySession.InstructorID;
                     StudySession.InstructorID = InstructorID;
                     StudySession.Note = Note;
                     base.Detach(StudySession);
                     base.Update(StudySession);
                 }
             }
+            //Sync calendar cho ca 2 giao vien
+            CalBO.SyncInstructorCalendar(OldInstructorID);
+            CalBO.SyncInstructorCalendar(InstructorID);
+        }
+
+        public List<Event> GetCalendarEvent(int InstructorID)
+        {
+            RollCallBusiness RollBO = new RollCallBusiness();
+            var CurrentRollCall = RollBO.GetInstructorFutureRollCalls(InstructorID);
+
+            var TotalCompliation = new List<Event>();
+            foreach (RollCall rollCall in CurrentRollCall)
+            {
+                var TimeAndClass = rollCall.StudySessions.Where(ss => ss.InstructorID == InstructorID).Select(s => new Event()
+                {
+                    id = s.SessionID + "",
+                    title = s.StartTime.ToString(@"hh\:mm") + " - " + s.EndTime.ToString(@"hh\:mm") + "\n" +
+                    s.Class.ClassName + " - " + rollCall.Subject.ShortName,
+                    StartDate = s.SessionDate.Add(s.StartTime),
+                    EndDate = s.SessionDate.Add(s.EndTime),
+                    start = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.StartTime.ToString(@"hh\:mm"),
+                    end = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.EndTime.ToString(@"hh\:mm")
+                });
+
+                TotalCompliation.AddRange(TimeAndClass.ToList());
+            }
+            return TotalCompliation;
         }
     }
 }

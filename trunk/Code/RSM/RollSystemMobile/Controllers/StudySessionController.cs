@@ -15,6 +15,7 @@ namespace RollSystemMobile.Controllers
         // GET: /StudySession/
         private StudySessionBusiness StuSesBO;
         private RollCallBusiness RollBO;
+
         public StudySessionController()
         {
             StuSesBO = new StudySessionBusiness();
@@ -121,5 +122,6 @@ namespace RollSystemMobile.Controllers
 
             return Json(new { message = "Success" }, JsonRequestBehavior.AllowGet);
         }
+
     }
 }
