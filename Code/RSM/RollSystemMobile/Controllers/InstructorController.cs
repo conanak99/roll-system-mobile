@@ -7,6 +7,7 @@ using RollSystemMobile.Models;
 using RollSystemMobile.Models.BusinessObject;
 using RollSystemMobile.Models.BindingModels;
 using RollSystemMobile.Models.ViewModels;
+using RollSystemMobile.Models.GoogleApi;
 
 namespace RollSystemMobile.Controllers
 {
@@ -64,8 +65,13 @@ namespace RollSystemMobile.Controllers
             User User = AccBO.GetUserByUsername(Username);
             Instructor AuthorizedInstructor = InsBO.GetInstructorByUserID(User.UserID);
 
-            ViewBag.InstructorID = AuthorizedInstructor.InstructorID;
-            return View();
+            //Tao Url
+            var APIWrapper = new GoogleCalendarAPIWrapper();
+            APIWrapper.RedirectUri = @"http://localhost:35728/Instructor/Authorize";
+            ViewBag.AuthUrl = APIWrapper.GetAuthUrl();
+            ViewBag.Message = TempData["Message"];
+
+            return View(AuthorizedInstructor);
         }
 
 
@@ -134,7 +140,7 @@ namespace RollSystemMobile.Controllers
             //Danh sach sinh vien trong log
             StudentBusiness StuBO = new StudentBusiness();
             List<Student> Students = StuBO.Find(stu => stu.StudentAttendances.
-                Any(attend => attend.LogID == Log.LogID)).ToList();
+                Any(attend => attend.LogID == Log.LogID && attend.IsPresent)).ToList();
             RollCall CurrentRollCall = RollBO.GetRollCallByID(RollCallID);
 
             //Tao model de show trong view
@@ -196,5 +202,38 @@ namespace RollSystemMobile.Controllers
             return PartialView("_LogDetail", Model);
         }
 
+        public ActionResult Authorize(String code)
+        {
+            var APIWrapper = new GoogleCalendarAPIWrapper();
+            APIWrapper.RedirectUri = @"http://localhost:35728/Instructor/Authorize";
+            String RefreshToken = APIWrapper.GetRefreshToken(code);
+
+            //Tim instructor da dang nhạp vao
+            string Username = this.HttpContext.User.Identity.Name;
+            User User = AccBO.GetUserByUsername(Username);
+            Instructor AuthorizedInstructor = InsBO.GetInstructorByUserID(User.UserID);
+            
+            //Tu code, lay refresh token
+            AuthorizedInstructor.ApiToken = RefreshToken;
+            InsBO.UpdateExist(AuthorizedInstructor);
+
+            TempData["Message"] = "Token received. Your calendar will be sync to Google Calendar later.";
+            return RedirectToAction("TeachingCalendar");
+        }
+
+        public ActionResult SyncManual()
+        {
+            //Tim instructor da dang nhạp vao
+            string Username = this.HttpContext.User.Identity.Name;
+            User User = AccBO.GetUserByUsername(Username);
+            Instructor AuthorizedInstructor = InsBO.GetInstructorByUserID(User.UserID);
+
+            CalendarBusiness CalBO = new CalendarBusiness();
+            CalBO.SyncInstructorCalendar(AuthorizedInstructor.InstructorID);
+
+            TempData["Message"] = "Your calendar was synced to Google Calendar at" 
+                + DateTime.Now.ToString("dd-MM-yyyy  HH:mm:ss");
+            return RedirectToAction("TeachingCalendar");
+        }
     }
 }

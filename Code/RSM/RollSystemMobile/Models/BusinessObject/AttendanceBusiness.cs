@@ -62,6 +62,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
             }
 
+            /*
             //Bat dau danh dau attendance
             foreach (int StudentID in StudentIDs)
             {
@@ -74,6 +75,44 @@ namespace RollSystemMobile.Models.BusinessObject
                         IsPresent = true
                     };
                     Log.StudentAttendances.Add(Attendance);
+                }
+            }
+
+             */
+
+            //Lay toan bo student cua roll call
+            RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
+            RollCall rollCall = RollBO.GetRollCallByID(RollCallID);
+            List<int> RollCallStudentIDs = rollCall.Students.Select(s => s.StudentID).ToList();
+
+            foreach (int StudentID in RollCallStudentIDs)
+            {
+                //Neu student chua co trong log thi add vao
+                if (!Log.StudentAttendances.Any(attendace => attendace.StudentID == StudentID))
+                {
+                    StudentAttendance Attendance = new StudentAttendance()
+                    {
+                        StudentID = StudentID,
+                    };
+                    //Xem co ten trong list cac id da nhan dc hay ko
+                    if (StudentIDs.Contains(StudentID))
+                    {
+                        Attendance.IsPresent = true;
+                    }
+                    else
+                    {
+                        Attendance.IsPresent = false;
+                    }
+                    Log.StudentAttendances.Add(Attendance);
+                }
+                else
+                {
+                    StudentAttendance Attendance = Log.StudentAttendances.SingleOrDefault(attendance => attendance.StudentID == StudentID);
+                    if (StudentIDs.Contains(StudentID))
+                    {
+                         Attendance.IsPresent = true;
+                    }
+                    //Ko chuyen tu true sang false, vi moi lan diem danh co the thieu nguoi
                 }
             }
 
@@ -95,6 +134,8 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             
             //Tim xem da co log manual cho ngay dua vao chua
+            AttendanceLog AutoLog = GetAttendanceLogAtDate(RollCallID, Date, 1);
+
             AttendanceLog Log = GetAttendanceLogAtDate(RollCallID, Date, 2);
             bool LogExist = true;
             if (Log == null)
@@ -118,9 +159,24 @@ namespace RollSystemMobile.Models.BusinessObject
                     Attendance = new StudentAttendance()
                     {
                         StudentID = AttendanceCheck.StudentID,
-                        Note = AttendanceCheck.Note,
                         IsPresent = AttendanceCheck.IsPresent
                     };
+
+                    var AutoAttend = AutoLog.StudentAttendances.FirstOrDefault(at => at.StudentID == AttendanceCheck.StudentID);
+                    if (AutoAttend.IsPresent != AttendanceCheck.IsPresent)
+                    {
+                        if (AutoAttend.IsPresent)
+                        {
+                            Attendance.Note = String.Format("({0}) P->A : {1}", username, AttendanceCheck.Note);
+                        }
+                        else
+                        {
+                            Attendance.Note = String.Format("({0}) A->P : {1}", username, AttendanceCheck.Note);
+                        }
+                        
+                    }
+
+
                     Log.StudentAttendances.Add(Attendance);
                 }
                 else

@@ -1,6 +1,6 @@
-﻿@model RollSystemMobile.Models.ViewModels.InstructorViewModel
+﻿@model RollSystemMobile.Models.Instructor
 @{
-    ViewBag.Title = "RollCallList";
+    ViewBag.Title = "Teaching Calendar";
 }
 @section ExtraHead {
     <style>
@@ -30,12 +30,31 @@
 <div class="separator bottom">
 </div>
 <div class="innerLR">
+
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-primary">
+    @ViewBag.Message
+    </div>
+}
     <div class="widget">
         <div class="widget-head">
             <h3 class="heading glyphicons calendar">
                 <i></i>Teaching Calendar</h3>
         </div>
         <div class="widget-body">
+        <div class="text-center" style="padding-bottom:10px">
+        @if (Model.ApiToken == null)
+        {
+             <a class="btn btn-primary" href="@ViewBag.AuthUrl"><i></i>Sync with Google Calendar</a>
+        }
+        else
+        {
+            <a class="btn btn-primary" href="@ViewBag.AuthUrl"><i></i>Renew Token</a>
+            <a class="btn btn-info" href="@Url.Action("SyncManual")">Request Calendar Sync Now</a>
+        }
+       
+       </div>
             <div id='calendar'>
             </div>
         </div>
@@ -51,7 +70,7 @@
                 right: 'month,basicWeek,basicDay'
             },
             editable: false,
-            events: '@Url.Action("GetTeachingSession", "Instructors", new { InstructorID = ViewBag.InstructorID })',
+            events: '@Url.Action("GetCalendarEvent", "Instructors", new { InstructorID = Model.InstructorID })',
             eventClick: function (calEvent, jsEvent, view) {
             },
             eventRender: function (event, element) {

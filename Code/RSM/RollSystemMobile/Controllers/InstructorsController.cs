@@ -119,28 +119,11 @@ namespace RollSystemMobile.Controllers
             return View(Instructor);
         }
 
-        public ActionResult GetTeachingSession(int InstructorID)
+        public ActionResult GetCalendarEvent(int InstructorID)
         {
-            RollCallBusiness RollBO = new RollCallBusiness();
-            var CurrentRollCall = RollBO.GetInstructorFutureRollCalls(InstructorID);
-
-            var TotalCompliation = new List<Event>();
-
-            foreach (RollCall rollCall in CurrentRollCall)
-            {
-                var TimeAndClass = rollCall.StudySessions.Where(ss => ss.InstructorID == InstructorID).Select(s => new Event()
-                {
-                    id = s.SessionID +"",
-                    title =  s.StartTime.ToString(@"hh\:mm") + " - " + s.EndTime.ToString(@"hh\:mm") + "\n" +
-                    s.Class.ClassName + " - " + rollCall.Subject.ShortName,
-                    start = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.StartTime.ToString(@"hh\:mm"),
-                    end = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.EndTime.ToString(@"hh\:mm")
-                });
-
-                TotalCompliation.AddRange(TimeAndClass.ToList());
-            }
-
-            return Json(TotalCompliation, JsonRequestBehavior.AllowGet);
+            StudySessionBusiness StuSesBO = new StudySessionBusiness();
+            List<Event> TeachingSession = StuSesBO.GetCalendarEvent(InstructorID);
+            return Json(TeachingSession, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

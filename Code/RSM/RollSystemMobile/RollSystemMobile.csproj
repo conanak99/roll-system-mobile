@@ -145,6 +145,7 @@
     <Compile Include="Models\BindingModels\InstructorBindingModel.cs" />
     <Compile Include="Models\BusinessObject\ClassBusiness.cs" />
     <Compile Include="Models\BusinessObject\AccountBusiness.cs" />
+    <Compile Include="Models\BusinessObject\CalendarBusiness.cs" />
     <Compile Include="Models\BusinessObject\StaffBusiness.cs" />
     <Compile Include="Models\BusinessObject\StudySessionBusiness.cs" />
     <Compile Include="Models\BusinessObject\SelectListFactory.cs" />
@@ -155,6 +156,10 @@
     <Compile Include="Models\BusinessObject\GenericBusiness.cs" />
     <Compile Include="Models\BusinessObject\RollCallBusiness.cs" />
     <Compile Include="Models\BusinessObject\FaceBusiness.cs" />
+    <Compile Include="Models\GoogleApi\GoogleCalendarAPIObject.cs" />
+    <Compile Include="Models\GoogleApi\GoogleCalendarAPIWrapper.cs" />
+    <Compile Include="Models\GoogleApi\WebUtils.cs" />
+    <Compile Include="Models\HelperClass\SimpleLog.cs" />
     <Compile Include="Models\HelperClass\OtherHelper.cs" />
     <Compile Include="Models\HelperClass\MyHtmlHelper.cs" />
     <Compile Include="Models\HelperClass\ExcelReader.cs" />
