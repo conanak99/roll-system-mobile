@@ -99,6 +99,8 @@ namespace RollSystemMobile.Controllers
             RollCallBusiness RollBO = new RollCallBusiness();
             RollCall rollcall = RollBO.GetRollCallByID(RollCallID);
 
+            AttendanceBusiness AttenBO = new AttendanceBusiness();
+            var AttendLog = AttenBO.GetRollCallAttendanceLog(RollCallID);
 
             var RollJson = new
             {
@@ -107,10 +109,31 @@ namespace RollSystemMobile.Controllers
                 classes = rollcall.Class.ClassName,
                 time = rollcall.StartTime.ToString(@"hh\:mm") + " - " + rollcall.EndTime.ToString(@"hh\:mm"),
                 date = rollcall.BeginDate.ToString("dd-MM-yyyy") + " to " + rollcall.EndDate.ToString("dd-MM-yyyy"),
-                studentList = rollcall.Students.Select(st => new { studentID = st.StudentID, studentCode = st.StudentCode, studentName = st.FullName })
+                studentList = rollcall.Students.Select(st => new { studentID = st.StudentID, studentCode = st.StudentCode, studentName = st.FullName }),
+                logList = AttendLog.OrderByDescending(log => log.LogDate).Select(log => new {rollID = log.RollCallID, logID = log.LogID, 
+                    logDate = log.LogDate.ToString("dd-MM-yyyy"), 
+                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count })
             };
 
             return Json(RollJson, JsonRequestBehavior.AllowGet);
         }
+
+        public ActionResult GetLogDetail(int LogID)
+        {
+            AttendanceBusiness AttenBO = new AttendanceBusiness();
+            AttendanceLog Log = AttenBO.GetLogByID(LogID);
+
+            var LogJson = Log.StudentAttendances.Select(sa => new
+            {
+                studentID = sa.StudentID,
+                studentCode = sa.Student.StudentCode,
+                studentName = sa.Student.FullName,
+                isPresent = sa.IsPresent
+            });
+
+            return Json(LogJson, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }
