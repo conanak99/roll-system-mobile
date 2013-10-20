@@ -275,6 +275,9 @@ namespace RollSystemMobile.Models.BusinessObject
             return StudentIDs.ToList();
         }
 
-
+        public AttendanceLog GetLogByID(int LogID)
+        {
+            return base.GetList().SingleOrDefault(log => log.LogID == LogID);
+        }
     }
 }
