@@ -18,6 +18,7 @@ namespace RollSystemMobile.Controllers
         ClassBusiness ClaBO;
         SubjectBusiness SubBO;
         StudentBusiness StuBO;
+        InstructorBusiness InsBO;
 
         public RollCallController()
         {
@@ -27,6 +28,7 @@ namespace RollSystemMobile.Controllers
             ClaBO = new ClassBusiness(DB);
             SubBO = new SubjectBusiness(DB);
             StuBO = new StudentBusiness(DB);
+            InsBO = new InstructorBusiness(DB);
         }
 
         //
@@ -80,7 +82,7 @@ namespace RollSystemMobile.Controllers
         {
             RollCall rollcall = RollBO.GetRollCallByID(RollCallID.Value);
             String[] tmp = StudentID.Split(',');
-            for (int i = 0; i < tmp.Length; i++) 
+            for (int i = 0; i < tmp.Length; i++)
             {
                 int test = int.Parse(tmp[i]);
                 var Student = StuBO.GetStudentByID(test);
@@ -112,8 +114,8 @@ namespace RollSystemMobile.Controllers
                 "ClassID", "ClassName");
             //Mac dinh, lay semester moi nhat
             ViewBag.SemesterID = SlFactory.MakeSemesterSelectList();
-               
-            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "ShortName");
+
+            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName");
 
             return View();
         }
@@ -122,33 +124,35 @@ namespace RollSystemMobile.Controllers
         // POST: /RollCall/Create
 
         [HttpPost]
-        public ActionResult Create(RollCall rollcall, int MajorID, int ClassID)
+        public ActionResult Create(RollCall rollcall, int MajorID, int ClassID, TimeSpan? otherTime)
         {
-            if (ModelState.IsValid)
-            {
 
-                List<string> ErrorList = RollBO.ValidRollCall(rollcall);
-                if (ErrorList.Count == 0)
+            List<string> ErrorList = RollBO.ValidRollCall(rollcall,otherTime);
+            if (ErrorList.Count == 0)
+            {
+                if (otherTime.ToString() != "")
                 {
-                    RollBO.Insert(rollcall);
-                    return RedirectToAction("Index");
+                    rollcall.StartTime = TimeSpan.Parse(otherTime.ToString());
                 }
-                else
+                RollBO.Insert(rollcall);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                foreach (var Error in ErrorList)
                 {
-                    foreach (var Error in ErrorList)
-                    {
-                        ModelState.AddModelError(String.Empty, Error);
-                    }
+                    ModelState.AddModelError(String.Empty, Error);
                 }
             }
 
+
             ViewBag.InstructorID = SlFactory.MakeSelectList<Instructor>("InstructorID", "FullName", rollcall.InstructorID);
-            ViewBag.MajorID = SlFactory.MakeSelectList<Instructor>("MajorID", "FullName", MajorID);
+            ViewBag.MajorID = SlFactory.MakeSelectList<Major>("MajorID", "FullName", MajorID);
             ViewBag.ClassID = new SelectList(ClaBO.GetClassByMajor(MajorID),
                 "ClassID", "ClassName", rollcall.ClassID);
             //Mac dinh, lay semester moi nhat
             ViewBag.SemesterID = SlFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", rollcall.SemesterID);
-            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "ShortName", rollcall.SubjectID);
+            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName", rollcall.SubjectID);
             return View(rollcall);
         }
 
@@ -167,7 +171,7 @@ namespace RollSystemMobile.Controllers
                 "ClassID", "ClassName", rollcall.ClassID);
             //Mac dinh, lay semester moi nhat
             ViewBag.SemesterID = SlFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", rollcall.SemesterID);
-            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "ShortName", rollcall.SubjectID);
+            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName", rollcall.SubjectID);
 
             return View(rollcall);
         }
@@ -176,11 +180,11 @@ namespace RollSystemMobile.Controllers
         // POST: /RollCall/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(RollCall rollcall)
+        public ActionResult Edit(RollCall rollcall,TimeSpan? otherTime)
         {
             if (ModelState.IsValid)
             {
-                List<string> ErrorList = RollBO.ValidRollCall(rollcall);
+                List<string> ErrorList = RollBO.ValidRollCall(rollcall,otherTime);
                 if (ErrorList.Count == 0)
                 {
                     // Kiem tra xem co doi giao vien hay ko
@@ -203,7 +207,7 @@ namespace RollSystemMobile.Controllers
                 "ClassID", "ClassName", rollcall.ClassID);
             //Mac dinh, lay semester moi nhat
             ViewBag.SemesterID = SlFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", rollcall.SemesterID);
-            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "ShortName", rollcall.SubjectID);
+            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName", rollcall.SubjectID);
 
             return View(rollcall);
         }
@@ -245,7 +249,7 @@ namespace RollSystemMobile.Controllers
         public JsonResult GetSubjects(int id)
         {
             var Subject = SubBO.GetSubjectByMajor(id).
-                Select(s => new { id = s.SubjectID, name = s.ShortName });
+                Select(s => new { id = s.SubjectID, name = s.FullName });
             return Json(Subject, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetSelectOption(int RollCallID)
@@ -253,6 +257,14 @@ namespace RollSystemMobile.Controllers
             var option = StuBO.GetStudentsNotInRollCall(RollCallID).
                Select(d => new { id = d.StudentID, name = d.FullName, code = d.StudentCode });
             return Json(option, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetInstructors(int id)
+        {
+            int typeID = SubBO.GetSubjectByID(id).TypeID;
+            var instructor = InsBO.GetAllInstructor().Where(d => d.SubjectTypeID == typeID).
+                Select(i => new { id = i.InstructorID, name = i.Fullname });
+            return Json(instructor, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult ChangeSchedule(int id)
@@ -265,13 +277,14 @@ namespace RollSystemMobile.Controllers
         public ActionResult GetStudySession(int id)
         {
             RollCall rollCall = RollBO.GetRollCallByID(id);
-            var TimeAndName = rollCall.StudySessions.Select(s => new { 
-            id = s.SessionID,
-            title = s.StartTime.ToString(@"hh\:mm") + " - " + s.EndTime.ToString(@"hh\:mm") + "\n" 
-                    + "Ins:" + s.Instructor.Fullname,
-            start = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.StartTime.ToString(@"hh\:mm"),
-            end = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.EndTime.ToString(@"hh\:mm"),
-            note = "abc"
+            var TimeAndName = rollCall.StudySessions.Select(s => new
+            {
+                id = s.SessionID,
+                title = s.StartTime.ToString(@"hh\:mm") + " - " + s.EndTime.ToString(@"hh\:mm") + "\n"
+                        + "Ins:" + s.Instructor.Fullname,
+                start = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.StartTime.ToString(@"hh\:mm"),
+                end = s.SessionDate.ToString("yyyy-MM-dd") + " " + s.EndTime.ToString(@"hh\:mm"),
+                note = "abc"
             });
             return Json(TimeAndName.ToList(), JsonRequestBehavior.AllowGet);
         }

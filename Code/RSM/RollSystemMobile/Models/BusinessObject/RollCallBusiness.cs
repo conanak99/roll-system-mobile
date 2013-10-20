@@ -182,15 +182,16 @@ namespace RollSystemMobile.Models.BusinessObject
         }
 
 
-        public List<String> ValidRollCall(RollCall InRollCall)
+        public List<String> ValidRollCall(RollCall InRollCall, TimeSpan? otherTime)
         {
             SubjectBusiness SubBO = new SubjectBusiness(this.RollSystemDB);
             ClassBusiness ClassBO = new ClassBusiness(this.RollSystemDB);
+            RollCallBusiness RcBO = new RollCallBusiness(this.RollSystemDB);
             List<string> ErrorList = new List<string>();
 
             var rollSubject = SubBO.GetSubjectByID(InRollCall.SubjectID);
             //Check may cai nhu gio hoc, giao vien dang day v...v trong nay
-            if ((InRollCall.StartTime.ToString(@"hh\:mm") == "10:45:"
+            if ((InRollCall.StartTime.ToString(@"hh\:mm") == "10:30"
                 || InRollCall.StartTime.ToString(@"hh\:mm") == "16:00") &&
             rollSubject.NumberOfSlot == 2)
             {
@@ -198,18 +199,42 @@ namespace RollSystemMobile.Models.BusinessObject
             }
 
             //Check thu xem class cua roll call nay co dang hoc roll call nao ko
-
-
+            List<RollCall> ClassRcList = RcBO.GetList().Where(r => r.ClassID == InRollCall.ClassID).ToList();
+            Boolean Classflag = true;
+            foreach (var item in ClassRcList)
+            {
+                if (otherTime.ToString() != "")
+                {
+                    InRollCall.StartTime = TimeSpan.Parse(otherTime.ToString());
+                }
+                if (item.StartTime == InRollCall.StartTime  && InRollCall.BeginDate <= InRollCall.BeginDate && InRollCall.BeginDate <= item.EndDate)
+                {
+                    Classflag = false;
+                }
+            }
+            if (Classflag == false)
+            {
+                ErrorList.Add("class");
+            }
             //Check xem giao vien roll call nay co dang day roll call nao cung gio ko
-
+            Boolean Insflag = true;
+            List<RollCall> InsRcList = RcBO.GetList().Where(r => r.InstructorID == InRollCall.InstructorID).ToList();
+            foreach (var item in InsRcList)
+            {   
+                if (item.StartTime == otherTime && item.BeginDate < InRollCall.BeginDate && InRollCall.BeginDate < item.EndDate)
+                {
+                    Insflag = false;
+                }
+            }
+            if (Insflag == false)
+            {
+                ErrorList.Add("instructor");
+            }
 
             //Nho check luon, start date va end date cua roll call so voi semester
+
             return ErrorList;
         }
-
-
-
-
 
         public void CreateRollCallBook(int RollCallID, String FileName)
         {
