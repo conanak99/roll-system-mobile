@@ -104,8 +104,6 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
                 else
                 {
-                    //Sync calendar
-                    CalBO.SyncInstructorCalendar(Session.InstructorID);
                     return base.Insert(Session);
                 }
             }
@@ -182,8 +180,6 @@ namespace RollSystemMobile.Models.BusinessObject
                 {
                     base.Detach(Session);
                     base.Update(Session);
-                    //Sync calendar
-                    CalBO.SyncInstructorCalendar(Session.InstructorID);
                 }
             }
         }
@@ -338,9 +334,6 @@ namespace RollSystemMobile.Models.BusinessObject
                     base.Update(StudySession);
                 }
             }
-            //Sync calendar cho ca 2 giao vien
-            CalBO.SyncInstructorCalendar(OldInstructorID);
-            CalBO.SyncInstructorCalendar(InstructorID);
         }
 
         public List<Event> GetCalendarEvent(int InstructorID)
