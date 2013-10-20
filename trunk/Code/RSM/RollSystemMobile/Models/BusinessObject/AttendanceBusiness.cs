@@ -279,5 +279,6 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             return base.GetList().SingleOrDefault(log => log.LogID == LogID);
         }
+
     }
 }

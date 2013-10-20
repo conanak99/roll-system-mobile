@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
+using RollSystemMobile.Models.BindingModels;
 using RollSystemMobile.Models.BusinessObject;
 
 namespace RollSystemMobile.Controllers
@@ -60,8 +61,12 @@ namespace RollSystemMobile.Controllers
             StudentBusiness StuBO = new StudentBusiness();
             List<Student> Students = StuBO.Find(stu => StudentIDs.Contains(stu.StudentID)).ToList();
 
-            var StudentsJson = Students.ToList().Select(s => new { studentID = s.StudentID,
-            studentCode = s.StudentCode, studentName = s.FullName});
+            var StudentsJson = Students.ToList().Select(s => new
+            {
+                studentID = s.StudentID,
+                studentCode = s.StudentCode,
+                studentName = s.FullName
+            });
 
             return Json(StudentsJson, JsonRequestBehavior.AllowGet);
         }
@@ -88,7 +93,7 @@ namespace RollSystemMobile.Controllers
                 classes = r.Class.ClassName,
                 time = r.StartTime.ToString(@"hh\:mm") + " - " + r.EndTime.ToString(@"hh\:mm"),
                 date = r.BeginDate.ToString("dd-MM-yyyy") + " to " + r.EndDate.ToString("dd-MM-yyyy"),
-                isCurrent = CurrentRollCall != null && CurrentRollCall.RollCallID == r.RollCallID  ? true : false   
+                isCurrent = CurrentRollCall != null && CurrentRollCall.RollCallID == r.RollCallID ? true : false
             });
 
             return Json(RollCallJson, JsonRequestBehavior.AllowGet);
@@ -110,9 +115,13 @@ namespace RollSystemMobile.Controllers
                 time = rollcall.StartTime.ToString(@"hh\:mm") + " - " + rollcall.EndTime.ToString(@"hh\:mm"),
                 date = rollcall.BeginDate.ToString("dd-MM-yyyy") + " to " + rollcall.EndDate.ToString("dd-MM-yyyy"),
                 studentList = rollcall.Students.Select(st => new { studentID = st.StudentID, studentCode = st.StudentCode, studentName = st.FullName }),
-                logList = AttendLog.OrderByDescending(log => log.LogDate).Select(log => new {rollID = log.RollCallID, logID = log.LogID, 
-                    logDate = log.LogDate.ToString("dd-MM-yyyy"), 
-                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count })
+                logList = AttendLog.Where(log => log.LogDate >= DateTime.Today.AddDays(-1)).OrderByDescending(log => log.LogDate).Select(log => new
+                {
+                    rollID = log.RollCallID,
+                    logID = log.LogID,
+                    logDate = log.LogDate.ToString("dd-MM-yyyy"),
+                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count
+                })
             };
 
             return Json(RollJson, JsonRequestBehavior.AllowGet);
@@ -123,15 +132,31 @@ namespace RollSystemMobile.Controllers
             AttendanceBusiness AttenBO = new AttendanceBusiness();
             AttendanceLog Log = AttenBO.GetLogByID(LogID);
 
-            var LogJson = Log.StudentAttendances.Select(sa => new
+            var LogJson = new
             {
+                logID = Log.LogID,
+                rollID = Log.RollCallID,
+                logDate = Log.LogDate.ToString("dd-MM-yyyy"),
+                submitDate = Log.LogDate.ToString("MM-dd-yyyy"),
+                studentList = Log.StudentAttendances.Select(sa => new
+                {
                 studentID = sa.StudentID,
                 studentCode = sa.Student.StudentCode,
                 studentName = sa.Student.FullName,
                 isPresent = sa.IsPresent
-            });
+                })
+            };
 
             return Json(LogJson, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public ActionResult CheckAttendanceManual(CheckAttendanceManualBindModel Model)
+        {
+            AttendanceBusiness AttendanceBO = new AttendanceBusiness();
+            AttendanceBO.WriteAttendanceManualLog(Model.Username, Model.RollCallID, Model.Date, Model.AttendanceChecks);
+
+            return Json(new { message = "Success" });
         }
 
 
