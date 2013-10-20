@@ -5,7 +5,7 @@
 }
 <h2>
     Create New Roll Call</h2>
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "RollCall", FormMethod.Post))
 {
     @Html.ValidationSummary(true)
     <table class="table">
@@ -15,14 +15,14 @@
                     <b>Major :</b>
                 </div>
                 <div class="editor-field " style="margin-left: 10px">
-                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, new { style = "width: 230px;" })
+                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, new { style = "width: 200px;" })
                 </div>
                 <span class="help-block">Select the major of roll call.</span>
                 <div class="editor-label">
                     <b>Subject</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px;">
-                    @Html.DropDownList("SubjectID", (SelectList)ViewBag.SubjectID, new { style = "width: 100px;" })
+                    @Html.DropDownList("SubjectID", (SelectList)ViewBag.SubjectID, new { style = "width: 250px;" })
                 </div>
                 <span class="help-block">Select the subject of roll call.</span>
                 <div class="editor-label">
@@ -63,10 +63,10 @@
            new SelectListItem { Text = "14:15", Value = "14:15" }, 
            new SelectListItem { Text = "16:00", Value = "16:00" },
            new SelectListItem { Text = "18:45", Value = "18:45" },
-           new SelectListItem { Text = "19:00", Value = "19:00" } 
-       }, new { @id = "2" ,style = "width:80px;"})
-                    <div id="1">@Html.TextBoxFor(model => model.StartTime,new { style ="width:80px;"})</div>
-                    @Html.ValidationMessageFor(model => model.StartTime)
+           new SelectListItem { Text = "19:00", Value = "19:00" }, 
+           new SelectListItem { Text = "-Other-", Value = "00:00" } 
+       }, new { @id = "startTime", style = "width:90px;" }) -
+                   <input style="margin-bottom:10px; width:80px;" type="text" name="otherTime" id="Other"/> 
                 </div>
                 <span class="help-block">Select the start time of roll call.</span>
                 <div class="editor-label">
@@ -83,7 +83,7 @@
         </tr>
     </table>
     <p>
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Create" id="submit" class="btn btn-primary" />
     </p>
 }
 <div>
@@ -91,52 +91,75 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        var timeValue = $('#startTime :selected').text();
+        alert(timeValue);
+        if (timeValue == "-Other-") {
+            $("#Other").prop('disabled', false);
+        } else {
+            $("#Other").prop('disabled', true);
+        }
+        $("#startTime").change(function () {
+            var timeValue = $('#startTime :selected').text();
+            if (timeValue == "-Other-") {
+                $("#Other").prop('disabled', false);
+            } else {
+                document.getElementById("Other").value = "";
+                $("#Other").prop('disabled', true);
+            }
+        });
+
         $("#2").width(100);
         //create datepicker
-        $("#begindate").datepicker();
-        $("#enddate").datepicker();
-        //
-        var value = $('#SubjectID :selected').text();
-        $('#1').remove();
-        $('#2').remove();
-        if (value == "CP") {
-            $('#a').append(time1);
-            //  $("#2").hide();
-            //  document.getElementById("1").style.display = "block";
-        } else {
-            $('#a').append(time2);
-            //  $("#2").show();
-            //  document.getElementById("1").style.display = "none";
-        }
 
+        $('#begindate').datepicker();
         //
         var classID = $('#ClassID :selected').attr("value");
         $('#classList').attr('href', "Studentlist?ClassID=" + classID);
     });
-    //set selected start time on reload page
-    var time1 = $('#1').clone();
-    var time2 = $('#2').clone();
+    //    //set selected start time on reload page
+        
+    // change instructor when select subject
+    var subjectID = $('#SubjectID :selected').attr("value");
+    var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
+
+    $.getJSON(instructorUrl, function (instructors) {
+        var html = "";
+        $.each(instructors, function (index, instructor) {
+            html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
+        });
+        $("#InstructorID").html(html);
+    });
     //change startime to text if subject is capnstone
     $('#SubjectID').change(function () {
-        var value = $('#SubjectID :selected').text();
-        $('#1').remove();
-        $('#2').remove();
-        if (value == "CP") {
-            $('#a').append(time1);
-            //  $("#2").hide();
-            //  document.getElementById("1").style.display = "block";
-        } else {
-            $('#a').append(time2);
-            //  $("#2").show();
-            //  document.getElementById("1").style.display = "none";
-        }
+
+        var subjectID = $('#SubjectID :selected').attr("value");
+        var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
+
+        $.getJSON(instructorUrl, function (instructors) {
+            var html = "";
+            $.each(instructors, function (index, instructor) {
+                html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
+            });
+            $("#InstructorID").html(html);
+        });
+        //        $('#1').remove();
+        //        $('#2').remove();
+        //        if (value == "CP") {
+        //            $('#a').append(time1);
+        //            //  $("#2").hide();
+        //            //  document.getElementById("1").style.display = "block";
+        //        } else {
+        //            $('#a').append(time2);
+        //            //  $("#2").show();
+        //            //  document.getElementById("1").style.display = "none";
+        //        }
     });
 
 
     //dom not only ready, but everything is loaded
     $('#ClassID').change(function () {
         var classID = $('#ClassID :selected').attr("value");
-        $('#classList').attr('href',"Studentlist?ClassID=" + classID);
+        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
     });
 
     $('#MajorID').change(function () {
@@ -151,6 +174,16 @@
                 html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
             });
             $("#SubjectID").html(html);
+
+            var subjectID = $('#SubjectID :selected').attr("value");
+            var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
+            $.getJSON(instructorUrl, function (instructors) {
+                var html = "";
+                $.each(instructors, function (index, instructor) {
+                    html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
+                });
+                $("#InstructorID").html(html);
+            });
         });
 
         $.getJSON(classUrl, function (classes) {
@@ -161,19 +194,6 @@
             $("#ClassID").html(html);
         });
 
-        //
-        var value = $('#SubjectID :selected').text();
-        $('#1').remove();
-        $('#2').remove();
-        if (value == "CP") {
-            $('#a').append(time1);
-            //  $("#2").hide();
-            //  document.getElementById("1").style.display = "block";
-        } else {
-            $('#a').append(time2);
-            //  $("#2").show();
-            //  document.getElementById("1").style.display = "none";
-        }
 
         //
         var classID = $('#ClassID :selected').attr("value");
