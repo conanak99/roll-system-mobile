@@ -359,5 +359,16 @@ namespace RollSystemMobile.Models.BusinessObject
             }
             return TotalCompliation;
         }
+
+
+        public List<StudySession> GetInstructorCurrentSession(int InstructorID)
+        {
+            return base.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate == DateTime.Today).ToList();
+        }
+
+        public List<StudySession> GetInstructorFutureSession(int InstructorID)
+        {
+            return base.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate >= DateTime.Today).ToList();
+        }
     }
 }

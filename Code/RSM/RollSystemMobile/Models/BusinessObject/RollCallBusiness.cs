@@ -30,20 +30,31 @@ namespace RollSystemMobile.Models.BusinessObject
             DateTime Today = DateTime.Now;
             StudySessionBusiness StuSesBO = new StudySessionBusiness(this.RollSystemDB);
 
-            var TodaySession = StuSesBO.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate == DateTime.Today);
+
+            var TodaySession = StuSesBO.GetInstructorCurrentSession(InstructorID);
             if (TodaySession == null)
             {
                 return null;
             }
             else
             {
-                var TodayRollCall = TodaySession.Select(s => s.RollCall).ToList();
+                var TodayRollCall = StuSesBO.GetInstructorFutureSession(InstructorID).Select(s => s.RollCall).Distinct().ToList();
                 foreach (var RollCall in TodayRollCall)
                 {
                     StudySession TdSes = TodaySession.FirstOrDefault(ss => ss.RollCallID == RollCall.RollCallID);
                     //Set lai thoi gian
-                    RollCall.StartTime = TdSes.StartTime;
-                    RollCall.EndTime = TdSes.EndTime;
+                    if (TdSes != null)
+                    {
+                        RollCall.StartTime = TdSes.StartTime;
+                        RollCall.EndTime = TdSes.EndTime;
+                    }
+                    else
+                    {
+                        //Neu ngay hom nay ko day, set thoi gian bang 0
+                        RollCall.StartTime = new TimeSpan(0, 0, 0);
+                        RollCall.EndTime = new TimeSpan(0, 0, 0);
+                    }
+                    
                 }
                 return TodayRollCall.OrderBy(r => r.StartTime).ToList();
             }
@@ -55,7 +66,7 @@ namespace RollSystemMobile.Models.BusinessObject
             DateTime Today = DateTime.Now;
             StudySessionBusiness StuSesBO = new StudySessionBusiness(this.RollSystemDB);
 
-            var TodaySession = StuSesBO.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate >= DateTime.Today);
+            var TodaySession = StuSesBO.GetInstructorFutureSession(InstructorID);
             return TodaySession.Select(ss => ss.RollCall).Distinct().ToList();
 
         }

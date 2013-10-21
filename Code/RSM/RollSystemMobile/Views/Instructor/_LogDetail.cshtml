@@ -19,7 +19,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
         <h3 id="myModalLabel">
-            Roll Call at @Html.FormatDate(@Model.AutoLog.LogDate)</h3>
+            Roll Call at @Html.FormatDate(CurrentAttendanceLog.LogDate)</h3>
     </div>
     <div class="modal-body" id='modal-body'>
         <legend>Roll Call Info</legend>
@@ -28,7 +28,7 @@
                 <dt>Roll Call</dt>
                 <dd>@Model.RollCall.RollCallID</dd>
                 <dt>Date</dt>
-                <dd>@Html.FormatDate(@Model.AutoLog.LogDate)</dd>
+                <dd>@Html.FormatDate(CurrentAttendanceLog.LogDate)</dd>
                 <dt>Subject</dt>
                 <dd>@Model.RollCall.Subject.ShortName</dd>
                 <dt>Class</dt>
@@ -37,7 +37,7 @@
         </fieldset>
         <legend>Log Image</legend>
         <fieldset class="text-center" style="width: 80%; margin: 0 auto">
-            @foreach (var Image in @Model.AutoLog.LogImages)
+            @foreach (var Image in Model.AutoLog.LogImages)
             {
                 <a class="fancybox" href="@Url.Content("~/Content/Log/" + Image.ImageLink)" data-fancybox-group="gallery">
                     <img src="@Url.Content("~/Content/Log/" + Image.ImageLink)" class="image-log"/></a> 
