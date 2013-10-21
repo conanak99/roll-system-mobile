@@ -7,9 +7,9 @@ body
 {
     background-color: White;
     //background-image:url("./themes/base/images/bg5.jpg");
-    background-image:url("./themes/base/images/bg3.jpg");
+    //background-image:url("./themes/base/images/bg3.jpg");
    //background-image:url("./themes/base/images/bg4.jpg");
-    //background-image:url("./themes/base/images/bg2.jpg");
+    background-image:url("./themes/base/images/bg2.jpg");
     //opacity: 0.5;
     /*background-repeat:repeat-y; */
 }
