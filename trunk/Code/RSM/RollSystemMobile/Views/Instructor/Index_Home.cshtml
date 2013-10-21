@@ -20,18 +20,17 @@
     </div>
     <div class="separator bottom">
     </div>
-        @if (Model.TeachingRollCall.Count() == 0)
+    @if (Model.TeachingRollCall.Count() == 0)
         {
-        <h3> Teaching Class: None</h3>
+        <h3>
+            Teaching Class: None</h3>
         }
         else
         {
-    <h3>
-        Teaching Class</h3>
+        <h3>
+            Teaching Class</h3>
         }
     <div class="row-fluid">
-
-
         @foreach (var RollCall in Model.TeachingRollCall)
         {
             bool IsCurrentRollCall = Model.CurrentRollCall != null && RollCall.RollCallID == Model.CurrentRollCall.RollCallID;   
@@ -39,7 +38,8 @@
                 <div class="widget widget-3 margin-bottom-none">
                     <div class="widget-head">
                         <h4 class="heading">
-                            <span class="glyphicons @(IsCurrentRollCall ? "book_open" : "book")"><i></i></span>@RollCall.Subject.ShortName - @RollCall.Class.ClassName</h4>
+                            <span class="glyphicons @(IsCurrentRollCall ? "book_open" : "book")"><i></i></span>@RollCall.Subject.ShortName
+                            - @RollCall.Class.ClassName</h4>
                     </div>
                     <div class="widget-body large dashboard cancellations">
                         <span><span>From</span> <span>@Html.FormatDate(RollCall.BeginDate)</span> </span>
@@ -60,8 +60,17 @@
                     }
                     else
                     {
-                        <span class="count label label-important">@Html.FormatTime(@RollCall.StartTime) - @Html.FormatTime(@RollCall.EndTime)
+                       
+                        if (RollCall.StartTime.Equals(new TimeSpan(0,0,0)))
+                        {
+                            <span class="count label label-important">No Teaching Slot!</span>
+                        } else{
+                             <span class="count label label-important"> @Html.FormatTime(@RollCall.StartTime) - @Html.FormatTime(@RollCall.EndTime)
                         </span>
+                        }
+                        
+                        
+                       
                     }
                 </div>
             </div>      
