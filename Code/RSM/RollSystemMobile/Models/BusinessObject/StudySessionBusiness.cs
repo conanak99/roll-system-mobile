@@ -198,6 +198,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
             //Tao 1 danh sach cac thoi gian rarnh
             List<TimeSpan> TimeList = AllAvailableTime(rollCall.Subject.NumberOfSlot);
+
             //Loai tiep nhung slot trong khoang thoi gian dc chon
             for (DateTime SelectedDate = FromDate; SelectedDate <= ToDate; SelectedDate = SelectedDate.AddDays(1))
             {
@@ -364,6 +365,11 @@ namespace RollSystemMobile.Models.BusinessObject
         public List<StudySession> GetInstructorCurrentSession(int InstructorID)
         {
             return base.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate == DateTime.Today).ToList();
+        }
+
+        public List<StudySession> GetInstructorYesterdaySession(int InstructorID)
+        {
+            return base.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate == DateTime.Today.AddDays(-1)).ToList();
         }
 
         public List<StudySession> GetInstructorFutureSession(int InstructorID)
