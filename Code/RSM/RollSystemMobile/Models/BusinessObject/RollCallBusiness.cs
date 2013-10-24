@@ -64,7 +64,7 @@ namespace RollSystemMobile.Models.BusinessObject
                     }
                 }
 
-                return TodayRollCall.OrderBy(r => r.StartTime).ToList();     
+                return TodayRollCall.OrderBy(r => r.StartTime).ToList();
             }
         }
 
@@ -226,7 +226,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 {
                     InRollCall.StartTime = TimeSpan.Parse(otherTime.ToString());
                 }
-                if (item.StartTime == InRollCall.StartTime  && InRollCall.BeginDate <= InRollCall.BeginDate && InRollCall.BeginDate <= item.EndDate)
+                if (item.StartTime == InRollCall.StartTime && InRollCall.BeginDate <= InRollCall.BeginDate && InRollCall.BeginDate <= item.EndDate)
                 {
                     Classflag = false;
                 }
@@ -239,7 +239,7 @@ namespace RollSystemMobile.Models.BusinessObject
             Boolean Insflag = true;
             List<RollCall> InsRcList = RcBO.GetList().Where(r => r.InstructorID == InRollCall.InstructorID).ToList();
             foreach (var item in InsRcList)
-            {   
+            {
                 if (item.StartTime == otherTime && item.BeginDate < InRollCall.BeginDate && InRollCall.BeginDate < item.EndDate)
                 {
                     Insflag = false;
@@ -264,12 +264,151 @@ namespace RollSystemMobile.Models.BusinessObject
 
         }
 
+
+
         public void CreateRollCallReport(int RollCallID, String FileName)
         {
             //Tao 1 roll call book rong
-            ExcelPackage Package = CreateRollCallBookPackage(RollCallID);
-            ExcelWorksheet Worksheet = Package.Workbook.Worksheets[1];
+            ExcelPackage Package = new ExcelPackage();
+            ExcelWorksheet RollCallWorksheet = FilledRollCallWorksheet(RollCallID);
+            ExcelWorksheet ExamListWorksheet = FilledExamListWorksheet(RollCallID);
 
+            Package.Workbook.Worksheets.Add(RollCallWorksheet.Name, RollCallWorksheet);
+            Package.Workbook.Worksheets.Add(ExamListWorksheet.Name, ExamListWorksheet);
+
+            ExcelWriter.WriteExcelFile(Package, FileName);
+            Package.Dispose();
+        }
+
+        //Lam may cai: Tim RollCall nam trong khoang ngay bao nhieu, toi bao nhieu
+        //Xuat ra danh sach SV du thi, so diem danh, ket qua present
+
+        private ExcelWorksheet CreateRollCallWorksheet(int RollCallID)
+        {
+
+            RollCall RollCall = GetRollCallByID(RollCallID);
+            String SheetName = RollCall.Class.ClassName + "_" + RollCall.Subject.ShortName;
+            
+
+            ExcelWorksheet RollCallWorksheet = new ExcelPackage().Workbook.Worksheets.Add(SheetName);
+
+            //Set chieu ngang cac cot
+            RollCallWorksheet.Cells["A:XFD"].Style.Font.Name = "Arial";
+            RollCallWorksheet.Column(1).Width = 4.5;
+            RollCallWorksheet.Column(2).Width = 15.5;
+            RollCallWorksheet.Column(3).Width = 27.5;
+            RollCallWorksheet.Column(5).Width = 11.5;
+            RollCallWorksheet.Column(6).Width = 4.5;
+
+
+
+            RollCallWorksheet.Cells["E1"].Value = "Roll Call Book";
+            RollCallWorksheet.Cells["E1"].Style.Font.Size = 18;
+            RollCallWorksheet.Cells["E1"].Style.Font.Bold = true;
+
+            RollCallWorksheet.Cells["E2"].Value = "Semester: ";
+            RollCallWorksheet.Cells["E3"].Value = "Class: ";
+            RollCallWorksheet.Cells["E4"].Value = "Subject: ";
+            RollCallWorksheet.Cells["E5"].Value = "Session: ";
+            RollCallWorksheet.Cells["E6"].Value = "Time: ";
+            RollCallWorksheet.Cells["E7"].Value = "Date: ";
+            RollCallWorksheet.Cells["E8"].Value = "Instructor: ";
+
+            //Merge tu G toi K de show
+            for (int i = 2; i <= 7; i++)
+            {
+                RollCallWorksheet.Cells["G" + i + ":K" + i].Merge = true;
+            }
+            RollCallWorksheet.Cells["G2"].Value = RollCall.Semester.SemesterName;
+            RollCallWorksheet.Cells["G3"].Value = RollCall.Class.ClassName;
+            RollCallWorksheet.Cells["G4"].Value = RollCall.Subject.ShortName;
+            RollCallWorksheet.Cells["G5"].Value = RollCall.StudySessions.Count;
+            RollCallWorksheet.Cells["G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            RollCallWorksheet.Cells["G6"].Value = String.Format("{0} - {1}",
+                RollCall.StartTime.ToString(@"hh\:mm"), RollCall.EndTime.ToString(@"hh\:mm"));
+            RollCallWorksheet.Cells["G7"].Value = String.Format("{0} to {1}",
+                RollCall.BeginDate.ToString("dd-MM-yyyy"), RollCall.EndDate.ToString("dd-MM-yyyy"));
+            RollCallWorksheet.Cells["G8"].Value = RollCall.Instructor.Fullname;
+
+            //Set size cho cac ki tu con lai
+            RollCallWorksheet.Cells["E2:K8"].Style.Font.Size = 12;
+            RollCallWorksheet.Cells["E2:K8"].Style.Font.Bold = true;
+
+            //Bat dau ghi tu o A10
+            RollCallWorksheet.Cells["A10"].Value = "No.";
+            RollCallWorksheet.Cells["B10"].Value = "Student Code";
+            RollCallWorksheet.Cells["C10"].Value = "Student Name";
+
+            //Ghi danh sach cac student, ten
+            var Students = RollCall.Students.ToList();
+            for (int i = 0; i < 30; i++)
+            {
+                int RowIndex = 11 + i;
+                RollCallWorksheet.Cells["A" + RowIndex].Value = i + 1;
+                if (i < Students.Count)
+                {
+                    RollCallWorksheet.Cells["B" + RowIndex].Value = Students.ElementAt(i).StudentCode;
+                    RollCallWorksheet.Cells["B" + RowIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    RollCallWorksheet.Cells["C" + RowIndex].Value = Students.ElementAt(i).FullName;
+                }
+            }
+
+
+            //Lam tron number of slot, vd 17,18 thanh 20
+            int NumberOfSlot = RollCall.StudySessions.Count;
+            NumberOfSlot = (int)Math.Ceiling((double)NumberOfSlot / 5) * 5;
+            int FinalColumnIndex = 4 + NumberOfSlot;
+
+            //Bau dau ve khung
+            for (int column = 1; column <= FinalColumnIndex; column++)
+            {
+                for (int row = 10; row <= 30 + 10 + 1; row++)
+                {
+                    RollCallWorksheet.Cells[row, column].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                }
+            }
+
+            //Join 5 ngay lai thanh 1 tuan
+            int WeekIndex = 1;
+            for (int i = 4; i < FinalColumnIndex; i += 5)
+            {
+                RollCallWorksheet.Cells[10, i, 10, i + 4].Merge = true;
+                RollCallWorksheet.Cells[10, i].Value = "Week " + WeekIndex;
+                WeekIndex++;
+            }
+
+            //Set lai gia tri width cua cac cot diem danh
+            for (int i = 4; i < FinalColumnIndex; i++)
+            {
+                RollCallWorksheet.Column(i).Width = 6;
+            }
+            RollCallWorksheet.Column(FinalColumnIndex).Width = 10;
+
+            //Format header cua bang
+            RollCallWorksheet.Cells[10, 1, 10, FinalColumnIndex].Style.Font.Bold = true;
+            RollCallWorksheet.Cells[10, 1, 10, FinalColumnIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //Format ten hoc sinh
+            RollCallWorksheet.Cells[11, 1, 11 + 30, FinalColumnIndex].Style.Font.Name = "Times New Roman";
+            //Tao them hang cuoi
+            RollCallWorksheet.Cells["A41:C41"].Merge = true;
+            RollCallWorksheet.Cells["A41"].Value = "Total Present Student: ";
+            RollCallWorksheet.Cells["A41"].Style.Font.Bold = true;
+            RollCallWorksheet.Cells["A41"].Style.Font.Name = "Arial";
+            RollCallWorksheet.Cells["A41"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //Tao them 1 hang Percent
+            RollCallWorksheet.Cells[9, FinalColumnIndex].Value = "X = Present";
+            RollCallWorksheet.Cells[9, FinalColumnIndex].Style.Font.Name = "Times New Roman";
+            RollCallWorksheet.Cells[10, FinalColumnIndex].Value = "Percent";
+            RollCallWorksheet.Cells[11, FinalColumnIndex, 31, FinalColumnIndex].Style.Numberformat.Format = "0.00%";
+
+            return RollCallWorksheet;
+        }
+
+        private ExcelWorksheet FilledRollCallWorksheet(int RollCallID)
+        {
+            ExcelWorksheet RollCallWorksheet = CreateRollCallWorksheet(RollCallID);
             //Bat dau dien info vao roll call book do
             RollCall RollCall = GetRollCallByID(RollCallID);
             var Students = RollCall.Students.ToList();
@@ -277,12 +416,19 @@ namespace RollSystemMobile.Models.BusinessObject
             AttendanceBusiness BO = new AttendanceBusiness();
             var AttendanceLogs = BO.GetRollCallAttendanceLog(RollCallID);
 
+            int NumberOfSlot = RollCall.StudySessions.Count; //RollCall.Subject.NumberOfSession;
+            //Lam tron number of slot, vd 17,18 thanh 20
+            NumberOfSlot = (int)Math.Ceiling((double)NumberOfSlot / 5) * 5;
+            int FinalColumnIndex = 4 + NumberOfSlot;
+
+
             for (int i = 0; i < 30; i++)
             {
                 int RowIndex = 11 + i;
                 if (i < Students.Count)
                 {
                     Student CurrentStudent = Students.ElementAt(i);
+                    double PresentSession = 0;
                     //Moi hang la 1 sinh vien, cu co log thi danh dau
                     for (int logIndex = 0; logIndex < AttendanceLogs.Count; logIndex++)
                     {
@@ -292,152 +438,148 @@ namespace RollSystemMobile.Models.BusinessObject
                             sa.IsPresent == true))
                         {
                             //Danh dau chu X vao o
-                            Worksheet.Cells[RowIndex, logIndex + 4].Value = "X";
+                            RollCallWorksheet.Cells[RowIndex, logIndex + 4].Value = "X";
+                            PresentSession++;
                         }
                     }
+                    double AttendanceRate = PresentSession / RollCall.StudySessions.Count * 100;
+                    RollCallWorksheet.Cells[RowIndex, FinalColumnIndex].Value =
+                        String.Format("{0:00.00}%", AttendanceRate);
                 }
             }
             //Tinh so sinh vien di hoc
-            Worksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
+            RollCallWorksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
 
-            int NumberOfSlot = RollCall.StudySessions.Count; //RollCall.Subject.NumberOfSession;
-            //Lam tron number of slot, vd 17,18 thanh 20
-            NumberOfSlot = (int)Math.Ceiling((double)NumberOfSlot / 5) * 5;
-            int FinalColumnIndex = 4 + NumberOfSlot;
-
-            //Tinh % di hoc cua moi SV
-            String Formula = "COUNTIF(D11:" + ExcelReader.NumberToText(3 + NumberOfSlot) + "11, \"X\")/" + NumberOfSlot;
-            Worksheet.Cells[11, FinalColumnIndex, 11 + Students.Count - 1, FinalColumnIndex].Formula = Formula;
-
-            ExcelWriter.WriteExcelFile(Package, FileName);
-            Package.Dispose();
+            return RollCallWorksheet;
         }
 
-        private ExcelPackage CreateRollCallBookPackage(int RollCallID)
+        private ExcelWorksheet CreateExamListWorksheet(int RollCallID)
         {
-            ExcelPackage Package = new ExcelPackage();
             RollCall RollCall = GetRollCallByID(RollCallID);
             String SheetName = RollCall.Class.ClassName + "_" + RollCall.Subject.ShortName;
             int NumberOfSlot = RollCall.StudySessions.Count; //RollCall.Subject.NumberOfSession;
 
-            ExcelWorksheet Worksheet = Package.Workbook.Worksheets.Add(SheetName);
+            //Them Tag danh sach du thi
+            ExcelWorksheet ExamListWorksheet = new ExcelPackage().Workbook.Worksheets.Add(SheetName + " - Final Exam");
             //Set chieu ngang cac cot
-            Worksheet.Cells["A:XFD"].Style.Font.Name = "Arial";
-            Worksheet.Column(1).Width = 4.5;
-            Worksheet.Column(2).Width = 15.5;
-            Worksheet.Column(3).Width = 27.5;
-            Worksheet.Column(5).Width = 11.5;
-            Worksheet.Column(6).Width = 4.5;
+            ExamListWorksheet.Column(1).Width = 4.5;
+            ExamListWorksheet.Column(2).Width = 15.5;
+            ExamListWorksheet.Column(3).Width = 25;
+            ExamListWorksheet.Column(4).Width = 15.5;
+            ExamListWorksheet.Column(5).Width = 10;
+            ExamListWorksheet.Column(6).Width = 20;
 
+            //Viet roll call info
+            ExamListWorksheet.Cells["A:XFD"].Style.Font.Name = "Arial";
+            ExamListWorksheet.Cells["C1"].Value = "Final Exam Student List";
+            ExamListWorksheet.Cells["C1"].Style.Font.Size = 18;
+            ExamListWorksheet.Cells["C1"].Style.Font.Bold = true;
 
+            ExamListWorksheet.Cells["C2"].Value = "Semester: ";
+            ExamListWorksheet.Cells["C3"].Value = "Class: ";
+            ExamListWorksheet.Cells["C4"].Value = "Subject: ";
 
-            Worksheet.Cells["E1"].Value = "Roll Call Book";
-            Worksheet.Cells["E1"].Style.Font.Size = 18;
-            Worksheet.Cells["E1"].Style.Font.Bold = true;
-
-            Worksheet.Cells["E2"].Value = "Semester: ";
-            Worksheet.Cells["E3"].Value = "Class: ";
-            Worksheet.Cells["E4"].Value = "Subject: ";
-            Worksheet.Cells["E5"].Value = "Session: ";
-            Worksheet.Cells["E6"].Value = "Time: ";
-            Worksheet.Cells["E7"].Value = "Date: ";
-            Worksheet.Cells["E8"].Value = "Instructor: ";
-
-            //Merge tu G toi K de show
-            for (int i = 2; i <= 7; i++)
-            {
-                Worksheet.Cells["G" + i + ":K" + i].Merge = true;
-            }
-            Worksheet.Cells["G2"].Value = RollCall.Semester.SemesterName;
-            Worksheet.Cells["G3"].Value = RollCall.Class.ClassName;
-            Worksheet.Cells["G4"].Value = RollCall.Subject.ShortName;
-            Worksheet.Cells["G5"].Value = NumberOfSlot;
-            Worksheet.Cells["G5"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-            Worksheet.Cells["G6"].Value = String.Format("{0} - {1}",
-                RollCall.StartTime.ToString(@"hh\:mm"), RollCall.EndTime.ToString(@"hh\:mm"));
-            Worksheet.Cells["G7"].Value = String.Format("{0} to {1}",
-                RollCall.BeginDate.ToString("dd-MM-yyyy"), RollCall.EndDate.ToString("dd-MM-yyyy"));
-            Worksheet.Cells["G8"].Value = RollCall.Instructor.Fullname;
+            ExamListWorksheet.Cells["D2"].Value = RollCall.Semester.SemesterName;
+            ExamListWorksheet.Cells["D3"].Value = RollCall.Class.ClassName;
+            ExamListWorksheet.Cells["D4"].Value = RollCall.Subject.ShortName;
 
             //Set size cho cac ki tu con lai
-            Worksheet.Cells["E2:K8"].Style.Font.Size = 12;
-            Worksheet.Cells["E2:K8"].Style.Font.Bold = true;
+            ExamListWorksheet.Cells["C2:D4"].Style.Font.Size = 12;
+            ExamListWorksheet.Cells["C2:D4"].Style.Font.Bold = true;
 
-            //Bat dau ghi tu o A10
-            Worksheet.Cells["A10"].Value = "No.";
-            Worksheet.Cells["B10"].Value = "Student Code";
-            Worksheet.Cells["C10"].Value = "Student Name";
+            //Ghi tu A6
+            //Bat dau ghi tu o A6
+            ExamListWorksheet.Cells["A6"].Value = "No.";
+            ExamListWorksheet.Cells["B6"].Value = "Student Code";
+            ExamListWorksheet.Cells["C6"].Value = "Student Name";
+            ExamListWorksheet.Cells["D6"].Value = "Birthdate";
+            ExamListWorksheet.Cells["E6"].Value = "Class";
+            ExamListWorksheet.Cells["F6"].Value = "Note";
+
+
+            //Format Table Header
+            ExamListWorksheet.Row(6).Height = 38;
+            ExamListWorksheet.Cells["A6:F6"].Style.Font.Bold = true;
+            ExamListWorksheet.Cells["A6:F6"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            ExamListWorksheet.Cells["A6:F6"].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
 
             //Ghi danh sach cac student, ten
             var Students = RollCall.Students.ToList();
-            for (int i = 0; i < 30; i++)
+            for (int i = 0; i < Students.Count; i++)
             {
-                int RowIndex = 11 + i;
-                Worksheet.Cells["A" + RowIndex].Value = i + 1;
+                int RowIndex = 7 + i;
+                ExamListWorksheet.Cells["A" + RowIndex].Value = i + 1;
                 if (i < Students.Count)
                 {
-                    Worksheet.Cells["B" + RowIndex].Value = Students.ElementAt(i).StudentCode;
-                    Worksheet.Cells["B" + RowIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    Worksheet.Cells["C" + RowIndex].Value = Students.ElementAt(i).FullName;
+                    ExamListWorksheet.Cells["B" + RowIndex].Value = Students.ElementAt(i).StudentCode;
+                    ExamListWorksheet.Cells["C" + RowIndex].Value = Students.ElementAt(i).FullName;
+                    ExamListWorksheet.Cells["D" + RowIndex].Value = Students.ElementAt(i).Birthdate.ToString("dd/MM/yyyy");
+                    ExamListWorksheet.Cells["E" + RowIndex].Value = Students.ElementAt(i).Class.ClassName;
+                    ExamListWorksheet.Cells["F" + RowIndex].Value = "";
+
+                    ExamListWorksheet.Cells["A" + RowIndex + ":F" + RowIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    ExamListWorksheet.Cells["A" + RowIndex + ":F" + RowIndex].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                    ExamListWorksheet.Cells["A" + RowIndex + ":F" + RowIndex].Style.Font.Name = "Times New Roman";
+                    ExamListWorksheet.Cells["C" + RowIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                 }
+                ExamListWorksheet.Row(RowIndex).Height = 25.5;
             }
 
-            /*
-            TimeSpan TotalDate = RollCall.EndDate - RollCall.BeginDate;
-            int NumberOfSlot = (int)Math.Ceiling((double)TotalDate.Days /  7) * 5;  //1 tuan 7 ngay hoc 5 buoi
-            */
-
-            //Lam tron number of slot, vd 17,18 thanh 20
-            NumberOfSlot = (int)Math.Ceiling((double)NumberOfSlot / 5) * 5;
-
-
-            int FinalColumnIndex = 4 + NumberOfSlot;
-            //Bat dau ke o tu Cell[4,10]
-
-
-            //Bau dau ve khung
-            for (int column = 1; column <= FinalColumnIndex; column++)
+            for (int column = 1; column <= 6; column++)
             {
-                for (int row = 10; row <= 30 + 10 + 1; row++)
+                for (int row = 6; row <= 6 + Students.Count; row++)
                 {
-                    Worksheet.Cells[row, column].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                    ExamListWorksheet.Cells[row, column].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
                 }
             }
 
-            //Join 5 ngay lai thanh 1 tuan
-            int WeekIndex = 1;
-            for (int i = 4; i < FinalColumnIndex; i += 5)
+            return ExamListWorksheet;
+        }
+
+        private ExcelWorksheet FilledExamListWorksheet(int RollCallID)
+        {
+            ExcelWorksheet ExamListWorksheet = CreateExamListWorksheet(RollCallID);
+
+            //Bat dau sua doi info trong cai exam list
+            RollCall RollCall = GetRollCallByID(RollCallID);
+            AttendanceBusiness BO = new AttendanceBusiness();
+            var AttendanceLogs = BO.GetRollCallAttendanceLog(RollCallID);
+
+            int NumberOfSlot = RollCall.StudySessions.Count;
+            var Students = RollCall.Students;
+
+            for (int i = 0; i < Students.Count; i++)
             {
-                Worksheet.Cells[10, i, 10, i + 4].Merge = true;
-                Worksheet.Cells[10, i].Value = "Week " + WeekIndex;
-                WeekIndex++;
+                int RowIndex = 7 + i;
+                Student CurrentStudent = Students.ElementAt(i);
+
+                double AbsentSession = Students.ElementAt(i).
+                        StudentAttendances.Count(sa => AttendanceLogs.Select(rc => rc.LogID)
+                        .Contains(sa.AttendanceLog.LogID) && !sa.IsPresent);
+
+                double AbsentRate = AbsentSession / NumberOfSlot * 100;
+                //Neu nghi qua 20%
+                if (AbsentRate > 20)
+                {
+                    ExamListWorksheet.Cells[RowIndex, 1, RowIndex, 5].Style.Font.Color.SetColor(Color.Red);
+                    ExamListWorksheet.Cells[RowIndex, 1, RowIndex, 5].Style.Font.Strike = true;
+                    ExamListWorksheet.Cells[RowIndex, 6].Value = String.Format("Absent Rate: {0:00}%", AbsentRate);
+                }
             }
 
-            //Set lai gia tri width cua cac cot diem danh
-            for (int i = 4; i < FinalColumnIndex; i++)
-            {
-                Worksheet.Column(i).Width = 6;
-            }
-            Worksheet.Column(FinalColumnIndex).Width = 10;
 
-            //Format header cua bang
-            Worksheet.Cells[10, 1, 10, FinalColumnIndex].Style.Font.Bold = true;
-            Worksheet.Cells[10, 1, 10, FinalColumnIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            return ExamListWorksheet;
+        }
 
-            //Format ten hoc sinh
-            Worksheet.Cells[11, 1, 11 + 30, FinalColumnIndex].Style.Font.Name = "Times New Roman";
-            //Tao them hang cuoi
-            Worksheet.Cells["A41:C41"].Merge = true;
-            Worksheet.Cells["A41"].Value = "Total Present Student: ";
-            Worksheet.Cells["A41"].Style.Font.Bold = true;
-            Worksheet.Cells["A41"].Style.Font.Name = "Arial";
-            Worksheet.Cells["A41"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+        public ExcelPackage CreateRollCallBookPackage(int RollCallID)
+        {
+            ExcelPackage Package = new ExcelPackage();
+            
+            ExcelWorksheet RollCallWorksheet = CreateRollCallWorksheet(RollCallID);
+            ExcelWorksheet ExamListWorksheet = CreateExamListWorksheet(RollCallID);
+            Package.Workbook.Worksheets.Add(RollCallWorksheet.Name, RollCallWorksheet);
+            Package.Workbook.Worksheets.Add(ExamListWorksheet.Name, ExamListWorksheet);
 
-            //Tao them 1 hang Percent
-            Worksheet.Cells[9, FinalColumnIndex].Value = "X = Present";
-            Worksheet.Cells[9, FinalColumnIndex].Style.Font.Name = "Times New Roman";
-            Worksheet.Cells[10, FinalColumnIndex].Value = "Percent";
-            Worksheet.Cells[11, FinalColumnIndex, 31, FinalColumnIndex].Style.Numberformat.Format = "0.00%";
             return Package;
         }
 
