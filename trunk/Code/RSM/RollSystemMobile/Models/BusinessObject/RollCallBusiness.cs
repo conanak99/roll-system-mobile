@@ -32,31 +32,39 @@ namespace RollSystemMobile.Models.BusinessObject
 
 
             var TodaySession = StuSesBO.GetInstructorCurrentSession(InstructorID);
-            if (TodaySession == null)
+            var YesterdaySession = StuSesBO.GetInstructorYesterdaySession(InstructorID);
+            if (TodaySession == null && YesterdaySession == null)
             {
                 return null;
             }
             else
             {
-                var TodayRollCall = StuSesBO.GetInstructorFutureSession(InstructorID).Select(s => s.RollCall).Distinct().ToList();
+
+                var TodayRollCall = TodaySession.Select(s => s.RollCall).ToList();
                 foreach (var RollCall in TodayRollCall)
                 {
                     StudySession TdSes = TodaySession.FirstOrDefault(ss => ss.RollCallID == RollCall.RollCallID);
                     //Set lai thoi gian
-                    if (TdSes != null)
+                    RollCall.StartTime = TdSes.StartTime;
+                    RollCall.EndTime = TdSes.EndTime;
+                }
+
+                //Nhung mon hom qua co nhung hom nay ko co
+                foreach (var RollCall in YesterdaySession.Select(s => s.RollCall).ToList())
+                {
+                    if (TodayRollCall == null)
                     {
-                        RollCall.StartTime = TdSes.StartTime;
-                        RollCall.EndTime = TdSes.EndTime;
+                        TodayRollCall = new List<RollCall>();
                     }
-                    else
+                    if (!TodayRollCall.Any(roll => roll.RollCallID == RollCall.RollCallID))
                     {
-                        //Neu ngay hom nay ko day, set thoi gian bang 0
                         RollCall.StartTime = new TimeSpan(0, 0, 0);
                         RollCall.EndTime = new TimeSpan(0, 0, 0);
+                        TodayRollCall.Add(RollCall);
                     }
-                    
                 }
-                return TodayRollCall.OrderBy(r => r.StartTime).ToList();
+
+                return TodayRollCall.OrderBy(r => r.StartTime).ToList();     
             }
         }
 
