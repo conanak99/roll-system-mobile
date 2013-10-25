@@ -255,6 +255,26 @@ namespace RollSystemMobile.Models.BusinessObject
             return ErrorList;
         }
 
+        public List<RollCall> GetStudentLearnedCourses(int StudentID)
+        {
+            StudentBusiness StuBO = new StudentBusiness();
+            Student FoundStu = StuBO.GetStudentByID(StudentID);
+
+            var LearnedRollCall = FoundStu.RollCalls.Where(r => r.EndDate < DateTime.Now).ToList();
+
+            return LearnedRollCall;
+        }
+
+        public List<RollCall> GetStudentLearningCourse(int StudentID)
+        {
+            StudentBusiness StuBO = new StudentBusiness();
+            Student FoundStu = StuBO.GetStudentByID(StudentID);
+
+            var LearningRollCall = FoundStu.RollCalls.Where(r => r.BeginDate <= DateTime.Now && r.EndDate > DateTime.Now).ToList();
+
+            return LearningRollCall;
+        }
+
         public void CreateRollCallBook(int RollCallID, String FileName)
         {
             //Tao 1 roll call book rong

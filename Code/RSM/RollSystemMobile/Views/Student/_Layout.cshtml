@@ -1,0 +1,88 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section ExtraHead {
+   @RenderSection("ExtraHead", required: false)
+}
+<div id="container">
+<div id="wrapper">
+    <div id="menu_top">
+        <ul class="nav nav-pills">
+            <li><a href="#">Introduction</a></li>
+            <li style="padding: 5px;">|</li>
+            <li><a href="#">Role</a></li>
+            <li style="padding: 5px;">|</li>
+            <li><a href="#">About us</a></li>
+            <li style="padding: 5px;">|</li>
+            <li><a href="#">Report</a></li>
+
+            <div id="cssmenu">
+                 <ul><li class="has-sub"><a href="#"><span>Hello, @User.Identity.Name</span></a>
+                            <ul>
+                                <li><a href="#"><span>Change Password</span></a></li>
+                                    <li><a href="@Url.Action("Logout", "Account")"><span>Log out</span></a></li>
+       
+                        </ul>
+                         </li>
+  
+                              </ul>
+              </div>
+
+     
+        </ul>
+        
+        
+    </div>
+    </div>
+<div id="after_top">
+    <div id="logo">
+        <div id="image" style="float: left;">
+        </div>
+        <div id="name" style="float: left;" >
+        </div>
+        <div id="fpt" style="float: left;" >
+        </div>
+    </div>
+  
+    
+    </div>
+ 
+<div id="bannerwrap">
+    <div id="banner">
+    </div>
+</div>
+ <div id="wrapcontent">
+     
+ </div>  
+    <div id="content_area" style="width:1050px">
+        @RenderBody()
+    </div>
+    <div id="footer">
+        <div id="footer_image">
+            <p style="font-size: 25px; font-family: Constantia; color: White;">
+                Fpt Universiry
+            </p>
+            <p style="font-size: 25px; font-family: Constantia; color: White;">
+                The Roll Call System
+            </p>
+            <p style="font-size: 15px; font-family: Constantia; color: White;">
+                Copyright by myself
+            </p>
+        </div>
+        <div id="footer_contact">
+            <p style="font-size: 25px; font-family: Constantia; color: White;">
+                Contract Web
+            </p>
+            <a href="#">Fpt university</a><br />
+            <a href="#">Fpt Coporation</a>
+        </div>
+        <div id="footer_link">
+            <p style="font-size: 25px; font-family: Constantia; color: White;">
+                Join With us
+            </p>
+            <a href="#">Facebook</a><br />
+            <a href="#">Twitter</a>
+        </div>
+    </div>
+</div>
