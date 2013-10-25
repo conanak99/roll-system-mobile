@@ -1,6 +1,4 @@
 .btn-primary,
-.navbar.main,
-.navbar.main .btn-navbar,
 #flotTip,
 .btn-group.open .btn-primary.dropdown-toggle,
 .btn-primary.disabled,
@@ -79,11 +77,12 @@ blockquote small,
   border-color: #fafdfa;
 }
 .navbar.main .appbrand {
-  background: #36982d;
-  border-color: #66cf5c;
+  background: #ffffff;
+  height: 600px;
+  //border-color: #66cf5c;
 }
 .navbar.main .appbrand span {
-  border-color: #2f8427;
+  //border-color: #2f8427;
 }
 .navbar.main .btn-navbar .icon-bar {
   background: #8bda84;
@@ -96,7 +95,7 @@ blockquote small,
   border-left-color: #78d470;
 }
 .navbar.main .btn-navbar {
-  border-right-color: #2f8427;
+  //border-right-color: #2f8427;
 }
 #menu > ul > li.active {
   border-top-color: #36982d;
