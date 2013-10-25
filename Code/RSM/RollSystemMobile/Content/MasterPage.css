@@ -31,7 +31,7 @@ body
 }
 #bannerwrap {
     width: 1349px;
-    height: 255px;
+    height: 155px;
     background-color: #232323;
     margin-left: -7.7%;
     opacity:0.9;
@@ -39,8 +39,8 @@ body
 #banner
 {
     width: 1080px;
-    height: 250px;
-    background-image: url("./themes/base/images/banner1.png");
+    height: 150px;
+    background-image: url("./themes/base/images/banner2.jpg");
     background-repeat:no-repeat;    
     margin-left:10%;
     margin-top:5px;
