@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
@@ -159,7 +161,7 @@ namespace RollSystemMobile.Controllers
             //Nhan dien tung khuon mat trong anh
             List<RecognizerResult> Result = FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths);
 
-            return View("RecognizeResult",Result);
+            return View("RecognizeResult", Result);
         }
 
         public ActionResult StaffAccountList()
@@ -177,6 +179,33 @@ namespace RollSystemMobile.Controllers
         public ActionResult StudentAccountList()
         {
             var Model = StuBO.GetAllStudents();
+            return View(Model);
+        }
+
+        public ActionResult Config()
+        {
+
+            String FileName = Server.MapPath("~/Config.xml");
+
+            XmlSerializer _xmlSerializer = new XmlSerializer(typeof(ConfigModel));
+            Stream stream = new FileStream(FileName, FileMode.Open, FileAccess.Read);
+            ConfigModel Model = (ConfigModel)_xmlSerializer.Deserialize(stream);
+            stream.Close();
+
+            return View(Model);
+        }
+
+        [HttpPost]
+        public ActionResult Config(ConfigModel Model)
+        {
+
+            XmlSerializer _xmlserializer = new XmlSerializer(typeof(ConfigModel));
+
+            String FileName = Server.MapPath("~/Config.xml");
+
+            Stream stream = new FileStream(FileName, FileMode.Create);
+            _xmlserializer.Serialize(stream, Model);
+            stream.Close();
             return View(Model);
         }
     }

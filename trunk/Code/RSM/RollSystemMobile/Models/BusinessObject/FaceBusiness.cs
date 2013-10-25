@@ -22,7 +22,7 @@ namespace RollSystemMobile.Models.BusinessObject
         private static String HAAR_XML_PATH;
         private static String TRAINING_FOLDER_PATH;
 
-        private static int RESIZE_WIDTH = 1300;
+        private static int RESIZE_WIDTH = 1100;
         private static int RESIZE_HEIGHT = 800;
         private static int TRAINING_DATA_SIZE = 100;
         private static FaceRecognizer FaceRec;

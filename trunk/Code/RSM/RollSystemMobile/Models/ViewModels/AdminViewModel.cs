@@ -15,4 +15,19 @@ namespace RollSystemMobile.Models.ViewModels
         public List<Instructor> Instructors { get; set; }
         public List<Student> Students { get; set; }
     }
+
+    [Serializable]
+    public class ConfigModel
+    {
+        public String HaarXMLFile { get; set; }
+        public int ResizedHeight { get; set; }
+        public int ResizeWidth { get; set; }
+
+        public ConfigModel()
+        {
+            HaarXMLFile = "";
+            ResizedHeight = 0;
+            ResizeWidth = 0;
+        }
+    }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<ConfigModel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <HaarXMLFile>haarcascade_frontalface_alt_tree.xml</HaarXMLFile>
+  <ResizedHeight>1200</ResizedHeight>
+  <ResizeWidth>500</ResizeWidth>
+</ConfigModel>
