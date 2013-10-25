@@ -44,9 +44,12 @@ namespace RollSystemMobile
             RegisterGlobalFilters(GlobalFilters.Filters);
             RegisterRoutes(RouteTable.Routes);
 
+            ConfigHelper.SetConfigFile(Server.MapPath("~/Config.xml"));
+            SimpleLog.SetLogFolder(Server.MapPath("~/Content/Log/TextLog"));
+
+            FaceBusiness.Initialize();
             FaceBusiness.SetXMLPath(Server.MapPath("~/"));
             FaceBusiness.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
-            SimpleLog.SetLogFolder(Server.MapPath("~/Content/Log/TextLog"));
 
             //Bat dau set cai scheduler
             TempPathHolder.TempPath = Server.MapPath("~/Content/Temp/");
