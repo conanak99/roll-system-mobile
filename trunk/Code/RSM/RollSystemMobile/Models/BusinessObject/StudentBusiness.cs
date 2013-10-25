@@ -45,5 +45,10 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.GetList().Where(s => !s.RollCalls.Any(d => d.RollCallID == RollCallID)).
                 OrderBy(s => s.StudentID).ToList();
         }
+
+        public Student GetStudentByUserID(int UserID)
+        {
+            return base.FindSingle(st => st.UserID == UserID);
+        }
     }
 }

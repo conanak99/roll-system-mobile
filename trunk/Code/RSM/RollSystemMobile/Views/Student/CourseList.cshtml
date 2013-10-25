@@ -1,0 +1,166 @@
+﻿@model RollSystemMobile.Models.ViewModels.StudentViewModel
+@{
+    ViewBag.Title = "Course List";
+}
+<div>
+    <h4>
+        Student Info</h4>
+    <dl class="dl-horizontal">
+        <dt>Student Code</dt>
+        <dd>@Model.AuthorizedStudent.StudentCode</dd>
+        <dt>Student Name</dt>
+        <dd>@Model.AuthorizedStudent.FullName</dd>
+        <dt>Class</dt>
+        <dd>@Model.AuthorizedStudent.Class.ClassName</dd>
+        <dt>Email</dt>
+        <dd>@Model.AuthorizedStudent.Email</dd>
+    </dl>
+</div>
+<div>
+    <h4>
+        Learning Course</h4>
+    @if (Model.LearningRollCalls.Count == 0)
+    {
+        <p>
+            No learning course</p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-right">
+                        No
+                    </th>
+                    <th>
+                        Subject
+                    </th>
+                    <th>
+                        Class
+                    </th>
+                    <th>
+                        Instructor
+                    </th>
+                    <th>
+                        Time
+                    </th>
+                    <th>
+                        Attendance
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int index = 1;}
+                @foreach (var Roll in Model.LearningRollCalls)
+                {
+                    <tr>
+                        <td class="text-right">
+                            @index
+                        </td>
+                        <td>
+                            @Roll.Subject.FullName
+                        </td>
+                        <td>
+                            @Roll.Class.ClassName
+                        </td>
+                        <td>
+                            @Roll.Instructor.Fullname
+                        </td>
+                        <td>
+                            From @Html.FormatDate(Roll.BeginDate) to @Html.FormatDate(Roll.EndDate)
+                        </td>
+                        <td>
+                            <a class="btn btn-info modal-caller" href="@Url.Action("RollAttendance",
+                    new { RollCallID = Roll.RollCallID, StudentID = Model.AuthorizedStudent.StudentID })">Attendance</a>
+                        </td>
+                    </tr>
+                    { index++; }
+                }
+            </tbody>
+        </table>
+    }
+</div>
+<div>
+    <h4>
+        Learned Course</h4>
+    @if (Model.LearnedRollCalls.Count == 0)
+    {
+        <p>
+            No learned course</p>
+    }
+    else
+    {
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-right">
+                        No
+                    </th>
+                    <th>
+                        Subject
+                    </th>
+                    <th>
+                        Class
+                    </th>
+                    <th>
+                        Instructor
+                    </th>
+                    <th>
+                        Time
+                    </th>
+                    <th>
+                        Attendance
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int index2 = 1;}
+                @foreach (var Roll in Model.LearnedRollCalls)
+                {
+                    <tr>
+                        <td class="text-right">
+                            @index2
+                        </td>
+                        <td>
+                            @Roll.Subject.FullName
+                        </td>
+                        <td>
+                            @Roll.Class.ClassName
+                        </td>
+                        <td>
+                            @Roll.Instructor.Fullname
+                        </td>
+                        <td>
+                            From @Html.FormatDate(Roll.BeginDate) to @Html.FormatDate(Roll.EndDate)
+                        </td>
+                        <td>
+                            <a class="btn btn-info modal-caller" href="@Url.Action("RollAttendance",
+                    new { RollCallID = Roll.RollCallID, StudentID = Model.AuthorizedStudent.StudentID })">Attendance</a>
+                        </td>
+                    </tr>
+                    { index2++; }
+                }
+            </tbody>
+        </table>
+    }
+</div>
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
+
+<script>
+    $('.modal-caller').click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $('#myModal').html(data);
+                $('#myModal').modal('show');
+            }
+        });
+    });
+</script>

@@ -1,0 +1,88 @@
+﻿@model RollSystemMobile.Models.ViewModels.StudentAttendanceViewModel
+@{
+    ViewBag.Title = "Roll Attendance";
+    Layout = null;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+        ×</button>
+    <h3 id="myModalLabel">
+        @Model.InStudent.FullName</h3>
+</div>
+<div class="modal-body" id='modal-body'>
+    <legend>Roll Call: @Model.InRollCall.Class.ClassName - @Model.InRollCall.Subject.ShortName</legend>
+    <fieldset style="margin: -20px 0 -20px -20px">
+        <dl class="dl-horizontal">
+            <dt>Total Session</dt>
+            <dd>@Model.InRollCall.StudySessions.Count</dd>
+            <dt>Completed Session</dt>
+            <dd>@Model.StudentAttendances.Count</dd>
+            @{ int Absent = Model.StudentAttendances.Count(sa => !sa.IsPresent);
+               double AbsentRate = (double)Absent / @Model.InRollCall.StudySessions.Count * 100;
+            }
+            <dt>Absent</dt>
+            <dd>@Absent</dd>
+            <dt>Absent Rate</dt>
+            <dd>
+                @String.Format("{0:0}%", AbsentRate)
+            </dd>
+        </dl>
+    </fieldset>
+    <legend>Attendance</legend>
+    <fieldset>
+        <div class="text-center">
+            <table class="table table-bordered table-condensed" style="width:70%">
+                <thead>
+                    <tr>
+                        <th class="text-right">
+                            No
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                        <th>
+                            Present
+                        </th>
+                        <th>
+                            Note
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ int index = 1;}
+                    @foreach (var Attendance in Model.StudentAttendances)
+                    {
+                        <tr>
+                            <td class="text-right">
+                                @index
+                            </td>
+                            <td>
+                                @Html.FormatDate(Attendance.AttendanceLog.LogDate)
+                            </td>
+                            <td>
+                                @if (Attendance.IsPresent)
+                                {
+                                    <p>
+                                        Present</p>
+                                }
+                                else
+                                {
+                                    <p style="color: Red">
+                                        Absent</p>
+                                }
+                            </td>
+                            <td>
+                                @Attendance.Note
+                            </td>
+                        </tr>
+                                { index++; }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+</div>
+<div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">
+        Close</button>
+</div>

@@ -73,6 +73,8 @@ namespace RollSystemMobile.Controllers
                                     Action = "Index";
                                     break;
                                 case "Student":
+                                    Action = "CourseList";
+                                    break;
                                 default:
                                     Action = "Index";
                                     break;
@@ -249,7 +251,7 @@ namespace RollSystemMobile.Controllers
                 }
             }
 
-            return RedirectToAction("InstructorAccountList", "Admin");
+            return RedirectToAction("StudentAccountList", "Admin");
         }
     }
 }

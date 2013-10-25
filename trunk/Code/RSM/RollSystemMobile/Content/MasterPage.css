@@ -275,6 +275,7 @@ input[type="text"]
 #cssmenu ul {
   //background: #333333;
   height: 35px;
+  width: 300px;
   list-style: none;
   margin-left: 85%;
   padding: 0;
