@@ -8,6 +8,10 @@ using System.Web.Routing;
 using RollSystemMobile.Models;
 using RollSystemMobile.Models.BusinessObject;
 using RollSystemMobile.Models.HelperClass;
+using System.Threading;
+using System.Threading.Tasks;
+using FluentScheduler;
+using RollSystemMobile.Schedule;
 
 namespace RollSystemMobile
 {
@@ -43,11 +47,16 @@ namespace RollSystemMobile
             FaceBusiness.SetXMLPath(Server.MapPath("~/"));
             FaceBusiness.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
             SimpleLog.SetLogFolder(Server.MapPath("~/Content/Log/TextLog"));
+
+            //Bat dau set cai scheduler
+            TempPathHolder.TempPath = Server.MapPath("~/Content/Temp/");
+            TaskManager.Initialize(new MyRegistry()); 
+            TaskManager.UnobservedTaskException += TaskManager_UnobservedTaskException;
         }
 
 
         //Lay role de authorize
-        protected void FormsAuthentication_OnAuthenticate(Object sender, FormsAuthenticationEventArgs e)
+        protected void FormsAuthentication_OnAuthenticate(Object sender, FormsAuthenticationEventArgs evt)
         {
             if (FormsAuthentication.CookiesSupported == true)
             {
@@ -67,15 +76,21 @@ namespace RollSystemMobile
                         }
 
                         //Set Role vao, sau nay co the authorize bang annotation
-                        e.User = new System.Security.Principal.GenericPrincipal(
+                        evt.User = new System.Security.Principal.GenericPrincipal(
                           new System.Security.Principal.GenericIdentity(username, "Forms"), roles.Split(';'));
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
-                        //somehting went wrong
+                        SimpleLog.Error(ex.Message);
                     }
                 }
             }
+        }
+
+        protected void TaskManager_UnobservedTaskException(Task sender, UnhandledExceptionEventArgs e)
+        {
+            
+            SimpleLog.Error(((Exception)e.ExceptionObject).Message);
         }
 
 

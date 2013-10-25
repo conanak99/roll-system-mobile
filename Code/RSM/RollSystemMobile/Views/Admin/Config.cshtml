@@ -1,0 +1,54 @@
+﻿@model RollSystemMobile.Models.ViewModels.ConfigModel
+
+@{
+    ViewBag.Title = "System Configuration";
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>System Configuration</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons settings">
+                <i></i>System Configuration</h3>
+        </div>
+        <div class="widget-body">
+            @using (Html.BeginForm("Config", "Admin", FormMethod.Post))
+            {
+                <div class="row-fluid">
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">
+                            Haar XML File</label>
+                        <div class="controls">
+                            <select name="HaarXMLFile" class="span4">
+                                <option @(Model.HaarXMLFile.Equals("haarcascade_frontalface_alt.xml") ? "selected=selected" : "")>haarcascade_frontalface_alt.xml</option>
+                                <option @(Model.HaarXMLFile.Equals("haarcascade_frontalface_alt_tree.xml") ? "selected=selected" : "")>haarcascade_frontalface_alt_tree.xml</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">
+                            Image Resized Height</label>
+                        <div class="controls">
+                            <input class="span3" id="ResizedHeight" name="ResizedHeight" value="@Model.ResizedHeight" type="text" /></div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">
+                            Image Resized Width</label>
+                        <div class="controls">
+                            <input class="span3" id="ResizeWidth" name="ResizeWidth" value="@Model.ResizeWidth" type="text" /></div>
+                    </div>
+                </div>
+                
+                <div class="form-actions" style="padding:0">
+                    <button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok">
+                        <i></i>Save</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
