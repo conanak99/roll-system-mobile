@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using RollSystemMobile.Models;
 using RollSystemMobile.Models.BusinessObject;
 using RollSystemMobile.Models.ViewModels;
+using RollSystemMobile.Models.HelperClass;
 
 namespace RollSystemMobile.Controllers
 {
@@ -184,28 +185,19 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult Config()
         {
-
-            String FileName = Server.MapPath("~/Config.xml");
-
-            XmlSerializer _xmlSerializer = new XmlSerializer(typeof(ConfigModel));
-            Stream stream = new FileStream(FileName, FileMode.Open, FileAccess.Read);
-            ConfigModel Model = (ConfigModel)_xmlSerializer.Deserialize(stream);
-            stream.Close();
-
+            var Model = ConfigHelper.GetConfig();
             return View(Model);
         }
 
         [HttpPost]
         public ActionResult Config(ConfigModel Model)
         {
-
-            XmlSerializer _xmlserializer = new XmlSerializer(typeof(ConfigModel));
-
-            String FileName = Server.MapPath("~/Config.xml");
-
-            Stream stream = new FileStream(FileName, FileMode.Create);
-            _xmlserializer.Serialize(stream, Model);
-            stream.Close();
+            if (ModelState.IsValid)
+            {
+                ViewBag.Message = "Setting saved.";
+                ConfigHelper.SaveConfig(Model);
+                FaceBusiness.Initialize();
+            }
             return View(Model);
         }
     }

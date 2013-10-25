@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Drawing;
+using RollSystemMobile.Models.HelperClass;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
@@ -15,17 +16,26 @@ namespace RollSystemMobile.Models.BusinessObject
         private static HaarCascade Haar;
         //Luc add, co the dung alt2
         //Luc detect, nen dung alt_tree neu can chinh xac cao, can nhieu van dung alt
-        private static String HaarXML = "haarcascade_frontalface_alt.xml"; //"haarcascade_frontalface_alt_tree.xml"
+        private static String HaarXML; //"haarcascade_frontalface_alt_tree.xml"
         private static double DETECT_SCALE = 1.1;
         private static int MIN_NEIGHBOR = 3;
         private static int MIN_SIZE = 20;
         private static String HAAR_XML_PATH;
         private static String TRAINING_FOLDER_PATH;
 
-        private static int RESIZE_WIDTH = 1100;
-        private static int RESIZE_HEIGHT = 800;
+        private static int RESIZE_WIDTH;
+        private static int RESIZE_HEIGHT;
         private static int TRAINING_DATA_SIZE = 100;
         private static FaceRecognizer FaceRec;
+
+        //Initialize tu file config config
+        public static void Initialize()
+        {
+            var Config = ConfigHelper.GetConfig();
+            HaarXML = Config.HaarXMLFile;
+            RESIZE_HEIGHT = Config.ResizedHeight;
+            RESIZE_WIDTH = Config.ResizeWidth;
+        }
 
         public static void SetXMLPath(String FilePath)
         {
@@ -71,9 +81,9 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             using (Image<Bgr, byte> OldImage = new Image<Bgr, byte>(OldPath))
             {
-                //Neu anh nho, 1 trong 2 chieu < max thi ko can resize
+                //Neu anh nho, ca 2 chieu < max thi ko can resize
 
-                if (OldImage.Width < RESIZE_WIDTH || OldImage.Height < RESIZE_HEIGHT)
+                if (OldImage.Width < RESIZE_WIDTH && OldImage.Height < RESIZE_HEIGHT)
                 {
                     OldImage.Save(NewPath);
                 }

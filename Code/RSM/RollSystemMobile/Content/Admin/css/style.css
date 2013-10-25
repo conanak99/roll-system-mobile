@@ -3886,6 +3886,17 @@ body.choose #choose-preview > span span {
 .bwizard-steps.clickable li:hover:not (.active ) a {
   color: #08c;
 }
+
+.field-validation-error 
+{
+    color:Red;
+}
+
+.field-message 
+{
+    color:Green;
+}
+
 @media (max-width: 480px) {
   /* badges only on small screens */
   .bwizard-steps li:after,

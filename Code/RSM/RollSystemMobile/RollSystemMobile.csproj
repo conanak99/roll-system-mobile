@@ -162,6 +162,7 @@
     <Compile Include="Models\GoogleApi\GoogleCalendarAPIObject.cs" />
     <Compile Include="Models\GoogleApi\GoogleCalendarAPIWrapper.cs" />
     <Compile Include="Models\GoogleApi\WebUtils.cs" />
+    <Compile Include="Models\HelperClass\ConfigHelper.cs" />
     <Compile Include="Models\HelperClass\SimpleLog.cs" />
     <Compile Include="Models\HelperClass\OtherHelper.cs" />
     <Compile Include="Models\HelperClass\MyHtmlHelper.cs" />
