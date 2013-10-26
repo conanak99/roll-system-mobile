@@ -794,13 +794,15 @@ li.center,
   font-size: 17px;
 }
 #content {
-    background-image: url("./images/bg2.jpg");
+  background-image: url("./images/bg2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
   position: relative;
   overflow: hidden;
   margin: 0 0 0 204px;
   //background: #f3f3f3;
   min-width: 320px;
-  min-height: 800px;
+  min-height: 630px;
   padding: 0 0 20px;
 }
 #content > .menubar {
