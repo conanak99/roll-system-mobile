@@ -116,10 +116,10 @@ body
 }
 #name {
     margin-left: 15%;
-    margin-top: -1%;
-    width:400px;
-    height:90px;
-    background-image: url("./themes/base/images/name3.png");
+    margin-top: 1%;
+    width:480px;
+    height:100px;
+    background-image: url("./themes/base/images/name.png");
     background-repeat: no-repeat;
 }
 #fpt {
