@@ -51,11 +51,13 @@
     <!-- Start Content -->
     <div class="container-fluid">
         <div class="navbar main">
-            <a href="index.html?lang=en" class="appbrand"><span>Roll System Mobile</span></a>
+            <a href="index.html?lang=en" class="appbrand">
+                <img src="../../Content/Admin/css/images/logo2.png" style="margin-top:5px; margin-left:25px;" /></a>
             <button type="button" class="btn btn-navbar">
                 <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
                 </span>
             </button>
+            <img src="../../Content/Admin/css/images/name3.png" style="margin-top:5px; margin-left:250px" />
             <ul class="topnav pull-right">
                 <li class="account"><a data-toggle="dropdown" href="my_account.html?lang=en" class="glyphicons logout lock">
                     <span class="hidden-phone text">@User.Identity.Name</span><i></i></a>
@@ -81,6 +83,10 @@
                     <li class="glyphicons log_book"><a href="@Url.Action("Index")"><i></i><span>
                         Present Roll Call</span></a></li>
                     <div class="clearfix" style="clear: both">
+                    </div>
+                    <div id="copyright" style="text-shadow: 1px 1px #232323;">
+                        <a href="#">Copyright © HBH Corporation</a></br>
+                        <a href="#">Design by Gacon</a>
                     </div>
             </div>
             <div id="content">

@@ -1,13 +1,12 @@
-.btn-primary,
+
+.navbar.main,
+.navbar.main .btn-navbar,
 #flotTip,
 .btn-group.open .btn-primary.dropdown-toggle,
 .btn-primary.disabled,
 .btn-primary[disabled],
-.btn-primary:hover,
-#menu > ul > li.active > a,
 .label-primary,
 .table-primary thead th,
-.pagination ul > .active > a,
 .pagination ul > .active > span,
 .gallery ul li .thumb,
 .widget-activity ul.filters li.glyphicons.active i,
@@ -22,9 +21,9 @@
 .notyfy_wrapper.notyfy_primary,
 .progress.progress-primary .bar,
 .alert.alert-primary,
-.pagination ul > li > a:hover,
 .pagination ul > li.primary > a {
-  background: #44bf39;
+  background: #232323 url("../images/pattern1.png") repeat;
+ // box-shadow: 10px 10px 5px #ffffff;
 }
 a,
 p a,
@@ -45,7 +44,7 @@ p a,
 .widget.widget-3 .widget-footer a:hover i:before,
 blockquote small,
 #menu .profile span a {
-  color: #44bf39;
+  color: #fff;
 }
 .btn-primary,
 .ui-slider-wrap .slider-primary .ui-slider-handle,
@@ -61,7 +60,7 @@ blockquote small,
 .alert.alert-primary,
 .pagination ul > li > a:hover,
 .pagination ul > li.primary > a {
-  border-color: #44bf39;
+  border-color: #fff;
 }
 .table-primary tbody td {
   background-color: #fafdfa;
@@ -77,25 +76,24 @@ blockquote small,
   border-color: #fafdfa;
 }
 .navbar.main .appbrand {
-  background: #ffffff;
-  height: 600px;
-  //border-color: #66cf5c;
+  background: #232323 url("../images/pattern1.png") repeat;
+  border-color: #232323;
 }
 .navbar.main .appbrand span {
-  //border-color: #2f8427;
+  border-color: #232323;
 }
 .navbar.main .btn-navbar .icon-bar {
-  background: #8bda84;
+  background: #959595;
 }
 .navbar.main .topnav {
-  border-color: #2f8427;
+  border-color: #232323;
 }
 .navbar.main .topnav > li {
-  border-right-color: #2f8427;
-  border-left-color: #78d470;
+  border-right-color: #232323;
+  border-left-color: #232323;
 }
 .navbar.main .btn-navbar {
-  //border-right-color: #2f8427;
+  border-right-color: #232323;
 }
 #menu > ul > li.active {
   border-top-color: #36982d;
@@ -108,10 +106,10 @@ blockquote small,
 .navbar.main .topnav > li .notif li > a.glyphicons i:before,
 .navbar.main .topnav > li > a,
 .navbar.main .topnav > li .notif li > a {
-  color: #b0e6ab;
+  color: #959595;
 }
 #menu > ul > li.active .count {
-  background: #287022;
+  background: #ffffff;
 }
 .widget-activity ul.activities li.highlight {
   background-color: rgba(68, 191, 57, 0.1);
