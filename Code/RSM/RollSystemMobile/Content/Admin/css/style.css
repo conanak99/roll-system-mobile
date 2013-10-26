@@ -63,7 +63,7 @@ p a {
 h1,
 h2,
 h3 {
-  
+  text-shadow: 0 1px 0 #fff;
 }
 h1 span,
 h2 span,
@@ -118,7 +118,7 @@ li.center,
   background: #fff;
 }
 .navbar.main {
-  height: 70px;
+  height: 80px;
   background-color: #355d81;
   background-image: -moz-linear-gradient(top, #355d81, #315779);
   background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#355d81), to(#315779));
@@ -127,7 +127,7 @@ li.center,
   background-image: linear-gradient(to bottom, #355d81, #315779);
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff355d81', endColorstr='#ff315779', GradientType=0);
-  box-shadow: 10px 10px 5px #ffffff;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
   margin: 0;
   position: relative;
 }
@@ -583,7 +583,7 @@ li.center,
   overflow: hidden;
   margin-bottom: -99999px;
   padding-bottom: 99999px;
-  background: #49ad47 url("../images/pattern1.png") repeat;
+  background: #d7dadc url("../images/pattern1.png") repeat;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) inset;
   -moz-box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) inset;
   -webkit-box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1) inset;
@@ -603,7 +603,7 @@ li.center,
 }
 #menu .profile span strong {
   display: block;
-  color: #ffffff;
+  color: #444444;
   font-size: 14px;
 }
 #menu .profile span a {
@@ -643,8 +643,8 @@ li.center,
 }
 #menu > ul > li .count {
   display: inline-block;
-  background: #ffffff;
-  color: #232323;
+  background: #45484d;
+  color: #d6d6d6;
   font-weight: 600;
   font-size: 10px;
   padding: 1px 8px;
@@ -662,7 +662,7 @@ li.center,
   border-top: 1px solid #e0e2e4;
   padding: 0;
   margin: 0;
-  color: #ffffff;
+  color: #45484d;
   height: 38px;
   line-height: 38px;
   text-decoration: none;
@@ -674,12 +674,12 @@ li.center,
 }
 #menu > ul > li a.glyphicons i:before {
   font-size: 17px;
-  color: #ffffff;
+  color: #45484d;
   top: 10px;
   left: 15px;
 }
 #menu > ul > li a:hover {
-  background: #47759e;
+  background: #d1d4d6;
 }
 #menu > ul > li.active {
   position: relative;
@@ -708,13 +708,13 @@ li.center,
 }
 #menu > ul > li.glyphicons a i:before {
   font-size: 17px;
-  color: #ffffff;
+  color: #45484d;
   top: 10px;
   left: 15px;
 }
 #menu > ul > li.hasSubmenu.active {
   height: auto;
-  background: #70ad47;
+  background: #fff;
   padding: 0;
   border-bottom: 1px solid #dddddd;
 }
@@ -744,7 +744,7 @@ li.center,
   color: #222;
 }
 #menu > ul ul li a:hover {
-  background: #639bce;
+  background: #fafafa;
 }
 #menu > ul ul li.active a {
   font-weight: 600;
@@ -912,13 +912,16 @@ li.center,
   border: none;
 }
 #footer {
-  //position: fixed;
-    width: 1349px;
-    height: 45px;
-    text-align: right;
-    background-color: #232323;
+  height: 35px;
+  background: #272729;
+  border-top: 1px solid #010101;
+  position: fixed;
+  bottom: 0;
+  z-index: 20000;
+  left: 0;
+  right: 0;
+  overflow: hidden;
 }
-
 #footer .wrap {
   background: #272729;
   display: block;
@@ -1340,12 +1343,11 @@ ul.icons li {
   position: relative;
 }
 .widget {
-  //  background-color: transparent;
   background: #fff;
-  opacity:0.87;
   margin: 0 auto 20px;
   position: static;
   border: 1px solid #c1c1c1;
+  opacity:0.9;
 }
 .widget .tab-content {
   padding: 0;
@@ -1386,7 +1388,7 @@ ul.icons li {
   color: #ffffff;
   font-size: 14px;
   height: 40px;
-  //line-height: 40px;
+  line-height: 40px;
   padding: 0 15px;
   float: left;
 }
@@ -1429,7 +1431,6 @@ ul.icons li {
   color: #45484d;
 }
 .widget .widget-body {
-  opacity:1.0 !important;
   padding: 20px 15px;
 }
 .widget .widget-body form {
@@ -1993,7 +1994,7 @@ p.glyphicons.envelope i:before {
 }
 .table-striped tbody tr:nth-child(odd) td,
 .table-striped tbody tr:nth-child(odd) th {
-  background-color: #d2ffb3;
+  background-color: #d5fcbb;
 }
 .table th,
 .table td {
@@ -2165,7 +2166,7 @@ p.glyphicons.envelope i:before {
 .pagination ul > .active > a,
 .pagination ul > .active > span {
   border-color: #47759e;
-  background: #49ad47;
+  background: #47759e;
   color: #fff;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   box-shadow: inset 1px 1px 1px rgba(255, 255, 255, 0.2), inset -1px -1px 1px rgba(0, 0, 0, 0.2);
@@ -2175,7 +2176,6 @@ p.glyphicons.envelope i:before {
 .pagination ul > li > a,
 .pagination ul > li > span {
   border-color: #dddddd;
-  background-color:#8dd95a;
 }
 .pagination ul > .primary.disabled > a,
 .pagination ul > .disabled > a,
@@ -2539,8 +2539,8 @@ hr.separator.bottom {
   -moz-border-radius: 0 0 0 0;
   border-radius: 0 0 0 0;
   margin: 0;
-  background: #49ad47 url("../images/pattern1.png") repeat;
-  color: #ffffff;
+  background: #fafafa;
+  color: #797979;
   border-bottom: 1px solid #ddd;
   font-size: 9pt;
 }
@@ -2666,7 +2666,7 @@ hr.separator.bottom {
   text-shadow: none;
 }
 .btn-primary {
-  background: #49ad47;
+  background: #47759e;
   border: 1px solid #375b7b;
   color: #ffffff;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
@@ -3874,17 +3874,6 @@ body.choose #choose-preview > span span {
 .bwizard-steps.clickable li:hover:not (.active ) a {
   color: #08c;
 }
-
-.field-validation-error 
-{
-    color:Red;
-}
-
-.field-message 
-{
-    color:Green;
-}
-
 @media (max-width: 480px) {
   /* badges only on small screens */
   .bwizard-steps li:after,
@@ -3899,9 +3888,4 @@ body.choose #choose-preview > span span {
     padding: 0;
     background-color: transparent;
   }
-    
-}
-#copyright {
-    text-align:center;
-    margin-top:200%;
 }
