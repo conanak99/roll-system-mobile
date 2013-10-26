@@ -632,7 +632,6 @@ a:focus {
 }
 
 .container-fluid {
-    background-color:red;
   padding-right: 20px;
   padding-left: 20px;
   *zoom: 1;
@@ -2141,13 +2140,7 @@ table {
 
 .table-striped tbody > tr:nth-child(odd) > td,
 .table-striped tbody > tr:nth-child(odd) > th {
-  background-color: #d2ffb3;
- 
-}
-
-.table-striped tbody > tr:nth-child(even) > td,
-.table-striped tbody > tr:nth-child(even) > th {
-  background-color: #ffffff;
+  background-color: #f9f9f9;
 }
 
 .table-hover tbody tr:hover > td,
@@ -4966,7 +4959,7 @@ input[type="submit"].btn.btn-mini {
 .breadcrumb > li {
   display: inline-block;
   *display: inline;
-  //text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 0 1px 0 #ffffff;
   *zoom: 1;
 }
 
