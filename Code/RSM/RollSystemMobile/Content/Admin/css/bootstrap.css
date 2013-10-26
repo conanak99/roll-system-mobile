@@ -2071,6 +2071,7 @@ table {
 .table-bordered tbody:first-child tr:first-child th,
 .table-bordered tbody:first-child tr:first-child td {
   border-top: 0;
+  
 }
 
 .table-bordered thead:first-child tr:first-child > th:first-child,
@@ -2142,7 +2143,6 @@ table {
 .table-striped tbody > tr:nth-child(odd) > td,
 .table-striped tbody > tr:nth-child(odd) > th {
   background-color: #d2ffb3;
- 
 }
 
 .table-striped tbody > tr:nth-child(even) > td,
@@ -4966,7 +4966,7 @@ input[type="submit"].btn.btn-mini {
 .breadcrumb > li {
   display: inline-block;
   *display: inline;
-  //text-shadow: 0 1px 0 #ffffff;
+  text-shadow: 0 0px 0 #ffffff;
   *zoom: 1;
 }
 

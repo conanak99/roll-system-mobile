@@ -21,6 +21,10 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <OldToolsVersion>4.0</OldToolsVersion>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -198,6 +202,8 @@
     <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\js\bootstrap-fileupload.js" />
     <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\js\jasny-bootstrap.js" />
     <Content Include="Content\Admin\bootstrap-extend\jasny-bootstrap\js\jasny-bootstrap.min.js" />
+    <Content Include="Content\Admin\css\bootstrap-responsive.css" />
+    <Content Include="Content\Admin\css\bootstrap.css" />
     <Content Include="Content\Admin\css\green-theme.css" />
     <Content Include="Content\Admin\css\glyphicons.css" />
     <Content Include="Content\Admin\css\style.css" />
