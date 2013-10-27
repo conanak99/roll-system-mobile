@@ -39,14 +39,6 @@
                     @Html.ValidationMessageFor(model => model.Phone)
                 </div>
                 <span class="help-block">Phone of instructor.( Example: 090xxxxxxx).</span>
-                <div class="editor-label">
-                     <b>User</b>
-                </div>
-                <div class="editor-field">
-                    @Html.DropDownList("UserID", (SelectList)ViewBag.UserID, new { style = "width: 120px;" })
-                    @Html.ValidationMessageFor(model => model.UserID)
-                </div>
-                <span class="help-block">Select the user for instructor.</span>
             </td>
         </tr>
     </table>

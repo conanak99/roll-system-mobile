@@ -1,0 +1,20 @@
+﻿@model RollSystemMobile.Models.Student
+@{
+    ViewBag.Title = "ChangeClass";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+    <p>
+        Change student Class</p>
+  @using (Html.BeginForm())
+  {
+    @Html.ValidationSummary(true)
+    <div class="editor-field " style="margin-left: 10px">
+        @Html.DropDownList("ClassID", new SelectList(ViewBag.ClassID, "ClassID", "ClassName").OrderBy(a => a.Text))
+    </div>
+    <p>
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </p>
+  }
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

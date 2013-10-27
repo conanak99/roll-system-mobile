@@ -127,13 +127,14 @@ namespace RollSystemMobile.Controllers
         public ActionResult Create(RollCall rollcall, int MajorID, int ClassID, TimeSpan? otherTime)
         {
 
-            List<string> ErrorList = RollBO.ValidRollCall(rollcall,otherTime);
+            List<string> ErrorList = RollBO.ValidRollCall(rollcall, otherTime);
             if (ErrorList.Count == 0)
             {
                 if (otherTime.ToString() != "")
                 {
                     rollcall.StartTime = TimeSpan.Parse(otherTime.ToString());
                 }
+                rollcall.SemesterID = 2;
                 RollBO.Insert(rollcall);
                 return RedirectToAction("Index");
             }
@@ -180,11 +181,11 @@ namespace RollSystemMobile.Controllers
         // POST: /RollCall/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(RollCall rollcall,TimeSpan? otherTime)
+        public ActionResult Edit(RollCall rollcall, TimeSpan? otherTime)
         {
             if (ModelState.IsValid)
             {
-                List<string> ErrorList = RollBO.ValidRollCall(rollcall,otherTime);
+                List<string> ErrorList = RollBO.ValidRollCall(rollcall, otherTime);
                 if (ErrorList.Count == 0)
                 {
                     // Kiem tra xem co doi giao vien hay ko
@@ -244,7 +245,24 @@ namespace RollSystemMobile.Controllers
                 Select(c => new { id = c.ClassID, name = c.ClassName });
             return Json(Classes, JsonRequestBehavior.AllowGet);
         }
-
+        //lay danh sach cac time ma lop chua hoc
+        public JsonResult GetStartTime(int id)
+        {
+            var rc = RollBO.GetList().Where(a => a.ClassID == id)
+             .Select(c => new
+             {
+                 enddate = c.EndDate.ToString("yyyy-MM-dd"),
+                 starttime = c.StartTime.ToString(@"hh\:mm"),
+                 endtime = c.EndTime.ToString(@"hh\:mm")
+             });
+            return Json(rc, JsonRequestBehavior.AllowGet);
+        }
+        //get so slot cua mon hoc
+        public JsonResult GetNumberOfSlot(int id)
+        {
+            var slot = SubBO.GetSubjectByID(id).NumberOfSlot;
+            return Json(slot, JsonRequestBehavior.AllowGet);
+        }
         //Lay danh sach mon hoc cua 1 major, de dua vao dropbox
         public JsonResult GetSubjects(int id)
         {
@@ -266,7 +284,18 @@ namespace RollSystemMobile.Controllers
                 Select(i => new { id = i.InstructorID, name = i.Fullname });
             return Json(instructor, JsonRequestBehavior.AllowGet);
         }
-
+        //get time instructor day trong ngay
+        public JsonResult GetInstructorFree(int id)
+        {
+            var instructor = RollBO.GetList().Where(r => r.InstructorID == id)
+                .Select(i => new
+                {
+                    starttime = i.StartTime.ToString(@"hh\:mm"),
+                    endtime = i.EndTime.ToString(@"hh\:mm"),
+                    enddate = i.EndDate.ToString("yyyy-MM-dd")
+                });
+            return Json(instructor, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult ChangeSchedule(int id)
         {
             RollCall rollCall = RollBO.GetRollCallByID(id);

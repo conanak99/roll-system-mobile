@@ -14,6 +14,7 @@ namespace RollSystemMobile.Controllers
     {
          private ClassBusiness ClassBO;
          SelectListFactory slFactory ;
+         StudentBusiness StuBO;
         //
         // GET: /Subject/
 
@@ -21,6 +22,7 @@ namespace RollSystemMobile.Controllers
         {
             slFactory = new SelectListFactory();
             ClassBO = new ClassBusiness();
+            StuBO = new StudentBusiness();
         }
 
         public ViewResult Index()
@@ -89,6 +91,15 @@ namespace RollSystemMobile.Controllers
             return View(cls);
         }
 
+        // student list
+        public ActionResult StudentList(int ClassID) {
+            List<Student> Students = null;
+
+          
+                Students = StuBO.GetStudentInClass(ClassID);
+
+            return View(Students);
+        }
         //
         // GET: /Class/Delete/5
  
