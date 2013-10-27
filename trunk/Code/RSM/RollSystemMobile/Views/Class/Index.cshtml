@@ -20,6 +20,9 @@
             ClassName
         </th>
         <th>
+        Student List
+        </th>
+        <th>
         </th>
     </tr>
     @{int index = 1;}
@@ -34,6 +37,9 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ClassName)
+            </td>
+            <td>
+                @Html.ActionLink("Show", "StudentList", new { ClassID = item.ClassID }) 
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.ClassID }) |

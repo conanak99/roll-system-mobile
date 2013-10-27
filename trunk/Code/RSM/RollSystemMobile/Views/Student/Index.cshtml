@@ -1,0 +1,68 @@
+﻿@model IEnumerable<RollSystemMobile.Models.Student>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered table-striped" id="example">
+    <thead>
+        <th>
+            Class
+        </th>
+        <th>
+            FullName
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            StudentCode
+        </th>
+        <th></th>
+    </thead>
+<tbody>
+ @{ int index = 1;}
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Class.ClassName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FullName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StudentCode)
+        </td>
+        <td>
+            @Html.ActionLink("Change Class", "ChangeClass", new { id=item.StudentID , classid = item.ClassID }) <br />
+            @Html.ActionLink("Edit", "Edit", new { id=item.StudentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.StudentID }) 
+        </td>
+    </tr>
+    { index++; } 
+}
+</tbody>
+</table>
+<script>
+    /* Table initialisation */
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page"
+            },
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4]}]
+        });
+    });
+</script>
+

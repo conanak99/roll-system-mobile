@@ -1,0 +1,60 @@
+﻿@model RollSystemMobile.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Student</legend>
+
+    <div class="display-label">Class</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Class.ClassName)
+    </div>
+
+    <div class="display-label">FullName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.FullName)
+    </div>
+
+    <div class="display-label">Birthdate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Birthdate)
+    </div>
+
+    <div class="display-label">CitizenID</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.CitizenID)
+    </div>
+
+    <div class="display-label">Address</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Address)
+    </div>
+
+    <div class="display-label">Email</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.Email)
+    </div>
+
+    <div class="display-label">IsActive</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.IsActive)
+    </div>
+
+    <div class="display-label">User</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.User.Username)
+    </div>
+
+    <div class="display-label">StudentCode</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.StudentCode)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.StudentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
