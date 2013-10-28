@@ -14,16 +14,19 @@ namespace RollSystemMobile.Controllers
     public class StudentController : Controller
     {
         private ClassBusiness ClassBO;
-        SelectListFactory slFactory;
-        StudentBusiness StuBO;
-		AccountBusiness AccBO;	
+       private SelectListFactory slFactory;
+       private StudentBusiness StuBO;
+		private AccountBusiness AccBO;
+        private RollCallBusiness RollBO;
 
         public StudentController()
         {
-            slFactory = new SelectListFactory();
-            ClassBO = new ClassBusiness();
-            StuBO = new StudentBusiness();
+            RSMEntities db = new RSMEntities();
+            slFactory = new SelectListFactory(db);
+            ClassBO = new ClassBusiness(db);
+            StuBO = new StudentBusiness(db);
 			AccBO = new AccountBusiness(db);
+            RollBO = new RollCallBusiness(db);
         }
         //
         // GET: /Student/

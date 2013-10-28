@@ -25,6 +25,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
         private static int RESIZE_WIDTH;
         private static int RESIZE_HEIGHT;
+        private static int RECOGNIZER_THREEHOLD;
         private static int TRAINING_DATA_SIZE = 100;
         private static FaceRecognizer FaceRec;
 
@@ -35,6 +36,7 @@ namespace RollSystemMobile.Models.BusinessObject
             HaarXML = Config.HaarXMLFile;
             RESIZE_HEIGHT = Config.ResizedHeight;
             RESIZE_WIDTH = Config.ResizeWidth;
+            RECOGNIZER_THREEHOLD = Config.Threehold;
         }
 
         public static void SetXMLPath(String FilePath)
@@ -197,7 +199,7 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             //Tu rollcall ID, tao face recognizer, train
             //FaceRecognizer FaceRec = new LBPHFaceRecognizer(1, 8, 8, 8, 75);
-            FaceRecognizer FaceRec = new FisherFaceRecognizer(80, 2500);
+            FaceRecognizer FaceRec = new FisherFaceRecognizer(80, RECOGNIZER_THREEHOLD);
 
             List<int> StudentIDs = new List<int>();
             List<Image<Gray, byte>> StudentImages = new List<Image<Gray, byte>>();

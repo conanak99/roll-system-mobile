@@ -22,11 +22,16 @@ namespace RollSystemMobile.Models.ViewModels
         [Range(500, 2000, ErrorMessage = "Width must be from 500 to 2000")]
         public int ResizeWidth { get; set; }
 
+        [Required(ErrorMessage = "Please enter threehold")]
+        [Range(500, 2500, ErrorMessage = "Threehold must be from 500 to 2500")]
+        public int Threehold { get; set; }
+
         public ConfigModel()
         {
             HaarXMLFile = "haarcascade_frontalface_alt.xml";
             ResizedHeight = 1100;
             ResizeWidth = 800;
+            Threehold = 1000;
         }
     }
 }
