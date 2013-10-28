@@ -18,7 +18,7 @@
         <div class="widget-body">
             @using (Html.BeginForm("Config", "Admin", FormMethod.Post))
             {
-                <span class="field-message">@ViewBag.Message</span>
+                <span class="field-message" style="color:Green">@ViewBag.Message</span>
                 
                 @Html.ValidationSummary(true)
                 <div class="row-fluid">
@@ -50,6 +50,15 @@
                             @Html.TextBoxFor(model => model.ResizedHeight, new {@class = "span2"})
                             @Html.ValidationMessageFor(model => model.ResizedHeight)
                             <span class="help-block">Height of resized image. Should be smaller than width.</span>
+                        </div>
+                    </div>
+                     <div class="control-group">
+                        <label class="control-label" for="firstname">
+                            Recognizer Threehold</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Threehold, new {@class = "span2"})
+                            @Html.ValidationMessageFor(model => model.Threehold)
+                            <span class="help-block">Set threehold higher if recognizer gives many unknown results.</span>
                         </div>
                     </div>
                 </div>

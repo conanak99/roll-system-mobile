@@ -470,6 +470,13 @@
     <Content Include="Views\Student\_Layout.cshtml" />
     <Content Include="Views\Student\_ViewStart.cshtml" />
     <Content Include="Views\Student\_RollAttendance.cshtml" />
+    <Content Include="Views\Student\ChangeClass.cshtml" />
+    <Content Include="Views\Student\Create.cshtml" />
+    <Content Include="Views\Student\Delete.cshtml" />
+    <Content Include="Views\Student\Details.cshtml" />
+    <Content Include="Views\Student\Edit.cshtml" />
+    <Content Include="Views\Student\Index.cshtml" />
+    <Content Include="Views\Staff\Import.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
