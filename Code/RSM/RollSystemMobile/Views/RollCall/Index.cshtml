@@ -5,8 +5,8 @@
 }
 <h1>
     Roll Call List</h1>
-<p>
-    @Html.ActionLink("Create New", "Create")
+<p style="font-size:20px;">
+   @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table table-bordered table-striped" id="example">
     <thead>
@@ -61,7 +61,7 @@
                 @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
             </td>
             <td>
-                @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID }) |
+                @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID }) <br />
                 @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) |
                 @Html.ActionLink("Detele", "Delete", new { id = item.RollCallID })
             </td>

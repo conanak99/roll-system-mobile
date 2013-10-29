@@ -72,7 +72,7 @@ body
 {
     float: left;
     width: 230px;
-    height: 290px;
+    height: 300px;
     margin: 5px 0 20px 40px;
     padding: 30px 10px 0 10px;
     position: relative;
@@ -226,7 +226,7 @@ body
     text-decoration: none;
     right: 11px;
 }
-
+/*
 #nav li a.current
 {
     background: url("./themes/base/images/nav3.png") no-repeat;
@@ -239,7 +239,7 @@ body
     font-weight: bold;
     font-size: 18px;
     
-}
+}*/
 #nav li a:hover
 {
     background: url("./themes/base/images/nav3.png") no-repeat;

@@ -14,9 +14,9 @@ namespace RollSystemMobile.Controllers
     public class StudentController : Controller
     {
         private ClassBusiness ClassBO;
-       private SelectListFactory slFactory;
-       private StudentBusiness StuBO;
-		private AccountBusiness AccBO;
+        private SelectListFactory slFactory;
+        private StudentBusiness StuBO;
+        private AccountBusiness AccBO;
         private RollCallBusiness RollBO;
 
         public StudentController()
@@ -25,7 +25,7 @@ namespace RollSystemMobile.Controllers
             slFactory = new SelectListFactory(db);
             ClassBO = new ClassBusiness(db);
             StuBO = new StudentBusiness(db);
-			AccBO = new AccountBusiness(db);
+            AccBO = new AccountBusiness(db);
             RollBO = new RollCallBusiness(db);
         }
         //
@@ -108,14 +108,14 @@ namespace RollSystemMobile.Controllers
         }
 
         [HttpPost]
-        public ActionResult ChangeClass(Student student,int id)
+        public ActionResult ChangeClass(Student student, int id)
         {
             if (ModelState.IsValid)
             {
                 Student std = StuBO.GetStudentByID(id);
                 std.ClassID = student.ClassID;
                 StuBO.UpdateExist(std);
-                return Redirect("Index");
+                return Redirect("~/Student/Index");
             }
             return View();
         }
@@ -138,7 +138,7 @@ namespace RollSystemMobile.Controllers
             StuBO.Delete(student);
             return RedirectToAction("Index");
         }
-//Hien thi cac mon ma student do da hoc
+        //Hien thi cac mon ma student do da hoc
         public ActionResult CourseList()
         {
             string Username = this.HttpContext.User.Identity.Name;
@@ -165,7 +165,7 @@ namespace RollSystemMobile.Controllers
             List<AttendanceLog> RollCallLogs = AttenBO.GetRollCallAttendanceLog(RollCallID);
 
             //Tim nhung attendance cua student, nam trong log, co rollcallID bang RollcallID dua vao
-            var StudentAttendances = Stu.StudentAttendances.Where(sa => sa.AttendanceLog.RollCallID == RollCallID 
+            var StudentAttendances = Stu.StudentAttendances.Where(sa => sa.AttendanceLog.RollCallID == RollCallID
                 && RollCallLogs.Select(r => r.LogID).Contains(sa.LogID))
                 .OrderBy(sa => sa.AttendanceLog.LogDate).ToList();
 
