@@ -5,53 +5,68 @@
 }
 <h2>
     Subject List</h2>
-<p>
+<p style="font-size: 20px;">
     @Html.MenuLink("Create New", "Create", "Subject")
 </p>
-<table class="table">
-    <tr>
-        <th>
+<table class="table table-bordered table-striped" id="example">
+    <thead>
+        <th style="background-color: #70ad47; color: #ffffff">
             No.
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
             Short Name
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
             Full Name
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
             Number Of Session
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
             Number Of Slot
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
         </th>
-    </tr>
-    @{int index = 1;}
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td style="text-align:right;">
-                @index
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ShortName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td style="text-align:right;">
-                @Html.DisplayFor(modelItem => item.NumberOfSession)
-            </td>
-            <td style="text-align:right;">
-                @Html.DisplayFor(modelItem => item.NumberOfSlot)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
-            </td>
-        </tr>
-           { index++; }
-    }
+    </thead>
+    <tbody>
+        @{int index = 1;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td style="text-align: right;">
+                    @Html.DisplayFor(modelItem => item.NumberOfSession)
+                </td>
+                <td style="text-align: right;">
+                    @Html.DisplayFor(modelItem => item.NumberOfSlot)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
+                </td>
+            </tr>
+               { index++; }
+        }
+    </tbody>
 </table>
+<script>
+    /* Table initialisation */
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page"
+            },
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [5]}]
+        });
+    });
+</script>

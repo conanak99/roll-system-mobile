@@ -5,26 +5,27 @@
 }
 <h2>
     Index</h2>
-<p>
+<p style="font-size:20px;">
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
+<table class="table table-bordered table-striped" id="example">
+    <thead>
+        <th style="background-color: #70ad47; color: #ffffff">
             No.
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
             Major
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
             ClassName
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
         Student List
         </th>
-        <th>
+        <th style="background-color: #70ad47; color: #ffffff">
         </th>
-    </tr>
+    </thead>
+    <tbody>
     @{int index = 1;}
     @foreach (var item in Model)
     {
@@ -48,4 +49,18 @@
         </tr>
            { index++; }
     }
+    </tbody>
 </table>
+<script>
+    /* Table initialisation */
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page"
+            },
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3, 4]}]
+        });
+    });
+</script>

@@ -74,8 +74,7 @@
            new SelectListItem { Text = "12:30", Value = "12:30" }, 
            new SelectListItem { Text = "14:15", Value = "14:15" }, 
            new SelectListItem { Text = "16:00", Value = "16:00" },
-           new SelectListItem { Text = "18:45", Value = "18:45" },
-           new SelectListItem { Text = "19:00", Value = "19:00" }, 
+           new SelectListItem { Text = "18:45", Value = "18:45" }, 
            new SelectListItem { Text = "Other", Value = "Other" } 
        }, new { @id = "startTime", style = "width:90px;" }) -
                     <input style="margin-bottom: 10px; width: 80px;" type="text" name="otherTime" id="Other" />
@@ -87,14 +86,12 @@
     <p>
         <input type="submit" value="Create" id="submit" class="btn btn-primary" />
     </p>
-    <input type="text" id="dp" />
 }
-<div>
+<p style="font-size: 20px;">
     @Html.ActionLink("Back to List", "Index")
-</div>
+</p>
 <script type="text/javascript">
     $(document).ready(function () {
-        var classID = $('#ClassID :selected').attr("value");
         var subjectID = $('#SubjectID :selected').attr("value");
         var today = new Date();
         var month = today.getMonth() + 1;
@@ -104,16 +101,26 @@
         var currentdate = year + "-" + month + "-" + date;
         var NextDate;
         var Ndate;
-
+        var Nndate;
+        //set default day is monday
         if (day > 1) {
             var i = 8 - day;
             NextDate = new Date(year, month, date + i);
-            Ndate = NextDate.getMonth() + "-" + NextDate.getDate() + "-" + NextDate.getFullYear();
+            if (NextDate.getMonth() == month) {
+                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+                Nndate = NextDate.getMonth() + "-" + NextDate.getDate() + "-" + NextDate.getFullYear();
+            } else {
+                NextDate = new Date(year, month, date + i - 1);
+                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+                Nndate = NextDate.getMonth() + "-" + NextDate.getDate() + "-" + NextDate.getFullYear();
+            }
         } else if (day == 0) {
             NextDate = new Date(year, month, date + 1);
-            Ndate = NextDate.getMonth() + "-" + NextDate.getDate() + "-" + NextDate.getFullYear();
+            Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+            Nndate = NextDate.getMonth() + "-" + NextDate.getDate() + "-" + NextDate.getFullYear();
         } else {
-            Ndate = month + "-" + date + "-" + year;
+            Ndate = date + "-" + month + "-" + year;
+            Nndate = month + "-" + date + "-" + year;
         }
 
         //show textbox when choose starttime is other.
@@ -135,7 +142,7 @@
                 return date.getDay() != 1 ? 'disabled' : '';
             }
         }).on('show', function (ev) {
-            $('#begindate').data({ date: Ndate });
+            $('#begindate').data({ date: Nndate });
             $('#begindate').datepicker('update');
         }).on('changeDate', function (ev) {
             var month = ev.date.getMonth() + 1;
@@ -167,12 +174,126 @@
             document.getElementById("semester").innerHTML = semester;
         }
 
-        //set default list starttime
+        //check the number of slot of subject, set start time option
+        CheckNumberOfSlot();
+        //remove start time option had exist
+        CheckStartTime();
+        // remove instructor is teaching at time
+        CheckInstructorFree();
+        //show student list
+        var classID = $('#ClassID :selected').attr("value");
+        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
+
+        // change instructor when select subject
+
+    });
+    //start time change value
+    $('#startTime').change(function () {
+        CheckInstructorFree();
+    });
+    //change startime to text if subject is capnstone
+    $('#SubjectID').change(function () {
+        var subjectID = $('#SubjectID :selected').attr("value");
+        var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
+        var subjectID = $('#SubjectID :selected').attr("value");
+        var timeValue = $('#startTime :selected').text();
+        var slotUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
+
+        if (timeValue == "Other") {
+            $("#Other").show();
+        } else {
+            $("#Other").hide();
+        }
+
+        $.getJSON(instructorUrl, function (instructors) {
+            var html = "";
+            $.each(instructors, function (index, instructor) {
+                html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
+            });
+            $("#InstructorID").html(html);
+        });
+        //set start time
+        SetDefaultTime();
+        CheckNumberOfSlot();
+        CheckStartTime();
+        CheckInstructorFree();
+    });
+
+
+    //show student list of class
+    $('#ClassID').change(function () {
+        var classID = $('#ClassID :selected').attr("value");
+        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
+        SetDefaultTime();
+        CheckNumberOfSlot();
+        CheckStartTime();
+        CheckInstructorFree();
+    });
+
+    //major change
+    $('#MajorID').change(function () {
+        var majorID = $('#MajorID :selected').attr("value");
+
+        var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
+        var classUrl = '@Url.Action("GetClasses")/' + majorID;
+
+        SetDefaultTime();
+        $.getJSON(subjectUrl, function (subjects) {
+            var html = "";
+            $.each(subjects, function (index, subject) {
+                html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
+            });
+            $("#SubjectID").html(html);
+            CheckNumberOfSlot();
+
+            var subjectID = $('#SubjectID :selected').attr("value");
+            var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
+            $.getJSON(instructorUrl, function (instructors) {
+                var html = "";
+                $.each(instructors, function (index, instructor) {
+                    html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
+                });
+                $("#InstructorID").html(html);
+                CheckInstructorFree();
+            });
+        });
+        $.getJSON(classUrl, function (classes) {
+            var html = "";
+            $.each(classes, function (index, item_class) {
+                html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
+            });
+            $("#ClassID").html(html);
+            CheckStartTime();
+        });
+
+        //
+        var classID = $('#ClassID :selected').attr("value");
+        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
+
+    });
+
+    function CheckNumberOfSlot() {
+        var subjectID = $('#SubjectID :selected').attr("value");
+        var slotUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
+        $.getJSON(slotUrl, function (slot) {
+            if (slot != 1) {
+                $("#startTime option[value='10:30']").remove();
+                $("#startTime option[value='16:00']").remove();
+            }
+        });
+    };
+    function CheckStartTime() {
+        var classID = $('#ClassID :selected').attr("value");
         var starttimeUrl = '@Url.Action("GetStartTime")/' + classID;
+        var today = new Date();
+        var month = today.getMonth() + 1;
+        var date = today.getDate();
+        var year = today.getFullYear();
+        var currentdate = year + "-" + month + "-" + date;
+
         $.getJSON(starttimeUrl, function (starttime) {
             $.each(starttime, function (index, time) {
                 if (time.enddate > currentdate) {
-
                     $("#startTime option[value='" + time.starttime + "']").remove();
                     if (time.endtime == "10:15") {
                         $("#startTime option[value='08:45']").remove();
@@ -186,23 +307,17 @@
                 }
             });
         });
-
-
-        var slotUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
-        $.getJSON(slotUrl, function (slot) {
-            if (slot != 1) {
-                $("#startTime option[value='10:30']").remove();
-                $("#startTime option[value='16:00']").remove();
-            }
-        });
-        //
-
-        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
-
-        // change instructor when select subject
-
-        var flag = true;
+    }
+    function CheckInstructorFree() {
+        var subjectID = $('#SubjectID :selected').attr("value");
         var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
+
+        var today = new Date();
+        var month = today.getMonth() + 1;
+        var date = today.getDate();
+        var year = today.getFullYear();
+        var currentdate = year + "-" + month + "-" + date;
+
         $.getJSON(instructorUrl, function (instructors) {
             var html = "";
             $.each(instructors, function (index, instructor) {
@@ -213,96 +328,32 @@
                         if (currentdate < ins.enddate) {
                             var starttime = $('#startTime :selected').attr("value");
                             if (ins.starttime == starttime) {
-                                $("#InstructorID option[value='1']").remove();
+                                $("#InstructorID option[value=" + instructor.id + "]").remove();
                             }
-
                         }
                     });
                 });
             });
             $("#InstructorID").html(html);
-
         });
-    });
-    //set semester base on date.
-    //    //set selected start time on reload page
-
-
-    //change startime to text if subject is capnstone
-    $('#SubjectID').change(function () {
-
-        var timeValue = $('#startTime :selected').text();
-        if (timeValue == "Other") {
-            $("#Other").show();
-        } else {
-            $("#Other").hide();
-        }
-
-        var subjectID = $('#SubjectID :selected').attr("value");
-        var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
-
-        $.getJSON(instructorUrl, function (instructors) {
-            var html = "";
-            $.each(instructors, function (index, instructor) {
-                html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
-            });
-            $("#InstructorID").html(html);
-        });
-        //        $('#1').remove();
-        //        $('#2').remove();
-        //        if (value == "CP") {
-        //            $('#a').append(time1);
-        //            //  $("#2").hide();
-        //            //  document.getElementById("1").style.display = "block";
-        //        } else {
-        //            $('#a').append(time2);
-        //            //  $("#2").show();
-        //            //  document.getElementById("1").style.display = "none";
-        //        }
-    });
-
-
-    //dom not only ready, but everything is loaded
-    $('#ClassID').change(function () {
-        var classID = $('#ClassID :selected').attr("value");
-        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
-    });
-
-    $('#MajorID').change(function () {
-        var majorID = $('#MajorID :selected').attr("value");
-
-        var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
-        var classUrl = '@Url.Action("GetClasses")/' + majorID;
-
-        $.getJSON(subjectUrl, function (subjects) {
-            var html = "";
-            $.each(subjects, function (index, subject) {
-                html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
-            });
-            $("#SubjectID").html(html);
-
-            var subjectID = $('#SubjectID :selected').attr("value");
-            var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
-            $.getJSON(instructorUrl, function (instructors) {
-                var html = "";
-                $.each(instructors, function (index, instructor) {
-                    html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
-                });
-                $("#InstructorID").html(html);
-            });
-        });
-
-        $.getJSON(classUrl, function (classes) {
-            var html = "";
-            $.each(classes, function (index, item_class) {
-                html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
-            });
-            $("#ClassID").html(html);
-        });
-
-
-        //
-        var classID = $('#ClassID :selected').attr("value");
-        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
-    });   
+    }
+    function SetDefaultTime() {
+        $("#startTime option[value='07:00']").remove();
+        $("#startTime option[value='08:45']").remove();
+        $("#startTime option[value='10:30']").remove();
+        $("#startTime option[value='12:30']").remove();
+        $("#startTime option[value='14:15']").remove();
+        $("#startTime option[value='16:00']").remove();
+        $("#startTime option[value='18:45']").remove();
+        var html = "";
+        html += ('<option value="07:00" >07:00</option>')
+        html += ('<option value="08:45" >08:45</option>')
+        html += ('<option value="10:30" >10:30</option>')
+        html += ('<option value="12:30" >12:30</option>')
+        html += ('<option value="14:15" >14:15</option>')
+        html += ('<option value="16:00" >16:00</option>')
+        html += ('<option value="18:45" >18:45</option>')
+        html += ('<option value="Other" >Other</option>')
+        $("#startTime").html(html);
+    }
 </script>
