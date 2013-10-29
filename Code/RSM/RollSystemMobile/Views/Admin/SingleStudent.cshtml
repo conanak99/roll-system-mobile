@@ -27,8 +27,8 @@
 <div class="innerLR">
     <div class="widget">
         <div class="widget-head">
-            <h3 class="heading glyphicons picture">
-                <i></i>@Model.FullName Image Data</h3>
+            <h3 class="heading glyphicons picture" id="headingNum">
+                <i></i>@Model.FullName Image Data. Total images: @Model.StudentImages.Count</h3>
         </div>
         <div class="widget-body">
             @if (Model.StudentImages.Count > 0)
@@ -47,8 +47,8 @@
             }
             else
             {
-                <h6>
-                    No images. Please upload some.</h6>
+                <h4>
+                    No images. Please upload some.</h4>
             }
         </div>
     </div>
@@ -150,9 +150,10 @@
             $.post('@Url.Action("DeleteTrainingImage", "Image")',
               { ImageID: imageID }, function (data) {
                   image.parent().hide('slow', function () {
+                      $('#headingNum').html('<i></i>@Model.FullName Image Data. Total images: ' + data.count);
                       $('#message').html(data.message);
                       $('#message').fadeIn(1000);
-                      $('#message').fadeOut(1500);
+                      $('#message').fadeOut(2500);
                   });
               }, 'json');
 

@@ -88,5 +88,10 @@ namespace RollSystemMobile.Models.HelperClass
         {
             return helper.Content("~/Content/Training Data/") + ImageLink;
         }
+
+        public static string LogImage(this UrlHelper helper, String ImageLink)
+        {
+            return helper.Content("~/Content/Log/") + ImageLink;
+        }
     }
 }

@@ -17,18 +17,15 @@ namespace RollSystemMobile.Controllers
         // GET: /Admin/
         private StudentBusiness StuBO;
         private ClassBusiness ClaBO;
-        private AccountBusiness AccBO;
-        private StaffBusiness StaffBO;
-        private InstructorBusiness InsBO;
+
+        private SelectListFactory SlFactory;
 
         public AdminController()
         {
             RSMEntities db = new RSMEntities();
             StuBO = new StudentBusiness(db);
             ClaBO = new ClassBusiness(db);
-            AccBO = new AccountBusiness(db);
-            StaffBO = new StaffBusiness(db);
-            InsBO = new InstructorBusiness(db);
+            SlFactory = new SelectListFactory(db);
         }
 
         public ActionResult Index()
@@ -170,12 +167,14 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult StaffAccountList()
         {
+            StaffBusiness StaffBO = new StaffBusiness();
             var Model = StaffBO.GetAllStaff();
             return View(Model);
         }
 
         public ActionResult InstructorAccountList()
         {
+            InstructorBusiness InsBO = new InstructorBusiness();
             var Model = InsBO.GetAllInstructor();
             return View(Model);
         }
@@ -203,5 +202,35 @@ namespace RollSystemMobile.Controllers
             }
             return View(Model);
         }
+
+        public ActionResult LogImages()
+        {
+            LogImageViewModel Model = new LogImageViewModel();
+            ViewBag.ClassID = SlFactory.MakeSelectList<Class>("ClassID", "ClassName");
+            return View(Model);
+        }
+
+        [HttpPost]
+        public ActionResult LogImages(String InFromDate, String InToDate, int? ClassID)
+        {
+            LogBusiness LogBO = new LogBusiness();
+            DateTime FromDate = InFromDate.ParseStringToDateTime();
+            DateTime ToDate = InToDate.ParseStringToDateTime();
+
+            LogImageViewModel Model = new LogImageViewModel();
+            Model.FromDate = FromDate;
+            Model.ToDate = ToDate;
+            if (ClassID != null)
+            {
+                Model.ClassID = ClassID.Value;
+            }
+            Model.LogList = LogBO.FindLogWithImages(FromDate, ToDate, ClassID);
+            
+
+            ViewBag.ClassID = SlFactory.MakeSelectList<Class>("ClassID", "ClassName");
+            return View(Model);
+        }
+
+
     }
 }

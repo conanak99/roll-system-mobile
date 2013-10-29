@@ -52,6 +52,8 @@
         if (ev.date.valueOf() > endDate.date.valueOf()) {
             var newDate = new Date(ev.date)
             endDate.setValue(newDate);
+        } else {
+            endDate.setValue(endDate.date);
         };
         findAvaibleChangeInstructor();
 

@@ -34,4 +34,19 @@ namespace RollSystemMobile.Models.ViewModels
             Threehold = 1000;
         }
     }
+
+    public class LogImageViewModel
+    {
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public int ClassID { get; set; }
+        public List<AttendanceLog> LogList { get; set; }
+
+        public LogImageViewModel()
+        {
+            FromDate = DateTime.Now;
+            ToDate = DateTime.Now.AddDays(1);
+            ClassID = 0;
+        }
+    }
 }

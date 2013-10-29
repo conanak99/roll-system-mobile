@@ -1,0 +1,131 @@
+﻿@model RollSystemMobile.Models.ViewModels.LogImageViewModel
+@{
+    ViewBag.Title = "Log Images";
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>Log Images</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons search">
+                <i></i>Find Log Images</h3>
+        </div>
+        <div class="widget-body">
+            @using (Html.BeginForm("LogImages", "Admin", FormMethod.Post))
+            {
+                
+                <div class="row-fluid">
+                    <div class="control-group span3">
+                        <label class="control-label">
+                            From</label>
+                        <div class="controls">
+                            <div class="input-append date" data-date="@Html.FormatDate(@Model.FromDate)" id="beginDate" data-date-format="dd-mm-yyyy">
+                                <input class="span2" name="InFromDate" id="InFromDate" style="width: 100px" size="16" type="text"
+                    value="@Html.FormatDate(@Model.FromDate)" readonly><span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group span3">
+                        <label class="control-label" for="firstname">
+                            To</label>
+                        <div class="controls">
+                            <div class="input-append date" data-date="@Html.FormatDate(@Model.ToDate)" id="endDate" data-date-format="dd-mm-yyyy">
+                                <input class="span2" name="InToDate" id="InToDate" style="width: 100px" size="16" type="text"
+                    value="@Html.FormatDate(@Model.ToDate)" readonly><span class="add-on"><i class="icon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group span3">
+                        <label class="control-label" for="firstname">
+                            Class</label>
+                        <div class="controls">
+                            @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, "", new { id = "slClass" })
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-actions" style="padding: 0">
+                    <button type="submit" class="btn btn-icon btn-primary glyphicons circle_ok">
+                        <i></i>Find</button>
+                </div>
+            }
+        </div>
+    </div>
+    @if (Model.LogList != null && Model.LogList.Count > 0)
+    {
+        <div class="widget">
+            <div class="widget-head">
+                <h3 class="heading glyphicons picture">
+                    <i></i>Result</h3>
+            </div>
+            <div class="widget-body">
+                @foreach (var Log in Model.LogList)
+                {
+                    foreach (var Image in Log.LogImages)
+                    {
+                    <img class="log-thumb" src="@Url.LogImage(Image.ImageLink)" title="Class: @Log.RollCall.Class.ClassName. Date: @Html.FormatDate(Log.LogDate)"/>
+                    }
+                }
+            </div>
+        </div>
+    }
+    else if (Model.LogList != null && Model.LogList.Count == 0)
+    {
+        <div class="widget">
+            <div class="widget-head">
+                <h3 class="heading glyphicons picture">
+                    <i></i>Result</h3>
+            </div>
+            <div class="widget-body">
+               <h4>No log image found</h4>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    var now = new Date();
+    //Nam trong hom nay toi end date, tru chu nhat
+    var beginDate = $("#beginDate").datepicker().on('changeDate', function (ev) {
+        if (ev.date.valueOf() > endDate.date.valueOf()) {
+            var newDate = new Date(ev.date);
+            endDate.setValue(newDate);
+        } else {
+            endDate.setValue(endDate.date);
+        };
+        beginDate.hide();
+    }).data('datepicker');
+
+    var endDate = $("#endDate").datepicker({
+        onRender: function (date) {
+            return date.valueOf() <= beginDate.date.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        endDate.hide();
+    }).data('datepicker');
+
+
+    //Select List Class
+    $("#slClass").select2({
+        placeholder: "All Class",
+        allowClear: true,
+        width: 100
+    });
+
+    $('.log-thumb').toggle(function () {
+        $(this).addClass('selected');
+    }, function () {
+        $(this).removeClass('selected');
+    });
+
+</script>
+@if (Model.ClassID != 0)
+{
+    <script>
+        $("#slClass").select2("val", '@Model.ClassID');
+    </script>
+}
