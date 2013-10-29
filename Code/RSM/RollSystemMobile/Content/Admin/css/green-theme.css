@@ -27,8 +27,7 @@
 .pagination ul > li.primary > a {
   background: #232323;
 }
-a,
-p a,
+
 .breadcrumb .glyphicons i:before,
 .widget .widget-body.list ul li .count,
 .breadcrumb .glyphicons i:before,
@@ -114,7 +113,8 @@ blockquote small,
   color: #888888;
 }
 #menu > ul > li.active .count {
-  background: #287022;
+  background: #fff;
+  color: #000;
 }
 .widget-activity ul.activities li.highlight {
   background-color: rgba(68, 191, 57, 0.1);

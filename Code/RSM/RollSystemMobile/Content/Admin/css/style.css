@@ -21,7 +21,7 @@ body {
   font-size: 13px;
 }
 a {
-  color: #47759e;
+  color: #333;
   outline: 0 !important;
 }
 input,
@@ -61,8 +61,7 @@ p a {
   color: #dd8a88;
 }
 h1,
-h2,
-h3 {
+h2 {
   text-shadow: 0 1px 0 #fff;
 }
 h1 span,
@@ -87,7 +86,8 @@ h2 {
 }
 h4,
 h3 {
-  color: #575655;
+  color: #fff;
+  text-shadow: 2px 2px 2px #333;
 }
 li.center,
 .center {
@@ -731,6 +731,7 @@ li.center,
   border: none;
 }
 #menu > ul ul li a {
+    background-color: rgba(0, 0, 0, 0.1);
   padding: 0 0 0 45px;
   height: 35px;
   line-height: 35px;
@@ -744,7 +745,7 @@ li.center,
   color: #222;
 }
 #menu > ul ul li a:hover {
-  background: #fafafa;
+  background: #a2f190;
 }
 #menu > ul ul li.active a {
   font-weight: 600;
@@ -3888,4 +3889,9 @@ body.choose #choose-preview > span span {
     padding: 0;
     background-color: transparent;
   }
+}
+#copyright a {
+    text-align: center;
+    margin-top: 380px;
+    color: #333;
 }
