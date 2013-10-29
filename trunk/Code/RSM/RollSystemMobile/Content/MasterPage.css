@@ -9,7 +9,7 @@ body
     //background-image:url("./themes/base/images/bg5.jpg");
     //background-image:url("./themes/base/images/bg3.jpg");
    //background-image:url("./themes/base/images/bg4.jpg");
-    background-image:url("./themes/base/images/bg2.jpg");
+    background-image:url("./themes/base/images/bg2_1.jpg");
     //opacity: 0.5;
     /*background-repeat:repeat-y; */
 }
@@ -72,7 +72,7 @@ body
 {
     float: left;
     width: 230px;
-    height: 250px;
+    height: 290px;
     margin: 5px 0 20px 40px;
     padding: 30px 10px 0 10px;
     position: relative;
@@ -232,7 +232,7 @@ body
     background: url("./themes/base/images/nav3.png") no-repeat;
     opacity:1.0;
     background-position: -232px 0;
-    color: #000;
+    color: #fff;
     left: -6px;
     padding: 15px 18px 20px 40px;
     margin-top: -10px;
