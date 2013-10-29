@@ -39,8 +39,8 @@
         <fieldset class="text-center" style="width: 80%; margin: 0 auto">
             @foreach (var Image in Model.AutoLog.LogImages)
             {
-                <a class="fancybox" href="@Url.Content("~/Content/Log/" + Image.ImageLink)" data-fancybox-group="gallery">
-                    <img src="@Url.Content("~/Content/Log/" + Image.ImageLink)" class="image-log"/></a> 
+                <a class="fancybox" href="@Url.LogImage(Image.ImageLink)" data-fancybox-group="gallery">
+                    <img src="@Url.LogImage(Image.ImageLink)" class="image-log"/></a> 
             }
         </fieldset>
         <legend>Attendance</legend>

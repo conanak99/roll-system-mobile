@@ -86,8 +86,10 @@ namespace RollSystemMobile.Controllers
         {
             var TrainingImage = StuImaBO.FindImageByID(ImageID);
             String message = "";
+            int imageRemaining = 0;
             if (TrainingImage != null)
             {
+                imageRemaining = TrainingImage.Student.StudentImages.Count - 1;
                 StuImaBO.Delete(TrainingImage);
                 message = TrainingImage.ImageLink + " deleted.";
             }
@@ -95,7 +97,9 @@ namespace RollSystemMobile.Controllers
             {
                 message = "Error. Image not exist in DB";
             }
-            return Json(new { message = message}, JsonRequestBehavior.AllowGet);
+            return Json(new { message = message, count = imageRemaining }, JsonRequestBehavior.AllowGet);
         }
+
+       
     }
 }

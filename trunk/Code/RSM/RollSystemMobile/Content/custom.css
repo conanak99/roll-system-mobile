@@ -157,3 +157,29 @@ img.thumbnail
     top: -10px;
     right: 10px;
 }
+
+.oppa-20
+{
+    opacity: 0.2;
+}
+
+.log-thumb
+{
+    height: 120px;
+    margin: 12px 6px 0 0;
+        border: 1px solid #FFF;
+    opacity: 0.7;
+}
+
+.log-thumb:hover
+{
+    border: 1px solid #111;
+    opacity: 0.9;
+}
+
+.log-thumb.selected
+{
+    opacity: 1;
+    border: 1px solid #000;
+
+}

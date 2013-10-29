@@ -18,8 +18,6 @@ namespace RollSystemMobile.Models.BusinessObject
             
         }
 
-        
-
         public AttendanceLog WriteAttendanceAutoLog(int RollCallID, List<RecognizerResult> RecognizerResults)
         {
             if (RecognizerResults.Count == 0)
