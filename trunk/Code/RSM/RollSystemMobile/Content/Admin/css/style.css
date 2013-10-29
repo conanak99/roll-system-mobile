@@ -2299,14 +2299,12 @@ p.glyphicons.envelope i:before {
   margin: 0 0 10px;
   color: #74614f;
   border-color: #74614f;
-  background: rgba(116, 97, 79, 0.2);
 }
 .alert h4 {
   margin: 0 0 5px;
   color: #74614f;
 }
 .alert.alert-error {
-  background: rgba(116, 70, 70, 0.2);
   color: #744646;
   border-color: #744646;
 }
@@ -2338,7 +2336,7 @@ p.glyphicons.envelope i:before {
 }
 .alert.alert-success {
   border-color: #586e54;
-  background: rgba(88, 110, 84, 0.2);
+  background: rgba(88, 110, 84, 0.9);
   color: #586e54;
 }
 .alert.alert-success .close,

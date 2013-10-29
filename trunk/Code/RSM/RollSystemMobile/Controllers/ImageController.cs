@@ -78,7 +78,7 @@ namespace RollSystemMobile.Controllers
             FacesAdded.OrderBy(fa => fa.StudentID);
             TempData["FacesAdded"] = FacesAdded;
             TempData["Errors"] = ErrorList;
-            return RedirectToAction("AddImages", "Admin");
+            return Redirect(model.ReturnUrl);
         }
 
 

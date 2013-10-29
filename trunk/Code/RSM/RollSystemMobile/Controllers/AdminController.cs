@@ -147,6 +147,9 @@ namespace RollSystemMobile.Controllers
             RollCallBusiness RollBO = new RollCallBusiness();
             RollCall rollCall = RollBO.GetRollCallByID(RollCallID);
 
+            List<Student> Students = rollCall.Students.ToList();
+            ViewBag.Students = Students;
+
             List<String> ImagePaths = new List<string>();
             foreach (HttpPostedFileBase file in ImageFiles)
             {

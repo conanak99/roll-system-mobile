@@ -38,7 +38,7 @@
                         <label class="control-label" for="firstname">
                             Image Resized Width</label>
                         <div class="controls">
-                            @Html.TextBoxFor(model => model.ResizeWidth, new {@class = "span2"})
+                            @Html.TextBoxFor(model => model.ResizeWidth, new {@class = "span1"})
                             @Html.ValidationMessageFor(model => model.ResizeWidth) <span class="help-block">Width of resized
                                 image. Shoule be larger than 1000.</span>
                         </div>
@@ -47,7 +47,7 @@
                         <label class="control-label" for="firstname">
                             Image Resized Height</label>
                         <div class="controls">
-                            @Html.TextBoxFor(model => model.ResizedHeight, new {@class = "span2"})
+                            @Html.TextBoxFor(model => model.ResizedHeight, new {@class = "span1"})
                             @Html.ValidationMessageFor(model => model.ResizedHeight)
                             <span class="help-block">Height of resized image. Should be smaller than width.</span>
                         </div>
@@ -56,7 +56,7 @@
                         <label class="control-label" for="firstname">
                             Recognizer Threehold</label>
                         <div class="controls">
-                            @Html.TextBoxFor(model => model.Threehold, new {@class = "span2"})
+                            @Html.TextBoxFor(model => model.Threehold, new {@class = "span1"})
                             @Html.ValidationMessageFor(model => model.Threehold)
                             <span class="help-block">Set threehold higher if recognizer gives many unknown results.</span>
                         </div>
