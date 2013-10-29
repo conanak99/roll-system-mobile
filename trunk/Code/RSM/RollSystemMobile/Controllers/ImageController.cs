@@ -59,7 +59,16 @@ namespace RollSystemMobile.Controllers
                 int[] FaceIndexs = SingeImageModel.FaceIndexs.ToArray();
                 int[] UserIDs = SingeImageModel.StudentIDs.ToArray();
 
-                String ImagePath = Server.MapPath("~/Content/Temp/Resized/" + ImageLink);
+                String ImagePath = "";
+                if (model.Folder.Equals("Resized"))
+                {
+                    ImagePath = Server.MapPath("~/Content/Temp/Resized/" + ImageLink);
+                }
+                else if (model.Folder.Equals("Log"))
+                {
+                    ImagePath = Server.MapPath("~/Content/Log/" + ImageLink);
+                }
+
                 if (FaceIndexs != null && UserIDs != null)
                 {
                     try

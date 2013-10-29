@@ -35,6 +35,11 @@ namespace RollSystemMobile.Models.BusinessObject
             }
 
         }
-        
+
+        public LogImage GetLogImageByID(int ImageID)
+        {
+            return RollSystemDB.LogImages.SingleOrDefault(img => img.ImageID == ImageID);          
+        }
+
     }
 }
