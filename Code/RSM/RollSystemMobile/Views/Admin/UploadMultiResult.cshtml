@@ -44,6 +44,7 @@
     {
 
         var Image = Model.ElementAt(ImageIndex);
+        <input type="hidden" name="ReturnUrl" value="@Url.Action("AddImages","Admin")" />
     <input type="hidden" name="ImageModels.Index" value="@ImageIndex"/>
     <input type="hidden" name="ImageModels[@ImageIndex].ImageLink" value="@Image.ImageLink"/>
     <div class="img-holder">

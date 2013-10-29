@@ -33,6 +33,8 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult CheckAttendanceAuto(int RollCallID, List<HttpPostedFileBase> ImageFiles)
         {
+            RollCallBusiness RollBO = new RollCallBusiness();
+            var rollCall = RollBO.GetRollCallByID(RollCallID);
             List<String> ImagePaths = new List<string>();
             foreach (HttpPostedFileBase file in ImageFiles)
             {
@@ -41,8 +43,10 @@ namespace RollSystemMobile.Controllers
                 file.SaveAs(OldPath);
 
                 //Resize file anh, luu vao thu muc log, nho them ngay thang truoc
-                String NewPath = Server.MapPath("~/Content/Log/" +
-                    DateTime.Today.ToString("dd-MM-yyyy") + "_" + file.FileName);
+                String NewPath = Server.MapPath("~/Content/Log/"
+                     + rollCall.Class.ClassName + "_"
+                     + rollCall.Subject.ShortName + "_"
+                     + file.FileName);
                 FaceBusiness.ResizeImage(OldPath, NewPath);
                 ImagePaths.Add(NewPath);
 
