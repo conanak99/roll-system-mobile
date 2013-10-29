@@ -1,25 +1,13 @@
 ﻿@model IEnumerable<RollSystemMobile.Models.RecognizerResult>
 @{
-    ViewBag.Title = "Recognize Result";
-}
-@section ExtraHead {
-    <style>
-        body
-        {
-            background-color: White;
-        }
-        input[disabled]
-        {
-            margin-top: 10px;
-        }
-    </style>
+    ViewBag.Title = "Upload Result";
 }
 <ul class="breadcrumb">
     <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
     <li class="divider"></li>
-    <li><a href="@Url.Action("RecognizeTesting")" class="glyphicons">Recognizer Testing</a></li>
+    <li><a href="@Url.Action("AddImages")">Upload Students Images</a></li>
     <li class="divider"></li>
-    <li>Recognize Result</li>
+    <li>Upload Result</li>
 </ul>
 <div class="separator bottom">
 </div>
@@ -27,7 +15,7 @@
     <div class="widget">
         <div class="widget-head">
             <h3 class="heading glyphicons picture">
-                <i></i>Result</h3>
+                <i></i>Select students faces in images</h3>
         </div>
         <div class="widget-body">
             <div id="dataHolder" style="display: none">
@@ -48,10 +36,15 @@
                     }
                 }
             </div>
-            @for (int ImageIndex = 0; ImageIndex < Model.Count(); ImageIndex++)
+            @using (@Html.BeginForm("SaveImageMulti", "Image", FormMethod.Post))
             {
 
-                var Image = Model.ElementAt(ImageIndex);
+                for (int ImageIndex = 0; ImageIndex < Model.Count(); ImageIndex++)
+                {
+
+                    var Image = Model.ElementAt(ImageIndex);
+                    <input type="hidden" name="Folder" value="Resized" />
+                <input type="hidden" name="ReturnUrl" value="@Url.Action("AddImages", "Admin")" />
                 <input type="hidden" name="ImageModels.Index" value="@ImageIndex"/>
                 <input type="hidden" name="ImageModels[@ImageIndex].ImageLink" value="@Image.ImageLink"/>
                 <div class="img-holder">
@@ -64,7 +57,7 @@
                         <input type="hidden" name="ImageModels[@ImageIndex].FaceIndexs[@FaceIndex]" value="@FaceIndex"/>
             
                         <input type="hidden" name="ImageModels[@ImageIndex].ImageLink" value="@Image.ImageLink"/>
-                        <div class="face-region" title="@Face.StudentName" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
+                        <div class="face-region" style="@String.Format("margin-left:{0}px; margin-top:{1}px; width:{2}px; height:{3}px",
                                        Face.X, Face.Y, Face.Width, Face.Height);">
                             @{ String SelectListID = "e" + ImageIndex + FaceIndex;
                                SelectListIDs.Add(SelectListID);
@@ -76,14 +69,14 @@
                     }
                     <img src="@Url.ResizedImage(Image.ImageLink)" />
                 </div>
+                }
+    
+                <input type="submit" class="btn btn-primary btn-large" value="Submit Result" />
             }
         </div>
-    </div>
-</div>
-
-
-<script>
- var fillHtml = $('#dataHolder').html();
+        <script>
+    //Chuyen data tu datafile vao cac dropbox
+    var fillHtml = $('#dataHolder').html();
     $('.datafill').html(fillHtml);
 
     //Ham de format entry trong selectbox
@@ -111,24 +104,12 @@
         width: 270
 	});
 
-
-     $('.face-region').mouseleave(function(){
+    $('.face-region').hover(function() {
+   var select = $(this).children('select');
+   select.removeClass('invi');
+}, function(){
      var select = $(this).children('select');
    select.addClass('invi');
 });
-
-$('.face-region').click(function() {
-   var select = $(this).children('select');
-   select.removeClass('invi');
-});
-
-    $('@SelectString').on("select2-selecting", function(e) {
-        var selectedValue = e.val;
-        var fullName = $('#dataHolder').find('option[value='+ selectedValue + ']').text();
-        $(this).parent().attr('title',fullName);
-     });
-
-
-</script>
-
-<script src="@Url.Content("~/Scripts/resize-face-region.js")" type="text/javascript"></script>
+        </script>
+        <script src="@Url.Content("~/Scripts/resize-face-region.js")" type="text/javascript"></script>

@@ -207,6 +207,16 @@
     <Content Include="Content\Admin\css\bootstrap.css" />
     <Content Include="Content\Admin\css\green-theme.css" />
     <Content Include="Content\Admin\css\glyphicons.css" />
+    <Content Include="Content\Admin\css\images\banner3.jpg" />
+    <Content Include="Content\Admin\css\images\bg2.jpg" />
+    <Content Include="Content\Admin\css\images\bg3.jpg" />
+    <Content Include="Content\Admin\css\images\logo1.png" />
+    <Content Include="Content\Admin\css\images\logo2.png" />
+    <Content Include="Content\Admin\css\images\logo_red.png" />
+    <Content Include="Content\Admin\css\images\logo_trans.png" />
+    <Content Include="Content\Admin\css\images\logo_white.png" />
+    <Content Include="Content\Admin\css\images\name3.png" />
+    <Content Include="Content\Admin\css\images\name3_1.png" />
     <Content Include="Content\Admin\css\style.css" />
     <Content Include="Content\Admin\css\style.min.css" />
     <Content Include="Content\Admin\fonts\glyphicons-regular.svg" />
@@ -418,7 +428,7 @@
     <Content Include="Views\Admin\_ViewStart.cshtml" />
     <Content Include="Views\Admin\StudentList.cshtml" />
     <Content Include="Views\Admin\SingleStudent.cshtml" />
-    <Content Include="Views\Admin\UploadResult.cshtml" />
+    <Content Include="Views\Admin\SingleStudentResult.cshtml" />
     <Content Include="Views\Staff\Index.cshtml" />
     <Content Include="Views\Staff\_Layout.cshtml" />
     <Content Include="Views\Staff\_ViewStart.cshtml" />
@@ -439,7 +449,7 @@
     <Content Include="Views\RollCall\RollCallStudentList.cshtml" />
     <Content Include="Views\RollCall\Studentlist.cshtml" />
     <Content Include="Views\Admin\AddImages.cshtml" />
-    <Content Include="Views\Admin\UploadMultiResult.cshtml" />
+    <Content Include="Views\Admin\AddImagesResult.cshtml" />
     <Content Include="Views\Instructors\Create.cshtml" />
     <Content Include="Views\Instructors\Delete.cshtml" />
     <Content Include="Views\Instructors\Details.cshtml" />
@@ -461,7 +471,7 @@
     <Content Include="Views\StudySession\_NewSession.cshtml" />
     <Content Include="Views\StudySession\_ChangeIns.cshtml" />
     <Content Include="Views\Admin\RecognizeTesting.cshtml" />
-    <Content Include="Views\Admin\RecognizeResult.cshtml" />
+    <Content Include="Views\Admin\RecognizeTestingResult.cshtml" />
     <Content Include="Views\Admin\StaffAccountList.cshtml" />
     <Content Include="Views\Admin\InstructorAccountList.cshtml" />
     <Content Include="Views\Admin\StudentAccountList.cshtml" />
@@ -479,6 +489,7 @@
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Staff\Import.cshtml" />
     <Content Include="Views\Admin\LogImages.cshtml" />
+    <Content Include="Views\Admin\LogImagesResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

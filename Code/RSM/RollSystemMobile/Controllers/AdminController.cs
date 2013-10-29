@@ -82,7 +82,7 @@ namespace RollSystemMobile.Controllers
                 RecognizerResult SingleResult = FaceBusiness.DetectFromImage(NewPath);
                 Results.Add(SingleResult);
             }
-            return View("UploadResult", Results);
+            return View("SingleStudentResult", Results);
         }
 
         public ActionResult AddImages()
@@ -128,7 +128,7 @@ namespace RollSystemMobile.Controllers
             var Students = StuBO.GetActiveStudents();
             ViewBag.Students = Students;
 
-            return View("UploadMultiResult", Results);
+            return View("AddImagesResult", Results);
         }
 
         public ActionResult RecognizeTesting()
@@ -141,12 +141,6 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult RecognizeTesting(int RollCallID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
-            RollCallBusiness RollBO = new RollCallBusiness();
-            RollCall rollCall = RollBO.GetRollCallByID(RollCallID);
-
-            List<Student> Students = rollCall.Students.ToList();
-            ViewBag.Students = Students;
-
             List<String> ImagePaths = new List<string>();
             foreach (HttpPostedFileBase file in ImageFiles)
             {
@@ -162,7 +156,7 @@ namespace RollSystemMobile.Controllers
             //Nhan dien tung khuon mat trong anh
             List<RecognizerResult> Result = FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths);
 
-            return View("RecognizeResult", Result);
+            return View("RecognizeTestingResult", Result);
         }
 
         public ActionResult StaffAccountList()
@@ -205,6 +199,22 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult LogImages()
         {
+            if (TempData["FacesAdded"] != null)
+            {
+                //Lay cai gia tri da duoc add, show ra
+                List<FaceAdded> FacesAdded = (List<FaceAdded>)TempData["FacesAdded"];
+                FacesAdded = FacesAdded.OrderBy(fa => fa.StudentID).ToList();
+                var StudentIDs = FacesAdded.Select(fa => fa.StudentID).Distinct().ToList();
+
+                List<Student> Students = StuBO.Find(st => StudentIDs.Contains(st.StudentID));
+
+                ViewBag.Students = Students;
+                ViewBag.FacesAdded = FacesAdded;
+            }
+
+            ViewBag.Errors = TempData["Errors"];
+
+
             LogImageViewModel Model = new LogImageViewModel();
             ViewBag.ClassID = SlFactory.MakeSelectList<Class>("ClassID", "ClassName");
             return View(Model);
@@ -231,6 +241,33 @@ namespace RollSystemMobile.Controllers
             return View(Model);
         }
 
+        [HttpPost]
+        public ActionResult SelectLogImage(IEnumerable<int> ImageIDs)
+        {
+            LogBusiness LogBO = new LogBusiness();
 
+            //Lay nhung image da chon tu db, sort theo rollcall ID
+            List<LogImage> ImageList = ImageIDs.Select(id=> LogBO.GetLogImageByID(id))
+                                       .OrderBy(img => img.AttendanceLog.RollCallID).ToList();
+
+            List<int> RollCallIDs = ImageList.Select(img => img.AttendanceLog.RollCallID).Distinct().ToList();
+
+            List<RecognizerResult> Result = new List<RecognizerResult>();
+
+            foreach (int RollCallID in RollCallIDs)
+            {
+                List<LogImage> RollCallImages = ImageList.Where(img => img.AttendanceLog.RollCallID == RollCallID).ToList();
+                List<String> ImagePaths = RollCallImages.Select(img => Server.MapPath("~/Content/Log/" + img.ImageLink)).ToList();
+
+                //Nhan dien khuon mat, dua vao list de show ra
+               Result.AddRange(FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths));
+            }
+
+
+            //Danh sash student de tao select list
+            ViewBag.Students = StuBO.GetAllStudents();
+
+            return View("LogImagesResult",Result);
+        }
     }
 }

@@ -218,10 +218,8 @@ namespace RollSystemMobile.Models.BusinessObject
 
                     TrainingImage._EqualizeHist();
                     StudentImages.Add(TrainingImage);
-
                 }
             }
-
 
             FaceRec.Train(StudentImages.ToArray(), StudentIDs.ToArray());
 
@@ -260,9 +258,6 @@ namespace RollSystemMobile.Models.BusinessObject
                 FaceReg.StudentName = GetUserName(PR);
                 Result.FaceList.Add(FaceReg);
             }
-
-            //Save de len file goc?
-
 
             return Result;
         }

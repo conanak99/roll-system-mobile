@@ -13,6 +13,7 @@ namespace RollSystemMobile.Models.BindingModels
     {
         public List<SingleImageBindingModel> ImageModels { get; set; }
         public String ReturnUrl { get; set; }
+        public String Folder { get; set; }
     }
 
     public class SingleImageBindingModel

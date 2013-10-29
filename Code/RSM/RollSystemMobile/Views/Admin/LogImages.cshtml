@@ -10,6 +10,49 @@
 <div class="separator bottom">
 </div>
 <div class="innerLR">
+    @if (ViewBag.Students != null && ViewBag.FacesAdded != null)
+    {
+        List<RollSystemMobile.Models.Student> Students = ViewBag.Students;
+        List<RollSystemMobile.Models.FaceAdded> FacesAdded = ViewBag.FacesAdded;
+        <div class="widget">
+            <div class="widget-head">
+                <h3 class="heading glyphicons picture">
+                    <i></i>Result</h3>
+            </div>
+            <div class="widget-body">
+                <ul>
+                    @foreach (var Student in Students)
+                    {
+                        <li style="padding-bottom: 5px">Added images :
+                            @foreach (var Face in FacesAdded.Where(fa => fa.StudentID == Student.StudentID))
+                            {
+                                <div class="thumbnail-holder">
+                                    <img class="thumbnail" src="@Url.TrainingImage(Face.FaceLink)" />
+                                    <button type="button" class="close btn-delete" imageID="@Face.ImageID" data-dismiss="modal" aria-hidden="true">
+                                        ×</button>
+                                </div>
+                            }
+                            for student: @Student.StudentCode - @Student.FullName </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+    @if (ViewBag.Errors != null && ((List<String>)ViewBag.Errors).Count > 0)
+    {
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                &times;</button>
+            <strong>Warning!</strong> Images:
+            @foreach (var Error in (List<String>)ViewBag.Errors)
+            {
+                <div class="thumbnail-holder">
+                    <img class="thumbnail" src="@Url.TrainingImage(Error)" />
+                </div>
+            }
+            existed in database. Not save.
+        </div>
+    }
     <div class="widget">
         <div class="widget-head">
             <h3 class="heading glyphicons search">
@@ -68,8 +111,19 @@
                 {
                     foreach (var Image in Log.LogImages)
                     {
-                    <img class="log-thumb" src="@Url.LogImage(Image.ImageLink)" title="Class: @Log.RollCall.Class.ClassName. Date: @Html.FormatDate(Log.LogDate)"/>
+                    <div class="thumbnail-holder">
+                        <img imgID="@Image.ImageID" class="log-thumb" src="@Url.LogImage(Image.ImageLink)" title="Class: @Log.RollCall.Class.ClassName. Date: @Html.FormatDate(Log.LogDate)">
+                        </img>
+                    </div>
+                    
                     }
+                }
+                @using (Html.BeginForm("SelectLogImage", "Admin", FormMethod.Post))
+                {
+                    <div id="form">
+                        <button class="btn btn-primary">
+                            Use selected images</button>
+                    </div>
                 }
             </div>
         </div>
@@ -82,7 +136,8 @@
                     <i></i>Result</h3>
             </div>
             <div class="widget-body">
-               <h4>No log image found</h4>
+                <h4>
+                    No log image found</h4>
             </div>
         </div>
     }
@@ -118,8 +173,23 @@
 
     $('.log-thumb').toggle(function () {
         $(this).addClass('selected');
+
+        //Them dau V vao cai da chon
+        var icon = $('<div class="glyphicons no-js ok_2 checked-icon" href="#"><i></i></div>');
+        $(this).parent().append(icon);
+
+        var selectedID = $(this).attr('imgID');
+        var hiddenInput = $('<input  type="hidden" id="' + selectedID + '" name="ImageIDs" value="' + selectedID + '"/>');
+        $('#form').append(hiddenInput);
+
+
     }, function () {
+        //Bo dau V va class
         $(this).removeClass('selected');
+        $(this).siblings('div').remove();
+
+        var selectedID = $(this).attr('imgID');
+        $('#' + selectedID).remove();
     });
 
 </script>
