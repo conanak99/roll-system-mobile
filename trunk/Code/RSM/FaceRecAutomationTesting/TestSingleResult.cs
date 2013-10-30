@@ -52,4 +52,11 @@ namespace FaceRecAutomationTesting
 	}
         }
     }
+
+    public class MoreTestSingleResult
+    {
+        public List<String> FileUsed { get; set; }
+        public int RunCount { get; set; }
+        public int StudentDetected { get; set; }
+    }
 }

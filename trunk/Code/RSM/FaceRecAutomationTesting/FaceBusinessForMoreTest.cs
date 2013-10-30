@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Drawing;
+using RollSystemMobile.Models;
+using RollSystemMobile.Models.BusinessObject;
 using RollSystemMobile.Models.HelperClass;
 using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.Util;
 using Emgu.CV.CvEnum;
 
-namespace RollSystemMobile.Models.BusinessObject
+namespace FaceRecAutomationTesting
 {
-    public class FaceBusiness
+    public class FaceBusinessForMoreTest
     {
         private static HaarCascade Haar;
         //Luc add, co the dung alt2
@@ -27,15 +29,15 @@ namespace RollSystemMobile.Models.BusinessObject
         private static int RESIZE_HEIGHT;
         private static int RECOGNIZER_THREEHOLD;
         private static int TRAINING_DATA_SIZE = 100;
+        private static FaceRecognizer FaceRec;
 
         //Initialize tu file config config
         public static void Initialize()
         {
-            var Config = ConfigHelper.GetConfig();
-            HaarXML = Config.HaarXMLFile;
-            RESIZE_HEIGHT = Config.ResizedHeight;
-            RESIZE_WIDTH = Config.ResizeWidth;
-            RECOGNIZER_THREEHOLD = Config.Threehold;
+            HaarXML = "haarcascade_frontalface_alt_tree.xml";
+            RESIZE_HEIGHT = 1200;
+            RESIZE_WIDTH = 900;
+            RECOGNIZER_THREEHOLD = 2000;
         }
 
         public static void SetXMLPath(String FilePath)
@@ -198,7 +200,7 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             //Tu rollcall ID, tao face recognizer, train
             //FaceRecognizer FaceRec = new LBPHFaceRecognizer(1, 8, 8, 8, 75);
-            FaceRecognizer FaceRec = new FisherFaceRecognizer(80, RECOGNIZER_THREEHOLD);
+            FaceRec = new FisherFaceRecognizer(80, RECOGNIZER_THREEHOLD);
 
             List<int> StudentIDs = new List<int>();
             List<Image<Gray, byte>> StudentImages = new List<Image<Gray, byte>>();
@@ -225,9 +227,9 @@ namespace RollSystemMobile.Models.BusinessObject
             return FaceRec;
         }
 
-        private static RecognizerResult RecognizeFromImage(FaceRecognizer FaceRec, String ImagePath)
+        private static RollSystemMobile.Models.RecognizerResult RecognizeFromImage(FaceRecognizer FaceRec, String ImagePath)
         {
-            RecognizerResult Result = new RecognizerResult();
+            RollSystemMobile.Models.RecognizerResult Result = new RollSystemMobile.Models.RecognizerResult();
             //Lay moi ten anh, ko lay toan bo duong dan
             Result.ImageLink = System.IO.Path.GetFileName(ImagePath);
 
@@ -245,7 +247,7 @@ namespace RollSystemMobile.Models.BusinessObject
                                 0, new System.Drawing.Size(MIN_SIZE, MIN_SIZE))[0];
             foreach (var Face in FacesDetected)
             {
-                FaceRegion FaceReg = new FaceRegion(Face.rect.X, Face.rect.Y,
+                RollSystemMobile.Models.FaceRegion FaceReg = new RollSystemMobile.Models.FaceRegion(Face.rect.X, Face.rect.Y,
                                 Face.rect.Width, Face.rect.Height);
 
                 //Nhan dien face la cua ai.
@@ -277,21 +279,19 @@ namespace RollSystemMobile.Models.BusinessObject
         }
 
 
-        public static List<RecognizerResult> RecognizeStudentForAttendance(int RollCallID, List<String> ImagePaths)
+        public static RollSystemMobile.Models.RecognizerResult RecognizeStudentForAttendance(int RollCallID, String ImagePath)
         {
             //Dua ID cua roll call, cac hinh da up, cho ra danh sach ket qua
-            FaceRecognizer FaceRec = CreateRollCallRecognizer(RollCallID);
-            List<RecognizerResult> Results = new List<RecognizerResult>();
-
-            foreach (var ImagePath in ImagePaths)
+            if (FaceRec == null)
             {
-                RecognizerResult Result = RecognizeFromImage(FaceRec, ImagePath);
-                Results.Add(Result);
+                 FaceRec = CreateRollCallRecognizer(RollCallID);
             }
+
+            RollSystemMobile.Models.RecognizerResult Result = RecognizeFromImage(FaceRec, ImagePath);
 
             //Dung xong nho dispose cho nhe bo nho
             FaceRec.Dispose();
-            return Results;
+            return Result;
         }
 
     }

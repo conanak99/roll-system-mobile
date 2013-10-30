@@ -46,6 +46,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -54,6 +55,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FaceBusinessForMoreTest.cs" />
+    <Compile Include="FaceRecognitionMoreTest.cs" />
     <Compile Include="FaceBO_HaarChangable_Extractable.cs" />
     <Compile Include="FaceBO_HaarChangable.cs" />
     <Compile Include="FaceBO.cs" />
@@ -78,6 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RollSystemMobile\RollSystemMobile.csproj">
+      <Project>{8EC4F019-8DE0-49C3-8725-CF0E73EDEE90}</Project>
+      <Name>RollSystemMobile</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
