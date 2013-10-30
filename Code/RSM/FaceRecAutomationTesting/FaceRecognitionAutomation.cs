@@ -23,7 +23,6 @@ namespace FaceRecAutomationTesting
             Console.WriteLine("1. Load a recognizer with 250 images, 25 labels. Test performance of checking.");
             Console.WriteLine("2. Load a recognizer with 600 images, 30 labels. Test performance of checking.");
             Console.WriteLine("3. Test the accuracy of 3 face recognizer algorithm. Each with 3 different threehold.");
-            Console.WriteLine("4. Test the accuracy the gender recognition algorithm.");
             Console.WriteLine("============================================================================");
 
             Console.Write("Enter option: ");
@@ -37,12 +36,6 @@ namespace FaceRecAutomationTesting
                     TestAccuracy(6);
                     TestAccuracy(8);
                     TestAccuracy(10);
-                    break;
-                case 4:
-                    TestGenderRecognitionAccuracy(50);
-                    TestGenderRecognitionAccuracy(100);
-                    TestGenderRecognitionAccuracy(150);
-                    TestGenderRecognitionAccuracy(180);
                     break;
                 default: Console.WriteLine("Good bye");
                     break;
