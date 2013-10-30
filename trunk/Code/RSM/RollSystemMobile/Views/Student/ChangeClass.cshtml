@@ -3,18 +3,33 @@
     ViewBag.Title = "ChangeClass";
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
-    <p>
-        Change student Class</p>
-  @using (Html.BeginForm())
-  {
+<h2>
+    Change class student:</h2>
+@using (Html.BeginForm())
+{
     @Html.ValidationSummary(true)
+    <div style="margin-left: 10px">
+        <p>
+            Student: @Model.FullName</p>
+        <p>
+            Class: @Model.Class.ClassName</p>
+        <p>
+            Student Code :@Model.StudentCode</p>
+    </div>
     <div class="editor-field " style="margin-left: 10px">
-        @Html.DropDownList("ClassID", new SelectList(ViewBag.ClassID, "ClassID", "ClassName").OrderBy(a => a.Text))
+        Change to :@Html.DropDownList("ClassID", new SelectList(ViewBag.ClassID, "ClassID", "ClassName").OrderBy(a => a.Text))
     </div>
     <p>
         <input type="submit" value="Save" class="btn btn-primary" />
     </p>
-  }
+}
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+<script>
+    var option = document.createElement("option");
+    option.text = "Break";
+    option.value = "Break";
+    var select = document.getElementById("ClassID");
+    select.appendChild(option);
+</script>
