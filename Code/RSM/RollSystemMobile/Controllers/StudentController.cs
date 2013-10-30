@@ -101,10 +101,11 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult ChangeClass(int id, int classid)
         {
+            Student student = StuBO.GetStudentByID(id);
             var type = ClassBO.GetClassByID(classid).MajorID;
             List<Class> cls = ClassBO.GetAllClasses().Where(a => a.MajorID == type && a.Students.Count() < 30 && a.ClassID != classid).ToList();
             ViewBag.ClassID = cls;
-            return View();
+            return View(student);
         }
 
         [HttpPost]
