@@ -29,7 +29,7 @@
     </thead>
 <tbody>
  @{ int index = 1;}
-@foreach (var item in Model) {
+@foreach (var item in Model.OrderByDescending(r=>r.StudentID)) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Class.ClassName)
