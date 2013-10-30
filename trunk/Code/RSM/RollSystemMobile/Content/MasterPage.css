@@ -226,7 +226,7 @@ body
     text-decoration: none;
     right: 11px;
 }
-/*
+
 #nav li a.current
 {
     background: url("./themes/base/images/nav3.png") no-repeat;
@@ -239,7 +239,7 @@ body
     font-weight: bold;
     font-size: 18px;
     
-}*/
+}
 #nav li a:hover
 {
     background: url("./themes/base/images/nav3.png") no-repeat;
@@ -253,7 +253,7 @@ body
 }
 #nav li
 {
-    background: url("./themes/base/images/nav3.png") no-repeat;
+    background: url("./themes/base/images/nav2.png") no-repeat;
     //color: #fff;
     font-weight: bold;
 }
