@@ -36,6 +36,12 @@ namespace RollSystemMobile.Models.BusinessObject
             RESIZE_HEIGHT = Config.ResizedHeight;
             RESIZE_WIDTH = Config.ResizeWidth;
             RECOGNIZER_THREEHOLD = Config.Threehold;
+
+            //Neu da initialize haar, initialize lai
+            if (Haar != null)
+            {
+                Haar = new HaarCascade(HAAR_XML_PATH);
+            }
         }
 
         public static void SetXMLPath(String FilePath)

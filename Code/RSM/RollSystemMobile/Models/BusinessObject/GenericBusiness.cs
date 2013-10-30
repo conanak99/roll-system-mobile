@@ -62,7 +62,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 RollSystemDB.SaveChanges();
                 return true;
             }
-            catch
+            catch(Exception e)
             {
                 return false;
             }
