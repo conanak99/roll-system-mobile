@@ -99,12 +99,19 @@ namespace RollSystemMobile.Controllers
             return View(student);
         }
 
-        public ActionResult ChangeClass(int id, int classid)
+        public ActionResult ChangeClass(int id, int? classid)
         {
             Student student = StuBO.GetStudentByID(id);
-            var type = ClassBO.GetClassByID(classid).MajorID;
-            List<Class> cls = ClassBO.GetAllClasses().Where(a => a.MajorID == type && a.Students.Count() < 30 && a.ClassID != classid).ToList();
-            ViewBag.ClassID = cls;
+            if (classid != null)
+            {
+                int clsid = classid.GetValueOrDefault();
+                var type = ClassBO.GetClassByID(clsid).MajorID;
+                List<Class> cls = ClassBO.GetAllClasses().Where(a => a.MajorID == type && a.Students.Count() < 30 && a.ClassID != clsid).ToList();
+                ViewBag.ClassID = cls;
+            }
+            else { 
+                ViewBag.ClassID = ClassBO.GetAllClasses();            
+            }
             return View(student);
         }
 
@@ -114,7 +121,13 @@ namespace RollSystemMobile.Controllers
             if (ModelState.IsValid)
             {
                 Student std = StuBO.GetStudentByID(id);
-                std.ClassID = student.ClassID;
+                if (student.ClassID != -1)
+                {
+                    std.ClassID = student.ClassID;
+                }
+                else {
+                    std.ClassID = null;
+                }
                 StuBO.UpdateExist(std);
                 return Redirect("~/Student/Index");
             }

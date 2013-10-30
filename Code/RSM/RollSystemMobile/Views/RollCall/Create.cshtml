@@ -137,9 +137,12 @@
 
         $("#2").width(100);
         //create datepicker
+        var now = new Date();
+        
         var begindate = $("#begindate").datepicker({
             onRender: function (date) {
-                return date.getDay() != 1 ? 'disabled' : '';
+                return date.valueOf() < now.valueOf() ||
+                 date.getDay() != 1 ? 'disabled' : '';
             }
         }).on('show', function (ev) {
             $('#begindate').data({ date: Nndate });
@@ -217,6 +220,12 @@
         CheckNumberOfSlot();
         CheckStartTime();
         CheckInstructorFree();
+        var timeValue = $('#startTime :selected').text();
+        if (timeValue == "Other") {
+            $("#Other").show();
+        } else {
+            $("#Other").hide();
+        }
     });
 
 
@@ -228,6 +237,12 @@
         CheckNumberOfSlot();
         CheckStartTime();
         CheckInstructorFree();
+        var timeValue = $('#startTime :selected').text();
+        if (timeValue == "Other") {
+            $("#Other").show();
+        } else {
+            $("#Other").hide();
+        }
     });
 
     //major change
@@ -264,6 +279,12 @@
             });
             $("#ClassID").html(html);
             CheckStartTime();
+            var timeValue = $('#startTime :selected').text();
+            if (timeValue == "Other") {
+                $("#Other").show();
+            } else {
+                $("#Other").hide();
+            }
         });
 
         //
