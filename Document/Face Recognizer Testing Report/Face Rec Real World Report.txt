@@ -1,0 +1,60 @@
+BEFORE - RESULT (10000 TIMES)
+Required: 2.Times: 1300
+Required: 3.Times: 4109
+Required: 4.Times: 2921
+Required: 5.Times: 1218
+Required: 6.Times: 343
+Required: 7.Times: 89
+Required: 8.Times: 17
+Required: 9.Times: 3
+==============================================================
+Number of image used: 1
+Average Student Detected: 7.568
+Number of image used: 2
+Average Student Detected: 10.85
+Number of image used: 3
+Average Student Detected: 12.528
+Number of image used: 4
+Average Student Detected: 13.719
+Number of image used: 5
+Average Student Detected: 14.528
+Number of image used: 6
+Average Student Detected: 15.115
+Number of image used: 7
+Average Student Detected: 15.662
+Number of image used: 8
+Average Student Detected: 16.062
+Number of image used: 9
+Average Student Detected: 16.379
+Number of image used: 10
+Average Student Detected: 16.609
+==============================================================
+AFTER - RESULT (10000 TIMES)
+Required: 2.Times: 1272
+Required: 3.Times: 3399
+Required: 4.Times: 3933
+Required: 5.Times: 1150
+Required: 6.Times: 222
+Required: 7.Times: 24
+==============================================================
+Number of image used: 1
+Average Student Detected: 8.026
+Number of image used: 2
+Average Student Detected: 10.772
+Number of image used: 3
+Average Student Detected: 12.428
+Number of image used: 4
+Average Student Detected: 13.504
+Number of image used: 5
+Average Student Detected: 14.335
+Number of image used: 6
+Average Student Detected: 14.999
+Number of image used: 7
+Average Student Detected: 15.583
+Number of image used: 8
+Average Student Detected: 16.071
+Number of image used: 9
+Average Student Detected: 16.415
+Number of image used: 10
+Average Student Detected: 16.714
+==============================================================
