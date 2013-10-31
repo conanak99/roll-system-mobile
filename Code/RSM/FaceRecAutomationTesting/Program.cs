@@ -13,11 +13,7 @@ namespace FaceRecAutomationTesting
            // FaceDetectionAutomation.RunTestAutomation();
            // FaceRecognitionAutomation.RunTestAutomation();
 
-            List<String> abc = new List<string>();
-            abc.Add("ab");
-            abc.Add("bc");
-            abc.Add("cd");
-            Console.WriteLine(abc.ToArray());
+            FaceRecognitionMoreTest.RunTestAutomation();
             Console.ReadLine();
         }
 
