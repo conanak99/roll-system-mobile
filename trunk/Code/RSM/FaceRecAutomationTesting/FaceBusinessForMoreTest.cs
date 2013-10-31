@@ -29,12 +29,11 @@ namespace FaceRecAutomationTesting
         private static int RESIZE_HEIGHT;
         private static int RECOGNIZER_THREEHOLD;
         private static int TRAINING_DATA_SIZE = 100;
-        private static FaceRecognizer FaceRec;
 
         //Initialize tu file config config
         public static void Initialize()
         {
-            HaarXML = "haarcascade_frontalface_alt_tree.xml";
+            HaarXML = "haarcascade_frontalface_alt.xml";
             RESIZE_HEIGHT = 1200;
             RESIZE_WIDTH = 900;
             RECOGNIZER_THREEHOLD = 2000;
@@ -200,7 +199,7 @@ namespace FaceRecAutomationTesting
         {
             //Tu rollcall ID, tao face recognizer, train
             //FaceRecognizer FaceRec = new LBPHFaceRecognizer(1, 8, 8, 8, 75);
-            FaceRec = new FisherFaceRecognizer(80, RECOGNIZER_THREEHOLD);
+            FaceRecognizer FaceRec = new FisherFaceRecognizer(80, RECOGNIZER_THREEHOLD);
 
             List<int> StudentIDs = new List<int>();
             List<Image<Gray, byte>> StudentImages = new List<Image<Gray, byte>>();
@@ -282,10 +281,9 @@ namespace FaceRecAutomationTesting
         public static RollSystemMobile.Models.RecognizerResult RecognizeStudentForAttendance(int RollCallID, String ImagePath)
         {
             //Dua ID cua roll call, cac hinh da up, cho ra danh sach ket qua
-            if (FaceRec == null)
-            {
-                 FaceRec = CreateRollCallRecognizer(RollCallID);
-            }
+
+            FaceRecognizer FaceRec = CreateRollCallRecognizer(RollCallID);
+
 
             RollSystemMobile.Models.RecognizerResult Result = RecognizeFromImage(FaceRec, ImagePath);
 

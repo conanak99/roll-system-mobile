@@ -57,6 +57,7 @@ namespace RollSystemMobile.Controllers
         {
             if (ModelState.IsValid)
             {
+                cls.IsActive = true;
                 ClassBO.Insert(cls);
                 return RedirectToAction("Index");  
             }
