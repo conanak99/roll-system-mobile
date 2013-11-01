@@ -12,58 +12,54 @@
         <tr>
             <td style="width: 350px;">
                 <div class="editor-label">
-                    <b>Begin Date</b>
+                    <b>1. Semester</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                    <div class="input-append date" id="begindate" data-date="10-10-2013" data-date-format="mm-dd-yyyy">
-                        <input class="span2" name="BeginDate" id="BeginDate" style="width: 100px; margin-left: 10px;"
-                            size="16" type="text" data-date-format="mm-dd-yyyy" readonly><span class="add-on"><i
-                                class="icon-th"></i></span>
-                    </div>
+                    @Html.DropDownList("SemesterID", new SelectList(ViewBag.SemesterID, "SemesterID", "SemesterName"), "- Select the semester -", new { style = "width: 200px;" })
                 </div>
-                <span class="help-block">Select the begin date of roll call.</span>
                 <div class="editor-label">
-                    <b>Major :</b>
+                    <b>3. Major :</b>
                 </div>
                 <div class="editor-field " style="margin-left: 10px">
-                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, new { style = "width: 200px;" })
+                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, "", new { style = "width: 200px;" })
                 </div>
                 <span class="help-block">Select the major of roll call.</span>
                 <div class="editor-label">
-                    <b>Class</b>
+                    <b>5. Subject</b>
                 </div>
-                <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, new { style = "width: 130px;" })<br />
-                    <a id="classList" target="_blank" href="">Click to view student in this class</a>
+                <div class="editor-field" style="margin-left: 10px;">
+                    @Html.DropDownList("SubjectID", (SelectList)ViewBag.SubjectID, "", new { style = "width: 250px;" })
                 </div>
-                <span class="help-block">Select the class of roll call.</span>
+                <span class="help-block">Select the subject of roll call.</span>
                 <div class="editor-label">
-                    <b>Instructor</b>
+                    <b>7. Instructor</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("InstructorID", (SelectList)ViewBag.MajoInstructorrID, new { style = "width: 230px;" })
+                    @Html.DropDownList("InstructorID", (SelectList)ViewBag.MajoInstructorrID, "", new { style = "width: 230px;" })
                 </div>
                 <span class="help-block">Select the instructor of roll call.</span>
             </td>
             <td>
                 <div class="editor-label">
-                    <b>Semester</b>
+                    <b>2. Begin Date</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                    <p id="semester">
-                        ...
-                    </p>
-                    <br />
+                    <div class="input-append date" id="begindate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
+                        <input class="span2" name="BeginDate" id="BeginDate" style="width: 100px; margin-left: 10px;"
+                            size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
+                                class="icon-th"></i></span>
+                    </div>
                 </div>
+                <span class="help-block">Select the begin date of roll call.</span>
                 <div class="editor-label">
-                    <b>Subject</b>
+                    <b>4. Class</b>
                 </div>
-                <div class="editor-field" style="margin-left: 10px;">
-                    @Html.DropDownList("SubjectID", (SelectList)ViewBag.SubjectID, new { style = "width: 250px;" })
+                <div class="editor-field" style="margin-left: 10px">
+                    @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, "", new { style = "width: 130px;" })<br />
                 </div>
-                <span class="help-block">Select the subject of roll call.</span>
+                <span class="help-block">Select the class of roll call.</span>
                 <div class="editor-label">
-                    <b>Start time</b>
+                    <b>6. Start time</b>
                 </div>
                 <div class="editor-field" id="a" style="margin-left: 10px;">
                     @Html.DropDownList("StartTime", new List<SelectListItem>
@@ -76,7 +72,7 @@
            new SelectListItem { Text = "16:00", Value = "16:00" },
            new SelectListItem { Text = "18:45", Value = "18:45" }, 
            new SelectListItem { Text = "Other", Value = "Other" } 
-       }, new { @id = "startTime", style = "width:90px;" }) -
+       }, "", new { @id = "startTime", style = "width:90px;" }) -
                     <input style="margin-bottom: 10px; width: 80px;" type="text" name="otherTime" id="Other" />
                 </div>
                 <span class="help-block">Select the start time of roll call.</span>
@@ -84,143 +80,243 @@
         </tr>
     </table>
     <p>
-        <input type="submit" value="Create" id="submit" class="btn btn-primary" />
+        <input style="margin-left: 20px;" type="submit" value="Create" id="submit" class="btn btn-primary" />
     </p>
 }
 <p style="font-size: 20px;">
     @Html.ActionLink("Back to List", "Index")
 </p>
 <script type="text/javascript">
+
     $(document).ready(function () {
-        var subjectID = $('#SubjectID :selected').attr("value");
-        var today = new Date();
-        var month = today.getMonth() + 1;
-        var date = today.getDate();
-        var year = today.getFullYear();
-        var day = today.getDay();
-        var currentdate = year + "-" + month + "-" + date;
-        var NextDate;
-        var Ndate;
-        var Nndate;
-        //set default day is monday
-        if (day > 1) {
-            var i = 8 - day;
-            NextDate = new Date(year, month, date + i);
-            if (NextDate.getMonth() == month) {
-                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-                Nndate = NextDate.getMonth() + "-" + NextDate.getDate() + "-" + NextDate.getFullYear();
-            } else {
-                NextDate = new Date(year, month, date + i - 1);
-                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-                Nndate = NextDate.getMonth() + "-" + NextDate.getDate() + "-" + NextDate.getFullYear();
-            }
-        } else if (day == 0) {
-            NextDate = new Date(year, month, date + 1);
-            Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-            Nndate = NextDate.getMonth() + "-" + NextDate.getDate() + "-" + NextDate.getFullYear();
-        } else {
-            Ndate = date + "-" + month + "-" + year;
-            Nndate = month + "-" + date + "-" + year;
-        }
-
-        //show textbox when choose starttime is other.
-
+        document.getElementById("startTime").disabled = true;
+        document.getElementById("MajorID").disabled = true;
+        document.getElementById("ClassID").disabled = true;
+        document.getElementById("SubjectID").disabled = true;
+        document.getElementById("InstructorID").disabled = true;
+        document.getElementById("submit").className = "btn";
+        document.getElementById("submit").disabled = true;
         $("#Other").hide();
-        $("#startTime").change(function () {
-            var timeValue = $('#startTime :selected').text();
-            if (timeValue == "Other") {
-                $("#Other").show();
-            } else {
-                $("#Other").hide();
-            }
-        });
+        //        var subjectID = $('#SubjectID :selected').attr("value");
+        //        var today = new Date();
+        //        var month = today.getMonth() + 1;
+        //        var date = today.getDate();
+        //        var year = today.getFullYear();
+        //        var day = today.getDay();
+        //        var currentdate = year + "-" + month + "-" + date;
+        //        var NextDate;
+        //        var Ndate;
+        //        //set default day is monday
+        //        if (day > 1) {
+        //            var i = 8 - day;
+        //            NextDate = new Date(year, month, date + i);
+        //            if (NextDate.getMonth() == month) {
+        //                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+        //            } else {
+        //                NextDate = new Date(year, month, date + i - 1);
+        //                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+        //            }
+        //        } else if (day == 0) {
+        //            NextDate = new Date(year, month, date + 1);
+        //            Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+        //        } else {
+        //            Ndate = date + "-" + month + "-" + year;
+        //        }
 
-        $("#2").width(100);
-        //create datepicker
-        var now = new Date();
-        
-        var begindate = $("#begindate").datepicker({
-            onRender: function (date) {
-                return date.valueOf() < now.valueOf() ||
-                 date.getDay() != 1 ? 'disabled' : '';
-            }
-        }).on('show', function (ev) {
-            $('#begindate').data({ date: Nndate });
-            $('#begindate').datepicker('update');
-        }).on('changeDate', function (ev) {
-            var month = ev.date.getMonth() + 1;
-            var year = ev.date.getFullYear();
-            var semester;
-            if (month >= 1 && month < 5) {
-                semester = "Spring " + year;
-                document.getElementById("semester").innerHTML = semester;
-            } else if (month < 9) {
-                semester = "Summer " + year;
-                document.getElementById("semester").innerHTML = semester;
-            } else {
-                semester = "Fall " + year;
-                document.getElementById("semester").innerHTML = semester;
-            }
-            $('#begindate').datepicker('hide');
-        });
-        document.getElementById("BeginDate").value = Ndate;
-        //set default semester
+        //        //show textbox when choose starttime is other.
 
-        if (month >= 1 && month < 5) {
-            semester = "Spring " + year;
-            document.getElementById("semester").innerHTML = semester;
-        } else if (month < 9) {
-            semester = "Summer " + year;
-            document.getElementById("semester").innerHTML = semester;
-        } else {
-            semester = "Fall " + year;
-            document.getElementById("semester").innerHTML = semester;
-        }
+        //        $("#Other").hide();
+        //        $("#startTime").change(function () {
+        //            var timeValue = $('#startTime :selected').text();
+        //            if (timeValue == "Other") {
+        //                $("#Other").show();
+        //            } else {
+        //                $("#Other").hide();
+        //            }
+        //        });
 
-        //check the number of slot of subject, set start time option
-        CheckNumberOfSlot();
-        //remove start time option had exist
-        CheckStartTime();
-        // remove instructor is teaching at time
-        CheckInstructorFree();
-        //show student list
-        var classID = $('#ClassID :selected').attr("value");
-        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
+        //        $("#2").width(100);
+        //        //create datepicker
+        //        var now = new Date();
+
+        //        var begindate = $("#begindate").datepicker({
+        //            onRender: function (date) {
+        //                return date.valueOf() < now.valueOf() ||
+        //                         date.getDay() != 1 ? 'disabled' : '';
+        //            }
+        //        }).on('show', function (ev) {
+        //            $('#begindate').data({ date: Ndate });
+        //            $('#begindate').datepicker('update');
+        //        });
+        //        document.getElementById("BeginDate").value = Ndate;
+        //        //set default semester
+
+        //        if (month >= 1 && month < 5) {
+        //            semester = "Spring " + year;
+        //            document.getElementById("semester").innerHTML = semester;
+        //        } else if (month < 9) {
+        //            semester = "Summer " + year;
+        //            document.getElementById("semester").innerHTML = semester;
+        //        } else {
+        //            semester = "Fall " + year;
+        //            document.getElementById("semester").innerHTML = semester;
+        //        }
+
+        //        //check the number of slot of subject, set start time option
+        //        CheckNumberOfSlot();
+        //        //remove start time option had exist
+        //        CheckStartTime();
+        //        // remove instructor is teaching at time
+        //        CheckInstructorFree();
+        //        //show student list
+        //        var classID = $('#ClassID :selected').attr("value");
+        //        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
 
         // change instructor when select subject
+    });
 
+
+    $('#SemesterID').change(function () {
+        document.getElementById("submit").className = "btn";
+        document.getElementById("submit").disabled = true;
+        document.getElementById("startTime").disabled = true;
+        document.getElementById("MajorID").disabled = true;
+        document.getElementById("ClassID").disabled = true;
+        document.getElementById("SubjectID").disabled = true;
+        document.getElementById("InstructorID").disabled = true;
+        $("#MajorID option[value='']").remove();
+
+
+        addOption("", "", "MajorID");
+        sortOption("MajorID");
+        addOption("", "", "ClassID");
+        sortOption("ClassID");
+        addOption("", "", "SubjectID");
+        sortOption("SubjectID");
+        sortOption("startTime");
+        addOption("", "", "InstructorID");
+        sortOption("InstructorID");
+
+
+        $("#MajorID option[value='']").attr('selected', true);
+        $("#ClassID option[value='']").attr('selected', true);
+        $("#SubjectID option[value='']").attr('selected', true);
+        $("#startTime option[value='']").attr('selected', true);
+        $("#InstructorID option[value='']").attr('selected', true);
+
+        $("#SemesterID option[value='']").remove();
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
+        var now = new Date();
+
+
+        $("#Other").hide();
+
+        $.getJSON(semesterUrl, function (semester) {
+            //set select first sunday
+            var a = new Date(semester.begindate);
+            var tmp;
+            var Ndate;
+            var NextDate;
+            if (now.valueOf() < a.valueOf()) {
+                tmp = new Date(a);
+            } else {
+                tmp = new Date(now);
+            };
+            var day = tmp.getDay();
+            var year = tmp.getFullYear();
+            var month = tmp.getMonth() + 1;
+            var date = tmp.getDate();
+            if (day > 1) {
+                var i = 8 - day;
+                NextDate = new Date(year, month, date + i);
+                if (NextDate.getMonth() == month) {
+                    Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+                } else {
+                    NextDate = new Date(year, month, date + i - 1);
+                    Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+                }
+            } else if (day == 0) {
+                NextDate = new Date(year, month, date + 1);
+                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+            } else {
+                Ndate = date + "-" + month + "-" + year;
+            }
+
+            var begindate = $("#begindate").datepicker({
+                onRender: function (date) {
+                    var a = new Date(semester.begindate);
+                    var b = new Date(semester.enddate);
+                    return date.valueOf() < now.valueOf() ||
+                            date.valueOf() < a.valueOf() ||
+                            date.valueOf() > b.valueOf() ||
+                         date.getDay() != 1 ? 'disabled' : '';
+                }
+            }).on('show', function (ev) {
+                $('#begindate').data({ date: Ndate });
+                $('#begindate').datepicker('update');
+            }).data('datepicker');
+            document.getElementById("BeginDate").value = Ndate;
+        });
+        document.getElementById("MajorID").disabled = false;
     });
     //start time change value
     $('#startTime').change(function () {
+        $("#startTime option[value='']").remove();
+        document.getElementById("submit").className = "btn";
+        document.getElementById("submit").disabled = true;
+        document.getElementById("InstructorID").disabled = false;
         CheckInstructorFree();
     });
     //change startime to text if subject is capnstone
     $('#SubjectID').change(function () {
-        var subjectID = $('#SubjectID :selected').attr("value");
-        var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
-        var subjectID = $('#SubjectID :selected').attr("value");
-        var timeValue = $('#startTime :selected').text();
-        var slotUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
+        $("#SubjectID option[value='']").remove();
+        document.getElementById("submit").className = "btn";
+        document.getElementById("submit").disabled = true;
 
-        if (timeValue == "Other") {
-            $("#Other").show();
-        } else {
-            $("#Other").hide();
+        var checkSelect = $('#ClassID :selected').attr("value");
+        
+        addOption("", "", "InstructorID");
+        sortOption("InstructorID");
+        $("#InstructorID option[value='']").attr('selected', true);
+
+        if (checkSelect != "") {
+            document.getElementById("startTime").disabled = false;
         }
-
-        $.getJSON(instructorUrl, function (instructors) {
-            var html = "";
-            $.each(instructors, function (index, instructor) {
-                html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
-            });
-            $("#InstructorID").html(html);
-        });
-        //set start time
+        document.getElementById("InstructorID").disabled = true;
         SetDefaultTime();
         CheckNumberOfSlot();
         CheckStartTime();
-        CheckInstructorFree();
-        var timeValue = $('#startTime :selected').text();
+
+        var majorID = $('#MajorID :selected').attr("value");
+        var classUrl = '@Url.Action("GetClasses")/' + majorID;
+        $.getJSON(classUrl, function (classes) {
+            var html = "";
+            html += ('<option value=""></option>');
+            $.each(classes, function (index, item_class) {
+                html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
+            });
+            $("#ClassID").html(html);
+        });
+
+        var subjectID = $('#SubjectID :selected').attr("value");
+        var subjectUrl = '@Url.Action("GetClassFree")/' + subjectID;; 
+        $.getJSON(subjectUrl, function (classs) {
+            $.each(classs, function (index, cls) {
+                $("#ClassID option[value='"+cls.id+"']").remove();
+            });
+        });
+        /*
+        $.getJSON(instructorUrl, function (instructors) {
+        var html = "";
+        $.each(instructors, function (index, instructor) {
+        html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
+        });
+        $("#InstructorID").html(html);
+        }); */
+        //set start time
+
+        var timeValue = $('#startTime :selected').atrr("value");
         if (timeValue == "Other") {
             $("#Other").show();
         } else {
@@ -231,60 +327,90 @@
 
     //show student list of class
     $('#ClassID').change(function () {
-        var classID = $('#ClassID :selected').attr("value");
-        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
+        $("#ClassID option[value='']").remove();
+        document.getElementById("submit").className = "btn";
+        document.getElementById("submit").disabled = true;
+        document.getElementById("SubjectID").disabled = false;
+
         SetDefaultTime();
         CheckNumberOfSlot();
         CheckStartTime();
-        CheckInstructorFree();
-        var timeValue = $('#startTime :selected').text();
+
+        var checkSelect = $('#SubjectID :selected').attr("value");
+        if (checkSelect != "") {
+            document.getElementById("startTime").disabled = false;
+        }
+        document.getElementById("InstructorID").disabled = true;
+        var timeValue = $('#startTime :selected').atrr("value");
         if (timeValue == "Other") {
             $("#Other").show();
         } else {
             $("#Other").hide();
         }
+        addOption("", "", "InstructorID");
+        sortOption("InstructorID");
+        $("#InstructorID option[value='']").attr('selected', true);
+
+        /*var subjectID = $('#SubjectID :selected').attr("value");
+        //var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
+        $.getJSON(subjectUrl, function (subjects) {
+        var html = "";
+        $.each(subjects, function (index, subject) {
+        html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
+        });
+        $("#SubjectID").html(html);
+        });
+        //        var classID = $('#ClassID :selected').attr("value");
+        //        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
+        //        SetDefaultTime();
+        //        CheckNumberOfSlot();
+        //        CheckStartTime();
+        //        CheckInstructorFree();
+        //        var timeValue = $('#startTime :selected').text();
+        //        if (timeValue == "Other") {
+        //            $("#Other").show();
+        //        } else {
+        //            $("#Other").hide();
+        //        }*/
     });
 
     //major change
     $('#MajorID').change(function () {
+        $("#MajorID option[value='']").remove();
+        document.getElementById("submit").className = "btn";
+        document.getElementById("submit").disabled = true;
+        document.getElementById("ClassID").disabled = false;
+        document.getElementById("SubjectID").disabled = false;
         var majorID = $('#MajorID :selected').attr("value");
 
         var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
         var classUrl = '@Url.Action("GetClasses")/' + majorID;
 
-        SetDefaultTime();
         $.getJSON(subjectUrl, function (subjects) {
             var html = "";
+            html += ('<option value=""></option>');
             $.each(subjects, function (index, subject) {
                 html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
             });
             $("#SubjectID").html(html);
-            CheckNumberOfSlot();
-
-            var subjectID = $('#SubjectID :selected').attr("value");
-            var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
-            $.getJSON(instructorUrl, function (instructors) {
-                var html = "";
-                $.each(instructors, function (index, instructor) {
-                    html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
-                });
-                $("#InstructorID").html(html);
-                CheckInstructorFree();
-            });
         });
+        /* 
+        var subjectID = $('#SubjectID :selected').attr("value");
+        var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
+        $.getJSON(instructorUrl, function (instructors) {
+        var html = "";
+        $.each(instructors, function (index, instructor) {
+        html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');               });
+        $("#InstructorID").html(html);
+        });
+        });*/
         $.getJSON(classUrl, function (classes) {
             var html = "";
+            html += ('<option value=""></option>');
             $.each(classes, function (index, item_class) {
                 html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
             });
             $("#ClassID").html(html);
-            CheckStartTime();
-            var timeValue = $('#startTime :selected').text();
-            if (timeValue == "Other") {
-                $("#Other").show();
-            } else {
-                $("#Other").hide();
-            }
         });
 
         //
@@ -292,7 +418,11 @@
         $('#classList').attr('href', "Studentlist?ClassID=" + classID);
 
     });
-
+    $('#InstructorID').change(function () {
+        $("#InstructorID option[value='']").remove();
+        document.getElementById("submit").className = "btn btn-primary";
+        document.getElementById("submit").disabled = false;
+    });
     function CheckNumberOfSlot() {
         var subjectID = $('#SubjectID :selected').attr("value");
         var slotUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
@@ -328,7 +458,7 @@
                 }
             });
         });
-    }
+    };
     function CheckInstructorFree() {
         var subjectID = $('#SubjectID :selected').attr("value");
         var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
@@ -341,6 +471,7 @@
 
         $.getJSON(instructorUrl, function (instructors) {
             var html = "";
+            html += ('<option id="select" value="" ></option>');
             $.each(instructors, function (index, instructor) {
                 html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
                 var insUrl = '@Url.Action("GetInstructorFree")/' + instructor.id;
@@ -357,7 +488,7 @@
             });
             $("#InstructorID").html(html);
         });
-    }
+    };
     function SetDefaultTime() {
         $("#startTime option[value='07:00']").remove();
         $("#startTime option[value='08:45']").remove();
@@ -367,6 +498,7 @@
         $("#startTime option[value='16:00']").remove();
         $("#startTime option[value='18:45']").remove();
         var html = "";
+        html += ('<option value=""></option>')
         html += ('<option value="07:00" >07:00</option>')
         html += ('<option value="08:45" >08:45</option>')
         html += ('<option value="10:30" >10:30</option>')
@@ -376,5 +508,21 @@
         html += ('<option value="18:45" >18:45</option>')
         html += ('<option value="Other" >Other</option>')
         $("#startTime").html(html);
-    }
+    };
+    function addOption(text, value, id) {
+        var option = document.createElement("option");
+        option.text = text;
+        option.value = value;
+        var select = document.getElementById(id);
+        select.appendChild(option);
+    };
+    function sortOption(id) {
+        var my_options = $("#" + id + " option");
+        my_options.sort(function (a, b) {
+            if (a.text > b.text) return 1;
+            else if (a.text < b.text) return -1;
+            else return 0
+        })
+        $("#" + id).empty().append(my_options);
+    };
 </script>

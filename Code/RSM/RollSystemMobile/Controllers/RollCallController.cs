@@ -19,6 +19,7 @@ namespace RollSystemMobile.Controllers
         SubjectBusiness SubBO;
         StudentBusiness StuBO;
         InstructorBusiness InsBO;
+        SemesterBusiness SeBO;
 
         public RollCallController()
         {
@@ -29,6 +30,7 @@ namespace RollSystemMobile.Controllers
             SubBO = new SubjectBusiness(DB);
             StuBO = new StudentBusiness(DB);
             InsBO = new InstructorBusiness(DB);
+            SeBO = new SemesterBusiness(DB); 
         }
 
         //
@@ -113,10 +115,9 @@ namespace RollSystemMobile.Controllers
             ViewBag.ClassID = new SelectList(ClaBO.GetClassByMajor(MajorID),
                 "ClassID", "ClassName");
             //Mac dinh, lay semester moi nhat
-            ViewBag.SemesterID = SlFactory.MakeSemesterSelectList();
-
+            List<Semester> semester = SeBO.GetList().Where(s => s.EndDate > DateTime.Now).ToList();
+            ViewBag.SemesterID = semester;
             ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName");
-
             return View();
         }
 
@@ -276,7 +277,22 @@ namespace RollSystemMobile.Controllers
                Select(d => new { id = d.StudentID, name = d.FullName, code = d.StudentCode });
             return Json(option, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult GetDateSemester(int id)
+        {
+            var begindate = SeBO.GetSemesterByID(id).BeginDate.ToString("yyyy-MM-dd");
+            var enddate = SeBO.GetSemesterByID(id).EndDate.ToString("yyyy-MM-dd");
+            var semester = new {begindate , enddate};
+            return Json(semester, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetStatusRollCall(int id)
+        {
+            var status = RollBO.GetRollCallByID(id).Status;
+            return Json(status, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetClassFree(int id) {
+            var cls = RollBO.GetList().Where(r => r.SubjectID == id).Select(a => new { id= a.ClassID, classname = a.Class.ClassName });
+            return Json(cls, JsonRequestBehavior.AllowGet);
+        }
         public JsonResult GetInstructors(int id)
         {
             int typeID = SubBO.GetSubjectByID(id).TypeID;
