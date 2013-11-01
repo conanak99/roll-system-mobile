@@ -5,8 +5,8 @@
 }
 <h2>
     Roll Call List</h2>
-<p style="font-size:20px;">
-   @Html.ActionLink("Create New", "Create")
+<p style="font-size: 20px;">
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table table-bordered table-striped" id="example">
     <thead>
@@ -35,39 +35,40 @@
         </th>
     </thead>
     <tbody>
-    @{ int index = 1;}
-    @foreach (var item in Model.OrderByDescending(r => r.RollCallID).OrderByDescending(r => r.BeginDate))
-    {
-        <tr>
-            <td style="text-align: right;">
-                @index
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Class.ClassName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Subject.ShortName)
-            </td>
-            <td>
-                @item.Instructor.Fullname
-            </td>
-            <td>
-                @item.BeginDate.ToString("dd-MM-yyyy") to @item.EndDate.ToString("dd-MM-yyyy")
-            </td>
-            <td>
-                @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
-            </td>
-            <td>
-                @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
-            </td>
-            <td>
-                @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID }) <br />
-                @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) |
-                @Html.ActionLink("Detele", "Delete", new { id = item.RollCallID })
-            </td>
-        </tr>
-           { index++; }
-    }
+        @{ int index = 1;}
+        @foreach (var item in Model.OrderByDescending(r => r.RollCallID).OrderByDescending(r => r.BeginDate))
+        {   
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject.ShortName)
+                </td>
+                <td>
+                    @item.Instructor.Fullname
+                </td>
+                <td>
+                    @item.BeginDate.ToString("dd-MM-yyyy") to @item.EndDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
+                </td>
+                <td>
+                    @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
+                </td>
+                <td>
+                    @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
+                    <br />
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) |
+                    @Html.ActionLink("Detele", "Delete", new { id = item.RollCallID })
+                </td>
+            </tr>
+               { index++; }
+        }
     </tbody>
 </table>
 <script>
@@ -81,5 +82,5 @@
             },
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [6, 7]}]
         });
-    });
+    });       
 </script>
