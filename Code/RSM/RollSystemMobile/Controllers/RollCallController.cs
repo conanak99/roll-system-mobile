@@ -30,7 +30,7 @@ namespace RollSystemMobile.Controllers
             SubBO = new SubjectBusiness(DB);
             StuBO = new StudentBusiness(DB);
             InsBO = new InstructorBusiness(DB);
-            SeBO = new SemesterBusiness(DB); 
+            SeBO = new SemesterBusiness(DB);
         }
 
         //
@@ -135,7 +135,6 @@ namespace RollSystemMobile.Controllers
                 {
                     rollcall.StartTime = TimeSpan.Parse(otherTime.ToString());
                 }
-                rollcall.SemesterID = 2;
                 RollBO.Insert(rollcall);
                 return RedirectToAction("Index");
             }
@@ -281,7 +280,7 @@ namespace RollSystemMobile.Controllers
         {
             var begindate = SeBO.GetSemesterByID(id).BeginDate.ToString("yyyy-MM-dd");
             var enddate = SeBO.GetSemesterByID(id).EndDate.ToString("yyyy-MM-dd");
-            var semester = new {begindate , enddate};
+            var semester = new { begindate, enddate };
             return Json(semester, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetStatusRollCall(int id)
@@ -289,9 +288,29 @@ namespace RollSystemMobile.Controllers
             var status = RollBO.GetRollCallByID(id).Status;
             return Json(status, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetClassFree(int id) {
-            var cls = RollBO.GetList().Where(r => r.SubjectID == id).Select(a => new { id= a.ClassID, classname = a.Class.ClassName });
+        public JsonResult GetClassFree(int id)
+        {
+            var cls = RollBO.GetList().Where(r => r.SubjectID == id).
+                Select(a => new
+                {
+                    id = a.ClassID,
+                    classname = a.Class.ClassName,
+                    enddate = a.EndDate.ToString("yyyy-MM-dd"),
+                    begindate = a.BeginDate.ToString("yyyy-MM-dd")
+                });
             return Json(cls, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetSubjectFree(int id, int semesterid)
+        {
+            var sub = RollBO.GetList().Where(r => r.ClassID == id && r.SemesterID == semesterid).
+                Select(a => new
+                {
+                    id = a.SubjectID,
+                    subjectname = a.Subject.FullName,
+                    enddate = a.EndDate.ToString("yyyy-MM-dd"),
+                    begindate = a.BeginDate.ToString("yyyy-MM-dd")
+                });
+            return Json(sub, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetInstructors(int id)
         {
@@ -308,7 +327,8 @@ namespace RollSystemMobile.Controllers
                 {
                     starttime = i.StartTime.ToString(@"hh\:mm"),
                     endtime = i.EndTime.ToString(@"hh\:mm"),
-                    enddate = i.EndDate.ToString("yyyy-MM-dd")
+                    enddate = i.EndDate.ToString("yyyy-MM-dd"),
+                    begindate = i.BeginDate.ToString("yyyy-MM-dd")
                 });
             return Json(instructor, JsonRequestBehavior.AllowGet);
         }
