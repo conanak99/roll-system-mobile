@@ -193,11 +193,12 @@
         sortOption("ClassID");
         addOption("", "", "SubjectID");
         sortOption("SubjectID");
+        addOption("", "", "startTime");
         sortOption("startTime");
         addOption("", "", "InstructorID");
         sortOption("InstructorID");
-
-
+        test();
+        $("#Other").hide();
         $("#MajorID option[value='']").attr('selected', true);
         $("#ClassID option[value='']").attr('selected', true);
         $("#SubjectID option[value='']").attr('selected', true);
@@ -205,59 +206,7 @@
         $("#InstructorID option[value='']").attr('selected', true);
 
         $("#SemesterID option[value='']").remove();
-        var semesterID = $('#SemesterID :selected').attr("value");
-        var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
-        var now = new Date();
 
-
-        $("#Other").hide();
-
-        $.getJSON(semesterUrl, function (semester) {
-            //set select first sunday
-            var a = new Date(semester.begindate);
-            var tmp;
-            var Ndate;
-            var NextDate;
-            if (now.valueOf() < a.valueOf()) {
-                tmp = new Date(a);
-            } else {
-                tmp = new Date(now);
-            };
-            var day = tmp.getDay();
-            var year = tmp.getFullYear();
-            var month = tmp.getMonth() + 1;
-            var date = tmp.getDate();
-            if (day > 1) {
-                var i = 8 - day;
-                NextDate = new Date(year, month, date + i);
-                if (NextDate.getMonth() == month) {
-                    Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-                } else {
-                    NextDate = new Date(year, month, date + i - 1);
-                    Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-                }
-            } else if (day == 0) {
-                NextDate = new Date(year, month, date + 1);
-                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-            } else {
-                Ndate = date + "-" + month + "-" + year;
-            }
-
-            var begindate = $("#begindate").datepicker({
-                onRender: function (date) {
-                    var a = new Date(semester.begindate);
-                    var b = new Date(semester.enddate);
-                    return date.valueOf() < now.valueOf() ||
-                            date.valueOf() < a.valueOf() ||
-                            date.valueOf() > b.valueOf() ||
-                         date.getDay() != 1 ? 'disabled' : '';
-                }
-            }).on('show', function (ev) {
-                $('#begindate').data({ date: Ndate });
-                $('#begindate').datepicker('update');
-            }).data('datepicker');
-            document.getElementById("BeginDate").value = Ndate;
-        });
         document.getElementById("MajorID").disabled = false;
     });
     //start time change value
@@ -266,62 +215,23 @@
         document.getElementById("submit").className = "btn";
         document.getElementById("submit").disabled = true;
         document.getElementById("InstructorID").disabled = false;
-        CheckInstructorFree();
+        checkInstructorFree();
     });
     //change startime to text if subject is capnstone
     $('#SubjectID').change(function () {
         $("#SubjectID option[value='']").remove();
         document.getElementById("submit").className = "btn";
         document.getElementById("submit").disabled = true;
+        document.getElementById("InstructorID").disabled = true;
+        document.getElementById("startTime").disabled = false;
 
-        var checkSelect = $('#ClassID :selected').attr("value");
-        
         addOption("", "", "InstructorID");
         sortOption("InstructorID");
         $("#InstructorID option[value='']").attr('selected', true);
 
-        if (checkSelect != "") {
-            document.getElementById("startTime").disabled = false;
-        }
-        document.getElementById("InstructorID").disabled = true;
-        SetDefaultTime();
-        CheckNumberOfSlot();
-        CheckStartTime();
-
-        var majorID = $('#MajorID :selected').attr("value");
-        var classUrl = '@Url.Action("GetClasses")/' + majorID;
-        $.getJSON(classUrl, function (classes) {
-            var html = "";
-            html += ('<option value=""></option>');
-            $.each(classes, function (index, item_class) {
-                html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
-            });
-            $("#ClassID").html(html);
-        });
-
-        var subjectID = $('#SubjectID :selected').attr("value");
-        var subjectUrl = '@Url.Action("GetClassFree")/' + subjectID;; 
-        $.getJSON(subjectUrl, function (classs) {
-            $.each(classs, function (index, cls) {
-                $("#ClassID option[value='"+cls.id+"']").remove();
-            });
-        });
-        /*
-        $.getJSON(instructorUrl, function (instructors) {
-        var html = "";
-        $.each(instructors, function (index, instructor) {
-        html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
-        });
-        $("#InstructorID").html(html);
-        }); */
-        //set start time
-
-        var timeValue = $('#startTime :selected').atrr("value");
-        if (timeValue == "Other") {
-            $("#Other").show();
-        } else {
-            $("#Other").hide();
-        }
+        setDefaultTime();
+        checkNumberOfSlot();
+        checkStartTime();
     });
 
 
@@ -331,47 +241,18 @@
         document.getElementById("submit").className = "btn";
         document.getElementById("submit").disabled = true;
         document.getElementById("SubjectID").disabled = false;
-
-        SetDefaultTime();
-        CheckNumberOfSlot();
-        CheckStartTime();
-
-        var checkSelect = $('#SubjectID :selected').attr("value");
-        if (checkSelect != "") {
-            document.getElementById("startTime").disabled = false;
-        }
         document.getElementById("InstructorID").disabled = true;
-        var timeValue = $('#startTime :selected').atrr("value");
-        if (timeValue == "Other") {
-            $("#Other").show();
-        } else {
-            $("#Other").hide();
-        }
+        document.getElementById("startTime").disabled = true;
+
         addOption("", "", "InstructorID");
         sortOption("InstructorID");
         $("#InstructorID option[value='']").attr('selected', true);
 
-        /*var subjectID = $('#SubjectID :selected').attr("value");
-        //var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
-        $.getJSON(subjectUrl, function (subjects) {
-        var html = "";
-        $.each(subjects, function (index, subject) {
-        html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
-        });
-        $("#SubjectID").html(html);
-        });
-        //        var classID = $('#ClassID :selected').attr("value");
-        //        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
-        //        SetDefaultTime();
-        //        CheckNumberOfSlot();
-        //        CheckStartTime();
-        //        CheckInstructorFree();
-        //        var timeValue = $('#startTime :selected').text();
-        //        if (timeValue == "Other") {
-        //            $("#Other").show();
-        //        } else {
-        //            $("#Other").hide();
-        //        }*/
+        checkSubjectFree();
+
+        setDefaultTime();
+        checkNumberOfSlot();
+        checkStartTime();
     });
 
     //major change
@@ -380,30 +261,31 @@
         document.getElementById("submit").className = "btn";
         document.getElementById("submit").disabled = true;
         document.getElementById("ClassID").disabled = false;
-        document.getElementById("SubjectID").disabled = false;
+        document.getElementById("SubjectID").disabled = true;
+        document.getElementById("startTime").disabled = true;
+        document.getElementById("InstructorID").disabled = true;
+
+        addOption("", "", "InstructorID");
+        sortOption("InstructorID");
+        $("#InstructorID option[value='']").attr('selected', true);
+        addOption("", "", "startTime");
+        sortOption("startTime");
+        $("#startTime option[value='']").attr('selected', true);
+        addOption("", "", "SubjectID");
+        sortOption("SubjectID");
+        $("#SubjectID option[value='']").attr('selected', true);
+
+        checkClassByMajor();
+    });
+    $('#InstructorID').change(function () {
+        $("#InstructorID option[value='']").remove();
+        document.getElementById("submit").className = "btn btn-primary";
+        document.getElementById("submit").disabled = false;
+    });
+
+    function checkClassByMajor() {
         var majorID = $('#MajorID :selected').attr("value");
-
-        var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
         var classUrl = '@Url.Action("GetClasses")/' + majorID;
-
-        $.getJSON(subjectUrl, function (subjects) {
-            var html = "";
-            html += ('<option value=""></option>');
-            $.each(subjects, function (index, subject) {
-                html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
-            });
-            $("#SubjectID").html(html);
-        });
-        /* 
-        var subjectID = $('#SubjectID :selected').attr("value");
-        var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
-        $.getJSON(instructorUrl, function (instructors) {
-        var html = "";
-        $.each(instructors, function (index, instructor) {
-        html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');               });
-        $("#InstructorID").html(html);
-        });
-        });*/
         $.getJSON(classUrl, function (classes) {
             var html = "";
             html += ('<option value=""></option>');
@@ -413,17 +295,8 @@
             $("#ClassID").html(html);
         });
 
-        //
-        var classID = $('#ClassID :selected').attr("value");
-        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
-
-    });
-    $('#InstructorID').change(function () {
-        $("#InstructorID option[value='']").remove();
-        document.getElementById("submit").className = "btn btn-primary";
-        document.getElementById("submit").disabled = false;
-    });
-    function CheckNumberOfSlot() {
+    };
+    function checkNumberOfSlot() {
         var subjectID = $('#SubjectID :selected').attr("value");
         var slotUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
         $.getJSON(slotUrl, function (slot) {
@@ -433,14 +306,61 @@
             }
         });
     };
-    function CheckStartTime() {
+
+    var today = new Date();
+    var month = today.getMonth() + 1;
+    var date = today.getDate();
+    var year = today.getFullYear();
+    var currentdate = year + "-" + month + "-" + date;
+
+    function checkClassFree() {
+        checkClassByMajor();
+        var subjectID = $('#SubjectID :selected').attr("value");
+        var subjectUrl = '@Url.Action("GetClassFree")/' + subjectID;
+
+        $.getJSON(subjectUrl, function (classs) {
+            $.each(classs, function (index, cls) {
+                $("#ClassID option[value='" + cls.id + "']").remove();
+            });
+        });
+    };
+    function checkSubjectByMajor() {
+        var majorID = $('#MajorID :selected').attr("value");
+        var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
+
+        $.getJSON(subjectUrl, function (subjects) {
+            var html = "";
+            html += ('<option value=""></option>');
+            $.each(subjects, function (index, subject) {
+                html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
+            });
+            $("#SubjectID").html(html);
+        });
+    };
+    function checkSubjectFree() {
+        var majorID = $('#MajorID :selected').attr("value");
+        var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
+
+        $.getJSON(subjectUrl, function (subjects) {
+            var html = "";
+            html += ('<option value=""></option>');
+            $.each(subjects, function (index, subject) {
+                html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
+            });
+            $("#SubjectID").html(html);
+            var classID = $('#ClassID :selected').attr("value");
+            var semesterID = $('#SemesterID :selected').attr("value");
+            var classUrl = '@Url.Action("GetSubjectFree")?id=' + classID + '&semesterid=' + semesterID;
+            $.getJSON(classUrl, function (subjects) {
+                $.each(subjects, function (index, sub) {
+                    $("#SubjectID option[value='" + sub.id + "']").remove();
+                });
+            });
+        });
+    };
+    function checkStartTime() {
         var classID = $('#ClassID :selected').attr("value");
         var starttimeUrl = '@Url.Action("GetStartTime")/' + classID;
-        var today = new Date();
-        var month = today.getMonth() + 1;
-        var date = today.getDate();
-        var year = today.getFullYear();
-        var currentdate = year + "-" + month + "-" + date;
 
         $.getJSON(starttimeUrl, function (starttime) {
             $.each(starttime, function (index, time) {
@@ -459,15 +379,10 @@
             });
         });
     };
-    function CheckInstructorFree() {
+
+    function checkInstructorFree() {
         var subjectID = $('#SubjectID :selected').attr("value");
         var instructorUrl = '@Url.Action("GetInstructors")/' + subjectID;
-
-        var today = new Date();
-        var month = today.getMonth() + 1;
-        var date = today.getDate();
-        var year = today.getFullYear();
-        var currentdate = year + "-" + month + "-" + date;
 
         $.getJSON(instructorUrl, function (instructors) {
             var html = "";
@@ -489,7 +404,7 @@
             $("#InstructorID").html(html);
         });
     };
-    function SetDefaultTime() {
+    function setDefaultTime() {
         $("#startTime option[value='07:00']").remove();
         $("#startTime option[value='08:45']").remove();
         $("#startTime option[value='10:30']").remove();
@@ -524,5 +439,66 @@
             else return 0
         })
         $("#" + id).empty().append(my_options);
+    };
+    function checkOtherTime() {
+        var timeValue = $('#startTime :selected').atrr("value");
+        if (timeValue == "Other") {
+            $("#Other").show();
+        } else {
+            $("#Other").hide();
+        }
+    };
+    function test() {
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
+        var now = new Date();
+
+        $.getJSON(semesterUrl, function (semester) {
+            //set select first sunday
+            var a = new Date(semester.begindate);
+            var b = new Date(semester.enddate);
+            var tmp;
+            var Ndate;
+            var NextDate;
+            if (now.valueOf() < a.valueOf()) {
+                tmp = new Date(a);
+            } else {
+                tmp = new Date(now);
+            };
+            var day = tmp.getDay();
+            var year = tmp.getFullYear();
+            var month = tmp.getMonth() + 1;
+            var date = tmp.getDate();
+            if (day > 1) {
+                var i = 8 - day;
+                NextDate = new Date(year, month, date + i);
+                if (NextDate.getMonth() == month) {
+                    Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+                } else {
+                    NextDate = new Date(year, month, date + i - 1);
+                    Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+                }
+            } else if (day == 0) {
+                NextDate = new Date(year, month, date + 1);
+                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+            } else {
+                Ndate = date + "-" + month + "-" + year;
+            }
+            
+            var begindate = $("#begindate").datepicker
+            ({
+                onRender: function (date) {
+                    
+                    return date.valueOf() < now.valueOf() ||
+                            date.valueOf() < a.valueOf() ||
+                            date.valueOf() > b.valueOf() ||
+                         date.getDay() != 1 ? 'disabled' : '';
+                }
+            }).on('show', function (ev) {
+                $('#begindate').data({ date: Ndate });
+                $('#begindate').datepicker('update');
+            }).data('datepicker');
+            document.getElementById("BeginDate").value = Ndate;
+        });  
     };
 </script>
