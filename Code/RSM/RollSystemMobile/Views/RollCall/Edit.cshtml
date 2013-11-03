@@ -13,28 +13,29 @@
         <tr>
             <td style="width: 350px;">
                 <div class="editor-label">
-                    <b>Major :</b>
+                    <b>1. Semester</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                    @Html.DropDownList("SemesterID")
+                    @Html.ValidationMessageFor(model => model.SemesterID)
+                </div>
+                <span class="help-block">Select the semester of roll call.</span>
+                <div class="editor-label">
+                    <b>3. Major :</b>
                 </div>
                 <div class="editor-field " style="margin-left: 10px">
                     @Html.DropDownList("MajorID")
                 </div>
                 <span class="help-block">Select the major of roll call.</span>
                 <div class="editor-label">
-                    <b>Subject</b>
+                    <b>5. Subject</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px;">
                       @Html.DropDownList("SubjectID")
                 </div>
                 <span class="help-block">Select the subject of roll call.</span>
                 <div class="editor-label">
-                    <b>Class</b>
-                </div>
-                <div class="editor-field" style="margin-left: 10px">
-                      @Html.DropDownList("ClassID")
-                </div>
-                <span class="help-block">Select the class of roll call.</span>
-                <div class="editor-label">
-                    <b>Instructor</b>
+                    <b>7. Instructor</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                       @Html.DropDownList("InstructorID")
@@ -43,36 +44,36 @@
             </td>
             <td>
                 <div class="editor-label">
-                    <b>Semester</b>
+                    <b>2. Begin Date</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("SemesterID")
-                    @Html.ValidationMessageFor(model => model.SemesterID)
+                    <div class="input-append date" id="begindate" data-date-format="dd-mm-yyyy">
+                        <input class="span2" name="BeginDate" style="width: 100px; margin-left: 10px;" size="16" type="text"
+                    value="@DateTime.Today.ToString("dd-MM-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
+                    </div>
                 </div>
-                <span class="help-block">Select the semester of roll call.</span>
+                <span class="help-block">Select the begin date of roll call.</span>
                 <div class="editor-label">
-                    <b>Start time</b>
+                    <b>4. Class</b>
+                </div>
+                <div class="editor-field" style="margin-left: 10px">
+                      @Html.DropDownList("ClassID")
+                </div>
+                <span class="help-block">Select the class of roll call.</span>
+                <div class="editor-label">
+                    <b>6. Start time</b>
                 </div>
                 <div class="editor-field" id="a" style="margin-left: 10px">
                     <div id="1">@Html.TextBoxFor(model => model.StartTime, new { style = "width:80px;" })</div>
                     @Html.ValidationMessageFor(model => model.StartTime)
                 </div>
                 <span class="help-block">Select the start time of roll call.</span>
-                <div class="editor-label">
-                    <b>Begin Date</b>
-                </div>
-                <div class="editor-field" style="margin-left: 10px">
-                    <div class="input-append date" id="begindate" data-date-format="mm-dd-yyyy">
-                        <input class="span2" name="BeginDate" style="width: 100px; margin-left: 10px;" size="16" type="text"
-                    value="@DateTime.Today.ToString("MM-dd-yyyy")" readonly><span class="add-on"><i class="icon-th"></i></span>
-                    </div>
-                </div>
-                <span class="help-block">Select the begin date of roll call.</span>
             </td>
         </tr>
     </table>
     <p>
         <input type="submit" value="Save" class="btn btn-primary" />
+        
     </p>
     
 }
@@ -82,34 +83,28 @@
 <script>
     $(document).ready(function () {
         $("#2").width(100);
-        //create datepicker
-        $("#begindate").datepicker();
-        $("#enddate").datepicker();
+
         //
-        //
-    });
+        var bgDate = '@ViewBag.BeginDate';
 
-    $('#MajorID').change(function () {
-        var majorID = $('#MajorID :selected').attr("value");
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
+        $.getJSON(semesterUrl, function (semester) {
+            //set select first sunday
+            var a = new Date(semester.begindate);
+            var b = new Date(semester.enddate);
+            var now = new Date();
+            var begindate = $("#begindate").datepicker
+            ({
+                onRender: function (date) {
 
-        var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
-        var classUrl = '@Url.Action("GetClasses")/' + majorID;
-
-        $.getJSON(subjectUrl, function (subjects) {
-            var html = "";
-            $.each(subjects, function (index, subject) {
-                html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
-            });
-            $("#SubjectID").html(html);
+                    return date.valueOf() < now.valueOf() ||
+                            date.valueOf() < a.valueOf() ||
+                            date.valueOf() > b.valueOf() ||
+                         date.getDay() != 1 ? 'disabled' : '';
+                }
+            }).data('datepicker');
+            begindate.setValue(bgDate);
         });
-
-        $.getJSON(classUrl, function (classes) {
-            var html = "";
-            $.each(classes, function (index, item_class) {
-                html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
-            });
-            $("#ClassID").html(html);
-        });
-        //
     });   
 </script>

@@ -1,0 +1,160 @@
+﻿@model RollSystemMobile.Models.ViewModels.RollCallDetailViewModel
+@{
+    ViewBag.Title = "Roll Call " + Model.RollCall.RollCallID;
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+@section ExtraHead
+{
+    <style>
+        form
+        {
+            margin: 0;
+        }
+        
+        .modal
+        {
+            width: 65%;
+            margin-left: -30%;
+        }
+        
+        dl.dl-horizontal
+        {
+            margin-top: -3px;
+        }
+        
+        fieldset dl.dl-horizontal
+        {
+            margin-top: 12px;
+        }
+        
+        .dl-horizontal dt
+        {
+            width: 120px;
+        }
+        
+        .dl-horizontal dd
+        {
+            margin-left: 140px;
+        }
+        
+        .input-prepend .add-on:first-child
+        {
+            border-radius: 0;
+        }
+    </style>
+    <link href="@Url.Content("~/Content/Plug-in/fancybox/jquery.fancybox.css")" rel="stylesheet"
+        type="text/css" />
+    <script src="@Url.Content("~/Content/Plug-in/fancybox/jquery.fancybox.js")" type="text/javascript"></script>
+}
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="row-fluid">
+        <div class="span5">
+            <div class="widget">
+                <div class="widget-head">
+                    <h3 class="heading glyphicons notes">
+                        <i></i>Roll Call Detail</h3>
+                </div>
+                <div class="widget-body">
+                    <dl class="dl-horizontal">
+                        <dt>Roll Call</dt>
+                        <dd>@Model.RollCall.RollCallID</dd>
+                        <dt>Subject</dt>
+                        <dd>@Model.RollCall.Subject.ShortName</dd>
+                        <dt>Instructor</dt>
+                        <dd>@Model.RollCall.Instructor.Fullname</dd>
+                        <dt>Class</dt>
+                        <dd>@Model.RollCall.Class.ClassName</dd>
+                        <dt>Date</dt>
+                        <dd>
+                            From @Html.FormatDate(@Model.RollCall.BeginDate) to @Html.FormatDate(@Model.RollCall.EndDate)</dd>
+                        <dt>Time</dt>
+                        <dd>@Html.FormatTime(@Model.RollCall.StartTime) - @Html.FormatTime(@Model.RollCall.EndTime)</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget">
+                <div class="widget-head">
+                    <h3 class="heading glyphicons notes_2">
+                        <i></i>Attendance Log</h3>
+                </div>
+                <div class="widget-body">
+                    <table class="table table-bordered table-condensed">
+                        <thead>
+                            <tr>
+                                <th class="text-right">
+                                    No
+                                </th>
+                                <th>
+                                    Date
+                                </th>
+                                <th>
+                                    Present Rate (Present / Total)
+                                </th>
+                                <th class="text-center">
+                                    Log Detail (<a title="View report as excel file" href="@Url.Action("RollCall", "Report", new { id = Model.RollCall.RollCallID })" >Report</a>)
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Khi tim log, dua ID vao, phai tim log cung ngay, cung mon, ca auto lan manual.
+                    Chi duoc sua log dang manual, hoac log 1 ngay truoc do.
+                    Khi chua co log manual, nho hien log auto
+                  -->
+                            @{int logIndex = 1;}
+                            @foreach (var AttendanceLog in Model.RollCallLogs)
+                            {
+                                <tr>
+                                    <td class="text-right">
+                                        @logIndex
+                                    </td>
+                                    <td>
+                                        @AttendanceLog.LogDate.ToString("dd-MM-yyyy")
+                                    </td>
+                                    <td>
+                                        @AttendanceLog.StudentAttendances.Count(attend => attend.IsPresent == true) /@Model.RollCall.Students.Count
+                                    </td>
+                                    <td class="text-center">
+                                        @using (Html.BeginForm("LogDetail", "RollCall", FormMethod.Get, new { @class = "AjaxForm" }))
+                                        {
+                                            <input type="hidden" name="RollCallID" value="@Model.RollCall.RollCallID" />
+                                            <input type="hidden" name="Date" value="@AttendanceLog.LogDate.Date" />
+                                            <input type="submit" class="btn btn-primary" value="Log Detail" />
+                                        }
+                                    </td>
+                                </tr>
+                                        { logIndex++; }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
+<script>
+    $('.AjaxForm').submit(function (e) {
+        e.preventDefault();
+        var formData = $(this).serialize();
+        var url = $(this).attr("action");
+
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: formData,
+            success: function (data) {
+                $('#myModal').html(data);
+                $('#myModal').modal('show');
+            }
+        });
+    });
+
+</script>
