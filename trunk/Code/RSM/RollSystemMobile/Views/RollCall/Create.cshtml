@@ -175,7 +175,6 @@
         // change instructor when select subject
     });
 
-
     $('#SemesterID').change(function () {
         document.getElementById("submit").className = "btn";
         document.getElementById("submit").disabled = true;
@@ -448,15 +447,18 @@
             $("#Other").hide();
         }
     };
+
+
+
     function test() {
         var semesterID = $('#SemesterID :selected').attr("value");
         var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
-        var now = new Date();
+        var now = new Date();        
 
         $.getJSON(semesterUrl, function (semester) {
             //set select first sunday
-            var a = new Date(semester.begindate);
-            var b = new Date(semester.enddate);
+            a = new Date(semester.begindate);
+            b = new Date(semester.enddate);
             var tmp;
             var Ndate;
             var NextDate;
@@ -484,21 +486,20 @@
             } else {
                 Ndate = date + "-" + month + "-" + year;
             }
-            
+
             var begindate = $("#begindate").datepicker
             ({
                 onRender: function (date) {
-                    
-                    return date.valueOf() < now.valueOf() ||
+                     return date.valueOf() < now.valueOf() ||
                             date.valueOf() < a.valueOf() ||
                             date.valueOf() > b.valueOf() ||
                          date.getDay() != 1 ? 'disabled' : '';
                 }
-            }).on('show', function (ev) {
-                $('#begindate').data({ date: Ndate });
-                $('#begindate').datepicker('update');
+            }).on('changeDate', function (ev) {
+                begindate.hide();
             }).data('datepicker');
-            document.getElementById("BeginDate").value = Ndate;
+
+            begindate.setValue(Ndate);
         });  
     };
 </script>
