@@ -155,6 +155,7 @@
     <Compile Include="Models\BusinessObject\AccountBusiness.cs" />
     <Compile Include="Models\BusinessObject\CalendarBusiness.cs" />
     <Compile Include="Models\BusinessObject\LogBusiness.cs" />
+    <Compile Include="Models\BusinessObject\SemesterBusiness.cs" />
     <Compile Include="Models\BusinessObject\StaffBusiness.cs" />
     <Compile Include="Models\BusinessObject\StudySessionBusiness.cs" />
     <Compile Include="Models\BusinessObject\SelectListFactory.cs" />
@@ -490,6 +491,7 @@
     <Content Include="Views\Staff\Import.cshtml" />
     <Content Include="Views\Admin\LogImages.cshtml" />
     <Content Include="Views\Admin\LogImagesResult.cshtml" />
+    <Content Include="Views\Class\StudentList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
