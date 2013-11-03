@@ -46,8 +46,8 @@ namespace FaceRecAutomationTesting
 
             //Set cac gia tri
             int TestRollCallID = 24;
-            int StudentPresent = 13;
-            String TestImageFolderPath = @"C:\Users\Hoang\Documents\Visual Studio 2010\Projects\RollSystemMobile\FaceRecAutomationTesting\More Test\13 Before";
+            int StudentPresent = 17;
+            String TestImageFolderPath = @"C:\Users\Hoang\Documents\Visual Studio 2010\Projects\RollSystemMobile\FaceRecAutomationTesting\More Test\Unknown";
 
             //Tao BO
             RollCall roll = new RollCallBusiness().GetRollCallByID(TestRollCallID);
