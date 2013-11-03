@@ -8,6 +8,9 @@ using System.Web.Mvc;
 using RollSystemMobile.Models;
 using System.Drawing;
 using RollSystemMobile.Models.BusinessObject;
+using RollSystemMobile.Models.ViewModels;
+using RollSystemMobile.Models.BindingModels;
+using RollSystemMobile.Models.GoogleApi;
 
 namespace RollSystemMobile.Controllers
 {
@@ -35,10 +38,18 @@ namespace RollSystemMobile.Controllers
 
         //
         // GET: /RollCall/
-        public ViewResult Index()
+        public ViewResult Index(int? status)
         {
-            var rollcalls = RollBO.GetList();
-            return View(rollcalls.OrderBy(i => i.BeginDate).ToList());
+            List<RollCall> rollcalls = null;
+            if (status == null)
+            {
+                 rollcalls = RollBO.GetList().Where(r => r.Status == 2).OrderBy(i => i.BeginDate).ToList();
+                
+            }
+            else {
+                 rollcalls = RollBO.GetList().Where(r => r.Status == status).OrderBy(i => i.BeginDate).ToList();
+            }
+            return View(rollcalls);
         }
 
         //student list cho trang create new rollcall
@@ -60,6 +71,55 @@ namespace RollSystemMobile.Controllers
             return View(Students);
         }
 
+
+        public ActionResult RollCallDetail(int id)
+        {
+            RollCall RollCall = RollBO.GetRollCallByID(id);
+
+            AttendanceBusiness AttendanceBO = new AttendanceBusiness();
+            //Lay danh sach nhung log cua roll call nay, tu luc bat dau
+            List<AttendanceLog> AttendanceLogs = AttendanceBO.GetRollCallAttendanceLog(id);
+
+
+            RollCallDetailViewModel Model = new RollCallDetailViewModel();
+            Model.RollCall = RollCall;
+            Model.RollCallLogs = AttendanceLogs;
+
+            return View(Model);
+        }
+        [HttpPost]
+        public ActionResult CheckAttendanceManual(CheckAttendanceManualBindModel Model)
+        {
+            AttendanceBusiness AttendanceBO = new AttendanceBusiness();
+            AttendanceBO.WriteAttendanceManualLog(Model.Username, Model.RollCallID, Model.Date, Model.AttendanceChecks);
+
+            String returnUrl = Model.ReturnUrl;
+
+            if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1
+                            && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//")
+                            && !returnUrl.StartsWith("/\\"))
+            {
+                return Redirect(Model.ReturnUrl);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult LogDetail(int RollCallID, DateTime Date)
+        {
+            AttendanceBusiness AttenBO = new AttendanceBusiness();
+
+            //1 ngay, 1 roll call co the co 2 loai log, log manual va auto, do do phai lay ca 2
+            AttendanceLog AutoLog = AttenBO.GetAttendanceLogAtDate(RollCallID, Date, 1);
+
+            AttendanceLog ManualLog = AttenBO.GetAttendanceLogAtDate(RollCallID, Date, 2);
+            RollCall RollCall = RollBO.GetRollCallByID(RollCallID);
+
+            LogDetailViewModel Model = new LogDetailViewModel();
+            Model.RollCall = RollCall;
+            Model.AutoLog = AutoLog;
+            Model.ManualLog = ManualLog;
+            return PartialView("_LogDetail", Model);
+        }
         //student list cho trang roll call list (co the xoa them)
         public ActionResult RollCallStudentList(int? RollCallID)
         {
@@ -173,7 +233,7 @@ namespace RollSystemMobile.Controllers
             //Mac dinh, lay semester moi nhat
             ViewBag.SemesterID = SlFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", rollcall.SemesterID);
             ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName", rollcall.SubjectID);
-
+            ViewBag.BeginDate = rollcall.BeginDate.ToString("dd-MM-yyyy") ;
             return View(rollcall);
         }
 
@@ -200,8 +260,8 @@ namespace RollSystemMobile.Controllers
                     }
                 }
             }
-
-            int MajorID = rollcall.Class.MajorID;
+            var rollCall = RollBO.GetRollCallByID(rollcall.RollCallID);
+            int MajorID = rollCall.Class.MajorID;
             ViewBag.InstructorID = SlFactory.MakeSelectList<Instructor>("InstructorID", "FullName", rollcall.InstructorID);
             ViewBag.MajorID = SlFactory.MakeSelectList<Major>("MajorID", "FullName", MajorID);
             ViewBag.ClassID = new SelectList(ClaBO.GetClassByMajor(MajorID),

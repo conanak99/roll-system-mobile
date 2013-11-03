@@ -7,6 +7,16 @@
     Roll Call List</h2>
 <p style="font-size: 20px;">
     @Html.ActionLink("Create New", "Create")
+    @using (@Html.BeginForm("Index", "RollCall", FormMethod.Get))
+    {
+        @Html.DropDownList("status", new List<SelectListItem>
+       {
+           new SelectListItem { Text = "Ongoing", Value = "2" ,Selected=true}, 
+           new SelectListItem { Text = "Upcoming", Value = "1" },
+           new SelectListItem { Text = "Ended", Value = "3" }, 
+       }, new { @id = "status", style = "width:150px;" })
+        <input type="submit" class="btn btn-primary btn-with-dropdown" value="Select" />
+    }
 </p>
 <table class="table table-bordered table-striped" id="example">
     <thead>
@@ -37,7 +47,39 @@
     <tbody>
         @{ int index = 1;}
         @foreach (var item in Model.OrderByDescending(r => r.RollCallID).OrderByDescending(r => r.BeginDate))
-        {   
+        {
+            if (item.Status == 1)
+            {
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject.ShortName)
+                </td>
+                <td>
+                    @item.Instructor.Fullname
+                </td>
+                <td>
+                    @item.BeginDate.ToString("dd-MM-yyyy") to @item.EndDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
+                </td>
+                <td>
+                </td>
+                <td>
+                    @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
+                    <br />
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID })
+                </td>
+            </tr>
+            }
+            else if (item.Status == 2)
+            {
             <tr>
                 <td style="text-align: right;">
                     @index
@@ -63,11 +105,39 @@
                 <td>
                     @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
                     <br />
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) |
-                    @Html.ActionLink("Detele", "Delete", new { id = item.RollCallID })
+                    @Html.ActionLink("Check Attendance", "RollCallDetail", new { id = item.RollCallID })
                 </td>
             </tr>
-               { index++; }
+            }
+            else if (item.Status == 3)
+            {
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject.ShortName)
+                </td>
+                <td>
+                    @item.Instructor.Fullname
+                </td>
+                <td>
+                    @item.BeginDate.ToString("dd-MM-yyyy") to @item.EndDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
+                </td>
+                <td>
+                </td>
+                <td>
+                    @Html.ActionLink("View Attendance", "RollCallStudentList", new { RollCallID = item.RollCallID })
+                </td>
+            </tr>
+            }
+            { index++; }
         }
     </tbody>
 </table>
@@ -82,5 +152,5 @@
             },
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [6, 7]}]
         });
-    });       
+    });
 </script>
