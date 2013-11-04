@@ -197,6 +197,9 @@ namespace RollSystemMobile.Models.BusinessObject
                 } while (SessionDate.DayOfWeek == DayOfWeek.Saturday || SessionDate.DayOfWeek == DayOfWeek.Sunday);
             }
 
+            //Set trang thai của roll call la incoming
+            rollcall.Status = 1;
+
             return base.Insert(rollcall);
         }
 
