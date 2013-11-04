@@ -492,6 +492,8 @@
     <Content Include="Views\Admin\LogImages.cshtml" />
     <Content Include="Views\Admin\LogImagesResult.cshtml" />
     <Content Include="Views\Class\StudentList.cshtml" />
+    <Content Include="Views\RollCall\_LogDetail.cshtml" />
+    <Content Include="Views\RollCall\RollCallDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

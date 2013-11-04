@@ -13,121 +13,8 @@
         CurrentAttendanceLog = Model.AutoLog;
     }
 }
-@if (CurrentAttendanceLog.LogDate < DateTime.Today.AddDays(-1))
+@using (Html.BeginForm("CheckAttendanceManual", "RollCall", FormMethod.Post))
 {
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            ×</button>
-        <h3 id="myModalLabel">
-            Roll Call at @Html.FormatDate(CurrentAttendanceLog.LogDate)</h3>
-    </div>
-    <div class="modal-body" id='modal-body'>
-        <legend>Roll Call Info</legend>
-        <fieldset style="margin: -20px 0 -20px -20px">
-            <dl class="dl-horizontal">
-                <dt>Roll Call</dt>
-                <dd>@Model.RollCall.RollCallID</dd>
-                <dt>Date</dt>
-                <dd>@Html.FormatDate(CurrentAttendanceLog.LogDate)</dd>
-                <dt>Subject</dt>
-                <dd>@Model.RollCall.Subject.ShortName</dd>
-                <dt>Class</dt>
-                <dd>@Model.RollCall.Class.ClassName</dd>
-            </dl>
-        </fieldset>
-        <legend>Log Image</legend>
-        <fieldset class="text-center" style="width: 80%; margin: 0 auto">
-            @foreach (var Image in Model.AutoLog.LogImages)
-            {
-                <a class="fancybox" href="@Url.LogImage(Image.ImageLink)" data-fancybox-group="gallery">
-                    <img src="@Url.LogImage(Image.ImageLink)" class="image-log"/></a> 
-            }
-        </fieldset>
-        <legend>Attendance</legend>
-        <fieldset>
-            <div class="text-center">
-                <!-- Tao form check attendace dua tren log hien tai -->
-                <table class="table table-striped table-condensed">
-                    <thead>
-                        <tr>
-                            <th class="text-right">
-                                No
-                            </th>
-                            <th>
-                                Student Name
-                            </th>
-                            <th>
-                                Present
-                            </th>
-                            <th class="text-center">
-                                Note
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @{int AttendIndex = 1; }
-                        @foreach (var Student in Model.RollCall.Students)
-                        {
-                            <tr>
-                                <td class="text-right">
-                                    @AttendIndex
-                                </td>
-                                <td>
-                                    @Student.FullName
-                                </td>
-                                @{  //Hien thi danh sach de danh lai attendance
-                            RollSystemMobile.Models.StudentAttendance Attendance = null;
-                            if (CurrentAttendanceLog != null)
-                            {
-                                Attendance = CurrentAttendanceLog.StudentAttendances.
-                                             FirstOrDefault(attend => attend.StudentID == Student.StudentID);
-                            }
-                                }
-                                @if (Attendance == null)
-                                {
-                                    <td>
-                                        <font color="red">Absent</font>
-                                    </td>
-                                    <td>
-                                    </td>
-                                }
-                                else
-                                {
-                                    if (Attendance.IsPresent)
-                                    {
-                                    <td>
-                                        Present
-                                    </td>
-                                    }
-                                    else
-                                    {
-                                    <td>
-                                        <font color="red">Absent</font>
-                                    </td>
-                                    }
-                                    <td>@Attendance.Note
-                                    </td>
-
-                                }
-                            </tr>
-                                { AttendIndex++; }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </fieldset>
-    </div>
-    <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">
-            Close</button>
-    </div>
-}
-else
-{
-
-    using (Html.BeginForm("CheckAttendanceManual", "RollCall", FormMethod.Post))
-    {
-
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
@@ -283,8 +170,6 @@ else
         <button class="btn" data-dismiss="modal" aria-hidden="true">
             Close</button>
     </div>
-
-    }
 }
 <script>
     $('#PresentRadio').change(function () {

@@ -74,4 +74,21 @@ namespace RollSystemMobile.Schedule
         }
     }
 
+    public class SyncCalendar : ITask
+    {
+        public void Execute()
+        {
+            InstructorBusiness InsBO = new InstructorBusiness();
+            CalendarBusiness CalenBO = new CalendarBusiness();
+            //Tim nhung instructor co API Token
+            List<Instructor> InstructorsWithAPI = InsBO.Find(ins => ins.ApiToken != null);
+
+            foreach (var Instructor in InstructorsWithAPI)
+            {
+                CalenBO.SyncInstructorCalendar(Instructor.InstructorID);
+            }
+
+            SimpleLog.Info("Calendar for " + InstructorsWithAPI.Count + " instructors synced.");
+        }
+    }
 }
