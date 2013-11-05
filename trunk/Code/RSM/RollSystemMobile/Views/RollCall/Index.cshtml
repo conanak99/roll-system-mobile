@@ -4,21 +4,23 @@
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
-    Roll Call List</h2>
-<p style="font-size: 20px;">
-    @Html.ActionLink("Create New", "Create")
-    @using (@Html.BeginForm("Index", "RollCall", FormMethod.Get))
-    {
-        @Html.DropDownList("status", new List<SelectListItem>
-       {
-           new SelectListItem { Text = "Ongoing", Value = "2" ,Selected=true}, 
-           new SelectListItem { Text = "Upcoming", Value = "1" },
-           new SelectListItem { Text = "Ended", Value = "3" }, 
-       }, new { @id = "status", style = "width:150px;" })
-        <input type="submit" class="btn btn-primary btn-with-dropdown" value="Select" />
-    }
-</p>
+    Roll Call List<span style="float:right; margin-right:20px;font-size:20px;">( @Html.ActionLink("Create new roll call", "Create") )</span></h2>
 <table class="table table-bordered table-striped" id="example">
+    
+    @Html.DropDownList("SemesterID", new SelectList(ViewBag.SemesterID, "SemesterID", "SemesterName"), new { style = "width:140px;" })
+    <text> From :</text>
+    <div class="input-append date" id="fromdate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
+        <input class="span2" name="BeginDate" id="FromDate" style="width: 100px; margin-left: 10px;"
+            size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
+                class="icon-th"></i></span>
+    </div>
+    <text> To :</text>
+    <div class="input-append date" id="todate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
+        <input class="span2" name="BeginDate" id="ToDate" style="width: 100px; margin-left: 10px;"
+            size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
+                class="icon-th"></i></span>
+    </div>
+    <input type="button" class="btn btn-primary btn-with-dropdown" value="Select" onclick="getRollcallList();" />
     <thead>
         <th style="width: 30px; background-color: #70ad47; color: #ffffff">
             No.
@@ -46,7 +48,7 @@
     </thead>
     <tbody>
         @{ int index = 1;}
-        @foreach (var item in Model.OrderByDescending(r => r.RollCallID).OrderByDescending(r => r.BeginDate))
+        @foreach (var item in Model.OrderByDescending(r => r.RollCallID).OrderByDescending(r => r.Class.ClassName))
         {
             if (item.Status == 1)
             {
@@ -70,6 +72,7 @@
                     @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
                 </td>
                 <td>
+                    @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
                 </td>
                 <td>
                     @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
@@ -144,6 +147,29 @@
 <script>
     /* Table initialisation */
     $(document).ready(function () {
+
+        var fromdate = $('#fromdate').datepicker().on('changeDate', function (ev) {
+            var month = ev.date.getMonth() + 1;
+            var ddate = ev.date.getDate() + "-" + month + "-" + ev.date.getFullYear();
+            document.getElementById('fromdate').setAttribute('data-date', ddate);
+
+        }).data('datepicker');
+        var todate = $('#todate').datepicker({
+            onRender: function (date) {
+                return date.valueOf() <= fromdate.date.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            var month = ev.date.getMonth() + 1;
+            var ddate = ev.date.getDate() + "-" + month + "-" + ev.date.getFullYear();
+            document.getElementById('todate').setAttribute('data-date', ddate);
+        }).data('datepicker');
+
+        fromdate.setValue('@ViewBag.Fromdate');
+        todate.setValue('@ViewBag.Todate');
+        $('#SemesterID').val('@ViewBag.DefaultSemester');
+        document.getElementById('fromdate').setAttribute('data-date', '@ViewBag.Fromdate');
+        document.getElementById('todate').setAttribute('data-date', '@ViewBag.Todate');
+
         $('#example').dataTable({
             "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
             "sPaginationType": "bootstrap",
@@ -153,4 +179,29 @@
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [6, 7]}]
         });
     });
+    $('#SemesterID').change(function () {
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
+        var fromdate = $('#fromdate').datepicker().data('datepicker');
+        var todate = $('#todate').datepicker().data('datepicker');
+        $.getJSON(semesterUrl, function (semester) {
+            fromdate.setValue(semester.bgdate);
+            todate.setValue(semester.eddate);
+            document.getElementById('fromdate').setAttribute('data-date', semester.bgdate);
+            document.getElementById('todate').setAttribute('data-date', semester.eddate);
+        });
+    });
+    function getRollcallList() {
+        var fdate = document.getElementById('fromdate').getAttribute('data-date');
+        var tdate = document.getElementById('todate').getAttribute('data-date');
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var link = '@Url.Action("Index", new { fromdate = "fdate", todate = "tdate", smtID = "semesterid" })';
+        link = link.replace("amp;", "");
+        link = link.replace("amp;", "");
+        link = link.replace("fdate", fdate);
+        link = link.replace("tdate", tdate);
+        link = link.replace("semesterid", semesterID);
+        window.location.href = link;
+    };
+    
 </script>

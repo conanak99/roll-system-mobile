@@ -38,17 +38,46 @@ namespace RollSystemMobile.Controllers
 
         //
         // GET: /RollCall/
-        public ViewResult Index(int? status)
+        public ViewResult Index(String fromdate, String todate,String smtID)
         {
-            List<RollCall> rollcalls = null;
-            if (status == null)
+            List<Semester> semester = SeBO.GetList();
+            ViewBag.SemesterID = semester;
+
+            //set current semester. with format dd-mm-yyyy
+            var now = new DateTime();
+            now = DateTime.Now;
+            var begindate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).BeginDate.ToString("dd-MM-yyyy");
+
+            var enddate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).EndDate.ToString("dd-MM-yyyy");
+            var id = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).SemesterID;
+            
+
+            //get date with format mm-dd-yyyy
+            var bgdate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).BeginDate.ToString("MM-dd-yyyy"); var endate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).EndDate.ToString("MM-dd-yyyy");
+            DateTime fdate;
+            DateTime tdate;
+            if (fromdate == null && todate == null)
             {
-                 rollcalls = RollBO.GetList().Where(r => r.Status == 2).OrderBy(i => i.BeginDate).ToList();
-                
+                ViewBag.DefaultSemester = id;
+                ViewBag.Todate = enddate;
+                ViewBag.Fromdate = begindate;
+                fdate = Convert.ToDateTime(bgdate);
+                tdate = Convert.ToDateTime(endate);
             }
-            else {
-                 rollcalls = RollBO.GetList().Where(r => r.Status == status).OrderBy(i => i.BeginDate).ToList();
+            else
+            {
+                ViewBag.DefaultSemester = smtID;
+                ViewBag.Todate = todate;
+                ViewBag.Fromdate = fromdate;
+                String[] tmp = fromdate.Split('-');
+                String fd = tmp[1] + "-" + tmp[0] + "-" + tmp[2];
+                String[] tmp1 = todate.Split('-');
+                String td = tmp1[1] + "-" + tmp1[0] + "-" + tmp1[2];
+                fdate = Convert.ToDateTime(fd);
+                tdate = Convert.ToDateTime(td);
             }
+
+            var rollcalls = RollBO.GetList().Where(r => r.BeginDate.CompareTo(fdate) >= 0 && r.EndDate.CompareTo(tdate) <= 0).OrderBy(i => i.BeginDate).ToList();
             return View(rollcalls);
         }
 
@@ -232,8 +261,9 @@ namespace RollSystemMobile.Controllers
                 "ClassID", "ClassName", rollcall.ClassID);
             //Mac dinh, lay semester moi nhat
             ViewBag.SemesterID = SlFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", rollcall.SemesterID);
-            ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName", rollcall.SubjectID);
-            ViewBag.BeginDate = rollcall.BeginDate.ToString("dd-MM-yyyy") ;
+            ViewBag.BeginDate = rollcall.BeginDate.ToString("dd-MM-yyyy");
+            ViewBag.StartTime = rollcall.StartTime.ToString(@"hh\:mm");
+            ViewBag.SubjectID = rollcall.SubjectID.ToString();
             return View(rollcall);
         }
 
@@ -340,7 +370,9 @@ namespace RollSystemMobile.Controllers
         {
             var begindate = SeBO.GetSemesterByID(id).BeginDate.ToString("yyyy-MM-dd");
             var enddate = SeBO.GetSemesterByID(id).EndDate.ToString("yyyy-MM-dd");
-            var semester = new { begindate, enddate };
+            var bgdate = SeBO.GetSemesterByID(id).BeginDate.ToString("dd-MM-yyyy");
+            var eddate = SeBO.GetSemesterByID(id).EndDate.ToString("dd-MM-yyyy");
+            var semester = new { begindate, enddate, bgdate, eddate };
             return Json(semester, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetStatusRollCall(int id)

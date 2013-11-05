@@ -4,7 +4,13 @@
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
-    Edit</h2>
+    Edit Roll Call</h2>
+<div style="margin-left:10px;margin-bottom:10px;">
+    <b>Semester : </b>@Model.Semester.SemesterName<br />
+    <b>Major : </b>@Model.Class.Major.FullName<br />
+    <b>Class : </b>@Model.Class.ClassName<br />
+    <b>Subject : </b>@Model.Subject.FullName
+</div>
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.RollCallID)
@@ -13,38 +19,7 @@
         <tr>
             <td style="width: 350px;">
                 <div class="editor-label">
-                    <b>1. Semester</b>
-                </div>
-                <div class="editor-field" style="margin-left: 10px">
-                    @Html.DropDownList("SemesterID")
-                    @Html.ValidationMessageFor(model => model.SemesterID)
-                </div>
-                <span class="help-block">Select the semester of roll call.</span>
-                <div class="editor-label">
-                    <b>3. Major :</b>
-                </div>
-                <div class="editor-field " style="margin-left: 10px">
-                    @Html.DropDownList("MajorID")
-                </div>
-                <span class="help-block">Select the major of roll call.</span>
-                <div class="editor-label">
-                    <b>5. Subject</b>
-                </div>
-                <div class="editor-field" style="margin-left: 10px;">
-                      @Html.DropDownList("SubjectID")
-                </div>
-                <span class="help-block">Select the subject of roll call.</span>
-                <div class="editor-label">
-                    <b>7. Instructor</b>
-                </div>
-                <div class="editor-field" style="margin-left: 10px">
-                      @Html.DropDownList("InstructorID")
-                </div>
-                <span class="help-block">Select the instructor of roll call.</span>
-            </td>
-            <td>
-                <div class="editor-label">
-                    <b>2. Begin Date</b>
+                    <b>1. Begin Date</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                     <div class="input-append date" id="begindate" data-date-format="dd-mm-yyyy">
@@ -54,18 +29,30 @@
                 </div>
                 <span class="help-block">Select the begin date of roll call.</span>
                 <div class="editor-label">
-                    <b>4. Class</b>
+                    <b>2. Instructor</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
-                      @Html.DropDownList("ClassID")
+                    @Html.DropDownList("InstructorID")
                 </div>
-                <span class="help-block">Select the class of roll call.</span>
+                <span class="help-block">Select the instructor of roll call.</span>
+            </td>
+            <td>
                 <div class="editor-label">
-                    <b>6. Start time</b>
+                    <b>3. Start time</b>
                 </div>
-                <div class="editor-field" id="a" style="margin-left: 10px">
-                    <div id="1">@Html.TextBoxFor(model => model.StartTime, new { style = "width:80px;" })</div>
-                    @Html.ValidationMessageFor(model => model.StartTime)
+                <div class="editor-field" id="a" style="margin-left: 10px;">
+                    @Html.DropDownList("StartTime", new List<SelectListItem>
+       {
+           new SelectListItem { Text = "07:00", Value = "07:00" }, 
+           new SelectListItem { Text = "08:45", Value = "08:45" },
+           new SelectListItem { Text = "10:30", Value = "10:30" }, 
+           new SelectListItem { Text = "12:30", Value = "12:30" }, 
+           new SelectListItem { Text = "14:15", Value = "14:15" }, 
+           new SelectListItem { Text = "16:00", Value = "16:00" },
+           new SelectListItem { Text = "18:45", Value = "18:45" }, 
+           new SelectListItem { Text = "Other", Value = "Other" } 
+       }, "", new { @id = "startTime", style = "width:90px;" }) -
+                    <input style="margin-bottom: 10px; width: 80px;" type="text" name="otherTime" id="Other" />
                 </div>
                 <span class="help-block">Select the start time of roll call.</span>
             </td>
@@ -73,12 +60,11 @@
     </table>
     <p>
         <input type="submit" value="Save" class="btn btn-primary" />
-        
     </p>
     
 }
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { status = @Model.Status })
 </div>
 <script>
     $(document).ready(function () {
@@ -86,7 +72,6 @@
 
         //
         var bgDate = '@ViewBag.BeginDate';
-
         var semesterID = $('#SemesterID :selected').attr("value");
         var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
         $.getJSON(semesterUrl, function (semester) {
@@ -106,5 +91,28 @@
             }).data('datepicker');
             begindate.setValue(bgDate);
         });
-    });   
+
+        var stTime = '@ViewBag.StartTime';
+        if (stTime != "07:00" || stTime != "08:45" || stTime != "10:30" || stTime != "12:30" || stTime != "14:15" || stTime != "16:00" || stTime != "18:45") {
+            $('#Other').show();
+            $('#startTime').val('Other');
+            document.getElementById('Other').value = stTime;
+        } else {
+            $('#Other').hide();
+        };
+        checkInstructorFree();
+    });
+    function checkInstructorFree() {
+        var sbID = '@ViewBag.SubjectID';
+        var instructorUrl = '@Url.Action("GetInstructors")/' + sbID;
+
+        $.getJSON(instructorUrl, function (instructors) {
+            var html = "";
+            html += ('<option id="select" value="" ></option>');
+            $.each(instructors, function (index, instructor) {
+                html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
+            });
+            $("#InstructorID").html(html);
+        });
+    };
 </script>
