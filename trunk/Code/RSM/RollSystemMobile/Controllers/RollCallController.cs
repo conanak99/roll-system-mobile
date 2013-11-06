@@ -38,7 +38,7 @@ namespace RollSystemMobile.Controllers
 
         //
         // GET: /RollCall/
-        public ViewResult Index(String fromdate, String todate,String smtID)
+        public ViewResult Index(String fromdate, String todate, String smtID)
         {
             List<Semester> semester = SeBO.GetList();
             ViewBag.SemesterID = semester;
@@ -50,7 +50,7 @@ namespace RollSystemMobile.Controllers
 
             var enddate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).EndDate.ToString("dd-MM-yyyy");
             var id = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).SemesterID;
-            
+
 
             //get date with format mm-dd-yyyy
             var bgdate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).BeginDate.ToString("MM-dd-yyyy"); var endate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).EndDate.ToString("MM-dd-yyyy");
@@ -77,7 +77,7 @@ namespace RollSystemMobile.Controllers
                 tdate = Convert.ToDateTime(td);
             }
 
-            var rollcalls = RollBO.GetList().Where(r => r.BeginDate.CompareTo(fdate) >= 0 && r.EndDate.CompareTo(tdate) <= 0).OrderBy(i => i.BeginDate).ToList();
+            var rollcalls = RollBO.GetList().Where(r => r.BeginDate.CompareTo(fdate) >= 0 && r.EndDate.CompareTo(tdate) <= 0).OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate).ToList();
             return View(rollcalls);
         }
 
@@ -214,7 +214,7 @@ namespace RollSystemMobile.Controllers
         // POST: /RollCall/Create
 
         [HttpPost]
-        public ActionResult Create(RollCall rollcall, int MajorID, int ClassID, TimeSpan? otherTime)
+        public ActionResult Create(RollCall rollcall, int MajorID, int ClassID, TimeSpan? otherTime,String begindate)
         {
 
             List<string> ErrorList = RollBO.ValidRollCall(rollcall, otherTime);
@@ -224,6 +224,9 @@ namespace RollSystemMobile.Controllers
                 {
                     rollcall.StartTime = TimeSpan.Parse(otherTime.ToString());
                 }
+                String[] tmp = begindate.Split('-');
+                String bgd = tmp[1] + "-" + tmp[0] + "-" + tmp[2];
+                rollcall.BeginDate = Convert.ToDateTime(bgd);
                 RollBO.Insert(rollcall);
                 return RedirectToAction("Index");
             }
@@ -341,6 +344,7 @@ namespace RollSystemMobile.Controllers
             var rc = RollBO.GetList().Where(a => a.ClassID == id)
              .Select(c => new
              {
+                 startdate = c.BeginDate.ToString("yyyy-MM-dd"),
                  enddate = c.EndDate.ToString("yyyy-MM-dd"),
                  starttime = c.StartTime.ToString(@"hh\:mm"),
                  endtime = c.EndTime.ToString(@"hh\:mm")
@@ -351,7 +355,9 @@ namespace RollSystemMobile.Controllers
         public JsonResult GetNumberOfSlot(int id)
         {
             var slot = SubBO.GetSubjectByID(id).NumberOfSlot;
-            return Json(slot, JsonRequestBehavior.AllowGet);
+            var session = SubBO.GetSubjectByID(id).NumberOfSession;
+            var sub = new { slot, session };
+            return Json(sub, JsonRequestBehavior.AllowGet);
         }
         //Lay danh sach mon hoc cua 1 major, de dua vao dropbox
         public JsonResult GetSubjects(int id)
@@ -398,9 +404,7 @@ namespace RollSystemMobile.Controllers
                 Select(a => new
                 {
                     id = a.SubjectID,
-                    subjectname = a.Subject.FullName,
-                    enddate = a.EndDate.ToString("yyyy-MM-dd"),
-                    begindate = a.BeginDate.ToString("yyyy-MM-dd")
+                    subjectname = a.Subject.FullName
                 });
             return Json(sub, JsonRequestBehavior.AllowGet);
         }
@@ -414,9 +418,11 @@ namespace RollSystemMobile.Controllers
         //get time instructor day trong ngay
         public JsonResult GetInstructorFree(int id)
         {
-            var instructor = RollBO.GetList().Where(r => r.InstructorID == id)
+            var typeID = SubBO.GetSubjectByID(id).TypeID;
+            var instructor = RollBO.GetList().Where(r => r.Instructor.SubjectType.TypeID == typeID)
                 .Select(i => new
                 {
+                    instructorid = i.InstructorID,
                     starttime = i.StartTime.ToString(@"hh\:mm"),
                     endtime = i.EndTime.ToString(@"hh\:mm"),
                     enddate = i.EndDate.ToString("yyyy-MM-dd"),

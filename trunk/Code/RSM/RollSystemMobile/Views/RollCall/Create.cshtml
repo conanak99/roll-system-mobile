@@ -8,56 +8,57 @@
 @using (Html.BeginForm("Create", "RollCall", FormMethod.Post))
 {
     @Html.ValidationSummary(true)
-    <table class="table">
+    <table class="table" >
         <tr>
-            <td style="width: 350px;">
+            <td style="width: 350px; padding-left:25px;">
                 <div class="editor-label">
                     <b>1. Semester</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                     @Html.DropDownList("SemesterID", new SelectList(ViewBag.SemesterID, "SemesterID", "SemesterName"), "- Select the semester -", new { style = "width: 200px;" })
                 </div>
+                <span style="height:10px;"id="se" class="help-block"></span>
                 <div class="editor-label">
                     <b>3. Major :</b>
                 </div>
                 <div class="editor-field " style="margin-left: 10px">
                     @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, "", new { style = "width: 200px;" })
                 </div>
-                <span class="help-block">Select the major of roll call.</span>
+                <span style="height:10px;" id="ma" class="help-block"></span>
                 <div class="editor-label">
                     <b>5. Subject</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px;">
                     @Html.DropDownList("SubjectID", (SelectList)ViewBag.SubjectID, "", new { style = "width: 250px;" })
                 </div>
-                <span class="help-block">Select the subject of roll call.</span>
+                <span style="height:10px;" id="su" class="help-block"></span>
                 <div class="editor-label">
                     <b>7. Instructor</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                     @Html.DropDownList("InstructorID", (SelectList)ViewBag.MajoInstructorrID, "", new { style = "width: 230px;" })
                 </div>
-                <span class="help-block">Select the instructor of roll call.</span>
+                <span style="height:10px;" id="in" class="help-block"></span>
             </td>
             <td>
                 <div class="editor-label">
                     <b>2. Begin Date</b>
                 </div>
-                <div class="editor-field" style="margin-left: 10px">
-                    <div class="input-append date" id="begindate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
+                <div class="editor-field">
+                    <div class="input-append date" id="begindate" name="begindate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
                         <input class="span2" name="BeginDate" id="BeginDate" style="width: 100px; margin-left: 10px;"
                             size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
                                 class="icon-th"></i></span>
                     </div>
                 </div>
-                <span class="help-block">Select the begin date of roll call.</span>
+                <span style="height:10px;" id="be" class="help-block"></span>
                 <div class="editor-label">
                     <b>4. Class</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                     @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, "", new { style = "width: 130px;" })<br />
                 </div>
-                <span class="help-block">Select the class of roll call.</span>
+                <span style="height:10px;" id="cl" class="help-block"></span>
                 <div class="editor-label">
                     <b>6. Start time</b>
                 </div>
@@ -72,10 +73,10 @@
            new SelectListItem { Text = "16:00", Value = "16:00" },
            new SelectListItem { Text = "18:45", Value = "18:45" }, 
            new SelectListItem { Text = "Other", Value = "Other" } 
-       }, "", new { @id = "startTime", style = "width:90px;" }) -
+       }, "", new { @id = "startTime", style = "width:90px;" }) 
                     <input style="margin-bottom: 10px; width: 80px;" type="text" name="otherTime" id="Other" />
                 </div>
-                <span class="help-block">Select the start time of roll call.</span>
+                <span style="height:10px;" id="st" class="help-block"></span>
             </td>
         </tr>
     </table>
@@ -97,82 +98,7 @@
         document.getElementById("submit").className = "btn";
         document.getElementById("submit").disabled = true;
         $("#Other").hide();
-        //        var subjectID = $('#SubjectID :selected').attr("value");
-        //        var today = new Date();
-        //        var month = today.getMonth() + 1;
-        //        var date = today.getDate();
-        //        var year = today.getFullYear();
-        //        var day = today.getDay();
-        //        var currentdate = year + "-" + month + "-" + date;
-        //        var NextDate;
-        //        var Ndate;
-        //        //set default day is monday
-        //        if (day > 1) {
-        //            var i = 8 - day;
-        //            NextDate = new Date(year, month, date + i);
-        //            if (NextDate.getMonth() == month) {
-        //                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-        //            } else {
-        //                NextDate = new Date(year, month, date + i - 1);
-        //                Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-        //            }
-        //        } else if (day == 0) {
-        //            NextDate = new Date(year, month, date + 1);
-        //            Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
-        //        } else {
-        //            Ndate = date + "-" + month + "-" + year;
-        //        }
-
-        //        //show textbox when choose starttime is other.
-
-        //        $("#Other").hide();
-        //        $("#startTime").change(function () {
-        //            var timeValue = $('#startTime :selected').text();
-        //            if (timeValue == "Other") {
-        //                $("#Other").show();
-        //            } else {
-        //                $("#Other").hide();
-        //            }
-        //        });
-
-        //        $("#2").width(100);
-        //        //create datepicker
-        //        var now = new Date();
-
-        //        var begindate = $("#begindate").datepicker({
-        //            onRender: function (date) {
-        //                return date.valueOf() < now.valueOf() ||
-        //                         date.getDay() != 1 ? 'disabled' : '';
-        //            }
-        //        }).on('show', function (ev) {
-        //            $('#begindate').data({ date: Ndate });
-        //            $('#begindate').datepicker('update');
-        //        });
-        //        document.getElementById("BeginDate").value = Ndate;
-        //        //set default semester
-
-        //        if (month >= 1 && month < 5) {
-        //            semester = "Spring " + year;
-        //            document.getElementById("semester").innerHTML = semester;
-        //        } else if (month < 9) {
-        //            semester = "Summer " + year;
-        //            document.getElementById("semester").innerHTML = semester;
-        //        } else {
-        //            semester = "Fall " + year;
-        //            document.getElementById("semester").innerHTML = semester;
-        //        }
-
-        //        //check the number of slot of subject, set start time option
-        //        CheckNumberOfSlot();
-        //        //remove start time option had exist
-        //        CheckStartTime();
-        //        // remove instructor is teaching at time
-        //        CheckInstructorFree();
-        //        //show student list
-        //        var classID = $('#ClassID :selected').attr("value");
-        //        $('#classList').attr('href', "Studentlist?ClassID=" + classID);
-
-        // change instructor when select subject
+        document.getElementById('se').innerHTML = "* Select the semester for roll call !";
     });
 
     $('#SemesterID').change(function () {
@@ -196,17 +122,22 @@
         sortOption("startTime");
         addOption("", "", "InstructorID");
         sortOption("InstructorID");
-        test();
+        setDatepicker();
         $("#Other").hide();
         $("#MajorID option[value='']").attr('selected', true);
         $("#ClassID option[value='']").attr('selected', true);
         $("#SubjectID option[value='']").attr('selected', true);
         $("#startTime option[value='']").attr('selected', true);
         $("#InstructorID option[value='']").attr('selected', true);
-
         $("#SemesterID option[value='']").remove();
-
         document.getElementById("MajorID").disabled = false;
+        //
+        document.getElementById('ma').innerHTML = "* Select the major for roll call !";
+        document.getElementById('be').innerHTML = "* Select the begin date for roll call !";
+        document.getElementById('se').innerHTML = " ";
+        document.getElementById('su').innerHTML = "";
+        document.getElementById('cl').innerHTML = "";
+        document.getElementById('st').innerHTML = "";
     });
     //start time change value
     $('#startTime').change(function () {
@@ -215,6 +146,8 @@
         document.getElementById("submit").disabled = true;
         document.getElementById("InstructorID").disabled = false;
         checkInstructorFree();
+        document.getElementById('st').innerHTML = " ";
+        document.getElementById('in').innerHTML = "* Select the instructor for roll call !";
     });
     //change startime to text if subject is capnstone
     $('#SubjectID').change(function () {
@@ -231,6 +164,9 @@
         setDefaultTime();
         checkNumberOfSlot();
         checkStartTime();
+        document.getElementById('st').innerHTML = "* Select the start time for roll call !";
+        document.getElementById('in').innerHTML = "";
+        document.getElementById('su').innerHTML = "";
     });
 
 
@@ -245,13 +181,17 @@
 
         addOption("", "", "InstructorID");
         sortOption("InstructorID");
+        addOption("", "", "startTime");
+        sortOption("startTime");
+
         $("#InstructorID option[value='']").attr('selected', true);
+        $("#startTime option[value='']").attr('selected', true);
 
         checkSubjectFree();
-
-        setDefaultTime();
-        checkNumberOfSlot();
-        checkStartTime();
+        document.getElementById('cl').innerHTML = "";
+        document.getElementById('st').innerHTML = "";
+        document.getElementById('in').innerHTML = "";
+        document.getElementById('su').innerHTML = "* Select the subject for roll call !";
     });
 
     //major change
@@ -275,11 +215,19 @@
         $("#SubjectID option[value='']").attr('selected', true);
 
         checkClassByMajor();
+        document.getElementById('cl').style.color = "black";
+        document.getElementById('ma').innerHTML = "";
+        document.getElementById('su').innerHTML = "";
+        document.getElementById('st').innerHTML = "";
+        document.getElementById('in').innerHTML = "";
+        document.getElementById('cl').innerHTML = "* Select the class for roll call !";
     });
     $('#InstructorID').change(function () {
         $("#InstructorID option[value='']").remove();
         document.getElementById("submit").className = "btn btn-primary";
         document.getElementById("submit").disabled = false;
+        document.getElementById('in').innerHTML = "";
+      
     });
 
     function checkClassByMajor() {
@@ -293,13 +241,13 @@
             });
             $("#ClassID").html(html);
         });
-
+        document.getElementById('in').innerHTML = "";
     };
     function checkNumberOfSlot() {
         var subjectID = $('#SubjectID :selected').attr("value");
         var slotUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
-        $.getJSON(slotUrl, function (slot) {
-            if (slot != 1) {
+        $.getJSON(slotUrl, function (sub) {
+            if (sub.slot != 1) {
                 $("#startTime option[value='10:30']").remove();
                 $("#startTime option[value='16:00']").remove();
             }
@@ -350,10 +298,21 @@
             var classID = $('#ClassID :selected').attr("value");
             var semesterID = $('#SemesterID :selected').attr("value");
             var classUrl = '@Url.Action("GetSubjectFree")?id=' + classID + '&semesterid=' + semesterID;
-            $.getJSON(classUrl, function (subjects) {
-                $.each(subjects, function (index, sub) {
-                    $("#SubjectID option[value='" + sub.id + "']").remove();
+            $.getJSON(classUrl, function (subs) {
+                $.each(subs, function (index, sa) {
+                    $("#SubjectID option[value='" + sa.id + "']").remove();
                 });
+                var checkNumberOption = document.getElementById('SubjectID').length;
+                if (checkNumberOption == 1) {
+                    document.getElementById('cl').innerHTML = "* This class is study all subjects in this semester !";
+                    document.getElementById('su').innerHTML = "";
+                    document.getElementById('cl').style.color = "red";
+                    document.getElementById("SubjectID").disabled = true;
+                }
+                else {
+                    document.getElementById('cl').style.color = "black";
+                    document.getElementById("SubjectID").disabled = false;
+                }
             });
         });
     };
@@ -361,20 +320,41 @@
         var classID = $('#ClassID :selected').attr("value");
         var starttimeUrl = '@Url.Action("GetStartTime")/' + classID;
 
-        $.getJSON(starttimeUrl, function (starttime) {
-            $.each(starttime, function (index, time) {
-                if (time.enddate > currentdate) {
-                    $("#startTime option[value='" + time.starttime + "']").remove();
-                    if (time.endtime == "10:15") {
-                        $("#startTime option[value='08:45']").remove();
-                    } else if (time.endtime == "12:00") {
-                        $("#startTime option[value='10:30']").remove();
-                    } else if (time.endtime == "15:45") {
-                        $("#startTime option[value='14:15']").remove();
-                    } else if (time.endtime == "17:30") {
-                        $("#startTime option[value='16:00']").remove();
+        var subjectID = $('#SubjectID :selected').attr("value");
+        var sessionUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
+
+        var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
+        var endDateSelect;
+        $.getJSON(sessionUrl, function (sub) {
+            var i = sub.session / sub.slot - (sub.session % sub.slot) / sub.slot + 2;
+            var tmp = beginDateSelect.split('-');
+            var year = tmp[2];
+            var month = tmp[1];
+            var date = tmp[0];
+            beginDateSelect = year + "-" + month + "-" + date;
+            var tmp1 = new Date(year, month, date - (-i));
+            var mth = tmp1.getMonth();
+            if (mth == 0) {
+                mth = 12;
+            }
+            endDateSelect = tmp1.getFullYear() + "-" + mth + "-" + tmp1.getDate();
+            $.getJSON(starttimeUrl, function (starttime) {
+                $.each(starttime, function (index, time) {
+                    if (time.startdate < endDateSelect && endDateSelect < time.enddate ||
+                        time.startdate < beginDateSelect && beginDateSelect < time.enddate ||
+                        time.startdate > endDateSelect && time.enddate < beginDateSelect) {
+                        $("#startTime option[value='" + time.starttime + "']").remove();
+                        if (time.endtime == "10:15") {
+                            $("#startTime option[value='08:45']").remove();
+                        } else if (time.endtime == "12:00") {
+                            $("#startTime option[value='10:30']").remove();
+                        } else if (time.endtime == "15:45") {
+                            $("#startTime option[value='14:15']").remove();
+                        } else if (time.endtime == "17:30") {
+                            $("#startTime option[value='16:00']").remove();
+                        }
                     }
-                }
+                });
             });
         });
     };
@@ -388,19 +368,67 @@
             html += ('<option id="select" value="" ></option>');
             $.each(instructors, function (index, instructor) {
                 html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
-                var insUrl = '@Url.Action("GetInstructorFree")/' + instructor.id;
-                $.getJSON(insUrl, function (inss) {
-                    $.each(inss, function (index, ins) {
-                        if (currentdate < ins.enddate) {
-                            var starttime = $('#startTime :selected').attr("value");
-                            if (ins.starttime == starttime) {
-                                $("#InstructorID option[value=" + instructor.id + "]").remove();
-                            }
-                        }
-                    });
-                });
             });
             $("#InstructorID").html(html);
+        });
+
+
+        var sessionUrl = '@Url.Action("GetNumberOfSlot")/' + subjectID;
+
+        var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
+        var endDateSelect;
+        $.getJSON(sessionUrl, function (sub) {
+            var i = sub.session / sub.slot - (sub.session % sub.slot) / sub.slot + 2;
+            var tmp = beginDateSelect.split('-');
+            var year = tmp[2];
+            var month = tmp[1];
+            var date = tmp[0];
+            beginDateSelect = year + "-" + month + "-" + date;
+            var tmp1 = new Date(year, month, date - (-i));
+            var mth = tmp1.getMonth();
+            if (mth == 0) {
+                mth = 12;
+            }
+            endDateSelect = tmp1.getFullYear() + "-" + mth + "-" + tmp1.getDate();
+
+            var insUrl = '@Url.Action("GetInstructorFree")/' + subjectID;
+            var starttime = $('#startTime :selected').attr("value");
+
+            var test = starttime.split(':');
+            var hour;
+            var minutes;
+            var endtime;
+
+            if (sub.slot == 1) {
+                hour = parseInt(test[0]) + 1;
+                minutes = parseInt(test[1]) + 30;
+                if (minutes >= 60) {
+                    hour = hour + minutes / 60 - minutes % 60 / 60;
+                    minutes = minutes % 60;
+                }
+                endtime = hour + ":" + minutes;
+            } else if (sub.slot == 2) {
+                hour = parseInt(test[0]) + 3;
+                minutes = parseInt(test[1]) + 15;
+                if (minutes >= 60) {
+                    hour = hour + minutes / 60 - minutes % 60 / 60;
+                    minutes = minutes % 60;
+                }
+                endtime = hour + ":" + minutes;
+            }
+            $.getJSON(insUrl, function (inss) {
+                $.each(inss, function (index, ins) {
+                    if (ins.begindate < beginDateSelect && beginDateSelect < ins.enddate ||
+                        ins.begindate < endDateSelect && endDateSelect < ins.enddate ||
+                        beginDateSelect < ins.begindate && ins.enddate < endDateSelect) {
+                        if (ins.starttime < starttime && starttime < ins.endtime ||
+                           ins.starttime < endtime && endtime < ins.endtime ||
+                           ins.starttime >= starttime && ins.endtime <= endtime) {
+                            $("#InstructorID option[value='" + ins.instructorid + "']").remove();
+                        }
+                    }
+                });
+            });
         });
     };
     function setDefaultTime() {
@@ -450,10 +478,10 @@
 
 
 
-    function test() {
+    function setDatepicker() {
         var semesterID = $('#SemesterID :selected').attr("value");
         var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
-        var now = new Date();        
+        var now = new Date();
 
         $.getJSON(semesterUrl, function (semester) {
             //set select first sunday
@@ -490,16 +518,20 @@
             var begindate = $("#begindate").datepicker
             ({
                 onRender: function (date) {
-                     return date.valueOf() < now.valueOf() ||
+                    return date.valueOf() < now.valueOf() ||
                             date.valueOf() < a.valueOf() ||
                             date.valueOf() > b.valueOf() ||
                          date.getDay() != 1 ? 'disabled' : '';
                 }
             }).on('changeDate', function (ev) {
+                var mont = ev.date.getMonth() + 1;
+                var evdate = ev.date.getDate() + "-" + mont + "-" + ev.date.getFullYear();
+                document.getElementById('begindate').setAttribute('data-date', evdate);
+                document.getElementById('be').innerHTML = "";
                 begindate.hide();
             }).data('datepicker');
-
             begindate.setValue(Ndate);
-        });  
+            document.getElementById('begindate').setAttribute('data-date', Ndate);
+        });
     };
 </script>
