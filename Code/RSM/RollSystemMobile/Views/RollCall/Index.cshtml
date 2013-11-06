@@ -48,7 +48,7 @@
     </thead>
     <tbody>
         @{ int index = 1;}
-        @foreach (var item in Model.OrderByDescending(r => r.RollCallID).OrderByDescending(r => r.Class.ClassName))
+        @foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r=>r.BeginDate))
         {
             if (item.Status == 1)
             {
@@ -152,7 +152,7 @@
             var month = ev.date.getMonth() + 1;
             var ddate = ev.date.getDate() + "-" + month + "-" + ev.date.getFullYear();
             document.getElementById('fromdate').setAttribute('data-date', ddate);
-
+            fromdate.hide();
         }).data('datepicker');
         var todate = $('#todate').datepicker({
             onRender: function (date) {
@@ -162,6 +162,7 @@
             var month = ev.date.getMonth() + 1;
             var ddate = ev.date.getDate() + "-" + month + "-" + ev.date.getFullYear();
             document.getElementById('todate').setAttribute('data-date', ddate);
+            todate.hide();
         }).data('datepicker');
 
         fromdate.setValue('@ViewBag.Fromdate');
