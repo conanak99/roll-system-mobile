@@ -280,5 +280,22 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.GetList().SingleOrDefault(log => log.LogID == LogID);
         }
 
+        public double GetStudentAbsentRate(int StudentID, int RollCallID)
+        {
+            RollCallBusiness RollBO = new RollCallBusiness(RollSystemDB);
+            StudentBusiness StuBO = new StudentBusiness(RollSystemDB);
+
+            var AttendanceLogs = GetRollCallAttendanceLog(RollCallID);
+            var Student = StuBO.GetStudentByID(StudentID);
+            var RollCall = RollBO.GetRollCallByID(RollCallID);
+
+            int NumberOfSlot = RollCall.StudySessions.Count;
+            double AbsentSession = Student.StudentAttendances.Count(sa => AttendanceLogs.Select(rc => rc.LogID)
+                        .Contains(sa.AttendanceLog.LogID) && !sa.IsPresent);
+            double AbsentRate = AbsentSession / NumberOfSlot * 100;
+
+            return AbsentRate;
+        }
+
     }
 }
