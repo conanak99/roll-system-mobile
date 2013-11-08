@@ -9,7 +9,8 @@
     <b>Semester : </b>@Model.Semester.SemesterName<br />
     <b>Major : </b>@Model.Class.Major.FullName<br />
     <b>Class : </b>@Model.Class.ClassName<br />
-    <b>Subject : </b>@Model.Subject.FullName
+    <b>Subject : </b>@Model.Subject.FullName<br />
+    <b>From : </b> @Model.BeginDate.ToString("dd-MM-yyyy") - <b>To : </b>@Model.EndDate.ToString("dd-MM-yyyy")
 </div>
 @using (Html.BeginForm())
 {
@@ -51,7 +52,7 @@
            new SelectListItem { Text = "16:00", Value = "16:00" },
            new SelectListItem { Text = "18:45", Value = "18:45" }, 
            new SelectListItem { Text = "Other", Value = "Other" } 
-       }, "", new { @id = "startTime", style = "width:90px;" }) -
+       }, "", new { @id = "startTime", style = "width:90px;" }) 
                     <input style="margin-bottom: 10px; width: 80px;" type="text" name="otherTime" id="Other" />
                 </div>
                 <span class="help-block">Select the start time of roll call.</span>
@@ -61,7 +62,6 @@
     <p>
         <input type="submit" value="Save" class="btn btn-primary" />
     </p>
-    
 }
 <div>
     @Html.ActionLink("Back to List", "Index", new { status = @Model.Status })
@@ -69,11 +69,9 @@
 <script>
     $(document).ready(function () {
         $("#2").width(100);
-
         //
         var bgDate = '@ViewBag.BeginDate';
-        var semesterID = $('#SemesterID :selected').attr("value");
-        var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
+        var semesterUrl = '@Url.Action("GetDateSemester")/' + '@ViewBag.Semester';
         $.getJSON(semesterUrl, function (semester) {
             //set select first sunday
             var a = new Date(semester.begindate);
@@ -93,26 +91,120 @@
         });
 
         var stTime = '@ViewBag.StartTime';
-        if (stTime != "07:00" || stTime != "08:45" || stTime != "10:30" || stTime != "12:30" || stTime != "14:15" || stTime != "16:00" || stTime != "18:45") {
+        if (stTime == "07:00" || stTime == "08:45" || stTime == "10:30" || stTime == "12:30" || stTime == "14:15" || stTime == "16:00" || stTime == "18:45") {
+            $('#Other').hide();
+        } else {
             $('#Other').show();
             $('#startTime').val('Other');
             document.getElementById('Other').value = stTime;
-        } else {
-            $('#Other').hide();
         };
+        checkInstructor();
         checkInstructorFree();
+        
     });
-    function checkInstructorFree() {
-        var sbID = '@ViewBag.SubjectID';
-        var instructorUrl = '@Url.Action("GetInstructors")/' + sbID;
+    function checkInstructor() {
+        var instructorUrl = '@Url.Action("GetInstructors")/' + '@ViewBag.Subject';
 
         $.getJSON(instructorUrl, function (instructors) {
             var html = "";
-            html += ('<option id="select" value="" ></option>');
             $.each(instructors, function (index, instructor) {
                 html += ('<option value="' + instructor.id + '" >' + instructor.name + '</option>');
             });
             $("#InstructorID").html(html);
+            $("#InstructorID option[value=" + '@ViewBag.ID' + "]").attr('selected', true);
+        });
+    }
+    function checkInstructorFree() {
+        var sessionUrl = '@Url.Action("GetNumberOfSlot")/' + '@ViewBag.Subject';
+
+        var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
+        var endDateSelect;
+        $.getJSON(sessionUrl, function (sub) {
+            var i = (sub.session / sub.slot - (sub.session % sub.slot) / sub.slot);
+            var day;
+            if ((i % 5) == 0) {
+                day = ((i / 5) * 7) - 1;
+            } else {
+                day = (((i - (i % 5)) + 1) * 7) - 1;
+            }
+            var tmp = beginDateSelect.split('-');
+            var year = tmp[2];
+            var month = tmp[1];
+            var date = tmp[0];
+            if (month < 10 && date < 10) {
+                beginDateSelect = year + "-0" + month + "-0" + date;
+            } else if (month >= 10 && date < 10) {
+                beginDateSelect = year + "-" + month + "-0" + date;
+            } else if (month < 10 && date >= 10) {
+                beginDateSelect = year + "-0" + month + "-" + date;
+            } else {
+                beginDateSelect = year + "-" + month + "-" + date;
+            }
+            var tmp1 = new Date(year, month, date - (-day));
+            var mth = tmp1.getMonth();
+            var yr = tmp1.getFullYear();
+            if (mth == 0) {
+                mth = 12;
+                yr--;
+            }
+            if (mth < 10) {
+                endDateSelect = yr + "-0" + mth + "-" + tmp1.getDate();
+            } else {
+                endDateSelect = yr + "-" + mth + "-" + tmp1.getDate();
+            }
+
+            var insUrl = '@Url.Action("GetInstructorFree")/' + '@ViewBag.Subject';
+            var starttime = $('#startTime :selected').attr("value");
+
+            var test = starttime.split(':');
+            var hour;
+            var minutes;
+            var endtime;
+
+            if (sub.slot == 1) {
+                hour = parseInt(test[0]) + 1;
+                minutes = parseInt(test[1]) + 30;
+                if (minutes >= 60) {
+                    hour = hour + minutes / 60 - minutes % 60 / 60;
+                    minutes = minutes % 60;
+                }
+                if (hour < 10) {
+                    endtime = "0" + hour + ":" + minutes;
+                } else {
+                    endtime = hour + ":" + minutes;
+                }
+            } else if (sub.slot == 2) {
+                hour = parseInt(test[0]) + 3;
+                minutes = parseInt(test[1]) + 15;
+                if (minutes >= 60) {
+                    hour = hour + minutes / 60 - minutes % 60 / 60;
+                    minutes = minutes % 60;
+                }
+                if (hour < 10) {
+                    endtime = "0" + hour + ":" + minutes;
+                } else {
+                    endtime = hour + ":" + minutes;
+                }
+            }
+            $.getJSON(insUrl, function (inss) {
+                $.each(inss, function (index, ins) {
+                    if (ins.begindate == beginDateSelect ||
+                        endDateSelect == ins.enddate ||
+                        (ins.begindate > beginDateSelect && ins.enddate < endDateSelect) ||
+                        (ins.begindate < beginDateSelect && ins.enddate > endDateSelect) ||
+                        (ins.begindate < beginDateSelect && ins.enddate > beginDateSelect) ||
+                        (ins.begindate < endDateSelect && ins.enddate > endDateSelect)) {
+                        if (ins.starttime == starttime ||
+                           endtime == ins.endtime ||
+                           (ins.starttime < starttime && ins.endtime > endtime) ||
+                           (ins.starttime > starttime && ins.endtime < endtime) ||
+                           (ins.starttime < starttime && ins.endtime > starttime) ||
+                           (ins.starttime < endtime && ins.endtime > endtime)) {
+                            $("#InstructorID option[value='" + ins.id + "']").remove();
+                        }
+                    }
+                });
+            });
         });
     };
 </script>

@@ -8,57 +8,58 @@
 @using (Html.BeginForm("Create", "RollCall", FormMethod.Post))
 {
     @Html.ValidationSummary(true)
-    <table class="table" >
+    <table class="table">
         <tr>
-            <td style="width: 350px; padding-left:25px;">
+            <td style="width: 350px; padding-left: 25px;">
                 <div class="editor-label">
                     <b>1. Semester</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                     @Html.DropDownList("SemesterID", new SelectList(ViewBag.SemesterID, "SemesterID", "SemesterName"), "- Select the semester -", new { style = "width: 200px;" })
                 </div>
-                <span style="height:10px;"id="se" class="help-block"></span>
+                <span style="height: 10px;" id="se" class="help-block"></span>
                 <div class="editor-label">
                     <b>3. Major :</b>
                 </div>
                 <div class="editor-field " style="margin-left: 10px">
                     @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, "", new { style = "width: 200px;" })
                 </div>
-                <span style="height:10px;" id="ma" class="help-block"></span>
+                <span style="height: 10px;" id="ma" class="help-block"></span>
                 <div class="editor-label">
                     <b>5. Subject</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px;">
                     @Html.DropDownList("SubjectID", (SelectList)ViewBag.SubjectID, "", new { style = "width: 250px;" })
                 </div>
-                <span style="height:10px;" id="su" class="help-block"></span>
+                <span style="height: 10px;" id="su" class="help-block"></span>
                 <div class="editor-label">
                     <b>7. Instructor</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                     @Html.DropDownList("InstructorID", (SelectList)ViewBag.MajoInstructorrID, "", new { style = "width: 230px;" })
                 </div>
-                <span style="height:10px;" id="in" class="help-block"></span>
+                <span style="height: 10px;" id="in" class="help-block"></span>
             </td>
             <td>
                 <div class="editor-label">
                     <b>2. Begin Date</b>
                 </div>
                 <div class="editor-field">
-                    <div class="input-append date" id="begindate" name="begindate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
+                    <div class="input-append date" id="begindate" name="begindate" data-date="10-10-2013"
+                        data-date-format="dd-mm-yyyy">
                         <input class="span2" name="BeginDate" id="BeginDate" style="width: 100px; margin-left: 10px;"
                             size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
                                 class="icon-th"></i></span>
                     </div>
                 </div>
-                <span style="height:10px;" id="be" class="help-block"></span>
+                <span style="height: 10px;" id="be" class="help-block"></span>
                 <div class="editor-label">
                     <b>4. Class</b>
                 </div>
                 <div class="editor-field" style="margin-left: 10px">
                     @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, "", new { style = "width: 130px;" })<br />
                 </div>
-                <span style="height:10px;" id="cl" class="help-block"></span>
+                <span style="height: 10px;" id="cl" class="help-block"></span>
                 <div class="editor-label">
                     <b>6. Start time</b>
                 </div>
@@ -73,10 +74,10 @@
            new SelectListItem { Text = "16:00", Value = "16:00" },
            new SelectListItem { Text = "18:45", Value = "18:45" }, 
            new SelectListItem { Text = "Other", Value = "Other" } 
-       }, "", new { @id = "startTime", style = "width:90px;" }) 
+       }, "", new { @id = "startTime", style = "width:90px;" })
                     <input style="margin-bottom: 10px; width: 80px;" type="text" name="otherTime" id="Other" />
                 </div>
-                <span style="height:10px;" id="st" class="help-block"></span>
+                <span style="height: 10px;" id="st" class="help-block"></span>
             </td>
         </tr>
     </table>
@@ -227,7 +228,7 @@
         document.getElementById("submit").className = "btn btn-primary";
         document.getElementById("submit").disabled = false;
         document.getElementById('in').innerHTML = "";
-      
+
     });
 
     function checkClassByMajor() {
@@ -287,32 +288,76 @@
     function checkSubjectFree() {
         var majorID = $('#MajorID :selected').attr("value");
         var subjectUrl = '@Url.Action("GetSubjects")/' + majorID;
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
 
         $.getJSON(subjectUrl, function (subjects) {
             var html = "";
             html += ('<option value=""></option>');
             $.each(subjects, function (index, subject) {
-                html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
-            });
-            $("#SubjectID").html(html);
-            var classID = $('#ClassID :selected').attr("value");
-            var semesterID = $('#SemesterID :selected').attr("value");
-            var classUrl = '@Url.Action("GetSubjectFree")?id=' + classID + '&semesterid=' + semesterID;
-            $.getJSON(classUrl, function (subs) {
-                $.each(subs, function (index, sa) {
-                    $("#SubjectID option[value='" + sa.id + "']").remove();
+                var sessionUrl = '@Url.Action("GetNumberOfSlot")/' + subject.id;
+                var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
+                var endDateSelect;
+                $.getJSON(sessionUrl, function (sub) {
+                    var i = (sub.session / sub.slot - (sub.session % sub.slot) / sub.slot);
+                    var day;
+                    if ((i % 5) == 0) {
+                        day = ((i / 5) * 7) - 1;
+                    } else {
+                        day = (((i - (i % 5)) + 1) * 7) - 1;
+                    }
+                    var tmp = beginDateSelect.split('-');
+                    var year = tmp[2];
+                    var month = tmp[1];
+                    var date = tmp[0];
+                    if (month < 10 && date < 10) {
+                        beginDateSelect = year + "-0" + month + "-0" + date;
+                    } else if (month >= 10 && date < 10) {
+                        beginDateSelect = year + "-" + month + "-0" + date;
+                    } else if (month < 10 && date >= 10) {
+                        beginDateSelect = year + "-0" + month + "-" + date;
+                    } else {
+                        beginDateSelect = year + "-" + month + "-" + date;
+                    }
+                    var tmp1 = new Date(year, month, date - (-day));
+                    var mth = tmp1.getMonth();
+                    var yr = tmp1.getFullYear();
+                    if (mth == 0) {
+                        mth = 12;
+                        yr--;
+                    }
+                    if (mth < 10) {
+                        endDateSelect = yr + "-0" + mth + "-" + tmp1.getDate();
+                    } else {
+                        endDateSelect = yr + "-" + mth + "-" + tmp1.getDate();
+                    }
+                    $.getJSON(semesterUrl, function (semester) {
+                        if (semester.enddate >= endDateSelect) {
+                            html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
+                        }
+                        $("#SubjectID").html(html);
+                        sortOption("SubjectID");
+                        var classID = $('#ClassID :selected').attr("value");
+                        var semesterID = $('#SemesterID :selected').attr("value");
+                        var classUrl = '@Url.Action("GetSubjectFree")?id=' + classID + '&semesterid=' + semesterID;
+                        $.getJSON(classUrl, function (subs) {
+                            $.each(subs, function (index, sa) {
+                                $("#SubjectID option[value='" + sa.id + "']").remove();
+                            });
+                            var checkNumberOption = document.getElementById('SubjectID').length;
+                            if (checkNumberOption == 1) {
+                                document.getElementById('cl').innerHTML = "* This class is study all subjects in this semester !";
+                                document.getElementById('su').innerHTML = "";
+                                document.getElementById('cl').style.color = "red";
+                                document.getElementById("SubjectID").disabled = true;
+                            }
+                            else {
+                                document.getElementById('cl').style.color = "black";
+                                document.getElementById("SubjectID").disabled = false;
+                            }
+                        });
+                    });
                 });
-                var checkNumberOption = document.getElementById('SubjectID').length;
-                if (checkNumberOption == 1) {
-                    document.getElementById('cl').innerHTML = "* This class is study all subjects in this semester !";
-                    document.getElementById('su').innerHTML = "";
-                    document.getElementById('cl').style.color = "red";
-                    document.getElementById("SubjectID").disabled = true;
-                }
-                else {
-                    document.getElementById('cl').style.color = "black";
-                    document.getElementById("SubjectID").disabled = false;
-                }
             });
         });
     };
@@ -326,23 +371,46 @@
         var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
         var endDateSelect;
         $.getJSON(sessionUrl, function (sub) {
-            var i = sub.session / sub.slot - (sub.session % sub.slot) / sub.slot + 2;
+            var i = (sub.session / sub.slot - (sub.session % sub.slot) / sub.slot);
+            var day;
+            if ((i % 5) == 0) {
+                day = ((i / 5) * 7) - 1;
+            } else {
+                day = (((i - (i % 5)) + 1) * 7) - 1;
+            }
             var tmp = beginDateSelect.split('-');
             var year = tmp[2];
             var month = tmp[1];
             var date = tmp[0];
-            beginDateSelect = year + "-" + month + "-" + date;
-            var tmp1 = new Date(year, month, date - (-i));
+            if (month < 10 && date < 10) {
+                beginDateSelect = year + "-0" + month + "-0" + date;
+            } else if (month >= 10 && date < 10) {
+                beginDateSelect = year + "-" + month + "-0" + date;
+            } else if (month < 10 && date >= 10) {
+                beginDateSelect = year + "-0" + month + "-" + date;
+            } else {
+                beginDateSelect = year + "-" + month + "-" + date;
+            }
+            var tmp1 = new Date(year, month, date - (-day));
             var mth = tmp1.getMonth();
+            var yr = tmp1.getFullYear();
             if (mth == 0) {
                 mth = 12;
+                yr--;
             }
-            endDateSelect = tmp1.getFullYear() + "-" + mth + "-" + tmp1.getDate();
+            if (mth < 10) {
+                endDateSelect = yr + "-0" + mth + "-" + tmp1.getDate();
+            } else {
+                endDateSelect = yr + "-" + mth + "-" + tmp1.getDate();
+            }
             $.getJSON(starttimeUrl, function (starttime) {
                 $.each(starttime, function (index, time) {
-                    if (time.startdate < endDateSelect && endDateSelect < time.enddate ||
-                        time.startdate < beginDateSelect && beginDateSelect < time.enddate ||
-                        time.startdate > endDateSelect && time.enddate < beginDateSelect) {
+                    if (time.begindate == beginDateSelect ||
+                        endDateSelect == time.enddate ||
+                        (time.begindate > beginDateSelect && time.enddate < endDateSelect) ||
+                        (time.begindate < beginDateSelect && time.enddate > endDateSelect) ||
+                        (time.begindate < beginDateSelect && time.enddate > beginDateSelect) ||
+                        (time.begindate < endDateSelect && time.enddate > endDateSelect)) {
                         $("#startTime option[value='" + time.starttime + "']").remove();
                         if (time.endtime == "10:15") {
                             $("#startTime option[value='08:45']").remove();
@@ -378,18 +446,38 @@
         var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
         var endDateSelect;
         $.getJSON(sessionUrl, function (sub) {
-            var i = sub.session / sub.slot - (sub.session % sub.slot) / sub.slot + 2;
+            var i = (sub.session / sub.slot - (sub.session % sub.slot) / sub.slot);
+            var day;
+            if ((i % 5) == 0) {
+                day = ((i / 5) * 7) - 1;
+            } else {
+                day = (((i - (i % 5)) + 1) * 7) - 1;
+            }
             var tmp = beginDateSelect.split('-');
             var year = tmp[2];
             var month = tmp[1];
             var date = tmp[0];
-            beginDateSelect = year + "-" + month + "-" + date;
-            var tmp1 = new Date(year, month, date - (-i));
+            if (month < 10 && date < 10) {
+                beginDateSelect = year + "-0" + month + "-0" + date;
+            } else if (month >= 10 && date < 10) {
+                beginDateSelect = year + "-" + month + "-0" + date;
+            } else if (month < 10 && date >= 10) {
+                beginDateSelect = year + "-0" + month + "-" + date;
+            } else {
+                beginDateSelect = year + "-" + month + "-" + date;
+            }
+            var tmp1 = new Date(year, month, date - (-day));
             var mth = tmp1.getMonth();
+            var yr = tmp1.getFullYear();
             if (mth == 0) {
                 mth = 12;
+                yr--;
             }
-            endDateSelect = tmp1.getFullYear() + "-" + mth + "-" + tmp1.getDate();
+            if (mth < 10) {
+                endDateSelect = yr + "-0" + mth + "-" + tmp1.getDate();
+            } else {
+                endDateSelect = yr + "-" + mth + "-" + tmp1.getDate();
+            }
 
             var insUrl = '@Url.Action("GetInstructorFree")/' + subjectID;
             var starttime = $('#startTime :selected').attr("value");
@@ -406,7 +494,11 @@
                     hour = hour + minutes / 60 - minutes % 60 / 60;
                     minutes = minutes % 60;
                 }
-                endtime = hour + ":" + minutes;
+                if (hour < 10) {
+                    endtime = "0" + hour + ":" + minutes;
+                } else {
+                    endtime = hour + ":" + minutes;
+                }
             } else if (sub.slot == 2) {
                 hour = parseInt(test[0]) + 3;
                 minutes = parseInt(test[1]) + 15;
@@ -414,17 +506,27 @@
                     hour = hour + minutes / 60 - minutes % 60 / 60;
                     minutes = minutes % 60;
                 }
-                endtime = hour + ":" + minutes;
+                if (hour < 10) {
+                    endtime = "0" + hour + ":" + minutes;
+                } else {
+                    endtime = hour + ":" + minutes;
+                }
             }
             $.getJSON(insUrl, function (inss) {
                 $.each(inss, function (index, ins) {
-                    if (ins.begindate < beginDateSelect && beginDateSelect < ins.enddate ||
-                        ins.begindate < endDateSelect && endDateSelect < ins.enddate ||
-                        beginDateSelect < ins.begindate && ins.enddate < endDateSelect) {
-                        if (ins.starttime < starttime && starttime < ins.endtime ||
-                           ins.starttime < endtime && endtime < ins.endtime ||
-                           ins.starttime >= starttime && ins.endtime <= endtime) {
-                            $("#InstructorID option[value='" + ins.instructorid + "']").remove();
+                    if (ins.begindate == beginDateSelect ||
+                        endDateSelect == ins.enddate ||
+                        (ins.begindate > beginDateSelect && ins.enddate < endDateSelect) ||
+                        (ins.begindate < beginDateSelect && ins.enddate > endDateSelect) ||
+                        (ins.begindate < beginDateSelect && ins.enddate > beginDateSelect) ||
+                        (ins.begindate < endDateSelect && ins.enddate > endDateSelect)) {
+                        if (ins.starttime == starttime ||
+                           endtime == ins.endtime ||
+                           (ins.starttime < starttime && ins.endtime > endtime) ||
+                           (ins.starttime > starttime && ins.endtime < endtime)||
+                           (ins.starttime < starttime && ins.endtime > starttime) || 
+                           (ins.starttime < endtime && ins.endtime > endtime)) {
+                            $("#InstructorID option[value='" + ins.id + "']").remove();
                         }
                     }
                 });
@@ -528,6 +630,29 @@
                 var evdate = ev.date.getDate() + "-" + mont + "-" + ev.date.getFullYear();
                 document.getElementById('begindate').setAttribute('data-date', evdate);
                 document.getElementById('be').innerHTML = "";
+
+                document.getElementById("startTime").disabled = true;
+                document.getElementById("SubjectID").disabled = true;
+                document.getElementById("InstructorID").disabled = true;
+
+                var majorID = $('#MajorID :selected').attr("value");
+                if (majorID == "") {
+                    document.getElementById("Class").disabled = true;
+                }
+                addOption("", "", "InstructorID");
+                sortOption("InstructorID");
+                $("#InstructorID option[value='']").attr('selected', true);
+                addOption("", "", "startTime");
+                sortOption("startTime");
+                $("#startTime option[value='']").attr('selected', true);
+                addOption("", "", "SubjectID");
+                sortOption("SubjectID");
+                $("#SubjectID option[value='']").attr('selected', true);
+                addOption("", "", "ClassID");
+                sortOption("ClassID");
+                $("#ClassID option[value='']").attr('selected', true);
+                document.getElementById("submit").className = "btn";
+                document.getElementById("submit").disabled = true;
                 begindate.hide();
             }).data('datepicker');
             begindate.setValue(Ndate);
