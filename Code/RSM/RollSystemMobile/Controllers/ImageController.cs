@@ -46,6 +46,24 @@ namespace RollSystemMobile.Controllers
             return RedirectToAction("SingleStudent","Admin", new { StudentID = StudentID });
         }
 
+
+        [HttpPost]
+        public ActionResult SaveRequestImage(FormCollection Form)
+        {
+            int StudentID = int.Parse(Form["StudentID"]);
+            List<String> ErrorList = new List<String>();
+            //Moi anh se co 1 id, luu face region co id nay vao database
+            String[] FilesPath = Form["ImageLink"].Split(',');
+            String[] FaceIDs = Form["FaceID"].Split(',');
+
+            //Bat chuoc ham tren, o day tao 1 request, sau do add image cua request do.
+            //Dung ham facebusiness.SaveRequestImage
+
+
+            return null;
+        }
+
+
         [HttpPost]
         public ActionResult SaveImageMulti(ImageBindingModel model)
         {
