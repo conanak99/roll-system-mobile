@@ -150,6 +150,46 @@ namespace RollSystemMobile.Models.BusinessObject
             Image.Dispose();
         }
 
+        public static void SaveRequestImage(string ImagePath, int FaceID, int StudentID, int RequestID)
+        {
+            //Ben ngoai ko check, ko save
+            if (FaceID == -1)
+            {
+                return;
+            }
+
+            StudentImageBusiness StuImaBO = new StudentImageBusiness();
+            RequestBusiness ReqBO = new RequestBusiness();
+
+            Image<Bgr, byte> Image = new Image<Bgr, byte>(ImagePath);
+            using (Image<Gray, byte> GrayImage = Image.Clone().Convert<Gray, byte>())
+            {
+                var FacesDetected = GrayImage.DetectHaarCascade(Haar, DETECT_SCALE, MIN_NEIGHBOR,
+                                    0, new System.Drawing.Size(MIN_SIZE, MIN_SIZE))[0];
+                Image<Bgr, byte> FaceImage = Image.Copy(FacesDetected[FaceID].rect)
+                                             .Resize(TRAINING_DATA_SIZE, TRAINING_DATA_SIZE,
+                                             INTER.CV_INTER_CUBIC); ;
+
+                //Tao ten file
+                String ImageName = System.IO.Path.GetFileNameWithoutExtension(ImagePath);
+                String FileName = String.Format("{0}_face_{1}.jpg", ImageName, FaceID);
+
+                if (StuImaBO.ImageExist(StudentID, FileName))
+                {
+                    throw new Exception(FileName);
+                }
+                else
+                {
+                    //Save file anh xuong
+                    FaceImage.Save(TRAINING_FOLDER_PATH + "/" + FileName);
+                    //Save xuong DB
+                    RequestImage ReqImg = new RequestImage() { RequestID = RequestID, ImageLink = FileName };
+                    ReqBO.InsertImage(ReqImg);
+                }
+            }
+            Image.Dispose();
+        }
+
         public static List<FaceAdded> SaveTrainingData(string ImagePath, int[] FaceIDs, int[] StudentIDs)
         {
             Image<Bgr, byte> Image = new Image<Bgr, byte>(ImagePath);

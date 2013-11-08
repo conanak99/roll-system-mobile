@@ -41,6 +41,9 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RSMModel", "Student_StudentImage_FK1", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Student), "StudentImage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentImage), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "User_Student_FK1", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.User), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "StudentInRollCall", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Student))]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_Request_Student", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Student), "Request", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Request), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_Request_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.User), "Request", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Request), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_RequestImage_Request", "Request", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Request), "RequestImage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RequestImage), true)]
 
 #endregion
 
@@ -379,6 +382,38 @@ namespace RollSystemMobile.Models
             }
         }
         private ObjectSet<StudentImage> _StudentImages;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<Request> Requests
+        {
+            get
+            {
+                if ((_Requests == null))
+                {
+                    _Requests = base.CreateObjectSet<Request>("Requests");
+                }
+                return _Requests;
+            }
+        }
+        private ObjectSet<Request> _Requests;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<RequestImage> RequestImages
+        {
+            get
+            {
+                if ((_RequestImages == null))
+                {
+                    _RequestImages = base.CreateObjectSet<RequestImage>("RequestImages");
+                }
+                return _RequestImages;
+            }
+        }
+        private ObjectSet<RequestImage> _RequestImages;
 
         #endregion
         #region AddTo Methods
@@ -525,6 +560,22 @@ namespace RollSystemMobile.Models
         public void AddToStudentImages(StudentImage studentImage)
         {
             base.AddObject("StudentImages", studentImage);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the Requests EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToRequests(Request request)
+        {
+            base.AddObject("Requests", request);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the RequestImages EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToRequestImages(RequestImage requestImage)
+        {
+            base.AddObject("RequestImages", requestImage);
         }
 
         #endregion
@@ -1780,6 +1831,386 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Subject>("RSMModel.SubjectMajorMapping", "Subject", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RSMModel", Name="Request")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class Request : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new Request object.
+        /// </summary>
+        /// <param name="requestID">Initial value of the RequestID property.</param>
+        /// <param name="studentID">Initial value of the StudentID property.</param>
+        /// <param name="isAccepted">Initial value of the IsAccepted property.</param>
+        public static Request CreateRequest(global::System.Int32 requestID, global::System.Int32 studentID, global::System.Boolean isAccepted)
+        {
+            Request request = new Request();
+            request.RequestID = requestID;
+            request.StudentID = studentID;
+            request.IsAccepted = isAccepted;
+            return request;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 RequestID
+        {
+            get
+            {
+                return _RequestID;
+            }
+            set
+            {
+                if (_RequestID != value)
+                {
+                    OnRequestIDChanging(value);
+                    ReportPropertyChanging("RequestID");
+                    _RequestID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("RequestID");
+                    OnRequestIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _RequestID;
+        partial void OnRequestIDChanging(global::System.Int32 value);
+        partial void OnRequestIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 StudentID
+        {
+            get
+            {
+                return _StudentID;
+            }
+            set
+            {
+                OnStudentIDChanging(value);
+                ReportPropertyChanging("StudentID");
+                _StudentID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("StudentID");
+                OnStudentIDChanged();
+            }
+        }
+        private global::System.Int32 _StudentID;
+        partial void OnStudentIDChanging(global::System.Int32 value);
+        partial void OnStudentIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
+        [DataMemberAttribute()]
+        public Nullable<global::System.Int32> CheckedAdminID
+        {
+            get
+            {
+                return _CheckedAdminID;
+            }
+            set
+            {
+                OnCheckedAdminIDChanging(value);
+                ReportPropertyChanging("CheckedAdminID");
+                _CheckedAdminID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("CheckedAdminID");
+                OnCheckedAdminIDChanged();
+            }
+        }
+        private Nullable<global::System.Int32> _CheckedAdminID;
+        partial void OnCheckedAdminIDChanging(Nullable<global::System.Int32> value);
+        partial void OnCheckedAdminIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Boolean IsAccepted
+        {
+            get
+            {
+                return _IsAccepted;
+            }
+            set
+            {
+                OnIsAcceptedChanging(value);
+                ReportPropertyChanging("IsAccepted");
+                _IsAccepted = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("IsAccepted");
+                OnIsAcceptedChanged();
+            }
+        }
+        private global::System.Boolean _IsAccepted;
+        partial void OnIsAcceptedChanging(global::System.Boolean value);
+        partial void OnIsAcceptedChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Request_Student", "Student")]
+        public Student Student
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Student>("RSMModel.FK_Request_Student", "Student").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Student>("RSMModel.FK_Request_Student", "Student").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Student> StudentReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Student>("RSMModel.FK_Request_Student", "Student");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Student>("RSMModel.FK_Request_Student", "Student", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Request_User", "User")]
+        public User User
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("RSMModel.FK_Request_User", "User").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("RSMModel.FK_Request_User", "User").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<User> UserReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<User>("RSMModel.FK_Request_User", "User");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("RSMModel.FK_Request_User", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_RequestImage_Request", "RequestImage")]
+        public EntityCollection<RequestImage> RequestImages
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RequestImage>("RSMModel.FK_RequestImage_Request", "RequestImage");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RequestImage>("RSMModel.FK_RequestImage_Request", "RequestImage", value);
+                }
+            }
+        }
+
+        #endregion
+    }
+    
+    /// <summary>
+    /// No Metadata Documentation available.
+    /// </summary>
+    [EdmEntityTypeAttribute(NamespaceName="RSMModel", Name="RequestImage")]
+    [Serializable()]
+    [DataContractAttribute(IsReference=true)]
+    public partial class RequestImage : EntityObject
+    {
+        #region Factory Method
+    
+        /// <summary>
+        /// Create a new RequestImage object.
+        /// </summary>
+        /// <param name="imageID">Initial value of the ImageID property.</param>
+        /// <param name="requestID">Initial value of the RequestID property.</param>
+        /// <param name="imageLink">Initial value of the ImageLink property.</param>
+        public static RequestImage CreateRequestImage(global::System.Int32 imageID, global::System.Int32 requestID, global::System.String imageLink)
+        {
+            RequestImage requestImage = new RequestImage();
+            requestImage.ImageID = imageID;
+            requestImage.RequestID = requestID;
+            requestImage.ImageLink = imageLink;
+            return requestImage;
+        }
+
+        #endregion
+        #region Primitive Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=true, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 ImageID
+        {
+            get
+            {
+                return _ImageID;
+            }
+            set
+            {
+                if (_ImageID != value)
+                {
+                    OnImageIDChanging(value);
+                    ReportPropertyChanging("ImageID");
+                    _ImageID = StructuralObject.SetValidValue(value);
+                    ReportPropertyChanged("ImageID");
+                    OnImageIDChanged();
+                }
+            }
+        }
+        private global::System.Int32 _ImageID;
+        partial void OnImageIDChanging(global::System.Int32 value);
+        partial void OnImageIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.Int32 RequestID
+        {
+            get
+            {
+                return _RequestID;
+            }
+            set
+            {
+                OnRequestIDChanging(value);
+                ReportPropertyChanging("RequestID");
+                _RequestID = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("RequestID");
+                OnRequestIDChanged();
+            }
+        }
+        private global::System.Int32 _RequestID;
+        partial void OnRequestIDChanging(global::System.Int32 value);
+        partial void OnRequestIDChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.String ImageLink
+        {
+            get
+            {
+                return _ImageLink;
+            }
+            set
+            {
+                OnImageLinkChanging(value);
+                ReportPropertyChanging("ImageLink");
+                _ImageLink = StructuralObject.SetValidValue(value, false);
+                ReportPropertyChanged("ImageLink");
+                OnImageLinkChanged();
+            }
+        }
+        private global::System.String _ImageLink;
+        partial void OnImageLinkChanging(global::System.String value);
+        partial void OnImageLinkChanged();
+
+        #endregion
+    
+        #region Navigation Properties
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_RequestImage_Request", "Request")]
+        public Request Request
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Request>("RSMModel.FK_RequestImage_Request", "Request").Value;
+            }
+            set
+            {
+                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Request>("RSMModel.FK_RequestImage_Request", "Request").Value = value;
+            }
+        }
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [BrowsableAttribute(false)]
+        [DataMemberAttribute()]
+        public EntityReference<Request> RequestReference
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<Request>("RSMModel.FK_RequestImage_Request", "Request");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<Request>("RSMModel.FK_RequestImage_Request", "Request", value);
                 }
             }
         }
@@ -3200,6 +3631,28 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RollCall>("RSMModel.StudentInRollCall", "RollCall", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Request_Student", "Request")]
+        public EntityCollection<Request> Requests
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Request>("RSMModel.FK_Request_Student", "Request");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Request>("RSMModel.FK_Request_Student", "Request", value);
                 }
             }
         }
@@ -4806,6 +5259,28 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Student>("RSMModel.User_Student_FK1", "Student", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Request_User", "Request")]
+        public EntityCollection<Request> Requests
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Request>("RSMModel.FK_Request_User", "Request");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Request>("RSMModel.FK_Request_User", "Request", value);
                 }
             }
         }
