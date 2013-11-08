@@ -77,7 +77,7 @@ namespace RollSystemMobile.Controllers
                 tdate = Convert.ToDateTime(td);
             }
 
-            var rollcalls = RollBO.GetList().Where(r => r.BeginDate.CompareTo(fdate) >= 0 && r.EndDate.CompareTo(tdate) <= 0).OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate).ToList();
+            var rollcalls = RollBO.GetList().Where(r => r.BeginDate.CompareTo(fdate) >= 0 && r.EndDate.CompareTo(tdate) <= 0).OrderByDescending(r => r.BeginDate).OrderByDescending(r => r.Class.ClassName).ToList();
             return View(rollcalls);
         }
 
@@ -237,8 +237,6 @@ namespace RollSystemMobile.Controllers
                     ModelState.AddModelError(String.Empty, Error);
                 }
             }
-
-
             ViewBag.InstructorID = SlFactory.MakeSelectList<Instructor>("InstructorID", "FullName", rollcall.InstructorID);
             ViewBag.MajorID = SlFactory.MakeSelectList<Major>("MajorID", "FullName", MajorID);
             ViewBag.ClassID = new SelectList(ClaBO.GetClassByMajor(MajorID),
@@ -267,6 +265,9 @@ namespace RollSystemMobile.Controllers
             ViewBag.BeginDate = rollcall.BeginDate.ToString("dd-MM-yyyy");
             ViewBag.StartTime = rollcall.StartTime.ToString(@"hh\:mm");
             ViewBag.SubjectID = rollcall.SubjectID.ToString();
+            ViewBag.Semester = rollcall.SemesterID;
+            ViewBag.Subject = rollcall.SubjectID;
+            ViewBag.ID = InstructorID;
             return View(rollcall);
         }
 
@@ -302,7 +303,8 @@ namespace RollSystemMobile.Controllers
             //Mac dinh, lay semester moi nhat
             ViewBag.SemesterID = SlFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", rollcall.SemesterID);
             ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName", rollcall.SubjectID);
-
+            ViewBag.Semester = rollcall.SemesterID;
+            ViewBag.Subject = rollcall.SubjectID;
             return View(rollcall);
         }
 
@@ -344,7 +346,7 @@ namespace RollSystemMobile.Controllers
             var rc = RollBO.GetList().Where(a => a.ClassID == id)
              .Select(c => new
              {
-                 startdate = c.BeginDate.ToString("yyyy-MM-dd"),
+                 begindate = c.BeginDate.ToString("yyyy-MM-dd"),
                  enddate = c.EndDate.ToString("yyyy-MM-dd"),
                  starttime = c.StartTime.ToString(@"hh\:mm"),
                  endtime = c.EndTime.ToString(@"hh\:mm")
@@ -422,7 +424,7 @@ namespace RollSystemMobile.Controllers
             var instructor = RollBO.GetList().Where(r => r.Instructor.SubjectType.TypeID == typeID)
                 .Select(i => new
                 {
-                    instructorid = i.InstructorID,
+                    id = i.InstructorID,
                     starttime = i.StartTime.ToString(@"hh\:mm"),
                     endtime = i.EndTime.ToString(@"hh\:mm"),
                     enddate = i.EndDate.ToString("yyyy-MM-dd"),

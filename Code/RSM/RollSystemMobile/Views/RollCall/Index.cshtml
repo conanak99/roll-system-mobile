@@ -37,7 +37,7 @@
         <th style="width: 200px; background-color: #70ad47; color: #ffffff">
             Date
         </th>
-        <th style="width: 150px; background-color: #70ad47; color: #ffffff">
+        <th style="width: 170px; background-color: #70ad47; color: #ffffff">
             Time
         </th>
         <th style="background-color: #70ad47; color: #ffffff">
@@ -48,7 +48,7 @@
     </thead>
     <tbody>
         @{ int index = 1;}
-        @foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r=>r.BeginDate))
+        @foreach (var item in Model.OrderByDescending(r => r.BeginDate).OrderByDescending(r => r.Class.ClassName))
         {
             if (item.Status == 1)
             {
