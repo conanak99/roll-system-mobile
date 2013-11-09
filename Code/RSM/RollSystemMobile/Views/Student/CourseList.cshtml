@@ -16,6 +16,7 @@
         <dt>Email</dt>
         <dd>@Model.AuthorizedStudent.Email</dd>
     </dl>
+      <a class="btn btn-primary" href="@Url.Action("StudentImage",new { StudentID = @Model.AuthorizedStudent.StudentID })">View Images</a>
 </div>
 <div>
     <h4>

@@ -12,9 +12,13 @@ namespace RollSystemMobile.Controllers
     public class ImageController : Controller
     {
         private StudentImageBusiness StuImaBO;
+        private RequestBusiness ReBO;
+        private RequestImageBusiness ReImBO;
 
         public ImageController()
         {
+            ReImBO = new RequestImageBusiness();
+            ReBO = new RequestBusiness();
             StuImaBO = new StudentImageBusiness();
         }
 
@@ -46,24 +50,37 @@ namespace RollSystemMobile.Controllers
             return RedirectToAction("SingleStudent","Admin", new { StudentID = StudentID });
         }
 
-
+        //
         [HttpPost]
-        public ActionResult SaveRequestImage(FormCollection Form)
+        public ActionResult CreateRequestImage(FormCollection Form)
         {
             int StudentID = int.Parse(Form["StudentID"]);
+            var request = new Request() { StudentID = StudentID, SentTime = DateTime.Now, IsAccepted = false };
+            ReBO.Insert(request);
+
             List<String> ErrorList = new List<String>();
             //Moi anh se co 1 id, luu face region co id nay vao database
             String[] FilesPath = Form["ImageLink"].Split(',');
             String[] FaceIDs = Form["FaceID"].Split(',');
 
-            //Bat chuoc ham tren, o day tao 1 request, sau do add image cua request do.
-            //Dung ham facebusiness.SaveRequestImage
-
-
-            return null;
+            for (int i = 0; i < FilesPath.Length; i++)
+            {
+                String ImagePath = Server.MapPath("~/Content/Temp/Resized/" + FilesPath[i]);
+                int FaceID = int.Parse(FaceIDs[i]);
+                try
+                {
+                    FaceBusiness.SaveRequestImage(ImagePath, FaceID, StudentID, request.RequestID);
+                }
+                catch (Exception e)
+                {
+                    ErrorList.Add(e.Message);
+                }
+            }
+            TempData["Errors"] = ErrorList;
+            //Cat image ra, cat face index ra, gui lai trang single
+            return RedirectToAction("StudentImage", "Student", new { StudentID = StudentID });
         }
-
-
+        
         [HttpPost]
         public ActionResult SaveImageMulti(ImageBindingModel model)
         {

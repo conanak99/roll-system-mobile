@@ -1854,12 +1854,14 @@ namespace RollSystemMobile.Models
         /// <param name="requestID">Initial value of the RequestID property.</param>
         /// <param name="studentID">Initial value of the StudentID property.</param>
         /// <param name="isAccepted">Initial value of the IsAccepted property.</param>
-        public static Request CreateRequest(global::System.Int32 requestID, global::System.Int32 studentID, global::System.Boolean isAccepted)
+        /// <param name="sentTime">Initial value of the SentTime property.</param>
+        public static Request CreateRequest(global::System.Int32 requestID, global::System.Int32 studentID, global::System.Boolean isAccepted, global::System.DateTime sentTime)
         {
             Request request = new Request();
             request.RequestID = requestID;
             request.StudentID = studentID;
             request.IsAccepted = isAccepted;
+            request.SentTime = sentTime;
             return request;
         }
 
@@ -1964,6 +1966,30 @@ namespace RollSystemMobile.Models
         private global::System.Boolean _IsAccepted;
         partial void OnIsAcceptedChanging(global::System.Boolean value);
         partial void OnIsAcceptedChanged();
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
+        [DataMemberAttribute()]
+        public global::System.DateTime SentTime
+        {
+            get
+            {
+                return _SentTime;
+            }
+            set
+            {
+                OnSentTimeChanging(value);
+                ReportPropertyChanging("SentTime");
+                _SentTime = StructuralObject.SetValidValue(value);
+                ReportPropertyChanged("SentTime");
+                OnSentTimeChanged();
+            }
+        }
+        private global::System.DateTime _SentTime;
+        partial void OnSentTimeChanging(global::System.DateTime value);
+        partial void OnSentTimeChanged();
 
         #endregion
     

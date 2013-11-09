@@ -1,0 +1,164 @@
+﻿@model RollSystemMobile.Models.Student
+@{
+    ViewBag.Title = "StudentImage";
+    Layout = "~/Views/Student/_Layout.cshtml";
+}
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture" id="headingNum">
+                <i></i>@Model.FullName. Total images: @Model.StudentImages.Count</h3>
+        </div>
+        <div class="widget-body">
+            @if (Model.StudentImages.Count > 0)
+            {
+
+                foreach (var image in Model.StudentImages)
+                {
+                <div class="thumbnail-holder">
+                    <img class="thumbnail" src="@Url.TrainingImage(image.ImageLink)" />
+                </div>
+                }
+                <div id="message">
+                </div>
+            }
+            else
+            {
+                <h4>
+                    No images. Please upload some.</h4>
+            }
+        </div>
+    </div>
+    @if (ViewBag.Errors != null && ((List<String>)ViewBag.Errors).Count > 0)
+    {
+        <div class="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                &times;</button>
+            <strong>Warning!</strong> Images:
+            @foreach (var Error in (List<String>)ViewBag.Errors)
+            {
+                <div class="thumbnail-holder">
+                    <img class="thumbnail" src="@Url.TrainingImage(Error)" />
+                </div>
+            }
+            existed in database. Not save.
+        </div>
+    }
+    <h3>
+        Your pending request:</h3>
+    <table class="table table-bordered table-striped" id="example">
+        <thead>
+            <th style="background-color: #70ad47; color: #ffffff">
+                No.
+            </th>
+            <th style="background-color: #70ad47; color: #ffffff">
+                Images
+            </th>
+            <th style="background-color: #70ad47; color: #ffffff">
+                Time
+            </th>
+            <th>
+            </th>
+        </thead>
+        <tbody>
+            @{int index = 1;}
+            @foreach (var item in Model.Requests.Where(rq => rq.CheckedAdminID == null))
+            {
+                <tr>
+                    <td>
+                        @index
+                    </td>
+                    <td>
+                        @foreach (var image in item.RequestImages) {
+                        <div class="thumbnail-holder">
+                            <img class="thumbnail" src="@Url.TrainingImage(image.ImageLink)" />
+                        </div>
+                        }
+                    </td>
+                    <td>
+                    @item.SentTime.ToString("dd-MM-yyyy hh:mm:ss")
+                    </td>
+                    <td>
+                   <a href="@Url.Action("DeleteRequest", new { id = item.RequestID })">Delete</a>
+                    </td>
+                </tr>
+                { index++; }
+            }
+        </tbody>
+    </table>
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture">
+                <i></i>Upload images:
+            </h3>
+        </div>
+        <div class="widget-body">
+            <div id="upload-div">
+                @using (Html.BeginForm("StudentImage", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.Hidden("StudentID", @Model.StudentID)
+
+                    <input type="file" id="files" name="ImageFiles" class="filestyle" accept="image/*"
+                        multiple />
+                    <button class="btn btn-primary" id="btnUpload">
+                        Upload</button>
+                    <br />
+                    <output id="list"></output>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var files;
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+    function handleFileSelect(evt) {
+        files = evt.target.files; // FileList object
+        if (files.length > 20) {
+            alert("Too many images. Select fewer than 20 images");
+            return false;
+        }
+        document.getElementById('list').innerHTML = "";
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+            parseFile(f);
+        }
+    }
+
+    function parseFile(file) {
+        // Only process image files.
+        if (!file.type.match('image.*')) {
+            return;
+        }
+
+        var reader = new FileReader();
+        // Closure to capture the file information.
+        reader.onload = function (e) {
+            // Render thumbnail.
+            var span = document.createElement('span');
+            span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(file.name), '"/>'].join('');
+            document.getElementById('list').insertBefore(span, null);
+        }
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(file);
+    }
+
+    $('#btnUpload').click(function () {
+        if (typeof files === "undefined" || files.length == 0) {
+            alert("Select file to upload!");
+            return false;
+        } else if (files.length > 20) {
+            alert("Too many images. Select fewer than 20 images");
+            return false;
+        } else {
+            return true;
+        }
+    });
+
+    $(":file").filestyle({ buttonText: "Select student's images" });
+</script>

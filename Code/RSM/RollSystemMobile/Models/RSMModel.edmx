@@ -203,12 +203,13 @@
           <Property Name="StudentID" Type="int" Nullable="false" />
           <Property Name="CheckedAdminID" Type="int" />
           <Property Name="IsAccepted" Type="bit" Nullable="false" />
+          <Property Name="SentTime" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="RequestImage">
           <Key>
             <PropertyRef Name="ImageID" />
           </Key>
-          <Property Name="ImageID" Type="int" Nullable="false" />
+          <Property Name="ImageID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="RequestID" Type="int" Nullable="false" />
           <Property Name="ImageLink" Type="varchar" Nullable="false" MaxLength="100" />
         </EntityType>
@@ -446,7 +447,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_RequestImage_Request">
-          <End Role="Request" Type="RSMModel.Store.Request" Multiplicity="1" />
+          <End Role="Request" Type="RSMModel.Store.Request" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="RequestImage" Type="RSMModel.Store.RequestImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Request">
@@ -1336,6 +1339,7 @@
           <Property Type="Int32" Name="StudentID" Nullable="false" />
           <Property Type="Int32" Name="CheckedAdminID" />
           <Property Type="Boolean" Name="IsAccepted" Nullable="false" />
+          <Property Type="DateTime" Name="SentTime" Nullable="false" />
           <NavigationProperty Name="Student" Relationship="RSMModel.FK_Request_Student" FromRole="Request" ToRole="Student" />
           <NavigationProperty Name="User" Relationship="RSMModel.FK_Request_User" FromRole="Request" ToRole="User" />
           <NavigationProperty Name="RequestImages" Relationship="RSMModel.FK_RequestImage_Request" FromRole="Request" ToRole="RequestImage" />
@@ -1344,7 +1348,7 @@
           <Key>
             <PropertyRef Name="ImageID" />
           </Key>
-          <Property Type="Int32" Name="ImageID" Nullable="false" />
+          <Property Type="Int32" Name="ImageID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="RequestID" Nullable="false" />
           <Property Type="String" Name="ImageLink" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Request" Relationship="RSMModel.FK_RequestImage_Request" FromRole="RequestImage" ToRole="Request" />
@@ -1562,6 +1566,7 @@
           <EntitySetMapping Name="Requests">
             <EntityTypeMapping TypeName="RSMModel.Request">
               <MappingFragment StoreEntitySet="Request">
+                <ScalarProperty Name="SentTime" ColumnName="SentTime" />
                 <ScalarProperty Name="IsAccepted" ColumnName="IsAccepted" />
                 <ScalarProperty Name="CheckedAdminID" ColumnName="CheckedAdminID" />
                 <ScalarProperty Name="StudentID" ColumnName="StudentID" />
@@ -1578,7 +1583,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -1630,8 +1635,8 @@
           <ConnectorPoint PointX="3" PointY="8.0285953776041659" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.User_Instructor_FK1" ManuallyRouted="false">
-          <ConnectorPoint PointX="5.79687375" PointY="13.375" />
-          <ConnectorPoint PointX="5.79687375" PointY="3.654793235677082" />
+          <ConnectorPoint PointX="5.7380360742187495" PointY="13.375" />
+          <ConnectorPoint PointX="5.7380360742187495" PointY="3.654793235677082" />
           <ConnectorPoint PointX="8.25" PointY="3.654793235677082" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.Role_User_FK1" ManuallyRouted="false">
@@ -1659,28 +1664,28 @@
         </AssociationConnector>
         <EntityTypeShape EntityType="RSMModel.StudySession" Width="1.5" PointX="13.5" PointY="2.25" Height="2.9417936197916674" />
         <AssociationConnector Association="RSMModel.FK_StudySession_Class" >
-          <ConnectorPoint PointX="4.5" PointY="6.3354063067232556" />
-          <ConnectorPoint PointX="5.7135404166666666" PointY="6.3354063067232547" />
-          <ConnectorPoint PointX="5.8802070833333326" PointY="6.3354063067232556" />
-          <ConnectorPoint PointX="10.653478893229165" PointY="6.3354063067232547" />
-          <ConnectorPoint PointX="10.820145559895833" PointY="6.3354063067232556" />
-          <ConnectorPoint PointX="11.184731393229166" PointY="6.3354063067232547" />
-          <ConnectorPoint PointX="11.351398059895834" PointY="6.3354063067232556" />
-          <ConnectorPoint PointX="11.416666666666666" PointY="6.3354063067232547" />
-          <ConnectorPoint PointX="11.583333333333334" PointY="6.3354063067232556" />
-          <ConnectorPoint PointX="14.2812525" PointY="6.3354063067232556" />
+          <ConnectorPoint PointX="4.5" PointY="6.4072509064755856" />
+          <ConnectorPoint PointX="5.6547027408854165" PointY="6.4072509064755847" />
+          <ConnectorPoint PointX="5.8213694075520825" PointY="6.4072509064755856" />
+          <ConnectorPoint PointX="10.636633404947917" PointY="6.4072509064755847" />
+          <ConnectorPoint PointX="10.803300071614585" PointY="6.4072509064755856" />
+          <ConnectorPoint PointX="11.167885904947916" PointY="6.4072509064755847" />
+          <ConnectorPoint PointX="11.334552571614584" PointY="6.4072509064755856" />
+          <ConnectorPoint PointX="11.416666666666666" PointY="6.4072509064755847" />
+          <ConnectorPoint PointX="11.583333333333334" PointY="6.4072509064755856" />
+          <ConnectorPoint PointX="14.2812525" PointY="6.4072509064755856" />
           <ConnectorPoint PointX="14.2812525" PointY="5.3840950520833326" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_StudySession_Instructor" >
           <ConnectorPoint PointX="9.75" PointY="5.5752416382211534" />
           <ConnectorPoint PointX="10.125" PointY="5.9502416382211534" />
           <ConnectorPoint PointX="10.125" PointY="5.7590950520833326" />
-          <ConnectorPoint PointX="10.653478893229165" PointY="5.7590950520833317" />
-          <ConnectorPoint PointX="10.820145559895833" PointY="5.7590950520833326" />
-          <ConnectorPoint PointX="10.952796119791666" PointY="5.7590950520833317" />
-          <ConnectorPoint PointX="11.119462786458334" PointY="5.7590950520833326" />
-          <ConnectorPoint PointX="11.184731393229166" PointY="5.7590950520833317" />
-          <ConnectorPoint PointX="11.351398059895834" PointY="5.7590950520833326" />
+          <ConnectorPoint PointX="10.636633404947917" PointY="5.7590950520833317" />
+          <ConnectorPoint PointX="10.803300071614585" PointY="5.7590950520833326" />
+          <ConnectorPoint PointX="10.919105143229166" PointY="5.7590950520833317" />
+          <ConnectorPoint PointX="11.085771809895833" PointY="5.7590950520833326" />
+          <ConnectorPoint PointX="11.167885904947916" PointY="5.7590950520833317" />
+          <ConnectorPoint PointX="11.334552571614584" PointY="5.7590950520833326" />
           <ConnectorPoint PointX="11.416666666666666" PointY="5.7590950520833317" />
           <ConnectorPoint PointX="11.583333333333334" PointY="5.7590950520833326" />
           <ConnectorPoint PointX="13.125" PointY="5.7590950520833326" />
@@ -1689,8 +1694,8 @@
         <EntityTypeShape EntityType="RSMModel.SubjectType" Width="1.5" PointX="0.75" PointY="4.375" Height="1.7879850260416674" />
         <AssociationConnector Association="RSMModel.FK_Instructor_SubjectType" >
           <ConnectorPoint PointX="2.25" PointY="5.1220914713541656" />
-          <ConnectorPoint PointX="5.7135404166666666" PointY="5.1220914713541648" />
-          <ConnectorPoint PointX="5.8802070833333326" PointY="5.1220914713541656" />
+          <ConnectorPoint PointX="5.6547027408854165" PointY="5.1220914713541648" />
+          <ConnectorPoint PointX="5.8213694075520825" PointY="5.1220914713541656" />
           <ConnectorPoint PointX="8.25" PointY="5.1220914713541656" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_Subject_SubjectType" >
@@ -1706,13 +1711,13 @@
           <ConnectorPoint PointX="9" PointY="12.66814947265625" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_RollCall_Class" >
-          <ConnectorPoint PointX="4.5" PointY="6.0739506533616279" />
-          <ConnectorPoint PointX="5.7135404166666666" PointY="6.073950653361627" />
-          <ConnectorPoint PointX="5.8802070833333326" PointY="6.0739506533616279" />
-          <ConnectorPoint PointX="10.653478893229165" PointY="6.073950653361627" />
-          <ConnectorPoint PointX="10.820145559895833" PointY="6.0739506533616279" />
-          <ConnectorPoint PointX="11.036129453125" PointY="6.0739506533616279" />
-          <ConnectorPoint PointX="11.036129453125" PointY="5.4129036458333317" />
+          <ConnectorPoint PointX="4.5" PointY="6.1098729532377929" />
+          <ConnectorPoint PointX="5.6547027408854165" PointY="6.109872953237792" />
+          <ConnectorPoint PointX="5.8213694075520825" PointY="6.1098729532377929" />
+          <ConnectorPoint PointX="10.636633404947917" PointY="6.109872953237792" />
+          <ConnectorPoint PointX="10.803300071614585" PointY="6.1098729532377929" />
+          <ConnectorPoint PointX="11.0024384765625" PointY="6.1098729532377929" />
+          <ConnectorPoint PointX="11.0024384765625" PointY="5.4129036458333317" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_RollCall_Instructor" >
           <ConnectorPoint PointX="9.75" PointY="3.7280900358072877" />
@@ -1724,13 +1729,13 @@
           <ConnectorPoint PointX="10.5" PointY="1.6562499999999998" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_RollCall_Subject" >
-          <ConnectorPoint PointX="4.5" PointY="10.276321614583335" />
-          <ConnectorPoint PointX="5.7135404166666666" PointY="10.276321614583335" />
-          <ConnectorPoint PointX="5.8802070833333326" PointY="10.276321614583335" />
-          <ConnectorPoint PointX="6.2213560416666667" PointY="10.276321614583335" />
-          <ConnectorPoint PointX="6.3880227083333327" PointY="10.276321614583335" />
-          <ConnectorPoint PointX="10.736812226562499" PointY="10.276321614583335" />
-          <ConnectorPoint PointX="10.736812226562499" PointY="5.4129036458333317" />
+          <ConnectorPoint PointX="4.5" PointY="10.361481213205016" />
+          <ConnectorPoint PointX="5.6547027408854165" PointY="10.361481213205016" />
+          <ConnectorPoint PointX="5.8213694075520825" PointY="10.361481213205016" />
+          <ConnectorPoint PointX="6.1919372037760416" PointY="10.361481213205016" />
+          <ConnectorPoint PointX="6.3586038704427077" PointY="10.361481213205016" />
+          <ConnectorPoint PointX="10.719966738281251" PointY="10.361481213205016" />
+          <ConnectorPoint PointX="10.719966738281251" PointY="5.4129036458333317" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_StudySession_RollCall" >
           <ConnectorPoint PointX="12" PointY="3.7280900358072877" />
@@ -1740,12 +1745,12 @@
         <EntityTypeShape EntityType="RSMModel.StudentImage" Width="1.5" PointX="18" PointY="7.75" Height="1.7879850260416674" />
         <AssociationConnector Association="RSMModel.Class_Student_FK1" >
           <ConnectorPoint PointX="4.5" PointY="6.65625" />
-          <ConnectorPoint PointX="5.7135404166666666" PointY="6.6562499999999991" />
-          <ConnectorPoint PointX="5.8802070833333326" PointY="6.65625" />
-          <ConnectorPoint PointX="10.653478893229165" PointY="6.6562499999999991" />
-          <ConnectorPoint PointX="10.820145559895833" PointY="6.65625" />
-          <ConnectorPoint PointX="11.184731393229166" PointY="6.6562499999999991" />
-          <ConnectorPoint PointX="11.351398059895834" PointY="6.65625" />
+          <ConnectorPoint PointX="5.6547027408854165" PointY="6.6562499999999991" />
+          <ConnectorPoint PointX="5.8213694075520825" PointY="6.65625" />
+          <ConnectorPoint PointX="10.636633404947917" PointY="6.6562499999999991" />
+          <ConnectorPoint PointX="10.803300071614585" PointY="6.65625" />
+          <ConnectorPoint PointX="11.167885904947916" PointY="6.6562499999999991" />
+          <ConnectorPoint PointX="11.334552571614584" PointY="6.65625" />
           <ConnectorPoint PointX="11.416666666666666" PointY="6.6562499999999991" />
           <ConnectorPoint PointX="11.583333333333334" PointY="6.65625" />
           <ConnectorPoint PointX="15.75" PointY="6.65625" />
@@ -1759,26 +1764,27 @@
           <ConnectorPoint PointX="18" PointY="8.6439925130208337" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.User_Student_FK1" >
-          <ConnectorPoint PointX="6.304689375" PointY="13.375" />
-          <ConnectorPoint PointX="6.304689375" PointY="9.5354624264100316" />
-          <ConnectorPoint PointX="10.653478893229165" PointY="9.5354624264100316" />
-          <ConnectorPoint PointX="10.820145559895833" PointY="9.5354624264100316" />
-          <ConnectorPoint PointX="11.416666666666666" PointY="9.5354624264100316" />
-          <ConnectorPoint PointX="11.583333333333334" PointY="9.5354624264100316" />
-          <ConnectorPoint PointX="15.75" PointY="9.5354624264100316" />
+          <ConnectorPoint PointX="6.2752705371093747" PointY="13.375" />
+          <ConnectorPoint PointX="6.2752705371093747" PointY="9.5829973744930967" />
+          <ConnectorPoint PointX="10.636633404947917" PointY="9.5829973744930967" />
+          <ConnectorPoint PointX="10.803300071614585" PointY="9.5829973744930967" />
+          <ConnectorPoint PointX="11.416666666666666" PointY="9.5829973744930967" />
+          <ConnectorPoint PointX="11.583333333333334" PointY="9.5829973744930967" />
+          <ConnectorPoint PointX="15.75" PointY="9.5829973744930967" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.StudentInRollCall" >
-          <ConnectorPoint PointX="11.2680647265625" PointY="5.4129036458333317" />
-          <ConnectorPoint PointX="11.2680647265625" PointY="9.1328719423716915" />
-          <ConnectorPoint PointX="11.416666666666666" PointY="9.1328719423716915" />
-          <ConnectorPoint PointX="11.583333333333334" PointY="9.1328719423716915" />
-          <ConnectorPoint PointX="15.75" PointY="9.1328719423716915" />
+          <ConnectorPoint PointX="11.25121923828125" PointY="5.4129036458333317" />
+          <ConnectorPoint PointX="11.25121923828125" PointY="9.1566394164132241" />
+          <ConnectorPoint PointX="11.416666666666666" PointY="9.1566394164132241" />
+          <ConnectorPoint PointX="11.583333333333334" PointY="9.1566394164132241" />
+          <ConnectorPoint PointX="15.75" PointY="9.1566394164132241" />
         </AssociationConnector>
-        <EntityTypeShape EntityType="RSMModel.Request" Width="1.5" PointX="18" PointY="10.25" Height="2.3648893229166674" />
-        <EntityTypeShape EntityType="RSMModel.RequestImage" Width="1.5" PointX="20.25" PointY="10.625" Height="1.7879850260416674" />
+        <EntityTypeShape EntityType="RSMModel.Request" Width="1.5" PointX="18" PointY="11.25" Height="2.5571907552083317" />
+        <EntityTypeShape EntityType="RSMModel.RequestImage" Width="1.5" PointX="20.25" PointY="11.625" Height="1.7879850260416674" />
         <AssociationConnector Association="RSMModel.FK_Request_Student" >
-          <ConnectorPoint PointX="17.25" PointY="10.485301106770834" />
-          <ConnectorPoint PointX="18" PointY="10.485301106770834" />
+          <ConnectorPoint PointX="16.5" PointY="10.720602213541666" />
+          <ConnectorPoint PointX="16.5" PointY="12.528595377604166" />
+          <ConnectorPoint PointX="18" PointY="12.528595377604166" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_Request_User" >
           <ConnectorPoint PointX="6.75" PointY="14.391696404947915" />
@@ -1788,12 +1794,14 @@
           <ConnectorPoint PointX="7.25" PointY="14.375" />
           <ConnectorPoint PointX="9.5" PointY="14.375" />
           <ConnectorPoint PointX="9.5" PointY="13.375" />
-          <ConnectorPoint PointX="18.75" PointY="13.375" />
-          <ConnectorPoint PointX="18.75" PointY="12.614889322916667" />
+          <ConnectorPoint PointX="17.75" PointY="13.375" />
+          <ConnectorPoint PointX="17.75" PointY="14.057190755208332" />
+          <ConnectorPoint PointX="18.75" PointY="14.057190755208332" />
+          <ConnectorPoint PointX="18.75" PointY="13.807190755208332" />
         </AssociationConnector>
         <AssociationConnector Association="RSMModel.FK_RequestImage_Request" >
-          <ConnectorPoint PointX="19.5" PointY="11.518992513020834" />
-          <ConnectorPoint PointX="20.25" PointY="11.518992513020834" />
+          <ConnectorPoint PointX="19.5" PointY="12.518992513020834" />
+          <ConnectorPoint PointX="20.25" PointY="12.518992513020834" />
         </AssociationConnector>
         </Diagram>
     </Diagrams>
