@@ -18,6 +18,7 @@ namespace RollSystemMobile.Controllers
         private StudentBusiness StuBO;
         private AccountBusiness AccBO;
         private RollCallBusiness RollBO;
+        private RequestBusiness ReBO;
 
         public StudentController()
         {
@@ -27,6 +28,7 @@ namespace RollSystemMobile.Controllers
             StuBO = new StudentBusiness(db);
             AccBO = new AccountBusiness(db);
             RollBO = new RollCallBusiness(db);
+            ReBO = new RequestBusiness(db);
         }
         //
         // GET: /Student/
@@ -152,6 +154,12 @@ namespace RollSystemMobile.Controllers
             StuBO.Delete(student);
             return RedirectToAction("Index");
         }
+        public ActionResult DeleteRequest(int id) {
+            var request = ReBO.GetRequestByID(id);
+            ReBO.Delete(request);
+            return RedirectToAction("StudentImage", "Student", new { StudentID = request.StudentID });
+        }
+
         //Hien thi cac mon ma student do da hoc
         public ActionResult CourseList()
         {
@@ -170,6 +178,41 @@ namespace RollSystemMobile.Controllers
             return View(Model);
         }
 
+        public ActionResult StudentImage(int StudentID)
+        {
+            var Student = StuBO.GetStudentByID(StudentID);
+            ViewBag.Errors = TempData["Errors"];
+            return View(Student);
+        }
+
+        [HttpPost]
+        //student view image or upload image
+        public ActionResult StudentImage(int StudentID, IEnumerable<HttpPostedFileBase> ImageFiles)
+        { 
+        
+            ViewBag.StudentID = StudentID;
+            var student = StuBO.GetStudentByID(StudentID);
+            ViewBag.StudentCode = student.StudentCode;
+            ViewBag.StudentName = student.FullName;
+
+            List<RecognizerResult> Results = new List<RecognizerResult>();
+
+            foreach (HttpPostedFileBase file in ImageFiles)
+            {
+                //Save file anh xuong
+                String OldPath = Server.MapPath("~/Content/Temp/" + file.FileName);
+                file.SaveAs(OldPath);
+
+                //Resize file anh
+                String NewPath = Server.MapPath("~/Content/Temp/Resized/" + file.FileName);
+                FaceBusiness.ResizeImage(OldPath, NewPath);
+
+                //Nhan dien khuon mat, cho vao danh sach
+                RecognizerResult SingleResult = FaceBusiness.DetectFromImage(NewPath);
+                Results.Add(SingleResult);
+            }
+            return View("StudentImageResult", Results);
+        }
         public ActionResult RollAttendance(int RollCallID, int StudentID)
         {
             Student Stu = StuBO.GetStudentByID(StudentID);

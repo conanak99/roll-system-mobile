@@ -21,9 +21,22 @@ namespace RollSystemMobile.Models.BusinessObject
             
         }
 
+        public Request GetRequestByID(int id)
+        {
+            return base.GetList().SingleOrDefault(c => c.RequestID == id);
+        }
+
         public void InsertImage(RequestImage ReqImg)
         {
-            RollSystemDB.RequestImages.AddObject(ReqImg);
+            try
+            {
+                RollSystemDB.RequestImages.AddObject(ReqImg);
+                RollSystemDB.SaveChanges();
+            }
+            catch (Exception e)
+            { 
+            
+            }
         }
     }
 }
