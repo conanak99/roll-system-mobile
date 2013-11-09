@@ -35,7 +35,6 @@ namespace RollSystemMobile.Controllers
 
         public ViewResult Index()
         {
-
             return View(StuBO.GetAllStudents().ToList());
         }
 
@@ -111,8 +110,9 @@ namespace RollSystemMobile.Controllers
                 List<Class> cls = ClassBO.GetAllClasses().Where(a => a.MajorID == type && a.Students.Count() < 30 && a.ClassID != clsid).ToList();
                 ViewBag.ClassID = cls;
             }
-            else { 
-                ViewBag.ClassID = ClassBO.GetAllClasses();            
+            else
+            {
+                ViewBag.ClassID = ClassBO.GetAllClasses();
             }
             return View(student);
         }
@@ -127,7 +127,8 @@ namespace RollSystemMobile.Controllers
                 {
                     std.ClassID = student.ClassID;
                 }
-                else {
+                else
+                {
                     std.ClassID = null;
                 }
                 StuBO.UpdateExist(std);
@@ -154,7 +155,8 @@ namespace RollSystemMobile.Controllers
             StuBO.Delete(student);
             return RedirectToAction("Index");
         }
-        public ActionResult DeleteRequest(int id) {
+        public ActionResult DeleteRequest(int id)
+        {
             var request = ReBO.GetRequestByID(id);
             ReBO.Delete(request);
             return RedirectToAction("StudentImage", "Student", new { StudentID = request.StudentID });
@@ -188,8 +190,8 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         //student view image or upload image
         public ActionResult StudentImage(int StudentID, IEnumerable<HttpPostedFileBase> ImageFiles)
-        { 
-        
+        {
+
             ViewBag.StudentID = StudentID;
             var student = StuBO.GetStudentByID(StudentID);
             ViewBag.StudentCode = student.StudentCode;
