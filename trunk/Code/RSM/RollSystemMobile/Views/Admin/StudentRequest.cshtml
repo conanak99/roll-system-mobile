@@ -1,0 +1,132 @@
+﻿@model IEnumerable<RollSystemMobile.Models.Request>
+@{
+    ViewBag.Title = "StudentRequest";
+}
+@section ExtraHead {
+    <style>
+        body
+        {
+            background-color: White;
+        }
+    </style>
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>Image Requests</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons user">
+                <i></i>Image Requests</h3>
+        </div>
+        <div class="widget-body">
+            @if (Model.Count() > 0)
+            {
+                <table class="table table-bordered table-striped table-condensed" id="example" style="background-color: #49ad47;
+                    opacity: 1.0 !important">
+                    <thead>
+                        <tr>
+                            <th class="text-right" style="color: #ffffff; width:20px;">
+                                No.
+                            </th>
+                            <th style="color: #ffffff;width:100px;">
+                                Student Code
+                            </th>
+                            <th style="color: #ffffff;width:100px;">
+                                Full Name
+                            </th>
+                            <th class="text-center" style="color: #ffffff">
+                                Images
+                            </th>
+                            <th style="color: #ffffff;width:100px;">
+                                Time
+                            </th>
+                            <th style="width:150px;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ int index = 1;}
+                        @foreach (var item in Model.OrderBy(r => r.Student.FullName))
+                        {
+                            <tr>
+                                <td style="text-align:right;">
+                                    @index
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Student.StudentCode)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Student.FullName)
+                                </td>
+                                <td>
+                                    @foreach (var image in item.RequestImages)
+                                    {
+                                        <div class="thumbnail-holder">
+                                            <img class="thumbnail" src="@Url.TrainingImage(image.ImageLink)" />
+                                        </div>
+                                    }
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SentTime)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" onclick="acceptRequest('@item.RequestID','@User.Identity.Name')">Accept</a>
+                                    <a class="btn btn-warning" onclick="denyRequest('@item.RequestID','@User.Identity.Name')">Deny</a>
+                                </td>
+                            </tr>
+                               { index++; }
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>
+                    There is no request from student !</p>
+            }
+        </div>
+    </div>
+</div>
+<script>
+
+    /* Table initialisation */
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "_MENU_ records per page"
+            },
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3,4,5]}]
+        });
+    });
+    function acceptRequest(requestID, name) {
+        var result = confirm("Do you want to save images !");
+        if (result == true) {
+            var link = '@Url.Action("AcceptRequest", new { requestID = "tmp1",name="tmp2"})';
+            link = link.replace("amp;", "");
+            link = link.replace("amp;", "");
+            link = link.replace("tmp1", requestID);
+            link = link.replace("tmp2", name);
+            link = link.replace("System.Security.Principal.GenericIdentity", "");
+            window.location.href = link;
+        }
+    }
+    function denyRequest(requestID,name) {
+        var result = confirm("Do you want to deny this request !");
+        if (result == true) {
+            var link = '@Url.Action("DenyRequest", new { requestID = "tmp1",name="tmp2"})';
+            link = link.replace("amp;", "");
+            link = link.replace("amp;", "");
+            link = link.replace("tmp1", requestID);
+            link = link.replace("tmp2", name);
+            link = link.replace("System.Security.Principal.GenericIdentity", "");
+            window.location.href = link;
+            alert(link);
+        }
+    }
+</script>

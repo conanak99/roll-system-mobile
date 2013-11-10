@@ -17,15 +17,21 @@ namespace RollSystemMobile.Controllers
         // GET: /Admin/
         private StudentBusiness StuBO;
         private ClassBusiness ClaBO;
-
+        private RequestBusiness ReBO;
         private SelectListFactory SlFactory;
-
+        private RequestImageBusiness ReImBO;
+        private StudentImageBusiness StuImBO;
+        private UserBusiness UserBO;
         public AdminController()
         {
             RSMEntities db = new RSMEntities();
             StuBO = new StudentBusiness(db);
             ClaBO = new ClassBusiness(db);
+            ReBO = new RequestBusiness(db);
             SlFactory = new SelectListFactory(db);
+            ReImBO = new RequestImageBusiness(db);
+            StuImBO = new StudentImageBusiness(db);
+            UserBO = new UserBusiness(db);
         }
 
         public ActionResult Index()
@@ -50,7 +56,44 @@ namespace RollSystemMobile.Controllers
             ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
             return View(Students);
         }
+        public ActionResult StudentRequest()
+        {
+            List<Request> Requests = null;
+            Requests = ReBO.GetList().Where(r => r.CheckedAdminID == null).ToList();
 
+            return View(Requests);
+        }
+        public ActionResult AcceptRequest(int requestID,String name)
+        {
+            var adminID = UserBO.GetList().SingleOrDefault(u => u.Username == name).UserID;
+            var req = ReBO.GetRequestByID(requestID);
+            req.IsAccepted = true;
+            req.CheckedAdminID = adminID;
+            ReBO.UpdateExist(req);
+
+            List<RequestImage> requestImage = null;
+            requestImage = ReImBO.GetList().Where(r => r.RequestID == requestID).ToList();
+            foreach (var rq in requestImage)
+            {
+                var stImage = new StudentImage();
+                stImage.StudentID = rq.RequestID;
+                stImage.ImageID = rq.ImageID;
+                stImage.ImageLink = rq.ImageLink;
+                StuImBO.Insert(stImage);
+            }
+
+            return RedirectToAction("StudentRequest");
+        }
+        public ActionResult DenyRequest(int requestID,String name)
+        {
+            var adminID = UserBO.GetList().SingleOrDefault(u => u.Username == name).UserID;
+            var req = ReBO.GetRequestByID(requestID);
+            req.IsAccepted = false;
+            req.CheckedAdminID = adminID;
+            ReBO.UpdateExist(req);
+
+            return RedirectToAction("StudentRequest");
+        }
         public ActionResult SingleStudent(int StudentID)
         {
             var Student = StuBO.GetStudentByID(StudentID);
@@ -235,7 +278,7 @@ namespace RollSystemMobile.Controllers
                 Model.ClassID = ClassID.Value;
             }
             Model.LogList = LogBO.FindLogWithImages(FromDate, ToDate, ClassID);
-            
+
 
             ViewBag.ClassID = SlFactory.MakeSelectList<Class>("ClassID", "ClassName");
             return View(Model);
@@ -247,7 +290,7 @@ namespace RollSystemMobile.Controllers
             LogBusiness LogBO = new LogBusiness();
 
             //Lay nhung image da chon tu db, sort theo rollcall ID
-            List<LogImage> ImageList = ImageIDs.Select(id=> LogBO.GetLogImageByID(id))
+            List<LogImage> ImageList = ImageIDs.Select(id => LogBO.GetLogImageByID(id))
                                        .OrderBy(img => img.AttendanceLog.RollCallID).ToList();
 
             List<int> RollCallIDs = ImageList.Select(img => img.AttendanceLog.RollCallID).Distinct().ToList();
@@ -260,14 +303,14 @@ namespace RollSystemMobile.Controllers
                 List<String> ImagePaths = RollCallImages.Select(img => Server.MapPath("~/Content/Log/" + img.ImageLink)).ToList();
 
                 //Nhan dien khuon mat, dua vao list de show ra
-               Result.AddRange(FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths));
+                Result.AddRange(FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths));
             }
 
 
             //Danh sash student de tao select list
             ViewBag.Students = StuBO.GetAllStudents();
 
-            return View("LogImagesResult",Result);
+            return View("LogImagesResult", Result);
         }
     }
 }
