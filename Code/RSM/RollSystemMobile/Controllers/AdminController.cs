@@ -19,9 +19,10 @@ namespace RollSystemMobile.Controllers
         private ClassBusiness ClaBO;
         private RequestBusiness ReBO;
         private SelectListFactory SlFactory;
-        private RequestImageBusiness ReImBO;
+        private StaffBusiness StaffBO;
         private StudentImageBusiness StuImBO;
-        private UserBusiness UserBO;
+        private AccountBusiness AccBO;
+
         public AdminController()
         {
             RSMEntities db = new RSMEntities();
@@ -29,9 +30,9 @@ namespace RollSystemMobile.Controllers
             ClaBO = new ClassBusiness(db);
             ReBO = new RequestBusiness(db);
             SlFactory = new SelectListFactory(db);
-            ReImBO = new RequestImageBusiness(db);
+            StaffBO = new StaffBusiness(db);
+            AccBO = new AccountBusiness(db);
             StuImBO = new StudentImageBusiness(db);
-            UserBO = new UserBusiness(db);
         }
 
         public ActionResult Index()
@@ -45,38 +46,43 @@ namespace RollSystemMobile.Controllers
 
             if (ClassID == null)
             {
-                Students = StuBO.GetActiveStudents();
+                Students = StuBO.GetActiveStudents().OrderByDescending(s => s.StudentID).ToList();
             }
             else
             {
-                Students = StuBO.GetStudentInClass(ClassID.Value);
+                Students = StuBO.GetStudentInClass(ClassID.Value).OrderByDescending(s => s.StudentID).ToList();
             }
 
             var Classes = ClaBO.GetActiveClasses();
             ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
             return View(Students);
         }
+
         public ActionResult StudentRequest()
         {
-            List<Request> Requests = null;
-            Requests = ReBO.GetList().Where(r => r.CheckedAdminID == null).ToList();
-
+            List<Request> Requests = ReBO.GetPendingRequest();
             return View(Requests);
         }
+
+        [ChildActionOnly]
+        public ActionResult RequestCount()
+        {
+            ViewBag.RequestCount = ReBO.GetPendingRequest().Count;
+            return PartialView("_RequestCount");
+        }
+
         public ActionResult AcceptRequest(int requestID,String name)
         {
-            var adminID = UserBO.GetList().SingleOrDefault(u => u.Username == name).UserID;
+            var adminID = AccBO.GetUserByUsername(name).UserID;
             var req = ReBO.GetRequestByID(requestID);
             req.IsAccepted = true;
             req.CheckedAdminID = adminID;
             ReBO.UpdateExist(req);
 
-            List<RequestImage> requestImage = null;
-            requestImage = ReImBO.GetList().Where(r => r.RequestID == requestID).ToList();
-            foreach (var rq in requestImage)
+            foreach (var rq in req.RequestImages)
             {
                 var stImage = new StudentImage();
-                stImage.StudentID = rq.RequestID;
+                stImage.StudentID = rq.Request.StudentID;
                 stImage.ImageID = rq.ImageID;
                 stImage.ImageLink = rq.ImageLink;
                 StuImBO.Insert(stImage);
@@ -84,9 +90,10 @@ namespace RollSystemMobile.Controllers
 
             return RedirectToAction("StudentRequest");
         }
+
         public ActionResult DenyRequest(int requestID,String name)
         {
-            var adminID = UserBO.GetList().SingleOrDefault(u => u.Username == name).UserID;
+            var adminID = AccBO.GetUserByUsername(name).UserID;
             var req = ReBO.GetRequestByID(requestID);
             req.IsAccepted = false;
             req.CheckedAdminID = adminID;
@@ -94,6 +101,7 @@ namespace RollSystemMobile.Controllers
 
             return RedirectToAction("StudentRequest");
         }
+
         public ActionResult SingleStudent(int StudentID)
         {
             var Student = StuBO.GetStudentByID(StudentID);
@@ -202,23 +210,45 @@ namespace RollSystemMobile.Controllers
             return View("RecognizeTestingResult", Result);
         }
 
+        public ActionResult AddStaff()
+        {
+            AddStaffModel Model = new AddStaffModel() { CreateAccount = true };
+            return View(Model);
+        }
+
+        [HttpPost]
+        public ActionResult AddStaff(AddStaffModel Model)
+        {
+            if (ModelState.IsValid)
+            {
+                Staff staff = new Staff() { Fullname = Model.Name, Email = Model.Email, Phone = Model.Phone, IsActive = true };
+                if (Model.CreateAccount)
+                {
+                  staff.User = AccBO.CreateUser(staff.Fullname);
+                }
+                StaffBO.Insert(staff);
+                return RedirectToAction("StaffAccountList");
+            }
+            return View(Model);
+        }
+
         public ActionResult StaffAccountList()
         {
             StaffBusiness StaffBO = new StaffBusiness();
-            var Model = StaffBO.GetAllStaff();
+            var Model = StaffBO.GetAllStaff().OrderByDescending(s => s.StaffID).ToList();
             return View(Model);
         }
 
         public ActionResult InstructorAccountList()
         {
             InstructorBusiness InsBO = new InstructorBusiness();
-            var Model = InsBO.GetAllInstructor();
+            var Model = InsBO.GetAllInstructor().OrderByDescending(ins => ins.InstructorID);
             return View(Model);
         }
 
         public ActionResult StudentAccountList()
         {
-            var Model = StuBO.GetAllStudents();
+            var Model = StuBO.GetAllStudents().OrderByDescending(s => s.StudentID);
             return View(Model);
         }
 

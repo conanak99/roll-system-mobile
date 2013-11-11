@@ -13,11 +13,9 @@ namespace RollSystemMobile.Controllers
     {
         private StudentImageBusiness StuImaBO;
         private RequestBusiness ReBO;
-        private RequestImageBusiness ReImBO;
 
         public ImageController()
         {
-            ReImBO = new RequestImageBusiness();
             ReBO = new RequestBusiness();
             StuImaBO = new StudentImageBusiness();
         }
@@ -125,6 +123,22 @@ namespace RollSystemMobile.Controllers
             return Redirect(model.ReturnUrl);
         }
 
+        public ActionResult DeleteRequestImage(int ImageID)
+        {
+            var TrainingImage = ReBO.FindReqImageByID(ImageID);
+            String message = "";
+            int imageRemaining = 0;
+            if (TrainingImage != null)
+            {
+                ReBO.DeleteImage(TrainingImage);
+                message = TrainingImage.ImageLink + " deleted.";
+            }
+            else
+            {
+                message = "Error. Image not exist in DB";
+            }
+            return Json(new { message = message, count = imageRemaining }, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult DeleteTrainingImage(int ImageID)
         {
