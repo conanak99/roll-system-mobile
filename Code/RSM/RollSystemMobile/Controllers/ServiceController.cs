@@ -7,10 +7,12 @@ using RollSystemMobile.Models;
 using RollSystemMobile.Models.BindingModels;
 using RollSystemMobile.Models.BusinessObject;
 
+
 namespace RollSystemMobile.Controllers
 {
     public class ServiceController : Controller
     {
+        private RSMEntities RollSystemDB;
 
         [HttpPost]
         public ActionResult Login(string Username, string Password)
@@ -106,6 +108,7 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult GetRollCallInfo(int RollCallID)
         {
+           
             RollCallBusiness RollBO = new RollCallBusiness();
             RollCall rollcall = RollBO.GetRollCallByID(RollCallID);
 
@@ -119,14 +122,23 @@ namespace RollSystemMobile.Controllers
                 classes = rollcall.Class.ClassName,
                 time = rollcall.StartTime.ToString(@"hh\:mm") + " - " + rollcall.EndTime.ToString(@"hh\:mm"),
                 date = rollcall.BeginDate.ToString("dd-MM-yyyy") + " to " + rollcall.EndDate.ToString("dd-MM-yyyy"),
-                studentList = rollcall.Students.Select(st => new { studentID = st.StudentID, studentCode = st.StudentCode, studentName = st.FullName }),
+                
+                studentList = rollcall.Students.Select(st => new { 
+                    studentID = st.StudentID, 
+                    studentCode = st.StudentCode, 
+                    studentName = st.FullName,
+                    percentRate = String.Format("{0:0.00}%",AttenBO.GetStudentAbsentRate(st.StudentID,RollCallID))
+                    
+                }),
                 logList = AttendLog.Where(log => log.LogDate >= DateTime.Today.AddDays(-1)).OrderByDescending(log => log.LogDate).Select(log => new
                 {
                     rollID = log.RollCallID,
                     logID = log.LogID,
                     logDate = log.LogDate.ToString("dd-MM-yyyy"),
-                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count
-                })
+                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count,
+                    
+                }),
+                
             };
 
             return Json(RollJson, JsonRequestBehavior.AllowGet);
