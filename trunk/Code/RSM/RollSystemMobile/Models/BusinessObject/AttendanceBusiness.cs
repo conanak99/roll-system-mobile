@@ -8,6 +8,9 @@ namespace RollSystemMobile.Models.BusinessObject
 {
     public class AttendanceBusiness: GenericBusiness<AttendanceLog>
     {
+        private RollCallBusiness RollBO;
+        private StudentBusiness StuBO;
+
         public AttendanceBusiness()
         {
         }
@@ -242,7 +245,10 @@ namespace RollSystemMobile.Models.BusinessObject
         public List<AttendanceLog> GetRollCallAttendanceLog(int RollCallID)
         {
             //Lay roll call ra
-            RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
+            if (RollBO == null)
+            {
+                RollBO = new RollCallBusiness(this.RollSystemDB);
+            }
             RollCall RollCall = RollBO.GetRollCallByID(RollCallID);
             
             //Lay cac ngay trong roll call
@@ -282,9 +288,13 @@ namespace RollSystemMobile.Models.BusinessObject
 
         public double GetStudentAbsentRate(int StudentID, int RollCallID)
         {
-            RollCallBusiness RollBO = new RollCallBusiness(RollSystemDB);
-            StudentBusiness StuBO = new StudentBusiness(RollSystemDB);
-
+            //Dung nhieu nen phai de trong private
+            if (RollBO == null || StuBO == null)
+            {
+                RollBO = new RollCallBusiness(RollSystemDB);
+                StuBO = new StudentBusiness(RollSystemDB);
+            }
+           
             var AttendanceLogs = GetRollCallAttendanceLog(RollCallID);
             var Student = StuBO.GetStudentByID(StudentID);
             var RollCall = RollBO.GetRollCallByID(RollCallID);

@@ -3,8 +3,9 @@
     ViewBag.Title = "StudentImage";
     Layout = "~/Views/Student/_Layout.cshtml";
 }
-<div class="separator bottom">
-</div>
+
+<a class="btn btn-primary" href="@Url.Action("CourseList")">Back</a>
+
 <div class="innerLR">
     <div class="widget">
         <div class="widget-head">
@@ -48,7 +49,7 @@
     }
     <h3>
         Your pending request:</h3>
-    <table class="table table-bordered table-striped" id="example">
+    <table class="table table-bordered table-condensed table-striped" id="example">
         <thead>
             <th style="background-color: #70ad47; color: #ffffff">
                 No.
@@ -59,7 +60,8 @@
             <th style="background-color: #70ad47; color: #ffffff">
                 Time
             </th>
-            <th>
+            <th class="text-center" style="background-color: #70ad47; color: #ffffff">
+            Action
             </th>
         </thead>
         <tbody>
@@ -78,10 +80,10 @@
                         }
                     </td>
                     <td>
-                    @item.SentTime.ToString("dd-MM-yyyy hh:mm:ss")
+                   @Html.DisplayFor(modelItem => item.SentTime)
                     </td>
-                    <td>
-                   <a href="@Url.Action("DeleteRequest", new { id = item.RequestID })">Delete</a>
+                    <td class="text-center">
+                   <a class="btn btn-danger" href="@Url.Action("DeleteRequest", new { id = item.RequestID })">Cancel</a>
                     </td>
                 </tr>
                 { index++; }
@@ -161,4 +163,9 @@
     });
 
     $(":file").filestyle({ buttonText: "Select student's images" });
+
+    $('a.btn-danger').click(function () {
+        var con = confirm("Do you really want to cancel the request");
+        return con;
+    });
 </script>

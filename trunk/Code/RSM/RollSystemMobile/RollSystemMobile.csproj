@@ -156,7 +156,6 @@
     <Compile Include="Models\BusinessObject\CalendarBusiness.cs" />
     <Compile Include="Models\BusinessObject\RequestBusiness.cs" />
     <Compile Include="Models\BusinessObject\LogBusiness.cs" />
-    <Compile Include="Models\BusinessObject\RequestImageBusiness.cs" />
     <Compile Include="Models\BusinessObject\SemesterBusiness.cs" />
     <Compile Include="Models\BusinessObject\StaffBusiness.cs" />
     <Compile Include="Models\BusinessObject\StudySessionBusiness.cs" />
@@ -440,7 +439,6 @@
     <Content Include="Views\Instructor\CheckAttendanceAuto.cshtml" />
     <Content Include="Views\Instructor\RollCallDetail.cshtml" />
     <Content Include="Views\Instructor\_LogDetail.cshtml" />
-    <Content Include="Views\Staff\ImportExcelFileToDatabase.cshtml" />
     <Content Include="Views\RollCall\Index.cshtml" />
     <Content Include="Views\RollCall\Details.cshtml" />
     <Content Include="Views\RollCall\Create.cshtml" />
@@ -498,6 +496,9 @@
     <Content Include="Views\RollCall\RollCallDetail.cshtml" />
     <Content Include="Views\Student\StudentImage.cshtml" />
     <Content Include="Views\Student\StudentImageResult.cshtml" />
+    <Content Include="Views\Admin\StudentRequest.cshtml" />
+    <Content Include="Views\Admin\_RequestCount.cshtml" />
+    <Content Include="Views\Admin\AddStaff.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

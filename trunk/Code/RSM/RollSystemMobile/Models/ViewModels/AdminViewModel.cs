@@ -35,6 +35,26 @@ namespace RollSystemMobile.Models.ViewModels
         }
     }
 
+    public class AddStaffModel
+    {
+        [Required(ErrorMessage = "Please enter staff name")]
+        [MinLength(5, ErrorMessage="Name must be longer than 5 characters")]
+        [MaxLength(50, ErrorMessage="Name must be shorter than 50 character")]
+        public String Name { get; set; }
+
+        [MinLength(5, ErrorMessage = "Email must be longer than 5 characters")]
+        [MaxLength(50, ErrorMessage = "Email must be shorter than 50 character")]
+        [DataType(DataType.EmailAddress, ErrorMessage = "Invalid email format")]
+        [RegularExpression(@"^([\w\.])+@([\w])+\.(\w){2,6}(\.([\w]){2,4})*$", ErrorMessage = "Invalid email format")]
+        public String Email { get; set; }
+
+        [MinLength(10, ErrorMessage = "Phone number must in range [10-12]")]
+        [MaxLength(12, ErrorMessage = "Phone number must in range [10-12]")]
+        [RegularExpression("[0-9]{10,12}", ErrorMessage = "Invalid phone number format")]
+        public String Phone { get; set; }
+        public bool CreateAccount { get; set; }
+    }
+
     public class LogImageViewModel
     {
         public DateTime FromDate { get; set; }

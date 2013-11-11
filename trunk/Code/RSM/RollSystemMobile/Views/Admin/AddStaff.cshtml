@@ -1,0 +1,65 @@
+﻿@model RollSystemMobile.Models.ViewModels.AddStaffModel
+@{
+    ViewBag.Title = "Add Staff";
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>Add Staff</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons settings">
+                <i></i>Add Staff</h3>
+        </div>
+        <div class="widget-body">
+            @using (Html.BeginForm("AddStaff", "Admin", FormMethod.Post))
+            {
+                
+                @Html.ValidationSummary(true)
+                <div class="row-fluid">
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">
+                            Staff Name(*)</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "span2" })
+                            @Html.ValidationMessageFor(model => model.Name)
+                            <span class="help-block">Example: Phạm Huy Hoàng</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">
+                            Email</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Email, new { @class = "span2" })
+                            @Html.ValidationMessageFor(model => model.Email)
+                            <span class="help-block">Example: hoangkh@fpt.edu.vn</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="firstname">
+                            Phone</label>
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Phone, new { style = "width: 130px;" })
+                            @Html.ValidationMessageFor(model => model.Phone)
+                            <span class="help-block">Example: 0932575868</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                            @Html.CheckBoxFor(model => model.CreateAccount)  Create Login Account
+                    </div>
+                </div>
+                
+                <div class="form-actions" style="padding: 0">
+                    <button type="submit" class="btn btn-icon btn-primary">
+                        <i></i>Add</button>
+                    <button type="reset" class="btn btn-icon btn-info">
+                        <i></i>Clear</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
