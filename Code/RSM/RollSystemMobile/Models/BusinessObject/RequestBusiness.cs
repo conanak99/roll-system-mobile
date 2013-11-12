@@ -26,9 +26,9 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.GetList().SingleOrDefault(c => c.RequestID == id);
         }
 
-        public List<Request> GetPendingRequest()
+        public List<Request> GetResponse()
         {
-           return base.GetList().Where(r => r.CheckedAdminID == null).ToList();
+           return base.GetList().Where(r => r.CheckedAdminID == null && r.IsResponse == true).ToList();
         }
 
         public RequestImage FindReqImageByID(int ImageID)

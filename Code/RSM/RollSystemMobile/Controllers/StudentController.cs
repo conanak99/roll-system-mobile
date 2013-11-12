@@ -187,9 +187,16 @@ namespace RollSystemMobile.Controllers
             return View(Student);
         }
 
+        public ActionResult ResponseRequest(int StudentID)
+        {
+            var Student = StuBO.GetStudentByID(StudentID);
+            ViewBag.Errors = TempData["Errors"];
+            return View(Student);
+        }
+
         [HttpPost]
         //student view image or upload image
-        public ActionResult StudentImage(int StudentID, IEnumerable<HttpPostedFileBase> ImageFiles)
+        public ActionResult ResonpeRequest(int StudentID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
 
             ViewBag.StudentID = StudentID;

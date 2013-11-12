@@ -3,9 +3,7 @@
     ViewBag.Title = "StudentImage";
     Layout = "~/Views/Student/_Layout.cshtml";
 }
-
 <a class="btn btn-primary" href="@Url.Action("CourseList")">Back</a>
-
 <div class="innerLR">
     <div class="widget">
         <div class="widget-head">
@@ -48,70 +46,38 @@
         </div>
     }
     <h3>
-        Your pending request:</h3>
+        Your request:</h3>
     <table class="table table-bordered table-condensed table-striped" id="example">
         <thead>
             <th style="background-color: #70ad47; color: #ffffff">
                 No.
             </th>
             <th style="background-color: #70ad47; color: #ffffff">
-                Images
-            </th>
-            <th style="background-color: #70ad47; color: #ffffff">
-                Time
+                Context
             </th>
             <th class="text-center" style="background-color: #70ad47; color: #ffffff">
-            Action
             </th>
         </thead>
         <tbody>
             @{int index = 1;}
-            @foreach (var item in Model.Requests.Where(rq => rq.CheckedAdminID == null))
+            @foreach (var item in Model.Requests.Where(rq => rq.IsResponse == false))
             {
                 <tr>
                     <td>
                         @index
                     </td>
                     <td>
-                        @foreach (var image in item.RequestImages) {
-                        <div class="thumbnail-holder">
-                            <img class="thumbnail" src="@Url.TrainingImage(image.ImageLink)" />
-                        </div>
-                        }
-                    </td>
-                    <td>
-                   @Html.DisplayFor(modelItem => item.SentTime)
+                        @Html.DisplayFor(modelItem => item.Context)
                     </td>
                     <td class="text-center">
-                   <a class="btn btn-danger" href="@Url.Action("DeleteRequest", new { id = item.RequestID })">Cancel</a>
+                        <a class="btn btn-primary" href="@Url.Action("ResponseRequest", new { StudentID = item.StudentID })">
+                            Action</a>
                     </td>
                 </tr>
-                { index++; }
+                                                   { index++; }
             }
         </tbody>
     </table>
-    <div class="widget">
-        <div class="widget-head">
-            <h3 class="heading glyphicons picture">
-                <i></i>Upload images:
-            </h3>
-        </div>
-        <div class="widget-body">
-            <div id="upload-div">
-                @using (Html.BeginForm("StudentImage", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    @Html.Hidden("StudentID", @Model.StudentID)
-
-                    <input type="file" id="files" name="ImageFiles" class="filestyle" accept="image/*"
-                        multiple />
-                    <button class="btn btn-primary" id="btnUpload">
-                        Upload</button>
-                    <br />
-                    <output id="list"></output>
-                }
-            </div>
-        </div>
-    </div>
 </div>
 <script>
 

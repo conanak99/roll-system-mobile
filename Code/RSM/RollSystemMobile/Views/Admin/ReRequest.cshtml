@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "ReRequest";
+}
+@section ExtraHead {
+    <style>
+        body
+        {
+            background-color: White;
+        }
+    </style>
+}
+<ul class="breadcrumb">
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>Create Requests</li>
+</ul>
+<div class="separator bottom">
+</div>
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons user">
+                <i></i>Create Request</h3>
+        </div>
+        <div class="widget-body">
+            <div>
+                Request to :
+                @Html.DropDownList("RequestTo", new List<SelectListItem>
+       {
+           new SelectListItem { Text = "Student", Value = "Student" ,Selected = true}, 
+           new SelectListItem { Text = "All", Value = "All" }, 
+       }, "", new { @id = "RequestTo", style = "width:90px;height:35px;" }) ---
+                <select id="Select" multiple style="width: 300px; margin-bottom: 10px;">
+                </select><br />
+                Context (<span style="color:Red">*</span>):
+                <input type="text" id="context"/><br />
+                <a class="btn btn-primary" onclick="sendRequest('@User.Identity.Name')">Send Request</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $("#Select").select2();
+    $("#RequestTo option[value='']").remove();
+    var selectUrl = '@Url.Action("GetOption")';
+    $.getJSON(selectUrl, function (options) {
+        var html = "";
+        $.each(options, function (index, option) {
+            html += ('<option value="' + option.id + '" >' + option.code + '-' + option.name + '</option>');
+        });
+        $("#Select").append(html);
+        $("#Select").select2("val",'@ViewBag.StudentID');
+    });
+
+    $('#RequestTo').change(function () {
+        var selectValue = $('#RequestTo :selected').attr("value");
+        if (selectValue == "All") {
+            document.getElementById("Select").disabled = true;
+            $("#Select").select2("val", "");
+        } else {
+            document.getElementById("Select").disabled = false;
+        }
+    });
+    function sendRequest(adminName) {
+        var selectValue = $('#RequestTo :selected').attr("value");
+        var slValue = $("#Select").select2("val");
+        var ctValue = document.getElementById("context").value;
+        var link;
+        if (selectValue == "All") {
+            link = '@Url.Action("SendRequest", new { stu = "tmp1", context = "tmp2" ,name = "tmp3"})';
+            link = link.replace("amp;", "");
+            link = link.replace("amp;", "");
+            link = link.replace("tmp1", selectValue);
+            link = link.replace("tmp2", ctValue);
+            link = link.replace("tmp3", adminName);
+            window.location.href = link;
+        }
+        else {
+            link = '@Url.Action("SendRequest", new { stu = "tmp1", context = "tmp2", name = "tmp3" })';
+            link = link.replace("amp;", "");
+            link = link.replace("amp;", "");
+            link = link.replace("tmp1", slValue);
+            link = link.replace("tmp2", ctValue);
+            link = link.replace("tmp3", adminName);
+            window.location.href = link;
+        }
+    };
+
+</script>

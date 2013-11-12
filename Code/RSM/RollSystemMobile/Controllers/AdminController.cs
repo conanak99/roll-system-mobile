@@ -60,22 +60,54 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult StudentRequest()
         {
-            List<Request> Requests = ReBO.GetPendingRequest();
+            List<Request> Requests = ReBO.GetResponse();
             return View(Requests);
         }
 
         [ChildActionOnly]
         public ActionResult RequestCount()
         {
-            ViewBag.RequestCount = ReBO.GetPendingRequest().Count;
+            ViewBag.RequestCount = ReBO.GetResponse().Count;
             return PartialView("_RequestCount");
         }
-
+        public ActionResult CreateRequest() 
+        {
+            return View();
+        }
+        public ActionResult SendRequest(String stu, String context, String name)
+        {
+            var adminID = AccBO.GetUserByUsername(name).UserID;
+            List<Student> students = StuBO.GetActiveStudents();
+            if (stu == "All")
+            {
+                
+                foreach (var student in students)
+                {
+                    var req = new Request();
+                    req.StudentID = student.StudentID;
+                    req.Context = context;
+                    req.CreatedAdminID = adminID;
+                    ReBO.Insert(req);
+                }
+            }
+            else
+            {
+                String[] tmp = stu.Split(',');
+                for (int i = 0; i < tmp.Length; i++)
+                {
+                    var req = new Request();
+                    req.StudentID = int.Parse(tmp[i]);
+                    req.Context = context;
+                    req.CreatedAdminID = adminID;
+                    ReBO.Insert(req);
+                }
+            }
+            return RedirectToAction("StudentRequest");
+        }
         public ActionResult AcceptRequest(int requestID,String name)
         {
             var adminID = AccBO.GetUserByUsername(name).UserID;
             var req = ReBO.GetRequestByID(requestID);
-            req.IsAccepted = true;
             req.CheckedAdminID = adminID;
             ReBO.UpdateExist(req);
 
@@ -95,12 +127,23 @@ namespace RollSystemMobile.Controllers
         {
             var adminID = AccBO.GetUserByUsername(name).UserID;
             var req = ReBO.GetRequestByID(requestID);
-            req.IsAccepted = false;
             req.CheckedAdminID = adminID;
+
             ReBO.UpdateExist(req);
 
-            return RedirectToAction("StudentRequest");
+            return RedirectToAction("ReRequest", new {studentid= req.StudentID });
         }
+        public ActionResult ReRequest(int studentid)
+        {
+            ViewBag.StudentID = studentid;
+            return View() ;
+        }
+        public ActionResult DetailRequest(int id) {
+
+            var request = ReBO.GetRequestByID(id);
+            return View(request);
+        }
+
 
         public ActionResult SingleStudent(int StudentID)
         {
@@ -313,7 +356,12 @@ namespace RollSystemMobile.Controllers
             ViewBag.ClassID = SlFactory.MakeSelectList<Class>("ClassID", "ClassName");
             return View(Model);
         }
-
+        public JsonResult GetOption()
+        {
+            var option = StuBO.GetActiveStudents().
+                Select(s => new { id = s.StudentID ,code = s.StudentCode, name = s.FullName });
+            return Json(option, JsonRequestBehavior.AllowGet);
+        }
         [HttpPost]
         public ActionResult SelectLogImage(IEnumerable<int> ImageIDs)
         {

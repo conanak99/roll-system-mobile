@@ -1,0 +1,81 @@
+﻿@model RollSystemMobile.Models.Student
+@{
+    ViewBag.Title = "ResponseRequest";
+    Layout = "~/Views/Student/_Layout.cshtml";
+}
+<div class="innerLR">
+    <div class="widget">
+        <div class="widget-head">
+            <h3 class="heading glyphicons picture">
+                <i></i>Upload images:
+            </h3>
+        </div>
+        <div class="widget-body">
+            <div id="upload-div">
+                @using (Html.BeginForm("ResonpeRequest", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.Hidden("StudentID", @Model.StudentID)
+
+                    <input type="file" id="files" name="ImageFiles" class="filestyle" accept="image/*"
+                        multiple />
+                    <button class="btn btn-primary" id="btnUpload">
+                        Upload</button>
+                    <br />
+                    <output id="list"></output>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    var files;
+    document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+    function handleFileSelect(evt) {
+        files = evt.target.files; // FileList object
+        if (files.length > 20) {
+            alert("Too many images. Select fewer than 20 images");
+            return false;
+        }
+        document.getElementById('list').innerHTML = "";
+        // Loop through the FileList and render image files as thumbnails.
+        for (var i = 0, f; f = files[i]; i++) {
+            parseFile(f);
+        }
+    }
+
+    function parseFile(file) {
+        // Only process image files.
+        if (!file.type.match('image.*')) {
+            return;
+        }
+
+        var reader = new FileReader();
+        // Closure to capture the file information.
+        reader.onload = function (e) {
+            // Render thumbnail.
+            var span = document.createElement('span');
+            span.innerHTML = ['<img class="thumb" src="', e.target.result,
+                            '" title="', escape(file.name), '"/>'].join('');
+            document.getElementById('list').insertBefore(span, null);
+        }
+        // Read in the image file as a data URL.
+        reader.readAsDataURL(file);
+    }
+
+    $('#btnUpload').click(function () {
+        if (typeof files === "undefined" || files.length == 0) {
+            alert("Select file to upload!");
+            return false;
+        } else if (files.length > 20) {
+            alert("Too many images. Select fewer than 20 images");
+            return false;
+        } else {
+            return true;
+        }
+    });
+
+    $(":file").filestyle({ buttonText: "Select student's images" });
+
+</script>
