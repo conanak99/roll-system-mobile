@@ -70,7 +70,7 @@
                         @Html.DisplayFor(modelItem => item.Context)
                     </td>
                     <td class="text-center">
-                        <a class="btn btn-primary" href="@Url.Action("ResponseRequest", new { StudentID = item.StudentID })">
+                        <a class="btn btn-primary" href="@Url.Action("ResponseRequest", new { StudentID = item.StudentID, requestID = item.RequestID })">
                             Action</a>
                     </td>
                 </tr>
