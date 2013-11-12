@@ -12,8 +12,9 @@
         </div>
         <div class="widget-body">
             <div id="upload-div">
-                @using (Html.BeginForm("ResonpeRequest", "Student", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("ResonpeRequest", "Student", FormMethod.Post, new { enctype = "multipart/form-data"}))
                 {
+                    <input type="hidden" name="requestID" value="@ViewBag.RequestID" />
                     @Html.Hidden("StudentID", @Model.StudentID)
 
                     <input type="file" id="files" name="ImageFiles" class="filestyle" accept="image/*"

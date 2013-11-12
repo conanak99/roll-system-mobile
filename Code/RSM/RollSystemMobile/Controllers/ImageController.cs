@@ -95,14 +95,15 @@ namespace RollSystemMobile.Controllers
             return Redirect(model.ReturnUrl);
         }
         [HttpPost]
-        public ActionResult CreateRequestImage(FormCollection Form,int RequestID)
+        public ActionResult CreateRequestImage(FormCollection Form)
         {
             int StudentID = int.Parse(Form["StudentID"]);
+            int requestID = int.Parse(Form["requestID"]);
             List<String> ErrorList = new List<String>();
             //Moi anh se co 1 id, luu face region co id nay vao database
             String[] FilesPath = Form["ImageLink"].Split(',');
             String[] FaceIDs = Form["FaceID"].Split(',');
-            var req = ReBO.GetRequestByID(RequestID);
+            var req = ReBO.GetRequestByID(requestID);
             req.IsResponse = true;
             ReBO.UpdateExist(req);
             for (int i = 0; i < FilesPath.Length; i++)
@@ -111,7 +112,7 @@ namespace RollSystemMobile.Controllers
                 int FaceID = int.Parse(FaceIDs[i]);
                 try
                 {
-                    FaceBusiness.SaveRequestImage(ImagePath, FaceID, StudentID, RequestID);
+                    FaceBusiness.SaveRequestImage(ImagePath, FaceID, StudentID, requestID);
                 }
                 catch (Exception e)
                 {

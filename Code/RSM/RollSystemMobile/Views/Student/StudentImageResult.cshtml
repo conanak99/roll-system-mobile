@@ -14,7 +14,7 @@
         <div class="widget-body">
             @using (@Html.BeginForm("CreateRequestImage", "Image", FormMethod.Post))
             {
-    
+                <input type="hidden" name="requestID" value="@ViewBag.RequestID" />
                 <input type="hidden" name="StudentID" value="@ViewBag.StudentID" />
                 foreach (var Image in Model)
                 {
