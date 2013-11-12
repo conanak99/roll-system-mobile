@@ -16,7 +16,15 @@
         <dt>Email</dt>
         <dd>@Model.AuthorizedStudent.Email</dd>
     </dl>
-      <a class="btn btn-primary" href="@Url.Action("StudentImage",new { StudentID = @Model.AuthorizedStudent.StudentID })">View Images</a>
+    @{ var request = Model.AuthorizedStudent.Requests.FirstOrDefault(rq => rq.IsResponse == false);}
+    @if (request != null)
+    {
+        <h5>
+            You have a request from admin: @request.Context
+        </h5>
+        <a class="btn btn-primary" href="@Url.Action("ResponseRequest", new { StudentID = Model.AuthorizedStudent.StudentID, requestID = request.RequestID })">
+            Upload Images</a>
+    }
 </div>
 <div>
     <h4>
@@ -146,11 +154,9 @@
         </table>
     }
 </div>
-
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
 </div>
-
 <script>
     $('.modal-caller').click(function (e) {
         e.preventDefault();

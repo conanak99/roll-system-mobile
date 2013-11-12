@@ -107,8 +107,8 @@
                     <li class="hasSubmenu glyphicons sort"><a data-toggle="collapse" href="#req_mana"><i>
                     </i><span>Manage Request</span></a>
                         <ul class="collapse" id="req_mana">
+                         @{Html.RenderAction("RequestCount");}
                             <li class=""><a href="@Url.Action("CreateRequest")"><span>Create Request</span></a></li>
-                            <li class=""><span>@{Html.RenderAction("RequestCount");}</span></li>
                         </ul>
                         <span class="count">></span> </li>
                     <div class="clearfix" style="clear: both">

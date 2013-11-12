@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<RollSystemMobile.Models.Request>
 @{
-    ViewBag.Title = "StudentRequest";
+    ViewBag.Title = "Student Requests";
 }
 @section ExtraHead {
     <style>
@@ -40,6 +40,7 @@
                                 Full Name
                             </th>
                             <th class="text-center" style="color: #ffffff; width: 170px;">
+                            Images
                             </th>
                         </tr>
                     </thead>
@@ -59,7 +60,7 @@
                                 </td>
                                 <td class="text-center">
                                     <a class="btn btn-primary" href='@Url.Action("DetailRequest", new { id = item.RequestID })'>
-                                        Detail</a>
+                                      @item.RequestImages.Count images</a>
                                 </td>
                             </tr>
                            { index++; }

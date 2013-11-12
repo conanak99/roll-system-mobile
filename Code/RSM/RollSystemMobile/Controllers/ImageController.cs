@@ -94,6 +94,7 @@ namespace RollSystemMobile.Controllers
             TempData["Errors"] = ErrorList;
             return Redirect(model.ReturnUrl);
         }
+
         [HttpPost]
         public ActionResult CreateRequestImage(FormCollection Form)
         {
@@ -121,8 +122,9 @@ namespace RollSystemMobile.Controllers
             }
             TempData["Errors"] = ErrorList;
             //Cat image ra, cat face index ra, gui lai trang single
-            return RedirectToAction("StudentImage", "Student", new { StudentID = StudentID });
+            return RedirectToAction("CourseList", "Student");
         }
+
         public ActionResult DeleteRequestImage(int ImageID)
         {
             var TrainingImage = ReBO.FindReqImageByID(ImageID);
