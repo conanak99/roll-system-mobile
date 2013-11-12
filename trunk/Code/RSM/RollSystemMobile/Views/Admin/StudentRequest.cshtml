@@ -39,14 +39,7 @@
                             <th style="color: #ffffff; width: 150px;">
                                 Full Name
                             </th>
-                            <th class="text-center" style="color: #ffffff">
-                                Images
-                            </th>
-                            <th style="color: #ffffff; width: 100px;">
-                                Time
-                            </th>
-                            <th class="text-center" style="color: #ffffff;width: 170px;">
-                                Action
+                            <th class="text-center" style="color: #ffffff; width: 170px;">
                             </th>
                         </tr>
                     </thead>
@@ -64,26 +57,12 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Student.FullName)
                                 </td>
-                                <td>
-                                    @foreach (var image in item.RequestImages)
-                                    {
-                                        <div class="thumbnail-holder">
-                                            <img class="thumbnail" src="@Url.TrainingImage(image.ImageLink)" />
-                                            <button type="button" class="close btn-delete" imageID="@image.ImageID" data-dismiss="modal" aria-hidden="true">
-                                                ×</button>
-                                        </div>
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SentTime)
-                                </td>
                                 <td class="text-center">
-                                    <a class="btn btn-primary" onclick="acceptRequest('@item.RequestID','@User.Identity.Name')">
-                                        Accept</a> <a class="btn btn-warning" onclick="denyRequest('@item.RequestID','@User.Identity.Name')">
-                                            Deny</a>
+                                    <a class="btn btn-primary" href='@Url.Action("DetailRequest", new { id = item.RequestID })'>
+                                        Detail</a>
                                 </td>
                             </tr>
-                                    { index++; }
+                           { index++; }
                         }
                     </tbody>
                 </table>
@@ -106,47 +85,7 @@
             "oLanguage": {
                 "sLengthMenu": "_MENU_ records per page"
             },
-            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3, 4, 5]}]
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3]}]
         });
     });
-    function acceptRequest(requestID, name) {
-        var result = confirm("Do you want to save images !");
-        if (result == true) {
-            var link = '@Url.Action("AcceptRequest", new { requestID = "tmp1", name = "tmp2" })';
-            link = link.replace("amp;", "");
-            link = link.replace("amp;", "");
-            link = link.replace("tmp1", requestID);
-            link = link.replace("tmp2", name);
-            link = link.replace("System.Security.Principal.GenericIdentity", "");
-            window.location.href = link;
-        }
-    }
-    function denyRequest(requestID, name) {
-        var result = confirm("Do you want to deny this request !");
-        if (result == true) {
-            var link = '@Url.Action("DenyRequest", new { requestID = "tmp1", name = "tmp2" })';
-            link = link.replace("amp;", "");
-            link = link.replace("amp;", "");
-            link = link.replace("tmp1", requestID);
-            link = link.replace("tmp2", name);
-            link = link.replace("System.Security.Principal.GenericIdentity", "");
-            window.location.href = link;
-        }
-    }
-
-    $('button.btn-delete').click(deleteImage);
-    //Delegate toi ham nay, khi click vao thi xoa anh
-    function deleteImage() {
-        var imageName = $(this).prev().attr('src');
-        var imageID = $(this).attr('ImageID');
-        var image = $(this);
-
-        var con = confirm("Do you really want to delete this image?");
-        if (con) {
-            $.post('@Url.Action("DeleteRequestImage", "Image")',
-              { ImageID: imageID }, function (data) {
-                  image.parent().hide('slow');
-              }, 'json');
-        }
-    }
 </script>
