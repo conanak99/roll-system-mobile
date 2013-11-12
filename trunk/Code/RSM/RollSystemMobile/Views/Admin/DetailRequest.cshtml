@@ -1,6 +1,6 @@
 ﻿@model RollSystemMobile.Models.Request
 @{
-    ViewBag.Title = "DetailRequest";
+    ViewBag.Title = "Request Detail";
 }
 @section ExtraHead {
     <style>
@@ -21,12 +21,9 @@
     <div class="widget">
         <div class="widget-head">
             <h3 class="heading glyphicons user">
-                <i></i>Detail Request</h3>
+                <i></i>Request Detail</h3>
         </div>
         <div class="widget-body">
-            <h1>
-                Request by :
-            </h1>
             <b>Student :</b> @Model.Student.FullName<br />
             <b>Student Code :</b> @Model.Student.StudentCode<br />
             <b>Class :</b> @Model.Student.Class.ClassName<br />
@@ -40,7 +37,7 @@
                 </div>
             }<br />
             <a class="btn btn-primary" onclick="acceptRequest('@Model.RequestID','@User.Identity.Name')">
-                Accept</a> <a class="btn btn-warning" onclick="ReRequest('@Model.RequestID','@User.Identity.Name')">Request again</a>
+                Accept</a> <a class="btn btn-warning" onclick="ReRequest('@Model.RequestID','@User.Identity.Name')">Deny. Send request again</a>
         </div>
     </div>
 </div>

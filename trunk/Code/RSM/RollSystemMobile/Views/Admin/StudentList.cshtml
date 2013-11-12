@@ -10,13 +10,13 @@
         }
     </style>
 }
-
 <ul class="breadcrumb">
-	<li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
-	<li class="divider"></li>
-	<li>Student List</li>
+    <li><a href="@Url.Action("Index")" class="glyphicons home"><i></i>Home</a></li>
+    <li class="divider"></li>
+    <li>Student List</li>
 </ul>
-<div class="separator bottom"></div>
+<div class="separator bottom">
+</div>
 <div class="innerLR">
     <div class="widget">
         <div class="widget-head">
@@ -26,40 +26,44 @@
         <div class="widget-body">
             <div>
                 @using (@Html.BeginForm("StudentList", "Admin", FormMethod.Get))
-{
+                {
                     <span class="dropdown-label">Class:</span> @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID)
                     <input type="submit" class="btn btn-primary btn-with-dropdown" value="Select" />
-}
+                }
             </div>
             @if (Model.Count() > 0)
-{
-                <table class="table table-bordered table-striped table-condensed" id="example" style="background-color:#49ad47; opacity:1.0 !important">
+            {
+                <table class="table table-bordered table-striped table-condensed" id="example" style="background-color: #49ad47;
+                    opacity: 1.0 !important">
                     <thead>
                         <tr>
-                            <th class="text-right" style="color:#ffffff">
+                            <th class="text-right" style="color: #ffffff">
                                 No.
                             </th>
-                            <th style="color:#ffffff">
+                            <th style="color: #ffffff">
                                 Student Code
                             </th>
-                            <th style="color:#ffffff">
+                            <th style="color: #ffffff">
                                 Full Name
                             </th>
-                            <th style="color:#ffffff">
+                            <th style="color: #ffffff">
                                 Email
                             </th>
-                            <th style="color:#ffffff">
+                            <th style="color: #ffffff">
                                 Class
                             </th>
-                            <th class="text-center" style="color:#ffffff">
+                            <th class="text-center" style="color: #ffffff">
                                 Images
+                            </th>
+                            <th class="text-center" style="color: #ffffff">
+                                Request Upload
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         @{ int index = 1;}
                         @foreach (var item in Model)
-        {
+                        {
                             <tr>
                                 <td class="text-right">
                                     @index
@@ -78,19 +82,26 @@
                                 </td>
                                 <td class="text-center">
                                     <a class="btn btn-primary" href="@Url.Action("SingleStudent", new { StudentID = @item.StudentID })">
-                                       @item.StudentImages.Count images</a>
+                                        @item.StudentImages.Count images</a>
+                                </td>
+                                <td class="text-center">
+                                    @if (item.StudentImages.Count < 10)
+                                    {
+                                        <a class="btn btn-info" href="@Url.Action("ReRequest", new { studentID = @item.StudentID })">
+                                            Request Upload</a>
+                                    }
                                 </td>
                             </tr>
-            { index++; }
-        }
+                                    { index++; }
+                        }
                     </tbody>
                 </table>
-}
-else
-{
+            }
+            else
+            {
                 <p>
                     This class has no student</p>
-}
+            }
         </div>
     </div>
     <script>

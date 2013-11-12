@@ -25,14 +25,9 @@
         <div class="widget-body">
             <div>
                 Request to :
-                @Html.DropDownList("RequestTo", new List<SelectListItem>
-       {
-           new SelectListItem { Text = "Student", Value = "Student" ,Selected = true}, 
-           new SelectListItem { Text = "All", Value = "All" }, 
-       }, "", new { @id = "RequestTo", style = "width:90px;height:35px;" }) ---
                 <select id="Select" multiple style="width: 300px; margin-bottom: 10px;">
                 </select><br />
-                Context (<span style="color:Red">*</span>):
+                Content (<span style="color:Red">*</span>):
                 <input type="text" id="context"/><br />
                 <a class="btn btn-primary" onclick="sendRequest('@User.Identity.Name')">Send Request</a>
             </div>
@@ -49,8 +44,10 @@
             html += ('<option value="' + option.id + '" >' + option.code + '-' + option.name + '</option>');
         });
         $("#Select").append(html);
-        $("#Select").select2("val",'@ViewBag.StudentID');
+        $("#Select").select2("val", '@ViewBag.StudentID');
+        $("#Select").select2("enable", false);
     });
+
 
     $('#RequestTo').change(function () {
         var selectValue = $('#RequestTo :selected').attr("value");
