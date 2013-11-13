@@ -220,7 +220,6 @@
     <Content Include="Content\Admin\css\images\name3.png" />
     <Content Include="Content\Admin\css\images\name3_1.png" />
     <Content Include="Content\Admin\css\style.css" />
-    <Content Include="Content\Admin\css\style.min.css" />
     <Content Include="Content\Admin\fonts\glyphicons-regular.svg" />
     <Content Include="Content\Admin\images\pattern1.png" />
     <Content Include="Content\Admin\images\pattern2.png" />
@@ -393,6 +392,7 @@
     <Content Include="Views\Admin\DetailRequest.cshtml" />
     <Content Include="Views\Admin\CreateRequest.cshtml" />
     <Content Include="Views\Admin\ReRequest.cshtml" />
+    <Content Include="Views\Account\ChangePassword.cshtml" />
     <None Include="_bin_deployableAssemblies\System.Web.Mvc.dll" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.xml" />
     <None Include="_bin_deployableAssemblies\WebMatrix.WebData.dll" />

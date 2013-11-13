@@ -62,7 +62,7 @@
                 <li class="account"><a data-toggle="dropdown" href="my_account.html?lang=en" class="glyphicons logout lock">
                     <span class="hidden-phone text">@User.Identity.Name</span><i></i></a>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="#" class="glyphicons cogwheel">Change Password<i></i></a></li>
+                        <li><a href="@Url.Action("ChangePassword","Account")" class="glyphicons cogwheel">Change Password<i></i></a></li>
                         <li><span><a class="btn btn-default btn-small pull-right" style="padding: 2px 10px;
                             background: #fff;" href="@Url.Action("Logout", "Account")">Sign Out</a> </span>
                         </li>
@@ -74,7 +74,7 @@
             <div id="menu" class="hidden-phone">
                 <span class="profile"><a class="img" href="my_account.html?lang=en">
                     <img src="@Url.Content("~/Content/Admin/images/sample.gif")" /></a> <span><strong>@User.Identity.Name</strong>
-                        <a href="my_account.html?lang=en">edit account</a> </span></span>
+                        <a href="@Url.Action("ChangePassword","Account")">edit account</a> </span></span>
                 <ul>
                     <li class="glyphicons home"><a href="@Url.Action("Index_Home")"><i></i><span>Instructor Home</span></a>
                     </li>
