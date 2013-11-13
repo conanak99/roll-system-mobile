@@ -18,9 +18,9 @@
             <li><a href="#">Report</a></li>
 
             <div id="cssmenu">
-                 <ul><li class="has-sub"><a href="#"><span>Hello, Staff</span></a>
+                 <ul><li class="has-sub"><a href="#"><span>Hello, @User.Identity.Name</span></a>
                             <ul>
-                                <li><a href="#"><span>Change Password</span></a></li>
+                                <li><a href="@Url.Action("ChangePassword","Account")"><span>Change Password</span></a></li>
                                     <li><a href="@Url.Action("Logout", "Account")"><span>Log out</span></a></li>
        
                         </ul>

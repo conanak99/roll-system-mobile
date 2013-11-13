@@ -13,18 +13,34 @@ namespace RollSystemMobile.Models.BindingModels
     {
         [Required(ErrorMessage = "Please enter username")]
         [Display(Name = "Username")]
-        [MinLength(5, ErrorMessage = "Username/Password must be from 5 to 30 characters")]
-        [MaxLength(30, ErrorMessage = "Username/Password must be from 5 to 30 characters")]
+        [StringLength(30, MinimumLength=5, ErrorMessage="Username must be from 5 to 30 characters")]
         public string Username { get; set; }
 
         [Required(ErrorMessage = "Please enter password")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
-        [MinLength(5, ErrorMessage = "Username/Password must be from 5 to 30 characters")]
-        [MaxLength(30, ErrorMessage = "Username/Password must be from 5 to 30 characters")]
+        [StringLength(30, MinimumLength = 5, ErrorMessage = "Password must be from 5 to 30 characters")]
         public string Password { get; set; }
 
         public string ReturnUrl { get; set; }
 
+    }
+
+    public class ChangePassModel
+    {
+        public User InUser { get; set; }
+
+        [Required(ErrorMessage = "Please enter old password")]
+        [DataType(DataType.Password)]
+        [StringLength(30, MinimumLength = 5, ErrorMessage = "Password must be from 5 to 30 characters")]
+        public string OldPassword { get; set; }
+
+        [Required(ErrorMessage = "Please enter new password")]
+        [DataType(DataType.Password)]
+        [StringLength(30, MinimumLength = 5, ErrorMessage = "New password must be from 5 to 30 characters")]
+        public string NewPassword { get; set; }
+
+        [Compare("NewPassword", ErrorMessage = "Repeat password must be the same as password")]
+        public string RepeatPassword { get; set; }
     }
 }

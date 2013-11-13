@@ -33,6 +33,46 @@ namespace RollSystemMobile.Controllers
             return View();
         }
 
+        public ActionResult ChangePassword()
+        {
+            String Username = User.Identity.Name;
+
+            ChangePassModel Model = new ChangePassModel();
+            Model.InUser = AccBO.GetUserByUsername(Username);
+            return View(Model);
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(ChangePassModel Model)
+        {
+            String Username = User.Identity.Name;
+            User user = AccBO.GetUserByUsername(Username);
+            if (ModelState.IsValid)
+            {
+                if (user.Password.Equals(Model.OldPassword))
+                {
+                    if (Model.OldPassword.Equals(Model.NewPassword))
+                    {
+                        ModelState.AddModelError("", "New password is the same as old password");
+                    }
+                    else
+                    {
+                        user.Password = Model.NewPassword;
+                        AccBO.UpdateExist(user);
+                        ViewBag.Message = "Password change successful.";
+                        Model = new ChangePassModel();
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Wrong old password");
+                }
+            }
+
+            Model.InUser = user;
+            return View(Model);
+        }
+
         [HttpPost]
         public ActionResult Login(LoginModelView model)
         {

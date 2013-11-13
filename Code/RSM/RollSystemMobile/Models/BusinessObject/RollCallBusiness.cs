@@ -467,7 +467,7 @@ namespace RollSystemMobile.Models.BusinessObject
                     }
                     double AttendanceRate = PresentSession / RollCall.StudySessions.Count * 100;
                     RollCallWorksheet.Cells[RowIndex, FinalColumnIndex].Value =
-                        String.Format("{0:00.00}%", AttendanceRate);
+                        String.Format("{0:0.00}%", AttendanceRate);
                 }
             }
             //Tinh so sinh vien di hoc

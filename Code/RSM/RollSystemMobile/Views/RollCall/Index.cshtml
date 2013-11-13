@@ -48,7 +48,7 @@
     </thead>
     <tbody>
         @{ int index = 1;}
-        @foreach (var item in Model.OrderByDescending(r => r.BeginDate).OrderByDescending(r => r.Class.ClassName))
+        @foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
         {
             if (item.Status == 1)
             {
