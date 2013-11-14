@@ -59,7 +59,12 @@ namespace RollSystemMobile.Models.BusinessObject
             //Bo dau, bo viet hoa
             Name = Name.NonUnicode().ToLowerInvariant();
 
+            if (Name.Length < 5)
+            {
+                Name = Name + "_user";
+            }
             String FinalName = Name;
+
             int Suffix = 2;
             //Truong hop ta ra ten trung
             while (GetList().Any(us => us.Username.Equals(FinalName)))
