@@ -303,8 +303,30 @@ namespace RollSystemMobile.Models.BusinessObject
             Package.Dispose();
         }
 
-        //Lam may cai: Tim RollCall nam trong khoang ngay bao nhieu, toi bao nhieu
         //Xuat ra danh sach SV du thi, so diem danh, ket qua present
+        public void CreateRollCallBooks(List<int> RollCallIDs, String FileName)
+        {
+            ExcelPackage Package = new ExcelPackage();
+            foreach (int RollCallID in RollCallIDs)
+            {
+                ExcelWorksheet ExamListWorksheet = FilledRollCallWorksheet(RollCallID);
+                Package.Workbook.Worksheets.Add(ExamListWorksheet.Name, ExamListWorksheet);
+            }
+            ExcelWriter.WriteExcelFile(Package, FileName);
+            Package.Dispose();
+        }
+
+        public void CreateStudentLists(List<int> RollCallIDs, String FileName)
+        {
+            ExcelPackage Package = new ExcelPackage();
+            foreach (int RollCallID in RollCallIDs)
+            {
+                ExcelWorksheet RollCallWorksheet = FilledExamListWorksheet(RollCallID);
+                Package.Workbook.Worksheets.Add(RollCallWorksheet.Name, RollCallWorksheet);
+            }
+            ExcelWriter.WriteExcelFile(Package, FileName);
+            Package.Dispose();
+        }
 
         private ExcelWorksheet CreateRollCallWorksheet(int RollCallID)
         {
@@ -471,8 +493,11 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
             }
             //Tinh so sinh vien di hoc
-            RollCallWorksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
-
+            if (AttendanceLogs.Count > 0)
+            {
+                RollCallWorksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
+            }
+           
             return RollCallWorksheet;
         }
 

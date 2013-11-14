@@ -218,3 +218,9 @@ img.thumbnail
 {
     display: none;
 }
+
+.inline-form
+{
+    width:200px;
+    display:inline;
+}

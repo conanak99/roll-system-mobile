@@ -4,9 +4,9 @@
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
-    Roll Call List<span style="float:right; margin-right:20px;font-size:20px;">( @Html.ActionLink("Create new roll call", "Create") )</span></h2>
-<table class="table table-bordered table-striped" id="example">
-    
+    Roll Call List<span style="float: right; margin-right: 20px; font-size: 20px;">( @Html.ActionLink("Create new roll call", "Create")
+        )</span></h2>
+
     @Html.DropDownList("SemesterID", new SelectList(ViewBag.SemesterID, "SemesterID", "SemesterName"), new { style = "width:140px;" })
     <text> From :</text>
     <div class="input-append date" id="fromdate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
@@ -21,6 +21,28 @@
                 class="icon-th"></i></span>
     </div>
     <input type="button" class="btn btn-primary btn-with-dropdown" value="Select" onclick="getRollcallList();" />
+    <div style="margin-bottom:10px">
+        @using (Html.BeginForm("RollCallBooks", "Report", FormMethod.Post, new { @class = "inline-form" }))
+        {
+            foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
+            {
+            <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
+            }
+            <input type="submit" class="btn btn-success" value="Roll Call Reports" />
+        }
+
+                @using (Html.BeginForm("RollCallStudentLists", "Report", FormMethod.Post, new { @class = "inline-form" }))
+        {
+            foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
+            {
+            <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
+            }
+            <input type="submit" class="btn btn-info" value="Final Exam Student Lists"/>
+        }
+        
+    </div>
+
+    <table class="table table-bordered table-striped" id="example">
     <thead>
         <th style="width: 30px; background-color: #70ad47; color: #ffffff">
             No.

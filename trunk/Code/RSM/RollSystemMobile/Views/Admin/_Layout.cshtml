@@ -81,34 +81,34 @@
                     <img src="@Url.Content("~/Content/Admin/images/sample.gif")" /></a> <span><strong>@User.Identity.Name</strong>
                         <a href="@Url.Action("ChangePassword","Account")">edit account</a> </span></span>
                 <ul>
-                    <li class="glyphicons home"><a href="@Url.Action("Index")"><i></i><span>Admin Dashboard</span></a>
+                    <li class="glyphicons home"><a href="@Url.Action("Index","Admin")"><i></i><span>Admin Dashboard</span></a>
                     </li>
                     <li class="hasSubmenu glyphicons group"><a data-toggle="collapse" href="#acc_mana"><i>
                     </i><span>Manage Account</span></a>
                         <ul class="collapse" id="acc_mana">
-                            <li class=""><a href="@Url.Action("AddStaff")"><span>Add Staff</span></a></li>
-                            <li class=""><a href="@Url.Action("StaffAccountList")"><span>Staff Accounts</span></a></li>
-                            <li class=""><a href="@Url.Action("InstructorAccountList")"><span>Instructor Accounts</span></a></li>
-                            <li class=""><a href="@Url.Action("StudentAccountList")"><span>Student Accounts</span></a></li>
+                            <li class=""><a href="@Url.Action("AddStaff", "Admin")"><span>Add Staff</span></a></li>
+                            <li class=""><a href="@Url.Action("StaffAccountList", "Admin")"><span>Staff Accounts</span></a></li>
+                            <li class=""><a href="@Url.Action("InstructorAccountList", "Admin")"><span>Instructor Accounts</span></a></li>
+                            <li class=""><a href="@Url.Action("StudentAccountList", "Admin")"><span>Student Accounts</span></a></li>
                         </ul>
                         <span class="count">></span></li>
                     <li class="hasSubmenu glyphicons user"><a data-toggle="collapse" href="#stu_mana"><i>
                     </i><span>Student Images</span></a>
                         <ul class="collapse" id="stu_mana">
-                            <li class=""><a href="@Url.Action("StudentList")"><span>Student List</span></a></li>
-                            <li class=""><a href="@Url.Action("AddImages")"><span>Upload Images</span></a></li>
-                            <li class=""><a href="@Url.Action("LogImages")"><span>Log Images</span></a></li>
+                            <li class=""><a href="@Url.Action("StudentList", "Admin")"><span>Student List</span></a></li>
+                            <li class=""><a href="@Url.Action("AddImages", "Admin")"><span>Upload Images</span></a></li>
+                            <li class=""><a href="@Url.Action("LogImages", "Admin")"><span>Log Images</span></a></li>
                         </ul>
                         <span class="count">></span> </li>
-                    <li class="glyphicons settings"><a href="@Url.Action("Config")"><i></i><span>Configure
+                    <li class="glyphicons settings"><a href="@Url.Action("Config", "Admin")"><i></i><span>Configure
                         System</span></a></li>
-                    <li class="glyphicons picture"><a href="@Url.Action("RecognizeTesting")"><i></i><span>
+                    <li class="glyphicons picture"><a href="@Url.Action("RecognizeTesting", "Admin")"><i></i><span>
                         Recognizer Testing</span></a></li>
                     <li class="hasSubmenu glyphicons sort"><a data-toggle="collapse" href="#req_mana"><i>
                     </i><span>Manage Request</span></a>
                         <ul class="collapse" id="req_mana">
                          @{Html.RenderAction("RequestCount", "Admin");}
-                            <li class=""><a href="@Url.Action("CreateRequest")"><span>Create Request</span></a></li>
+                            <li class=""><a href="@Url.Action("CreateRequest", "Admin")"><span>Create Request</span></a></li>
                         </ul>
                         <span class="count">></span> </li>
                     <div class="clearfix" style="clear: both">
