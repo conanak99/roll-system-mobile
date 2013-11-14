@@ -29,5 +29,28 @@ namespace RollSystemMobile.Controllers
             return File(FilePath, ExcelMimeType, FileName);
         }
 
+        public ActionResult RollCallBooks(List<int> RollCallIDs)
+        {
+            String FileName = "RollCallReport" + "_" + DateTime.Today.ToString("dd-MM-yyyy") + ".xlsx";
+
+            RollCallBusiness BO = new RollCallBusiness();
+            String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
+            BO.CreateRollCallBooks(RollCallIDs, FilePath);
+
+            String ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            return File(FilePath, ExcelMimeType, FileName);
+        }
+
+        public ActionResult RollCallStudentLists(List<int> RollCallIDs)
+        {
+            String FileName = "RollCallStudentList" + "_" + DateTime.Today.ToString("dd-MM-yyyy") + ".xlsx";
+
+            RollCallBusiness BO = new RollCallBusiness();
+            String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
+            BO.CreateStudentLists(RollCallIDs, FilePath);
+
+            String ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            return File(FilePath, ExcelMimeType, FileName);
+        }
     }
 }
