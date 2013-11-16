@@ -162,24 +162,25 @@ namespace RollSystemMobile.Models.BusinessObject
                         StudentID = AttendanceCheck.StudentID,
                         IsPresent = AttendanceCheck.IsPresent
                     };
-
-                    var AutoAttend = AutoLog.StudentAttendances.FirstOrDefault(at => at.StudentID == AttendanceCheck.StudentID);
-                    if (AutoAttend != null)
+                    if (AutoLog != null)
                     {
-                        if (AutoAttend.IsPresent != AttendanceCheck.IsPresent)
+                        var AutoAttend = AutoLog.StudentAttendances.FirstOrDefault(at => at.StudentID == AttendanceCheck.StudentID);
+                        if (AutoAttend != null)
                         {
-                            if (AutoAttend.IsPresent)
+                            if (AutoAttend.IsPresent != AttendanceCheck.IsPresent)
                             {
-                                Attendance.Note = String.Format("({0}) P->A : {1}", username, AttendanceCheck.Note);
-                            }
-                            else
-                            {
-                                Attendance.Note = String.Format("({0}) A->P : {1}", username, AttendanceCheck.Note);
-                            }
+                                if (AutoAttend.IsPresent)
+                                {
+                                    Attendance.Note = String.Format("({0}) P->A : {1}", username, AttendanceCheck.Note);
+                                }
+                                else
+                                {
+                                    Attendance.Note = String.Format("({0}) A->P : {1}", username, AttendanceCheck.Note);
+                                }
 
-                        } 
+                            }
+                        }
                     }
-
                     Log.StudentAttendances.Add(Attendance);
                 }
                 else
