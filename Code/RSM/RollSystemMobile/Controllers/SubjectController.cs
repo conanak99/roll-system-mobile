@@ -25,7 +25,7 @@ namespace RollSystemMobile.Controllers
 
         public ViewResult Index()
         {
-            return View(SubBO.GetActiveSubject());
+            return View(SubBO.GetList());
         }
 
         //
@@ -42,6 +42,7 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             return View();
         } 
 
@@ -49,13 +50,15 @@ namespace RollSystemMobile.Controllers
         // POST: /Subject/Create
 
         [HttpPost]
-        public ActionResult Create(Subject subject)
+        public ActionResult Create(Subject subject,int TypeID)
         {
             if (ModelState.IsValid)
             {
+                subject.TypeID = TypeID;
                 SubBO.Insert(subject);
                 return RedirectToAction("Index");  
             }
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             return View(subject);
         }
         
@@ -87,6 +90,20 @@ namespace RollSystemMobile.Controllers
         }
 
         //
+        public ActionResult InactiveSubject(int id)
+        {
+            var sub = SubBO.GetSubjectByID(id);
+            sub.IsActive = false;
+            SubBO.UpdateExist(sub);
+            return RedirectToAction("Index");
+        }
+        public ActionResult ActiveSubject(int id)
+        {
+            var sub = SubBO.GetSubjectByID(id);
+            sub.IsActive = true;
+            SubBO.UpdateExist(sub);
+            return RedirectToAction("Index");
+        }
         // GET: /Subject/Delete/5
  
         public ActionResult Delete(int id)

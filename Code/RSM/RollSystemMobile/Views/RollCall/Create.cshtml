@@ -22,7 +22,7 @@
                     <b>3. Major :</b>
                 </div>
                 <div class="editor-field " style="margin-left: 10px">
-                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, "", new { style = "width: 200px;" })
+                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, String.Empty, new { style = "width: 200px;" })
                 </div>
                 <span style="height: 10px;" id="ma" class="help-block"></span>
                 <div class="editor-label">
@@ -113,23 +113,20 @@
         $("#MajorID option[value='']").remove();
 
 
-        addOption("", "", "MajorID");
+        $("#MajorID").prepend("<option value='' selected='selected'></option>");
         sortOption("MajorID");
-        addOption("", "", "ClassID");
+        $("#ClassID").prepend("<option value='' selected='selected'></option>");
         sortOption("ClassID");
-        addOption("", "", "SubjectID");
+        $("#SubjectID").prepend("<option value='' selected='selected'></option>");
         sortOption("SubjectID");
-        addOption("", "", "startTime");
+        $("#startTime").prepend("<option value='' selected='selected'></option>");
         sortOption("startTime");
-        addOption("", "", "InstructorID");
+        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
         sortOption("InstructorID");
+
+
         setDatepicker();
         $("#Other").hide();
-        $("#MajorID option[value='']").attr('selected', true);
-        $("#ClassID option[value='']").attr('selected', true);
-        $("#SubjectID option[value='']").attr('selected', true);
-        $("#startTime option[value='']").attr('selected', true);
-        $("#InstructorID option[value='']").attr('selected', true);
         $("#SemesterID option[value='']").remove();
         document.getElementById("MajorID").disabled = false;
         //
@@ -158,9 +155,8 @@
         document.getElementById("InstructorID").disabled = true;
         document.getElementById("startTime").disabled = false;
 
-        addOption("", "", "InstructorID");
+        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
         sortOption("InstructorID");
-        $("#InstructorID option[value='']").attr('selected', true);
 
         setDefaultTime();
         checkNumberOfSlot();
@@ -180,13 +176,10 @@
         document.getElementById("InstructorID").disabled = true;
         document.getElementById("startTime").disabled = true;
 
-        addOption("", "", "InstructorID");
-        sortOption("InstructorID");
-        addOption("", "", "startTime");
-        sortOption("startTime");
-
-        $("#InstructorID option[value='']").attr('selected', true);
-        $("#startTime option[value='']").attr('selected', true);
+        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
+        sortOption("Instructor");
+        $("#startTime").prepend("<option value='' selected='selected'></option>");
+        sortOption("startTIme");
 
         checkSubjectFree();
         document.getElementById('cl').innerHTML = "";
@@ -205,15 +198,12 @@
         document.getElementById("startTime").disabled = true;
         document.getElementById("InstructorID").disabled = true;
 
-        addOption("", "", "InstructorID");
+        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
         sortOption("InstructorID");
-        $("#InstructorID option[value='']").attr('selected', true);
-        addOption("", "", "startTime");
+        $("#startTime").prepend("<option value='' selected='selected'></option>");
         sortOption("startTime");
-        $("#startTime option[value='']").attr('selected', true);
-        addOption("", "", "SubjectID");
+        $("#SubjectID").prepend("<option value='' selected='selected'></option>");
         sortOption("SubjectID");
-        $("#SubjectID option[value='']").attr('selected', true);
 
         checkClassByMajor();
         document.getElementById('cl').style.color = "black";
@@ -639,18 +629,15 @@
                 if (majorID == "") {
                     document.getElementById("Class").disabled = true;
                 }
-                addOption("", "", "InstructorID");
+                $("#InstructorID").prepend("<option value='' selected='selected'></option>");
                 sortOption("InstructorID");
-                $("#InstructorID option[value='']").attr('selected', true);
-                addOption("", "", "startTime");
+                $("#startTime").prepend("<option value='' selected='selected'></option>");
                 sortOption("startTime");
-                $("#startTime option[value='']").attr('selected', true);
-                addOption("", "", "SubjectID");
+                $("#SubjectID").prepend("<option value='' selected='selected'></option>");
                 sortOption("SubjectID");
-                $("#SubjectID option[value='']").attr('selected', true);
-                addOption("", "", "ClassID");
+                $("#ClassID").prepend("<option value='' selected='selected'></option>");
                 sortOption("ClassID");
-                $("#ClassID option[value='']").attr('selected', true);
+
                 document.getElementById("submit").className = "btn";
                 document.getElementById("submit").disabled = true;
                 begindate.hide();

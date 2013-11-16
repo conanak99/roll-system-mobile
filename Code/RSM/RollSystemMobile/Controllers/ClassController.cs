@@ -76,6 +76,20 @@ namespace RollSystemMobile.Controllers
             return View(cls);
         }
 
+        public ActionResult InactiveClass(int id)
+        {
+            var clss = ClassBO.GetClassByID(id);
+            clss.IsActive = false;
+            ClassBO.UpdateExist(clss);
+            return RedirectToAction("Index");
+        }
+        public ActionResult ActiveClass(int id)
+        {
+            var clss = ClassBO.GetClassByID(id);
+            clss.IsActive = true;
+            ClassBO.UpdateExist(clss);
+            return RedirectToAction("Index");
+        }
         //
         // POST: /Class/Edit/5
 

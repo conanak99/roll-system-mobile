@@ -29,6 +29,13 @@
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
                 <span class="help-block">Email of instructor( Example: Huynq@fpt.edu.vn).</span>
+                 <div class="editor-label">
+                    <b>Subject Type</b>
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("TypeID", (SelectList)ViewBag.TypeID, new { style = "width: 200px;" })
+                </div>
+                <span class="help-block">Select subject type of instructor</span>
             </td>
             <td>
                 <div class="editor-label">

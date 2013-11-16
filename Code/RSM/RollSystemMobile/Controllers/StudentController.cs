@@ -99,7 +99,21 @@ namespace RollSystemMobile.Controllers
             ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
             return View(student);
         }
-
+        //
+        public ActionResult InactiveStudent(int id)
+        {
+            var stu = StuBO.GetStudentByID(id) ;
+            stu.IsActive = false;
+            StuBO.UpdateExist(stu);
+            return RedirectToAction("Index");
+        }
+        public ActionResult ActiveStudent(int id)
+        {
+            var stu = StuBO.GetStudentByID(id);
+            stu.IsActive = true;
+            StuBO.UpdateExist(stu);
+            return RedirectToAction("Index");
+        }
         public ActionResult ChangeClass(int id, int? classid)
         {
             Student student = StuBO.GetStudentByID(id);
@@ -109,6 +123,8 @@ namespace RollSystemMobile.Controllers
                 var type = ClassBO.GetClassByID(clsid).MajorID;
                 List<Class> cls = ClassBO.GetAllClasses().Where(a => a.MajorID == type && a.Students.Count() < 30 && a.ClassID != clsid).ToList();
                 ViewBag.ClassID = cls;
+                int tmp = classid.Value;
+                ViewBag.Class = ClassBO.GetClassByID(tmp).ClassName;
             }
             else
             {

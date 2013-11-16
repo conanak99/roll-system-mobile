@@ -4,10 +4,8 @@
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
-    Instructor List</h2>
-<p style="font-size:20px;">
-    @Html.ActionLink("Create New", "Create")
-</p>
+    Instructor List <span style="float: right; margin-right: 20px; font-size: 20px;">( @Html.ActionLink("Create new instructor", "Create")
+        )</span></h2>
 <table class="table table-bordered table-striped" id="example">
     <thead>
         <th style="background-color: #70ad47; color: #ffffff">
@@ -20,35 +18,68 @@
             User
         </th>
         <th style="background-color: #70ad47; color: #ffffff">
-        Schedule
+            Schedule
+        </th>
+        <th style="background-color: #70ad47; color: #ffffff">
+        Active / Inactive
         </th>
         <th style="background-color: #70ad47; color: #ffffff">
         </th>
     </thead>
     <tbody>
-    @{ int index = 1;}
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td style="text-align: right;">
-                @index
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fullname)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.User.Username)
-            </td>
-            <td>
-            @Html.ActionLink("Teaching Schedule", "Schedule", new { id = item.InstructorID })
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.InstructorID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.InstructorID })
-            </td>
-        </tr>
-           { index++; }
-    }
+        @{ int index = 1;}
+        @foreach (var item in Model)
+        {
+            if (item.IsActive == true)
+            {
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fullname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Username)
+                </td>
+                <td>
+                    @Html.ActionLink("Teaching Schedule", "Schedule", new { id = item.InstructorID })
+                </td>
+                <td>
+                    <a class="btn btn-primary" onclick="inactive('@item.InstructorID','@item.Fullname')" style="width: 50px; margin-left:25px;">Active</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.InstructorID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.InstructorID })
+                </td>
+            </tr>
+            }
+            else
+            {
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fullname)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.Username)
+                </td>
+                <td>
+                    @Html.ActionLink("Teaching Schedule", "Schedule", new { id = item.InstructorID })
+                </td>
+                <td>
+                    <a class="btn" onclick="active('@item.InstructorID','@item.Fullname')" style=" margin-left:25px;">Inactive</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.InstructorID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.InstructorID })
+                </td>
+            </tr>
+            }
+            { index++; }
+        }
     </tbody>
 </table>
 <script>
@@ -60,7 +91,25 @@
             "oLanguage": {
                 "sLengthMenu": "_MENU_ records per page"
             },
-            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3,4]}]
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3, 4, 5]}]
         });
     });
+    function inactive(id,name) {
+        var result = confirm("Are you sure want to inactive teacher : " + name +" ?");
+        if (result) {
+            link = '@Url.Action("InactiveInstructor", new { id = "tmp1" })';
+            link = link.replace("amp;", "");
+            link = link.replace("tmp1", id);
+            window.location.href = link;
+        }
+    }
+    function active(id, name) {
+        var result = confirm("Are you sure want to active teacher : " + name + " ?");
+        if (result) {
+            link = '@Url.Action("ActiveInstructor", new { id = "tmp1" })';
+            link = link.replace("amp;", "");
+            link = link.replace("tmp1", id);
+            window.location.href = link;
+        }
+    }
 </script>

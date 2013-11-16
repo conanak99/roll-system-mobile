@@ -9,15 +9,15 @@
 {
     @Html.ValidationSummary(true)
     <div style="margin-left: 10px">
-        <p>
-            Student: @Model.FullName</p>
-        <p>
-            Class:</p>
-        <p>
-            Student Code :@Model.StudentCode</p>
+        <b>
+            Student : </b> @Model.FullName<br />
+        <b>
+            Student Code :</b>@Model.StudentCode<br />
+        <b>
+            Class : </b>@ViewBag.Class<br />
     </div>
     <div class="editor-field " style="margin-left: 10px">
-        Change to :@Html.DropDownList("ClassID", new SelectList(ViewBag.ClassID, "ClassID", "ClassName").OrderBy(a => a.Text))
+        <b>Change to : </b>@Html.DropDownList("ClassID", new SelectList(ViewBag.ClassID, "ClassID", "ClassName").OrderBy(a => a.Text))
     </div>
     <p>
         <input type="submit" value="Save" class="btn btn-primary" />
