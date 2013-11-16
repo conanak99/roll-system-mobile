@@ -132,7 +132,7 @@ else
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
             ×</button>
         <h3 id="myModalLabel">
-            Roll Call at @Html.FormatDate(@Model.AutoLog.LogDate)</h3>
+            Roll Call at @Html.FormatDate(@CurrentAttendanceLog.LogDate)</h3>
     </div>
     <div class="modal-body" id='modal-body'>
         <legend>Roll Call Info</legend>
@@ -141,7 +141,7 @@ else
                 <dt>Roll Call</dt>
                 <dd>@Model.RollCall.RollCallID</dd>
                 <dt>Date</dt>
-                <dd>@Html.FormatDate(@Model.AutoLog.LogDate)</dd>
+                <dd>@Html.FormatDate(@CurrentAttendanceLog.LogDate)</dd>
                 <dt>Subject</dt>
                 <dd>@Model.RollCall.Subject.ShortName</dd>
                 <dt>Class</dt>
@@ -150,18 +150,20 @@ else
         </fieldset>
         <legend>Log Image</legend>
         <fieldset class="text-center" style="width: 80%; margin: 0 auto">
-            @foreach (var Image in @Model.AutoLog.LogImages)
+            @if(Model.AutoLog != null){
+            foreach (var Image in Model.AutoLog.LogImages)
             {
-                <a class="fancybox" href="@Url.Content("~/Content/Log/" + Image.ImageLink)" data-fancybox-group="gallery">
-                    <img src="@Url.Content("~/Content/Log/" + Image.ImageLink)" class="image-log"/></a> 
+                <a class="fancybox" href="@Url.LogImage(Image.ImageLink)" data-fancybox-group="gallery">
+                    <img src="@Url.LogImage(Image.ImageLink)" class="image-log"/></a> 
             }
+        }
         </fieldset>
         <legend>Attendance</legend>
         <fieldset>
             <div class="text-center">
                 <input type="hidden" name="Username" value="@User.Identity.Name" />
                 <input type="hidden" name="RollCallID" value="@Model.RollCall.RollCallID" />
-                <input type="hidden" name="Date" value="@Model.AutoLog.LogDate" />
+                <input type="hidden" name="Date" value="@CurrentAttendanceLog.LogDate" />
                 <input type="hidden" name="ReturnUrl" value="@Url.Action("RollCallDetail", "Instructor", new { id = Model.RollCall.RollCallID })" />
                 <!-- Tao form check attendace dua tren log hien tai -->
                 <table class="table table-striped table-condensed">
@@ -188,6 +190,7 @@ else
                         @{int AttendIndex = 1;
                           int CheckIndex = 0;
                         }
+
                         @foreach (var Student in Model.RollCall.Students)
                         {
                             <tr>
