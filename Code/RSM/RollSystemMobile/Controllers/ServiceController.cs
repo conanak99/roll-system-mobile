@@ -135,8 +135,7 @@ namespace RollSystemMobile.Controllers
                     rollID = log.RollCallID,
                     logID = log.LogID,
                     logDate = log.LogDate.ToString("dd-MM-yyyy"),
-                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count,
-                    
+                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count,     
                 }),
                 
             };
@@ -154,6 +153,7 @@ namespace RollSystemMobile.Controllers
                 logID = Log.LogID,
                 rollID = Log.RollCallID,
                 logDate = Log.LogDate.ToString("dd-MM-yyyy"),
+                logPresent = Log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + Log.RollCall.Students.Count,
                 submitDate = Log.LogDate.ToString("MM-dd-yyyy"),
                 studentList = Log.StudentAttendances.Select(sa => new
                 {
