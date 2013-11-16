@@ -4,10 +4,8 @@
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
-    Subject List</h2>
-<p style="font-size: 20px;">
-    @Html.MenuLink("Create New", "Create", "Subject")
-</p>
+    Subject List<span style="float: right; margin-right: 20px; font-size: 20px;">( @Html.ActionLink("Create new subject", "Create")
+        )</span></h2>
 <table class="table table-bordered table-striped" id="example">
     <thead>
         <th style="background-color: #70ad47; color: #ffffff">
@@ -26,12 +24,17 @@
             Number Of Slot
         </th>
         <th style="background-color: #70ad47; color: #ffffff">
+            Active / Inactive
+        </th>
+        <th style="background-color: #70ad47; color: #ffffff">
         </th>
     </thead>
     <tbody>
         @{int index = 1;}
         @foreach (var item in Model)
         {
+            if (item.IsActive == true)
+            {
             <tr>
                 <td style="text-align: right;">
                     @index
@@ -49,11 +52,45 @@
                     @Html.DisplayFor(modelItem => item.NumberOfSlot)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) |
+                    <a class="btn btn-primary" onclick="inactive('@item.SubjectID','@item.FullName')" style="width: 50px; margin-left:10px;">
+                        Active</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) 
                     @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
                 </td>
             </tr>
-               { index++; }
+            }
+            else
+            { 
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ShortName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td style="text-align: right;">
+                    @Html.DisplayFor(modelItem => item.NumberOfSession)
+                </td>
+                <td style="text-align: right;">
+                    @Html.DisplayFor(modelItem => item.NumberOfSlot)
+                </td>
+                <td>
+                    <a class="btn" onclick="active('@item.SubjectID','@item.FullName')" style="width: 50px; margin-left:10px;">
+                        Inactive</a>
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) 
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
+                </td>
+            </tr>
+            }
+
+            { index++; }
         }
     </tbody>
 </table>
@@ -66,7 +103,25 @@
             "oLanguage": {
                 "sLengthMenu": "_MENU_ records per page"
             },
-            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [5]}]
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [5, 6]}]
         });
     });
+    function inactive(id, name) {
+        var result = confirm("Are you sure want to inactive subject : " + name + " ?");
+        if (result) {
+            link = '@Url.Action("InactiveSubject", new { id = "tmp1" })';
+            link = link.replace("amp;", "");
+            link = link.replace("tmp1", id);
+            window.location.href = link;
+        }
+    }
+    function active(id, name) {
+        var result = confirm("Are you sure want to active subject : " + name + " ?");
+        if (result) {
+            link = '@Url.Action("ActiveSubject", new { id = "tmp1" })';
+            link = link.replace("amp;", "");
+            link = link.replace("tmp1", id);
+            window.location.href = link;
+        }
+    }
 </script>

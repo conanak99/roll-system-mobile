@@ -12,9 +12,9 @@
     @Html.ValidationSummary(true)
     <table class="table">
         <tr>
-            <td style="width:350px;">
+            <td style="width: 350px;">
                 <div class="editor-label">
-                    <b>Name</b>( <b style="color:Red">*</b> )
+                    <b>Name</b>( <b style="color: Red">*</b> )
                 </div>
                 <div class="editor-field">
                     @Html.EditorFor(model => model.Fullname)
@@ -29,23 +29,30 @@
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
                 <span class="help-block">Email of instructor( Example: Huynq@fpt.edu.vn).</span>
-                </td>
-                <td>
+            </td>
+            <td>
                 <div class="editor-label">
-                     <b>Phone number</b>
+                    <b>Phone number</b>
                 </div>
                 <div class="editor-field">
-                    @Html.TextBoxFor(model => model.Phone, new { style = "width: 150px;"})
+                    @Html.TextBoxFor(model => model.Phone, new { style = "width: 150px;" })
                     @Html.ValidationMessageFor(model => model.Phone)
                 </div>
                 <span class="help-block">Phone of instructor.( Example: 090xxxxxxx).</span>
+                <div class="editor-label">
+                    <b>Subject Type</b>
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("TypeID", (SelectList)ViewBag.TypeID, new { style = "width: 200px;" })
+                </div>
+                <span class="help-block">Select subject type of instructor</span>
             </td>
         </tr>
     </table>
     <p>
-        <input type="submit" value="Create" class="btn btn-primary"/>
+        <input type="submit" value="Create" class="btn btn-primary" />
     </p>
 }
-<p style="font-size:20px;">
+<p style="font-size: 20px;">
     @Html.ActionLink("Back to List", "Index")
 </p>

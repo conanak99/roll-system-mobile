@@ -46,22 +46,36 @@ namespace RollSystemMobile.Controllers
         {
             SelectListFactory slFactory = new SelectListFactory();
             ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID","TypeName");
             return View();
         }
-
+        public ActionResult InactiveInstructor(int id) {
+            var ins = InsBO.GetInstructorByID(id);
+            ins.IsActive = false;
+            InsBO.UpdateExist(ins);
+            return RedirectToAction("Index");
+        }
+        public ActionResult ActiveInstructor(int id)
+        {
+            var ins = InsBO.GetInstructorByID(id);
+            ins.IsActive = true;
+            InsBO.UpdateExist(ins);
+            return RedirectToAction("Index");
+        }
         //
         // POST: /Default1/Create
 
         [HttpPost]
-        public ActionResult Create(Instructor instructor)
+        public ActionResult Create(Instructor instructor,int TypeID)
         {
             if (ModelState.IsValid)
             {
+                instructor.SubjectTypeID = TypeID;
                 InsBO.Insert(instructor);
                 return RedirectToAction("Index");
             }
 
-            
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
             return View(instructor);
         }
@@ -73,6 +87,8 @@ namespace RollSystemMobile.Controllers
         {
             Instructor instructor = InsBO.GetInstructorByID(id);
             int UserID = instructor.User.UserID;
+            int TypeID = instructor.SubjectType.TypeID;
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName",TypeID);
             ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username", UserID);
             return View(instructor);
         }
@@ -89,6 +105,8 @@ namespace RollSystemMobile.Controllers
                 return RedirectToAction("Index");
             }
             int UserID = instructor.User.UserID;
+            int TypeID = instructor.SubjectType.TypeID;
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName", TypeID);
             ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username", UserID);
             return View(instructor);
         }

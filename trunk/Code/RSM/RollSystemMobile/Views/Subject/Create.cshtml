@@ -29,6 +29,13 @@
                     @Html.ValidationMessageFor(model => model.FullName)
                 </div>
                 <span class="help-block">Full Name of subject ( Example : Operating System ...).</span>
+                <div class="editor-label">
+                    <b>Subject Type</b>
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("TypeID", (SelectList)ViewBag.TypeID, new { style = "width: 200px;" })
+                </div>
+                <span class="help-block">Select subject type of subject</span>
             </td>
             <td>
                 <div class="editor-label">
