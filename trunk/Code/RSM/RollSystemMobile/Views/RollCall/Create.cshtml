@@ -112,19 +112,17 @@
         document.getElementById("InstructorID").disabled = true;
         $("#MajorID option[value='']").remove();
 
-
-        $("#MajorID").prepend("<option value='' selected='selected'></option>");
         sortOption("MajorID");
-        $("#ClassID").prepend("<option value='' selected='selected'></option>");
+        $("#MajorID").prepend("<option value='' selected='selected'></option>");
         sortOption("ClassID");
-        $("#SubjectID").prepend("<option value='' selected='selected'></option>");
+        $("#ClassID").prepend("<option value='' selected='selected'></option>");
         sortOption("SubjectID");
-        $("#startTime").prepend("<option value='' selected='selected'></option>");
+        $("#SubjectID").prepend("<option value='' selected='selected'></option>");
         sortOption("startTime");
-        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
+        $("#startTime").prepend("<option value='' selected='selected'></option>");
         sortOption("InstructorID");
-
-
+        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
+        
         setDatepicker();
         $("#Other").hide();
         $("#SemesterID option[value='']").remove();
@@ -154,10 +152,10 @@
         document.getElementById("submit").disabled = true;
         document.getElementById("InstructorID").disabled = true;
         document.getElementById("startTime").disabled = false;
-
-        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
+        
         sortOption("InstructorID");
-
+        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
+        
         setDefaultTime();
         checkNumberOfSlot();
         checkStartTime();
@@ -176,11 +174,11 @@
         document.getElementById("InstructorID").disabled = true;
         document.getElementById("startTime").disabled = true;
 
-        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
         sortOption("Instructor");
-        $("#startTime").prepend("<option value='' selected='selected'></option>");
+        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
         sortOption("startTIme");
-
+        $("#startTime").prepend("<option value='' selected='selected'></option>");
+        
         checkSubjectFree();
         document.getElementById('cl').innerHTML = "";
         document.getElementById('st').innerHTML = "";
@@ -198,12 +196,12 @@
         document.getElementById("startTime").disabled = true;
         document.getElementById("InstructorID").disabled = true;
 
-        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
         sortOption("InstructorID");
-        $("#startTime").prepend("<option value='' selected='selected'></option>");
+        $("#InstructorID").prepend("<option value='' selected='selected'></option>");
         sortOption("startTime");
-        $("#SubjectID").prepend("<option value='' selected='selected'></option>");
+        $("#startTime").prepend("<option value='' selected='selected'></option>");
         sortOption("SubjectID");
+        $("#SubjectID").prepend("<option value='' selected='selected'></option>");
 
         checkClassByMajor();
         document.getElementById('cl').style.color = "black";
@@ -334,17 +332,6 @@
                             $.each(subs, function (index, sa) {
                                 $("#SubjectID option[value='" + sa.id + "']").remove();
                             });
-                            var checkNumberOption = document.getElementById('SubjectID').length;
-                            if (checkNumberOption == 1) {
-                                document.getElementById('cl').innerHTML = "* This class has studied all subjects in this semester !";
-                                document.getElementById('su').innerHTML = "";
-                                document.getElementById('cl').style.color = "red";
-                                document.getElementById("SubjectID").disabled = true;
-                            }
-                            else {
-                                document.getElementById('cl').style.color = "black";
-                                document.getElementById("SubjectID").disabled = false;
-                            }
                         });
                     });
                 });
@@ -629,15 +616,16 @@
                 if (majorID == "") {
                     document.getElementById("Class").disabled = true;
                 }
-                $("#InstructorID").prepend("<option value='' selected='selected'></option>");
+                $("#ClassID option[value='']").remove();
                 sortOption("InstructorID");
-                $("#startTime").prepend("<option value='' selected='selected'></option>");
+                $("#InstructorID").prepend("<option value='' selected='selected'></option>");
                 sortOption("startTime");
-                $("#SubjectID").prepend("<option value='' selected='selected'></option>");
+                $("#startTime").prepend("<option value='' selected='selected'></option>");
                 sortOption("SubjectID");
-                $("#ClassID").prepend("<option value='' selected='selected'></option>");
+                $("#SubjectID").prepend("<option value='' selected='selected'></option>");
                 sortOption("ClassID");
-
+                $("#ClassID").prepend("<option value='' selected='selected'></option>");
+                
                 document.getElementById("submit").className = "btn";
                 document.getElementById("submit").disabled = true;
                 begindate.hide();
