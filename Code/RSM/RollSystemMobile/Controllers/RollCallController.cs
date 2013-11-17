@@ -23,7 +23,7 @@ namespace RollSystemMobile.Controllers
         StudentBusiness StuBO;
         InstructorBusiness InsBO;
         SemesterBusiness SeBO;
-
+        MajorBusiness MjBO;
         public RollCallController()
         {
             RSMEntities DB = new RSMEntities();
@@ -34,6 +34,7 @@ namespace RollSystemMobile.Controllers
             StuBO = new StudentBusiness(DB);
             InsBO = new InstructorBusiness(DB);
             SeBO = new SemesterBusiness(DB);
+            MjBO = new MajorBusiness(DB);
         }
 
         //
@@ -214,7 +215,7 @@ namespace RollSystemMobile.Controllers
         // POST: /RollCall/Create
 
         [HttpPost]
-        public ActionResult Create(RollCall rollcall, int MajorID, int ClassID, TimeSpan? otherTime,String begindate)
+        public ActionResult Create(RollCall rollcall, int MajorID, int ClassID, TimeSpan? otherTime, String begindate)
         {
 
             List<string> ErrorList = RollBO.ValidRollCall(rollcall, otherTime);
@@ -416,6 +417,38 @@ namespace RollSystemMobile.Controllers
             var instructor = InsBO.GetAllInstructor().Where(d => d.SubjectTypeID == typeID).
                 Select(i => new { id = i.InstructorID, name = i.Fullname });
             return Json(instructor, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetNumSub(int smtID, int mjID, int clsID)
+        {
+            var totalsub = SubBO.GetSubjectByMajor(mjID).Count();
+            var numsub = RollBO.GetList().Where(r => r.ClassID == clsID && r.SemesterID == smtID).Count();
+            var cls = new { totalsub, numsub };
+            return Json(cls, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetMajors(int smtID)
+        {
+            List<Major> majors = MjBO.GetList();
+            int numcls;
+            int numsub;
+            int totalrc;
+            int numrc;
+            var id = "";
+            var name = "";
+            foreach (var major in majors)
+            {
+                numcls = ClaBO.GetClassByMajor(major.MajorID).Count();
+                numsub = SubBO.GetSubjectByMajor(major.MajorID).Count();
+                totalrc = numsub * numcls;
+                numrc = RollBO.GetList().Where(r => r.Class.MajorID == major.MajorID && r.SemesterID == smtID).Count();
+                if (totalrc > numrc)
+                {
+                    id = id + major.MajorID.ToString() +",";
+                    name = name + major.FullName + ",";
+                }
+            };
+
+            var mj = new { id,name };
+            return Json(mj, JsonRequestBehavior.AllowGet);
         }
         //get time instructor day trong ngay
         public JsonResult GetInstructorFree(int id)
