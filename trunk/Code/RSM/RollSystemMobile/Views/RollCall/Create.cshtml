@@ -72,8 +72,7 @@
            new SelectListItem { Text = "12:30", Value = "12:30" }, 
            new SelectListItem { Text = "14:15", Value = "14:15" }, 
            new SelectListItem { Text = "16:00", Value = "16:00" },
-           new SelectListItem { Text = "18:45", Value = "18:45" }, 
-           new SelectListItem { Text = "Other", Value = "Other" } 
+           new SelectListItem { Text = "18:45", Value = "18:45" }
        }, "", new { @id = "startTime", style = "width:90px;" })
                     <input style="margin-bottom: 10px; width: 80px;" type="text" name="otherTime" id="Other" />
                 </div>
@@ -122,7 +121,7 @@
         $("#startTime").prepend("<option value='' selected='selected'></option>");
         sortOption("InstructorID");
         $("#InstructorID").prepend("<option value='' selected='selected'></option>");
-        
+
         setDatepicker();
         $("#Other").hide();
         $("#SemesterID option[value='']").remove();
@@ -134,6 +133,7 @@
         document.getElementById('su').innerHTML = "";
         document.getElementById('cl').innerHTML = "";
         document.getElementById('st').innerHTML = "";
+        checkMajor();
     });
     //start time change value
     $('#startTime').change(function () {
@@ -152,10 +152,10 @@
         document.getElementById("submit").disabled = true;
         document.getElementById("InstructorID").disabled = true;
         document.getElementById("startTime").disabled = false;
-        
+
         sortOption("InstructorID");
         $("#InstructorID").prepend("<option value='' selected='selected'></option>");
-        
+
         setDefaultTime();
         checkNumberOfSlot();
         checkStartTime();
@@ -178,7 +178,7 @@
         $("#InstructorID").prepend("<option value='' selected='selected'></option>");
         sortOption("startTIme");
         $("#startTime").prepend("<option value='' selected='selected'></option>");
-        
+
         checkSubjectFree();
         document.getElementById('cl').innerHTML = "";
         document.getElementById('st').innerHTML = "";
@@ -222,13 +222,20 @@
     function checkClassByMajor() {
         var majorID = $('#MajorID :selected').attr("value");
         var classUrl = '@Url.Action("GetClasses")/' + majorID;
+        var semesterID = $('#SemesterID :selected').attr("value");
         $.getJSON(classUrl, function (classes) {
             var html = "";
             html += ('<option value=""></option>');
             $.each(classes, function (index, item_class) {
-                html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
+                //check class da hoc full mon trong semester
+                var clsUrl = '@Url.Action("GetNumSub")?smtID=' + semesterID + "&mjID=" + majorID + "&clsID=" + item_class.id;
+                $.getJSON(clsUrl, function (clses) {
+                    if (clses.totalsub > clses.numsub) {
+                        html += ('<option value="' + item_class.id + '" >' + item_class.name + '</option>');
+                    }
+                    $("#ClassID").html(html);
+                });
             });
-            $("#ClassID").html(html);
         });
         document.getElementById('in').innerHTML = "";
     };
@@ -310,17 +317,22 @@
                     var tmp1 = new Date(year, month, date - (-day));
                     var mth = tmp1.getMonth();
                     var yr = tmp1.getFullYear();
+                    var dt = tmp1.getDate();
                     if (mth == 0) {
                         mth = 12;
                         yr--;
                     }
-                    if (mth < 10) {
+                    if (mth < 10 && dt < 10) {
+                        endDateSelect = yr + "-0" + mth + "-0" + tmp1.getDate();
+                    } else if (mth >= 10 && dt < 10) {
+                        endDateSelect = yr + "-" + mth + "-0" + tmp1.getDate();
+                    } else if (mth < 10 && dt >= 10) {
                         endDateSelect = yr + "-0" + mth + "-" + tmp1.getDate();
                     } else {
                         endDateSelect = yr + "-" + mth + "-" + tmp1.getDate();
                     }
                     $.getJSON(semesterUrl, function (semester) {
-                        if (semester.enddate >= endDateSelect) {
+                        if (semester.enddate > endDateSelect || semester.enddate == endDateSelect) {
                             html += ('<option value="' + subject.id + '" >' + subject.name + '</option>');
                         }
                         $("#SubjectID").html(html);
@@ -371,11 +383,16 @@
             var tmp1 = new Date(year, month, date - (-day));
             var mth = tmp1.getMonth();
             var yr = tmp1.getFullYear();
+            var dt = tmp1.getDate();
             if (mth == 0) {
                 mth = 12;
                 yr--;
             }
-            if (mth < 10) {
+            if (mth < 10 && dt < 10) {
+                endDateSelect = yr + "-0" + mth + "-0" + tmp1.getDate();
+            } else if (mth >= 10 && dt < 10) {
+                endDateSelect = yr + "-" + mth + "-0" + tmp1.getDate();
+            } else if (mth < 10 && dt >= 10) {
                 endDateSelect = yr + "-0" + mth + "-" + tmp1.getDate();
             } else {
                 endDateSelect = yr + "-" + mth + "-" + tmp1.getDate();
@@ -446,11 +463,16 @@
             var tmp1 = new Date(year, month, date - (-day));
             var mth = tmp1.getMonth();
             var yr = tmp1.getFullYear();
+            var dt = tmp1.getDate();
             if (mth == 0) {
                 mth = 12;
                 yr--;
             }
-            if (mth < 10) {
+            if (mth < 10 && dt < 10) {
+                endDateSelect = yr + "-0" + mth + "-0" + tmp1.getDate();
+            } else if (mth >= 10 && dt < 10) {
+                endDateSelect = yr + "-" + mth + "-0" + tmp1.getDate();
+            } else if (mth < 10 && dt >= 10) {
                 endDateSelect = yr + "-0" + mth + "-" + tmp1.getDate();
             } else {
                 endDateSelect = yr + "-" + mth + "-" + tmp1.getDate();
@@ -500,8 +522,8 @@
                         if (ins.starttime == starttime ||
                            endtime == ins.endtime ||
                            (ins.starttime < starttime && ins.endtime > endtime) ||
-                           (ins.starttime > starttime && ins.endtime < endtime)||
-                           (ins.starttime < starttime && ins.endtime > starttime) || 
+                           (ins.starttime > starttime && ins.endtime < endtime) ||
+                           (ins.starttime < starttime && ins.endtime > starttime) ||
                            (ins.starttime < endtime && ins.endtime > endtime)) {
                             $("#InstructorID option[value='" + ins.id + "']").remove();
                         }
@@ -527,7 +549,6 @@
         html += ('<option value="14:15" >14:15</option>')
         html += ('<option value="16:00" >16:00</option>')
         html += ('<option value="18:45" >18:45</option>')
-        html += ('<option value="Other" >Other</option>')
         $("#startTime").html(html);
     };
     function addOption(text, value, id) {
@@ -555,8 +576,21 @@
         }
     };
 
-
-
+    function checkMajor() {
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var majorUrl = '@Url.Action("GetMajors")?smtID=' + semesterID;
+        var html = "";
+        html += ('<option value=""></option>');
+        $.getJSON(majorUrl, function (majors) {
+            var a = (majors.id).split(',');
+            var b = (majors.name).split(',');
+            for (var i = 0; i < (a.length - 1); i++) {
+                html += ('<option value="' + a[i] + '" >' + b[i] + '</option>');
+            }
+            $("#MajorID").html(html);
+            sortOption("MajorID");
+        });
+    }
     function setDatepicker() {
         var semesterID = $('#SemesterID :selected').attr("value");
         var semesterUrl = '@Url.Action("GetDateSemester")/' + semesterID;
@@ -625,7 +659,7 @@
                 $("#SubjectID").prepend("<option value='' selected='selected'></option>");
                 sortOption("ClassID");
                 $("#ClassID").prepend("<option value='' selected='selected'></option>");
-                
+
                 document.getElementById("submit").className = "btn";
                 document.getElementById("submit").disabled = true;
                 begindate.hide();
