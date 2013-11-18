@@ -43,17 +43,20 @@
     
 <b style="margin-left:5px;">Toltal Student : </b>@Model.Count()
 </table>
-<div>
-    <select id="SelectStudent" multiple style="width: 300px;">
-    </select>
-    <input onclick="AddStudent()" class="btn btn-primary" type="submit" value="Add" />
-</div>
+
 }
 else
 {
     <p>
         This class has no student</p>
 }
+
+<div>
+    <select id="SelectStudent" multiple style="width: 300px;">
+    </select>
+    <input onclick="AddStudent()" class="btn btn-primary" type="submit" value="Add" />
+</div>
+
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
