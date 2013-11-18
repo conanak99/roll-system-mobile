@@ -154,6 +154,7 @@
     <Compile Include="Models\BusinessObject\ClassBusiness.cs" />
     <Compile Include="Models\BusinessObject\AccountBusiness.cs" />
     <Compile Include="Models\BusinessObject\CalendarBusiness.cs" />
+    <Compile Include="Models\BusinessObject\MajorBusiness.cs" />
     <Compile Include="Models\BusinessObject\RequestBusiness.cs" />
     <Compile Include="Models\BusinessObject\LogBusiness.cs" />
     <Compile Include="Models\BusinessObject\SemesterBusiness.cs" />
