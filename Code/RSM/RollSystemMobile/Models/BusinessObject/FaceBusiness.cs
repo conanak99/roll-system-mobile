@@ -266,6 +266,10 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
             }
 
+            if (StudentImages.Count == 0 || StudentIDs.Count == 0)
+            {
+                return null;
+            }
             FaceRec.Train(StudentImages.ToArray(), StudentIDs.ToArray());
 
             return FaceRec;
@@ -328,6 +332,11 @@ namespace RollSystemMobile.Models.BusinessObject
             //Dua ID cua roll call, cac hinh da up, cho ra danh sach ket qua
             FaceRecognizer FaceRec = CreateRollCallRecognizer(RollCallID);
             List<RecognizerResult> Results = new List<RecognizerResult>();
+
+            if (FaceRec == null)
+            {
+                return Results;
+            }
 
             foreach (var ImagePath in ImagePaths)
             {
