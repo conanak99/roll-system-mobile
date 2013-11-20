@@ -294,7 +294,7 @@
                 var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
                 var endDateSelect;
                 $.getJSON(sessionUrl, function (sub) {
-                    var i = (sub.session / sub.slot - (sub.session % sub.slot) / sub.slot);
+                    var i = sub.session;
                     var day;
                     if ((i % 5) == 0) {
                         day = ((i / 5) * 7) - 1;
@@ -314,6 +314,7 @@
                     } else {
                         beginDateSelect = year + "-" + month + "-" + date;
                     }
+                    alert(endDateSelect);
                     var tmp1 = new Date(year, month, date - (-day));
                     var mth = tmp1.getMonth();
                     var yr = tmp1.getFullYear();

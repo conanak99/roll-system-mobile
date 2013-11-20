@@ -54,7 +54,9 @@ namespace RollSystemMobile.Controllers
             }
 
             var Classes = ClaBO.GetActiveClasses();
-            ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
+            ViewBag.ClassID = SlFactory.MakeSelectList<Class>("ClassID", "ClassName");
+            ViewBag.SelectedID = ClassID;
+              //new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
             return View(Students);
         }
 
