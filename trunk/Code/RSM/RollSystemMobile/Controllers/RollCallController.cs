@@ -78,6 +78,7 @@ namespace RollSystemMobile.Controllers
                 tdate = Convert.ToDateTime(td);
             }
 
+            RollBO.SetRollCallStatus();
             var rollcalls = RollBO.GetList().Where(r => r.BeginDate.CompareTo(fdate) >= 0 && r.EndDate.CompareTo(tdate) <= 0).OrderByDescending(r => r.BeginDate).OrderByDescending(r => r.Class.ClassName).ToList();
             return View(rollcalls);
         }

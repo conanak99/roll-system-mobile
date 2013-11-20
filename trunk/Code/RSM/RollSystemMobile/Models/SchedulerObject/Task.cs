@@ -51,26 +51,7 @@ namespace RollSystemMobile.Schedule
         public void Execute()
         {
             RollCallBusiness RollBO = new RollCallBusiness();
-            //Tim nhung roll call co ngay bat dau bang hom nay, active
-            var RollToActive = RollBO.GetList().Where(roll => roll.BeginDate.Equals(DateTime.Today));
-            foreach (var rollCall in RollToActive)
-            {
-                //Status bang 2 la activa, o status nay ko duoc sua gi het, chi duoc doi lich
-                rollCall.Status = 2;
-                RollBO.UpdateExist(rollCall);
-                SimpleLog.Info("Roll Call " + rollCall.RollCallID + " Activated");
-            }
-            
-
-            var RollToInactive = RollBO.GetList().Where(roll => roll.EndDate.Equals(DateTime.Today));
-            foreach (var rollCall in RollToInactive)
-            {
-                //Status bang 2 la activa, o status nay ko duoc sua gi het, chi duoc doi lich
-                rollCall.Status = 3;
-                RollBO.UpdateExist(rollCall);
-                SimpleLog.Info("Roll Call " + rollCall.RollCallID + " Inactivated");
-            }
-
+            RollBO.SetRollCallStatus();
         }
     }
 
