@@ -227,19 +227,7 @@ body
     right: 11px;
 }
 
-#nav li a.current
-{
-    background: url("./themes/base/images/nav3.png") no-repeat;
-    opacity:1.0;
-    background-position: -232px 0;
-    color: #fff;
-    left: -6px;
-    padding: 15px 18px 20px 40px;
-    margin-top: -10px;
-    font-weight: bold;
-    font-size: 18px;
     
-}
 #nav li a:hover
 {
     background: url("./themes/base/images/nav3.png") no-repeat;

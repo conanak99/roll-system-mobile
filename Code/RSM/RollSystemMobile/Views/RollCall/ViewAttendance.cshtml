@@ -1,0 +1,62 @@
+﻿@model RollSystemMobile.Models.ViewModels.RollCallDetailViewModel
+@{
+    ViewBag.Title = "ViewAttendance";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+<h2>Roll call attendance: </h2>
+<table class="table table-striped table-condensed" id="example">
+    <thead>
+        <tr>
+            <th>
+                No
+            </th>
+            <th>
+                Student Code
+            </th>
+            <th>
+                Student Name
+            </th>
+            <th>
+                Absent Rate
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int index = 1;}
+        @foreach (var Student in Model.RollCall.Students)
+        {
+            <tr>
+                <td>
+                    @index
+                </td>
+                <td>
+                    @Student.StudentCode
+                </td>
+                <td>
+                    @Student.FullName
+                </td>
+                <td>
+                    @{
+               int Present = Student.StudentAttendances.Count(sa => Model.RollCallLogs.Select(rc => rc.LogID).Contains(sa.AttendanceLog.LogID) && !sa.IsPresent);
+               int TotalSlot = Model.RollCall.StudySessions.Count;
+
+               double Percent = (double)Present / TotalSlot * 100;
+                    }
+                    @String.Format("{0:0}", Percent)%
+                </td>
+            </tr>
+               { index++; }
+
+        }
+    </tbody>
+</table>
+<script>
+    $('#example').dataTable({
+        "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+        "sPaginationType": "bootstrap",
+        "oLanguage": {
+            "sLengthMenu": "Display _MENU_ records per page"
+        },
+        "aoColumnDefs": [{ 'bSortable': false, 'aTargets': []}]
+    });
+</script>

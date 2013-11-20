@@ -4,46 +4,96 @@
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
 <h2>
-    Student list</h2>
+    Student List</h2>
 @if (Model.Count() > 0)
-{
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th class="text-right" style="width: 50px;">
-                    No.
-                </th>
-                <th style="width: 150px;">
-                    Student Code
-                </th>
-                <th style="width: 500px;">
-                    Full Name
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @{ int index = 1;}
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td class="text-right">
-                        @index
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.StudentCode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                </tr>
-                   { index++; }
-            }
-        </tbody>
-        <b style="margin-left: 5px;">Toltal Student: </b>@Model.Count()
-    </table>    
+{    
+<table class="table table-bordered table-striped" id="example">
+    <thead>
+        <th>
+            No.
+        </th>
+        <th>
+            Student Name
+        </th>
+        <th>
+            Student Code
+        </th>
+        <th>
+        </th>
+    </thead>
+   <tbody>
+    @{var index = 1;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="text-align: right;">
+                @index
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentCode)
+            </td>
+            <td>
+                 <a href="#" onclick="deleteStudent('@ViewBag.ClassID','@item.StudentID','@item.FullName','@item.StudentCode')">Remove</a>
+            </td>
+        </tr>
+                                                                                                         { index++; }
+    }
+    </tbody>
+<b style="margin-left:5px;">Toltal Student : </b>@Model.Count()
+</table>
+
 }
 else
 {
     <p>
         This class has no student</p>
 }
+
+<div>
+    <select id="SelectStudent" multiple style="width: 300px;">
+    </select>
+    <input onclick="AddStudent()" class="btn btn-primary" type="submit" value="Add" />
+</div>
+<br />
+<p style="font-size: 20px;">
+    @Html.ActionLink("Back to List", "Index")
+</p>
+<script type="text/javascript">
+    $("#SelectStudent").select2();
+    //add option for student select
+
+    var selectUrl = '@Url.Action("GetStudents")';
+    $.getJSON(selectUrl, function (options) {
+        var html = "";
+        $.each(options, function (index, option) {
+            html += ('<option value="' + option.id + '" >' + option.code + '-' + option.name + '</option>');
+        });
+        $("#SelectStudent").append(html);
+    });
+
+    //send action add students to rollcall
+
+    function AddStudent() {
+        var a = $("#SelectStudent").select2("val");
+        var url = '@Url.Action("AddStudent")' + '?ClassID=' + '@ViewBag.ClassID' + '&StudentID=' + a;
+        window.location.href = url;
+    }
+    $('#example').dataTable({
+        "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+        "sPaginationType": "bootstrap",
+        "oLanguage": {
+            "sLengthMenu": "Display _MENU_ records per page"
+        },
+        "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3]}]
+    });
+    function deleteStudent(classID, studentID, name, code) {
+        var result = confirm("Do you want to remove student " + name + "- " + code + " out of class ?");
+        if (result) {
+            var url = '@Url.Action("DeleteStudent")' + '?ClassID=' + classID + '&StudentID=' + studentID;
+            window.location.href = url;
+        }
+    }
+</script>

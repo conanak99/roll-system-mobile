@@ -85,21 +85,11 @@ namespace RollSystemMobile.Controllers
         }
 
         //student list cho trang create new rollcall
-        public ActionResult Studentlist(int? ClassID)
+        public ActionResult Studentlist(int? RollCallID)
         {
             List<Student> Students = null;
-
-            if (ClassID == null)
-            {
-                Students = StuBO.GetList();
-            }
-            else
-            {
-                Students = StuBO.GetStudentInClass(ClassID.Value);
-            }
-
-            var Classes = ClaBO.GetActiveClasses();
-            ViewBag.ClassID = new SelectList(Classes.OrderBy(c => c.ClassName), "ClassID", "ClassName", ClassID);
+            var rollcall = RollBO.GetRollCallByID(RollCallID.Value);
+            Students = rollcall.Students.ToList();
             return View(Students);
         }
 
@@ -163,9 +153,9 @@ namespace RollSystemMobile.Controllers
         }
 
         //remove student from studenrlist of the rollcall
-        public ActionResult DeleteStudent(int? RollCallID, int? StudentID)
+        public ActionResult DeleteStudent(int RollCallID, int StudentID)
         {
-            RollCall rollcall = RollBO.GetRollCallByID(RollCallID.Value);
+            RollCall rollcall = RollBO.GetRollCallByID(RollCallID);
             var Student = rollcall.Students.Single(a => a.StudentID == StudentID);
             rollcall.Students.Remove(Student);
             RollBO.Update(rollcall);
@@ -186,6 +176,23 @@ namespace RollSystemMobile.Controllers
             return RedirectToAction("RollCallStudentList", new { RollCallID = RollCallID });
         }
         // GET: /RollCall/Details/5
+
+        //view attendance roll call
+        public ViewResult ViewAttendance(int RollCallID)
+        {
+            RollCall RollCall = RollBO.GetRollCallByID(RollCallID);
+
+            AttendanceBusiness AttendanceBO = new AttendanceBusiness();
+            //Lay danh sach nhung log cua roll call nay, tu luc bat dau
+            List<AttendanceLog> AttendanceLogs = AttendanceBO.GetRollCallAttendanceLog(RollCallID);
+
+
+            RollCallDetailViewModel Model = new RollCallDetailViewModel();
+            Model.RollCall = RollCall;
+            Model.RollCallLogs = AttendanceLogs;
+
+            return View(Model);
+        }
 
         public ViewResult Details(int id)
         {

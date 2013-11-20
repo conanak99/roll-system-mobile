@@ -125,6 +125,8 @@
                     @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
                 </td>
                 <td>
+                   @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
+                    <br />
                     @Html.ActionLink("Check Attendance", "RollCallDetail", new { id = item.RollCallID })
                 </td>
             </tr>
@@ -154,7 +156,7 @@
                     @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
                 </td>
                 <td>
-                    @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
+                    <a target="_blank" href="@Url.Action("Studentlist", "RollCall", new { RollCallID = item.RollCallID })">Student List</a>
                     <br />
                     @Html.ActionLink("Check Attendance", "RollCallDetail", new { id = item.RollCallID })
                 </td>
@@ -184,7 +186,7 @@
                 <td>
                 </td>
                 <td>
-                    @Html.ActionLink("View Attendance", "RollCallStudentList", new { RollCallID = item.RollCallID })
+                    @Html.ActionLink("View Attendance", "ViewAttendance", new { RollCallID = item.RollCallID })
                 </td>
             </tr>
             }

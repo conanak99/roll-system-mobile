@@ -7,7 +7,7 @@
     Student List</h2>
 @if (Model.Count() > 0)
 {
-    <table class="table table-bordered">
+    <table class="table table-bordered table-striped" id="example">
         <thead>
             <tr>
                 <th class="text-right" style="width: 50px;">
@@ -48,3 +48,15 @@ else
     <p>
         This class has no student</p>
 }
+<script>
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "Display _MENU_ records per page"
+            },
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': []}]
+        });
+    });
+</script>
