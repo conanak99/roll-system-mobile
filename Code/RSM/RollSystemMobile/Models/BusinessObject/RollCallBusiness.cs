@@ -24,6 +24,29 @@ namespace RollSystemMobile.Models.BusinessObject
 
         }
 
+       
+        public void SetRollCallStatus()
+        {
+            //Active nhung roll call toi ngay
+            var RollToActive = base.GetList().Where(roll => 
+                roll.BeginDate.CompareTo(DateTime.Today) <= 0 && roll.Status != 2);
+            foreach (var rollCall in RollToActive)
+            {
+                //Status bang 2 la activa, o status nay ko duoc sua gi het, chi duoc doi lich
+                rollCall.Status = 2;
+                base.UpdateExist(rollCall);
+            }
+
+            //Inactive roll call qua ngay
+            var RollToInactive = base.GetList().Where(roll => 
+                roll.EndDate.CompareTo(DateTime.Today) <= 0 && roll.Status != 3);
+            foreach (var rollCall in RollToInactive)
+            {
+                //Status bang 2 la activa, o status nay ko duoc sua gi het, chi duoc doi lich
+                rollCall.Status = 3;
+                base.UpdateExist(rollCall);
+            }
+        }
 
         public List<RollCall> GetInstructorCurrentRollCalls(int InstructorID)
         {
