@@ -80,6 +80,7 @@ namespace RollSystemMobile.Controllers
 
             RollBO.SetRollCallStatus();
             var rollcalls = RollBO.GetList().Where(r => r.BeginDate.CompareTo(fdate) >= 0 && r.EndDate.CompareTo(tdate) <= 0).OrderByDescending(r => r.BeginDate).OrderByDescending(r => r.Class.ClassName).ToList();
+
             return View(rollcalls);
         }
 
@@ -316,7 +317,8 @@ namespace RollSystemMobile.Controllers
         public ActionResult Delete(int id)
         {
             RollCall rollcall = RollBO.GetRollCallByID(id);
-            return View(rollcall);
+            RollBO.Delete(rollcall);
+            return RedirectToAction("Index");
         }
 
         //

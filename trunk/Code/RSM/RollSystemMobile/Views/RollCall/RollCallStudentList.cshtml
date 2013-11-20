@@ -8,7 +8,7 @@
 @if (Model.Count() > 0)
 {    
 <table class="table table-bordered table-striped" id="example">
-    <tr>
+    <thead>
         <th>
             No.
         </th>
@@ -20,7 +20,8 @@
         </th>
         <th>
         </th>
-    </tr>
+    </thead>
+   <tbody>
     @{var index = 1;}
     @foreach (var item in Model)
     {
@@ -40,7 +41,7 @@
         </tr>
            { index++; }
     }
-    
+    </tbody>
 <b style="margin-left:5px;">Toltal Student : </b>@Model.Count()
 </table>
 
@@ -56,10 +57,10 @@ else
     </select>
     <input onclick="AddStudent()" class="btn btn-primary" type="submit" value="Add" />
 </div>
-
-<div>
+<br />
+<p style="font-size: 20px;">
     @Html.ActionLink("Back to List", "Index")
-</div>
+</p>
 <script type="text/javascript">
     $("#SelectStudent").select2();
     //add option for student select

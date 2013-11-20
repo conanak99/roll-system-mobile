@@ -6,43 +6,39 @@
 <h2>
     Roll Call List<span style="float: right; margin-right: 20px; font-size: 20px;">( @Html.ActionLink("Create new roll call", "Create")
         )</span></h2>
-
-    @Html.DropDownList("SemesterID", new SelectList(ViewBag.SemesterID, "SemesterID", "SemesterName"), new { style = "width:140px;" })
-    <text> From :</text>
-    <div class="input-append date" id="fromdate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
-        <input class="span2" name="BeginDate" id="FromDate" style="width: 100px; margin-left: 10px;"
-            size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
-                class="icon-th"></i></span>
-    </div>
-    <text> To :</text>
-    <div class="input-append date" id="todate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
-        <input class="span2" name="BeginDate" id="ToDate" style="width: 100px; margin-left: 10px;"
-            size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
-                class="icon-th"></i></span>
-    </div>
-    <input type="button" class="btn btn-primary btn-with-dropdown" value="Select" onclick="getRollcallList();" />
-    <div style="margin-bottom:10px">
-        @using (Html.BeginForm("RollCallBooks", "Report", FormMethod.Post, new { @class = "inline-form" }))
+@Html.DropDownList("SemesterID", new SelectList(ViewBag.SemesterID, "SemesterID", "SemesterName"), new { style = "width:140px;" })
+<text> From :</text>
+<div class="input-append date" id="fromdate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
+    <input class="span2" name="BeginDate" id="FromDate" style="width: 100px; margin-left: 10px;"
+        size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
+            class="icon-th"></i></span>
+</div>
+<text> To :</text>
+<div class="input-append date" id="todate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
+    <input class="span2" name="BeginDate" id="ToDate" style="width: 100px; margin-left: 10px;"
+        size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
+            class="icon-th"></i></span>
+</div>
+<input type="button" class="btn btn-primary btn-with-dropdown" value="Select" onclick="getRollcallList();" />
+<div style="margin-bottom: 10px">
+    @using (Html.BeginForm("RollCallBooks", "Report", FormMethod.Post, new { @class = "inline-form" }))
+    {
+        foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
         {
-            foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
-            {
-            <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
-            }
-            <input type="submit" class="btn btn-success" value="Roll Call Reports" />
+        <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
         }
-
-                @using (Html.BeginForm("RollCallStudentLists", "Report", FormMethod.Post, new { @class = "inline-form" }))
+        <input type="submit" class="btn btn-success" value="Roll Call Reports" />
+    }
+    @using (Html.BeginForm("RollCallStudentLists", "Report", FormMethod.Post, new { @class = "inline-form" }))
+    {
+        foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
         {
-            foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
-            {
-            <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
-            }
-            <input type="submit" class="btn btn-info" value="Final Exam Student Lists"/>
+        <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
         }
-        
-    </div>
-
-    <table class="table table-bordered table-striped" id="example">
+        <input type="submit" class="btn btn-info" value="Final Exam Student Lists" />
+    }
+</div>
+<table class="table table-bordered table-striped" id="example">
     <thead>
         <th style="width: 30px; background-color: #70ad47; color: #ffffff">
             No.
@@ -99,11 +95,41 @@
                 <td>
                     @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
                     <br />
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID })
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) | 
+                    <a href="#" onclick="deleteRollcall('@item.Class.ClassName','@item.Subject.FullName','@item.Instructor.Fullname','@item.RollCallID');">Delete</a>
                 </td>
             </tr>
             }
-            else if (item.Status == 2)
+            else if (item.Status == 2 && item.BeginDate.AddDays(2) >= DateTime.Now)
+            {
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Class.ClassName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Subject.ShortName)
+                </td>
+                <td>
+                    @item.Instructor.Fullname
+                </td>
+                <td>
+                    @item.BeginDate.ToString("dd-MM-yyyy") to @item.EndDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @item.StartTime.ToString(@"hh\:mm") - @item.EndTime.ToString(@"hh\:mm")
+                </td>
+                <td>
+                    @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
+                </td>
+                <td>
+                    @Html.ActionLink("Check Attendance", "RollCallDetail", new { id = item.RollCallID })
+                </td>
+            </tr>
+            }
+            else if (item.Status == 2 && item.BeginDate.AddDays(2) < DateTime.Now )
             {
             <tr>
                 <td style="text-align: right;">
@@ -169,7 +195,6 @@
 <script>
     /* Table initialisation */
     $(document).ready(function () {
-
         var fromdate = $('#fromdate').datepicker().on('changeDate', function (ev) {
             var month = ev.date.getMonth() + 1;
             var ddate = ev.date.getDate() + "-" + month + "-" + ev.date.getFullYear();
@@ -226,5 +251,14 @@
         link = link.replace("semesterid", semesterID);
         window.location.href = link;
     };
-    
+    function deleteRollcall(clss, sub, ins,rollcalID) {
+        var result = confirm("Do you want to delete roll call : \n\t\t Class : " + clss + " \n\t\t Subject : " + sub + " \n\t\t Instructor : " + ins + " ? ");
+        if (result) {
+            var link = '@Url.Action("Delete", new { id = "tmp1" })';
+            link = link.replace("amp;", "");
+            link = link.replace("Delete/", "Delete?id=");
+            link = link.replace("tmp1", rollcalID);
+            window.location.href = link;
+        }
+    }
 </script>
