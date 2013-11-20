@@ -43,7 +43,7 @@
                     @Html.DisplayFor(modelItem => item.ClassName)
                 </td>
                 <td>
-                    @Html.ActionLink("Show", "StudentList", new { ClassID = item.ClassID })
+                    @Html.ActionLink("Add / Remove", "StudentList", new { ClassID = item.ClassID })
                 </td>
                  <td>
                     <a class="btn btn-primary" onclick="inactive('@item.ClassID','@item.ClassName')" style="width: 50px; margin-left:55px;">Active</a>
@@ -67,7 +67,7 @@
                     @Html.DisplayFor(modelItem => item.ClassName)
                 </td>
                 <td>
-                    @Html.ActionLink("Show", "StudentList", new { ClassID = item.ClassID })
+                    @Html.ActionLink("Add / Remove", "StudentList", new { ClassID = item.ClassID })
                 </td>
                 <td>
                  <a class="btn" onclick="active('@item.ClassID','@item.ClassName')" style=" margin-left:55px;">Inactive</a>
@@ -89,7 +89,7 @@
             "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
             "sPaginationType": "bootstrap",
             "oLanguage": {
-                "sLengthMenu": "_MENU_ records per page"
+                "sLengthMenu": "Display _MENU_ records per page"
             },
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [3, 4,5]}]
         });

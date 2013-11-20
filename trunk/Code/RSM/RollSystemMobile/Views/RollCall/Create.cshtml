@@ -361,7 +361,7 @@
         var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
         var endDateSelect;
         $.getJSON(sessionUrl, function (sub) {
-            var i = (sub.session / sub.slot - (sub.session % sub.slot) / sub.slot);
+            var i = sub.session;
             var day;
             if ((i % 5) == 0) {
                 day = ((i / 5) * 7) - 1;
@@ -441,7 +441,7 @@
         var beginDateSelect = document.getElementById('begindate').getAttribute('data-date');
         var endDateSelect;
         $.getJSON(sessionUrl, function (sub) {
-            var i = (sub.session / sub.slot - (sub.session % sub.slot) / sub.slot);
+            var i = sub.session;
             var day;
             if ((i % 5) == 0) {
                 day = ((i / 5) * 7) - 1;

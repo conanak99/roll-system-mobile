@@ -109,13 +109,31 @@ namespace RollSystemMobile.Controllers
         // student list
         public ActionResult StudentList(int ClassID) {
             List<Student> Students = null;
-
-          
                 Students = StuBO.GetStudentInClass(ClassID);
-
+                ViewBag.ClassID = ClassID;
             return View(Students);
         }
+        public ActionResult AddStudent(int ClassID,String StudentID) {
+            String[] tmp = StudentID.Split(',');
+            for (int i = 0; i < tmp.Length; i++)
+            {
+                int test = int.Parse(tmp[i]);
+                var Student = StuBO.GetStudentByID(test);
+                Student.ClassID = ClassID;
+                StuBO.UpdateExist(Student);
+            }
+            return RedirectToAction("StudentList", new { ClassID = ClassID });
+        }
+        public ActionResult DeleteStudent(int ClassID, int StudentID)
+        {
+            Class cls = ClassBO.GetClassByID(ClassID);
+            var stu = cls.Students.Single(c=>c.StudentID == StudentID);
+            cls.Students.Remove(stu);
+            ClassBO.Update(cls);
+            return RedirectToAction("StudentList", new { ClassID = ClassID });
+        }
         //
+
         // GET: /Class/Delete/5
  
         public ActionResult Delete(int id)
@@ -125,6 +143,12 @@ namespace RollSystemMobile.Controllers
         }
 
         //
+        public JsonResult GetStudents()
+        {
+            var option = StuBO.GetActiveStudents().Where(c=>c.ClassID== null).
+               Select(d => new { id = d.StudentID, name = d.FullName, code = d.StudentCode });
+            return Json(option, JsonRequestBehavior.AllowGet);
+        }
         // POST: /Class/Delete/5
 
         [HttpPost, ActionName("Delete")]
