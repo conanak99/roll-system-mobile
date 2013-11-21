@@ -156,7 +156,7 @@
                     @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
                 </td>
                 <td>
-                    <a target="_blank" href="@Url.Action("Studentlist", "RollCall", new { RollCallID = item.RollCallID })">Student List</a>
+                    <a class="modal-call" href="@Url.Action("StudentList", "RollCall", new { RollCallID = item.RollCallID })">Student List</a>
                     <br />
                     @Html.ActionLink("Check Attendance", "RollCallDetail", new { id = item.RollCallID })
                 </td>
@@ -194,6 +194,32 @@
         }
     </tbody>
 </table>
+
+
+
+
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
+
+<script>
+    $('.modal-call').click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $('#myModal').html(data);
+                $('#myModal').modal('show');
+            }
+        });
+    });
+
+</script>
+
+
 <script>
     /* Table initialisation */
     $(document).ready(function () {

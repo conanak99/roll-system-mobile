@@ -85,12 +85,13 @@ namespace RollSystemMobile.Controllers
         }
 
         //student list cho trang create new rollcall
-        public ActionResult Studentlist(int? RollCallID)
+        public ActionResult StudentList(int RollCallID)
         {
             List<Student> Students = null;
-            var rollcall = RollBO.GetRollCallByID(RollCallID.Value);
+            var rollcall = RollBO.GetRollCallByID(RollCallID);
+            ViewBag.Class = rollcall.Class.ClassName;
             Students = rollcall.Students.ToList();
-            return View(Students);
+            return PartialView("_StudentList", Students);
         }
 
 

@@ -472,7 +472,7 @@
     <Content Include="Views\Instructor\_ViewStart.cshtml" />
     <Content Include="Views\Instructor\_Layout.cshtml" />
     <Content Include="Views\RollCall\RollCallStudentList.cshtml" />
-    <Content Include="Views\RollCall\Studentlist.cshtml" />
+    <Content Include="Views\RollCall\_StudentList.cshtml" />
     <Content Include="Views\Admin\AddImages.cshtml" />
     <Content Include="Views\Admin\AddImagesResult.cshtml" />
     <Content Include="Views\Instructors\Create.cshtml" />
