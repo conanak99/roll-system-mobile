@@ -317,10 +317,10 @@ namespace RollSystemMobile.Models.BusinessObject
             //Tao 1 roll call book rong
             ExcelPackage Package = new ExcelPackage();
             ExcelWorksheet RollCallWorksheet = FilledRollCallWorksheet(RollCallID);
-            ExcelWorksheet ExamListWorksheet = FilledExamListWorksheet(RollCallID);
+            //ExcelWorksheet ExamListWorksheet = FilledExamListWorksheet(RollCallID);
 
             Package.Workbook.Worksheets.Add(RollCallWorksheet.Name, RollCallWorksheet);
-            Package.Workbook.Worksheets.Add(ExamListWorksheet.Name, ExamListWorksheet);
+            //Package.Workbook.Worksheets.Add(ExamListWorksheet.Name, ExamListWorksheet);
 
             ExcelWriter.WriteExcelFile(Package, FileName);
             Package.Dispose();
