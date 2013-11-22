@@ -1,0 +1,11 @@
+﻿Slide 1:
+- Sửa Server, Client thành Server Database, Client Database.
+- Bỏ Application. PHía trên, Instructor tương tác với Browser, tới server.
+- Phía dưới, gom device và client database lại, bao bởi hình chữ nhật, viền đứt nét, ghi chữ client.
+- Phía dưới, Instructor tương tác với device, device thông qua Web Service, tương tác với Server Database (Thay cho cái buffer sync).
+Slide 2:
+- Bỏ cái buffer sync giữa 2 database.
+- Vẫn giữ mấy đường thẳng thể hiện mapping.
+- Device lấy thông tin từ client database, thông qua lớp Service, tương tác với server database (2 database client và server không tương tác trực tiếp).
+
+Cứ tạm vẽ thế, có gì vẽ xong fix tiếp, em note lại có chừng này.
