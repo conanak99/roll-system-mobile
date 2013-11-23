@@ -21,9 +21,10 @@ namespace RollSystemMobile.Schedule
         } 
     }
 
-    public static class TempPathHolder
+    public static class PathHolder
     {
         public static String TempPath { get; set; }
+        public static String LogoPath { get; set; }
     }
 
     public class ClearTempFolderTask : ITask
@@ -31,13 +32,13 @@ namespace RollSystemMobile.Schedule
         public void Execute()
         {
             //Clean thu muc temp
-            string[] filePaths = Directory.GetFiles(TempPathHolder.TempPath);
+            string[] filePaths = Directory.GetFiles(PathHolder.TempPath);
             foreach (string filePath in filePaths)
                 File.Delete(filePath);
             SimpleLog.Info(filePaths.Count() + " files in Temp Folder deleted.");
 
 
-            filePaths = Directory.GetFiles(TempPathHolder.TempPath + "Resized/");
+            filePaths = Directory.GetFiles(PathHolder.TempPath + "Resized/");
             foreach (string filePath in filePaths)
                 File.Delete(filePath);
             SimpleLog.Info(filePaths.Count() + " files in Resized Folder deleted.");

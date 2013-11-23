@@ -18,7 +18,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult RollCall(int id)
         {
             RollCall RollCall = db.RollCalls.First(r => r.RollCallID == id);
-            String FileName = RollCall.Class.ClassName + "_" + RollCall.Subject.ShortName
+            String FileName = RollCall.Class.ClassName.Trim() + "_" + RollCall.Subject.ShortName
                 + "_" + DateTime.Today.ToString("dd-MM-yyyy") + ".xlsx";
 
             RollCallBusiness BO = new RollCallBusiness();
