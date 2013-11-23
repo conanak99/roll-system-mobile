@@ -317,10 +317,20 @@ namespace RollSystemMobile.Models.BusinessObject
             //Tao 1 roll call book rong
             ExcelPackage Package = new ExcelPackage();
             ExcelWorksheet RollCallWorksheet = FilledRollCallWorksheet(RollCallID);
+            
             //ExcelWorksheet ExamListWorksheet = FilledExamListWorksheet(RollCallID);
 
             Package.Workbook.Worksheets.Add(RollCallWorksheet.Name, RollCallWorksheet);
             //Package.Workbook.Worksheets.Add(ExamListWorksheet.Name, ExamListWorksheet);
+
+            //Add logo vao
+            Package.DoAdjustDrawings = false;
+            ExcelWorksheet RSheet = Package.Workbook.Worksheets[RollCallWorksheet.Name];
+            Image logo = Image.FromFile(RollSystemMobile.Schedule.PathHolder.LogoPath);
+            var addedLogo = RSheet.Drawings.AddPicture("Logo", logo);
+            addedLogo.EditAs = OfficeOpenXml.Drawing.eEditAs.Absolute;
+            addedLogo.From.Column = 0;
+            addedLogo.From.Row = 0;
 
             ExcelWriter.WriteExcelFile(Package, FileName);
             Package.Dispose();
@@ -330,11 +340,23 @@ namespace RollSystemMobile.Models.BusinessObject
         public void CreateRollCallBooks(List<int> RollCallIDs, String FileName)
         {
             ExcelPackage Package = new ExcelPackage();
+            Package.DoAdjustDrawings = false;
             foreach (int RollCallID in RollCallIDs)
             {
                 ExcelWorksheet ExamListWorksheet = FilledRollCallWorksheet(RollCallID);
                 Package.Workbook.Worksheets.Add(ExamListWorksheet.Name, ExamListWorksheet);
             }
+
+            //Them logo
+            Image logo = Image.FromFile(RollSystemMobile.Schedule.PathHolder.LogoPath);
+            foreach (var Sheet in Package.Workbook.Worksheets)
+            {
+                var addedLogo = Sheet.Drawings.AddPicture("Logo", logo);
+                addedLogo.EditAs = OfficeOpenXml.Drawing.eEditAs.Absolute;
+                addedLogo.From.Column = 0;
+                addedLogo.From.Row = 0;
+            }
+
             ExcelWriter.WriteExcelFile(Package, FileName);
             Package.Dispose();
         }
@@ -355,9 +377,8 @@ namespace RollSystemMobile.Models.BusinessObject
         {
 
             RollCall RollCall = GetRollCallByID(RollCallID);
-            String SheetName = RollCall.Class.ClassName + "_" + RollCall.Subject.ShortName;
+            String SheetName = RollCall.Class.ClassName.Trim() + "_" + RollCall.Subject.ShortName;
             
-
             ExcelWorksheet RollCallWorksheet = new ExcelPackage().Workbook.Worksheets.Add(SheetName);
 
             //Set chieu ngang cac cot

@@ -52,7 +52,9 @@ namespace RollSystemMobile
             FaceBusiness.SetTrainingFolderPath(Server.MapPath("~/Content/Training Data"));
 
             //Bat dau set cai scheduler
-            TempPathHolder.TempPath = Server.MapPath("~/Content/Temp/");
+            PathHolder.TempPath = Server.MapPath("~/Content/Temp/");
+            PathHolder.LogoPath = Server.MapPath("~/Content/") + "png-logo_resize.png";
+
             TaskManager.Initialize(new MyRegistry()); 
             TaskManager.UnobservedTaskException += TaskManager_UnobservedTaskException;
         }
