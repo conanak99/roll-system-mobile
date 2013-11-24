@@ -18,13 +18,13 @@
             FullName
         </th>
         <th style="background-color: #70ad47; color: #ffffff; width:100px;">
-            Email
-        </th>
-        <th style="background-color: #70ad47; color: #ffffff; width:100px;">
             Student Code
         </th>
         <th style="background-color: #70ad47; color: #ffffff">
             Active / Inactive
+        </th>
+         <th style="background-color: #70ad47; color: #ffffff; width:100px;">
+            Attendance Report
         </th>
         <th style="background-color: #70ad47; color: #ffffff">
         </th>
@@ -46,14 +46,14 @@
                     @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.StudentCode)
                 </td>
                 <td>
                     <a class="btn btn-primary" onclick="inactive('@item.StudentID','@item.FullName')" style="width: 50px; margin-left:15px;">
                         Active</a>
+                </td>
+                 <td>
+                    @Html.ActionLink("Attendance Report", "AttendanceReport", new { id = item.StudentID })
                 </td>
                 <td>
                     @Html.ActionLink("Change Class", "ChangeClass", new { id = item.StudentID, classid = item.ClassID })
@@ -76,14 +76,14 @@
                     @Html.DisplayFor(modelItem => item.FullName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.StudentCode)
                 </td>
                 <td>
                     <a class="btn" onclick="active('@item.StudentID','@item.FullName')" style="width: 50px; margin-left:15px;">
                         Inactive</a>
+                </td>
+                 <td>
+                    @Html.ActionLink("Attendance Report", "AttendanceReport", new { id = item.StudentID })
                 </td>
                 <td>
                     @Html.ActionLink("Change Class", "ChangeClass", new { id = item.StudentID, classid = item.ClassID })

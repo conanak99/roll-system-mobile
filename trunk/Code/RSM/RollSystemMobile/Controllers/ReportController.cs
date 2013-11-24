@@ -52,5 +52,22 @@ namespace RollSystemMobile.Controllers
             String ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             return File(FilePath, ExcelMimeType, FileName);
         }
+
+        public ActionResult StudentReport(int StudentID, int SemesterID)
+        {
+            StudentBusiness StuBO = new StudentBusiness();
+            SemesterBusiness SemBO = new SemesterBusiness();
+
+            var stu = StuBO.GetStudentByID(StudentID);
+            var sem = SemBO.GetSemesterByID(SemesterID);
+
+            String FileName = stu.StudentCode + "_" + sem.SemesterName + ".xlsx";
+            String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
+
+            StuBO.CreateStudentReport(StudentID, SemesterID, FilePath);
+
+            String ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            return File(FilePath, ExcelMimeType, FileName);
+        }
     }
 }
