@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<string>
+@{
     ViewBag.Title = "Import";
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
@@ -9,22 +10,25 @@
     <input id="FileUpload" name="FileUpload" type="file" />
     <br />
     <br />
+    <b>Download file template <a href="@Url.Action("Download", "Staff")">
+        here</a>. </b>
+    <br />
+    <br />
     <input class="btn btn-primary" type="submit" id="Submit" name="Submit" value="Submit" />
     
 }
-<label>@ViewData["test"]</label>
 <script type="text/javascript">
     $(document).ready(function () {
         $(":file").filestyle();
     });
-        $('form').submit(function () {
-            var selectedFile = $('#FileUpload').val();
-            var matches = selectedFile.match(/\.(xlsx?)$/i);
-            if (matches == null) {
-                alert('please select an Excel file');
-                return false;
-            }
-            return true;
-       
+    $('form').submit(function () {
+        var selectedFile = $('#FileUpload').val();
+        var matches = selectedFile.match(/\.(xlsx?)$/i);
+        if (matches == null) {
+            alert('please select an Excel file');
+            return false;
+        }
+        return true;
+
     });
 </script>

@@ -1,0 +1,105 @@
+﻿@model RollSystemMobile.Models.ViewModels.AttendanceReportViewModel
+@{
+    ViewBag.Title = "AttendanceReport";
+}
+<h2>
+    Attendance Report</h2>
+<b>Student : </b>@Model.Student.FullName<br />
+<b>Student Code : </b>@Model.Student.StudentCode
+<br />
+<b>Class: </b>@Model.Student.Class.ClassName<br />
+<br />
+ @Html.DropDownList("SemesterID")
+
+ <a style="margin-bottom:10px;" class="btn btn-primary" onclick="attendanceReport('@Model.Student.StudentID')">Select</a> --- 
+<a  style="margin-bottom:10px;"class="btn btn-primary" onclick="exportReport('@Model.Student.StudentID')">Export to excel</a>
+
+<table class="table table-bordered table-striped" id="example">
+    <thead>
+        <th>
+            No.
+        </th>
+        <th>
+            Subject
+        </th>
+        <th>
+            Semester
+        </th>
+        <th>
+            Absent Rate
+        </th>
+        <th>
+            Detail
+        </th>
+    </thead>
+    <tbody>
+        @{ int index = 1;
+           RollSystemMobile.Models.BusinessObject.AttendanceBusiness AttendBO = new RollSystemMobile.Models.BusinessObject.AttendanceBusiness();
+        }
+        @foreach (var rollcall in Model.RollCallList)
+        { 
+            <tr>
+                <td>
+                    @index
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => rollcall.Subject.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => rollcall.Semester.SemesterName)
+                </td>
+                <td>
+                    @{
+               double Percent = AttendBO.GetStudentAbsentRate(Model.Student.StudentID, rollcall.RollCallID);
+                    }
+                    @String.Format("{0:0}", Percent)
+                </td>
+                <td>
+                    <a class="btn btn-info modal-caller" href="@Url.Action("RollAttendance",
+                    new { RollCallID = rollcall.RollCallID, StudentID = Model.Student.StudentID })">
+                        Detail</a>
+                </td>
+            </tr>
+                  { index++; }
+        }
+    </tbody>
+</table>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+</div>
+<script>
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "Display _MENU_ records per page"
+            },
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': []}]
+        });
+    });
+    $('.modal-caller').click(function (e) {
+        e.preventDefault();
+        var url = $(this).attr('href');
+
+        $.ajax({
+            type: "GET",
+            url: url,
+            success: function (data) {
+                $('#myModal').html(data);
+                $('#myModal').modal('show');
+            }
+        });
+    });
+    function attendanceReport(stuID) {
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var url = '@Url.Action("AttendanceReport")' + '?id=' + stuID + '&smtID=' + semesterID;
+        window.location.href = url;
+    }
+    function exportReport(stuID) {
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var url = '@Url.Action("StudentReport")' + '?StudentID=' + stuID + '&SemesterID=' + semesterID;
+        url = url.replace("Student/", "Report/");
+        window.location.href = url;
+    }
+</script>

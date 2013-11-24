@@ -13,7 +13,7 @@ using RollSystemMobile.Models;
 using System.Data.SqlClient;
 namespace RollSystemMobile.Controllers
 {
-    public class StaffController : Controller 
+    public class StaffController : Controller
     {
         private RSMEntities _db = new RSMEntities();
         //
@@ -26,6 +26,12 @@ namespace RollSystemMobile.Controllers
         public ActionResult Import()
         {
             return View();
+        }
+        public FilePathResult Download()
+        {
+            string fileName = "File_Import_Template.xls";
+            string path = AppDomain.CurrentDomain.BaseDirectory + "Content/Files/";
+            return File(path + fileName, "file/xls", fileName);
         }
         [HttpPost]
         public ActionResult ImportExcel(HttpPostedFileBase file)
@@ -96,11 +102,11 @@ namespace RollSystemMobile.Controllers
                     int majorID;
                     int classID;
                     String value;
-                    
+
                     // insert tung dong cua file
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
-                      //insert class
+                        //insert class
                         dbclass = new Class();
                         //lay gia tri majorid dua tren majorshorname
                         tmp = ds.Tables[0].Rows[i]["Major"].ToString();
@@ -133,18 +139,18 @@ namespace RollSystemMobile.Controllers
                             _db.SaveChanges();
                         }
                     }
-                    
+
                     ds.Dispose();
                     excelConnection.Close();
                 }
 
                 else
                 {
-                   
+
                 }
             }
             return RedirectToAction("Import");
-            
+
         }
     }
 }

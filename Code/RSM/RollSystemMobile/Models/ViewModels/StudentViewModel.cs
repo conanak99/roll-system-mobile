@@ -21,4 +21,9 @@ namespace RollSystemMobile.Models.ViewModels
         public RollCall InRollCall { get; set; }
         public List<StudentAttendance> StudentAttendances { get; set; }
     }
+    public class AttendanceReportViewModel
+    {
+        public Student Student { get; set; }
+        public List<RollCall> RollCallList { get; set; }
+    }
 }
