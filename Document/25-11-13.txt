@@ -1,9 +1,22 @@
-hide 3 phan demo cuoi cung
-phan biet vi sao
-huy nghien cuu ve co che cua mobile,han che demo trung lap,
-tat chuong trinh ma ct van chay nen. thi co ato sync dc k?
-add image student sau cung.
-thu 5 quay video thiet trinh 
-be help xuong duoi
-cu moi module se co mot slide.chi tiet.
-khong de thoi gian chet
+[ Web ]
+ 1. Vi sao su dung mo hinh MVC ?
+ 2. Vi sao su dung agile model ? (Nghien cuu so luoc cac model khac ? Scrum)
+ 3. Vi sao khong dong bo calendar theo event ?
+ 4. Trang roll call list cua staff show cai j?
+ _Show nhung roll call nam trong khoang thoi gian hoac semester staff lua chon . Cac roll call se duoc show theo ten class, Date giam dan.	
+ 5. Khoang thoi gian giao vien co the chup hinh tu luc bat dau hoc la bao lau ? cong tru 15p hay trong thoi gian hoc.
+ 6. Danh sach roll call cua giao vien show theo quy luat nao ? 
+ 7. Truong hop gap nguoi la se xu li nhu the nao ?
+ _Se phat trien them mot module khac de xu li.
+ 8.Anh cua sinh vien khi duoc xac nhan hoac xu li khi diem danh co duoc add them vao database ? 
+[ Mobile ]
+ 1. Ve che do offline, sau khi co mang lai (chuong trinh van chay nen) thi co auto sync duoc khong hay user pha chon chuong trinh ?
+ 2. O trang roll call detail, vi sao khong show het chi tiet nhu ben web ?
+ 3. Gia su giao vien hu het cac thiet bi, muon dien thoai giao vien khac diem danh co duoc khong ?
+ 4. Vi sao o che do offline, giao vien van login duoc?
+ 5. Thieu hoac du bao nhieu nguoi thi system gui notation check manual ? 
+
+
+[ Database ]
+ 2. Neu truong hop muon phat trien them kiem soat theo block, thi them cai gi? bang nao ?
+ 
