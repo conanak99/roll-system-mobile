@@ -619,7 +619,11 @@
                     Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
                 } else {
                     NextDate = new Date(year, month, date + i - 1);
-                    Ndate = NextDate.getDate() + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear();
+                    if (NextDate.getMonth() == 0) {
+                        Ndate = (NextDate.getDate() + 1) + "-" + 12 + "-" + (NextDate.getFullYear() - 1);
+                    } else {
+                        Ndate = (NextDate.getDate()+1) + "-" + NextDate.getMonth() + "-" + NextDate.getFullYear() ;
+                    }
                 }
             } else if (day == 0) {
                 NextDate = new Date(year, month, date + 1);
