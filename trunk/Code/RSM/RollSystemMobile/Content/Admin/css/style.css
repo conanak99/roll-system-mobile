@@ -3077,11 +3077,6 @@ textarea {
   border-radius: 0 0 0 0;
 }
 
-input[type=text]
-{
-    font-size: 110%;
-}
-
 .control-label.center {
   text-align: center;
 }

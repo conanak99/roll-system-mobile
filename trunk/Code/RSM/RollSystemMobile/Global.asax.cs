@@ -54,7 +54,8 @@ namespace RollSystemMobile
             //Bat dau set cai scheduler
             PathHolder.TempPath = Server.MapPath("~/Content/Temp/");
             PathHolder.LogoPath = Server.MapPath("~/Content/") + "png-logo_resize.png";
-
+           // PathHolder.LogoPath = Server.MapPath("~/Content/") + "fu_logo_edited.png";
+            
             TaskManager.Initialize(new MyRegistry()); 
             TaskManager.UnobservedTaskException += TaskManager_UnobservedTaskException;
         }
