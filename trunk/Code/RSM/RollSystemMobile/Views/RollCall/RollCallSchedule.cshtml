@@ -45,6 +45,19 @@
     <dt>Time</dt>
     <dd>@Html.FormatTime(@Model.StartTime) - @Html.FormatTime(@Model.EndTime)</dd>
 </dl>
+
+<div class="text-left" style="margin: 0 0 15px 280px">
+    <h4>
+        More Action</h4>
+    <a href="@Url.Action("AddSession", "StudySession", new { RollCallID = Model.RollCallID })" id="new-ses" class="btn btn-success">
+        Add Session</a>
+    <a href="@Url.Action("ChangeInstructor", "StudySession", new { RollCallID = Model.RollCallID })" id="change-ins" class="btn btn-info">
+        Change Instructor</a>
+</div>
+
+
+<div id='calendar'>
+</div>
 <div class="text-left" style="margin: 0 0 15px 280px">
     <h4>
         Help</h4>
@@ -57,16 +70,8 @@
         height: 20px; display: inline-block">
     </div>
     Present and future study session, click to change date, time.
-    <h4>
-        More Action</h4>
-    <a href="@Url.Action("AddSession", "StudySession", new { RollCallID = Model.RollCallID })" id="new-ses" class="btn btn-success">
-        Add Session</a>
-    <a href="@Url.Action("ChangeInstructor", "StudySession", new { RollCallID = Model.RollCallID })" id="change-ins" class="btn btn-info">
-        Change Instructor</a>
 </div>
 
-<div id='calendar'>
-</div>
 <script>
     $(document).ready(function () {
 

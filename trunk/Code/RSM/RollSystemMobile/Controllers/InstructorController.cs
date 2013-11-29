@@ -11,7 +11,7 @@ using RollSystemMobile.Models.GoogleApi;
 
 namespace RollSystemMobile.Controllers
 {
-
+    [Authorize]
     public class InstructorController : Controller
     {
         //

@@ -3,7 +3,6 @@
     ViewBag.Title = "Teaching Schedule";
     Layout = "~/Views/Staff/_Layout.cshtml";
 }
-
 @section ExtraHead {
     <style>
         #calendar
@@ -19,21 +18,54 @@
             text-align: center;
         }
         
-        .datepicker{z-index:1151;}
+        .datepicker
+        {
+            z-index: 1151;
+        }
     </style>
     <link href="@Url.Content("~/Content/Plug-in/FullCalendar/fullcalendar.css")" rel="stylesheet"
         type="text/css" />
     <script src="@Url.Content("~/Content/Plug-in/FullCalendar/js/fullcalendar.js")" 
     type="text/javascript"></script>
 }
-
-<h4>Teaching Schedule</h4>
+<h4>
+    Teaching Schedule</h4>
 <dl class="dl-horizontal">
-    <dt>ID</dt>
-    <dd>@Model.InstructorID</dd>
-    <dt>Full Nam</dt>
+    <dt>Full Name</dt>
     <dd>@Model.Fullname</dd>
+    <dt>Phone Number</dt>
+    <dd>@Model.Phone</dd>
+    <dt>Email</dt>
+    <dd>@Model.Email</dd>
 </dl>
+
+<div class="text-left" style="margin: 0 0 15px 280px">
+    <h4>
+        Session Report</h4>
+     @using (Html.BeginForm("SessionReport", "Report", FormMethod.Post))
+        {
+            <span>Select month:</span> <select name="SelectedMonth">
+                @{
+            for (int i = 1; i <= 12; i++)
+            {
+                DateTime dt = new DateTime(2000, i, 1);
+                if (dt.Month == DateTime.Today.Month)
+                {
+                  <option value="@i" selected>@dt.ToString("MMMM")</option>
+                }
+                else
+                {
+                    <option value="@i">@dt.ToString("MMMM")</option>
+                }
+            }
+                }
+            </select>
+            <input type="hidden" name="InstructorID" value="@Model.InstructorID" />
+            
+            <button class="btn btn-primary">Download</button>
+        }
+</div>
+
 <div id='calendar'>
 </div>
 <script>
@@ -46,7 +78,7 @@
                 right: 'month,basicWeek,basicDay'
             },
             editable: false,
-            events: '@Url.Action("GetTeachingSession", new { InstructorID = Model.InstructorID })',
+            events: '@Url.Action("GetCalendarEvent", new { InstructorID = Model.InstructorID })',
             eventClick: function (calEvent, jsEvent, view) {
             },
             eventRender: function (event, element) {
@@ -56,7 +88,7 @@
                     element.css('border', '1px solid gray');
                 }
                 else {
-                   
+
                 }
             }
         });

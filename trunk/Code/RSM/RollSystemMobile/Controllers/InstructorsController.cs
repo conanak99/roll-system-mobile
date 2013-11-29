@@ -86,7 +86,11 @@ namespace RollSystemMobile.Controllers
         public ActionResult Edit(int id)
         {
             Instructor instructor = InsBO.GetInstructorByID(id);
-            int UserID = instructor.User.UserID;
+            int UserID = 0;
+            if (instructor.User != null)
+            {
+                UserID = instructor.User.UserID; 
+            }
             int TypeID = instructor.SubjectType.TypeID;
             ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName",TypeID);
             ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username", UserID);

@@ -48,8 +48,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.StudentCode)
                 </td>
-                <td>
-                    <a class="btn btn-primary" onclick="inactive('@item.StudentID','@item.FullName')" style="width: 50px; margin-left:15px;">
+                <td class="text-center">
+                    <a class="btn btn-primary" onclick="inactive('@item.StudentID','@item.FullName')" style="width: 50px">
                         Active</a>
                 </td>
                  <td>
@@ -78,8 +78,8 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.StudentCode)
                 </td>
-                <td>
-                    <a class="btn" onclick="active('@item.StudentID','@item.FullName')" style="width: 50px; margin-left:15px;">
+                <td class="text-center">
+                    <a class="btn" onclick="active('@item.StudentID','@item.FullName')" style="width: 50px">
                         Inactive</a>
                 </td>
                  <td>

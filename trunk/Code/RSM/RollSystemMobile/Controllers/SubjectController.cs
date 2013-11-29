@@ -10,6 +10,7 @@ using RollSystemMobile.Models.BusinessObject;
 
 namespace RollSystemMobile.Controllers
 { 
+    [Authorize]
     public class SubjectController : Controller
     {
         private SubjectBusiness SubBO;

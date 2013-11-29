@@ -12,6 +12,7 @@ using RollSystemMobile.Models.HelperClass;
 
 namespace RollSystemMobile.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         // GET: /Admin/

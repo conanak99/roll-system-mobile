@@ -51,19 +51,18 @@
     <script src="@Url.Content("~/Scripts/jquery.validate.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.js")" type="text/javascript"></script>
     @RenderSection("ExtraHead", required: false)
-
     <style>
-    input 
-    {
-        color:Black;
-    }
+        input
+        {
+            color: Black;
+        }
     </style>
 </head>
 <body>
     <!-- Start Content -->
     <div class="container-fluid">
         <div class="navbar main">
-            <a href="@Url.Action("Index","Admin")" class="appbrand">
+            <a href="@Url.Action("Index", "Admin")" class="appbrand">
                 <img src="../../Content/Admin/css/images/logo2.png" style="margin-top: 5px; margin-left: 25px;" /></a>
             <button type="button" class="btn btn-navbar">
                 <span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar">
@@ -74,7 +73,8 @@
                 <li class="account"><a data-toggle="dropdown" href="my_account.html?lang=en" class="glyphicons logout lock">
                     <span class="hidden-phone text">@User.Identity.Name</span><i></i></a>
                     <ul class="dropdown-menu pull-right">
-                        <li><a href="@Url.Action("ChangePassword","Account")" class="glyphicons cogwheel">Change Password<i></i></a></li>
+                        <li><a href="@Url.Action("ChangePassword", "Account")" class="glyphicons cogwheel">Change
+                            Password<i></i></a></li>
                         <li><span><a class="btn btn-default btn-small pull-right" style="padding: 2px 10px;
                             background: #fff;" href="@Url.Action("Logout", "Account")">Sign Out</a> </span>
                         </li>
@@ -86,16 +86,18 @@
             <div id="menu" class="hidden-phone">
                 <span class="profile"><a class="img" href="#">
                     <img src="@Url.Content("~/Content/Admin/images/sample.gif")" /></a> <span><strong>@User.Identity.Name</strong>
-                        <a href="@Url.Action("ChangePassword","Account")">edit account</a> </span></span>
+                        <a href="@Url.Action("ChangePassword", "Account")">edit account</a> </span>
+                </span>
                 <ul>
-                    <li class="glyphicons home"><a href="@Url.Action("Index","Admin")"><i></i><span>Admin Dashboard</span></a>
-                    </li>
+                    <li class="glyphicons home"><a href="@Url.Action("Index", "Admin")"><i></i><span>Admin
+                        Dashboard</span></a> </li>
                     <li class="hasSubmenu glyphicons group"><a data-toggle="collapse" href="#acc_mana"><i>
                     </i><span>Manage Account</span></a>
                         <ul class="collapse" id="acc_mana">
                             <li class=""><a href="@Url.Action("AddStaff", "Admin")"><span>Add Staff</span></a></li>
                             <li class=""><a href="@Url.Action("StaffAccountList", "Admin")"><span>Staff Accounts</span></a></li>
-                            <li class=""><a href="@Url.Action("InstructorAccountList", "Admin")"><span>Instructor Accounts</span></a></li>
+                            <li class=""><a href="@Url.Action("InstructorAccountList", "Admin")"><span>Instructor
+                                Accounts</span></a></li>
                             <li class=""><a href="@Url.Action("StudentAccountList", "Admin")"><span>Student Accounts</span></a></li>
                         </ul>
                         <span class="count">></span></li>
@@ -107,17 +109,19 @@
                             <li class=""><a href="@Url.Action("LogImages", "Admin")"><span>Log Images</span></a></li>
                         </ul>
                         <span class="count">></span> </li>
-                    <li class="glyphicons settings"><a href="@Url.Action("Config", "Admin")"><i></i><span>Configure
-                        System</span></a></li>
+                    <!-- 
                     <li class="glyphicons picture"><a href="@Url.Action("RecognizeTesting", "Admin")"><i></i><span>
                         Recognizer Testing</span></a></li>
+                        -->
                     <li class="hasSubmenu glyphicons sort"><a data-toggle="collapse" href="#req_mana"><i>
                     </i><span>Manage Request</span></a>
                         <ul class="collapse" id="req_mana">
-                         @{Html.RenderAction("RequestCount", "Admin");}
+                            @{Html.RenderAction("RequestCount", "Admin");}
                             <li class=""><a href="@Url.Action("CreateRequest", "Admin")"><span>Create Request</span></a></li>
                         </ul>
                         <span class="count">></span> </li>
+                    <li class="glyphicons settings"><a href="@Url.Action("Config", "Admin")"><i></i><span>
+                        Configure System</span></a></li>
                     <div class="clearfix" style="clear: both">
                     </div>
                     <!--   <div id="copyright" style="text-shadow: 1px 1px #232323;">

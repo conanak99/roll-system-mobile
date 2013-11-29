@@ -15,9 +15,6 @@
             Fullname
         </th>
         <th style="background-color: #70ad47; color: #ffffff">
-            User
-        </th>
-        <th style="background-color: #70ad47; color: #ffffff">
             Schedule
         </th>
         <th style="background-color: #70ad47; color: #ffffff">
@@ -40,13 +37,10 @@
                     @Html.DisplayFor(modelItem => item.Fullname)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.Username)
-                </td>
-                <td>
                     @Html.ActionLink("Teaching Schedule", "Schedule", new { id = item.InstructorID })
                 </td>
-                <td>
-                    <a class="btn btn-primary" onclick="inactive('@item.InstructorID','@item.Fullname')" style="width: 50px; margin-left:25px;">Active</a>
+                <td class="text-center">
+                    <a class="btn btn-primary" onclick="inactive('@item.InstructorID','@item.Fullname')" style="width: 50px">Active</a>
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.InstructorID }) |
@@ -64,13 +58,10 @@
                     @Html.DisplayFor(modelItem => item.Fullname)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.User.Username)
-                </td>
-                <td>
                     @Html.ActionLink("Teaching Schedule", "Schedule", new { id = item.InstructorID })
                 </td>
-                <td>
-                    <a class="btn" onclick="active('@item.InstructorID','@item.Fullname')" style=" margin-left:25px;">Inactive</a>
+                <td class="text-center">
+                    <a class="btn" onclick="active('@item.InstructorID','@item.Fullname')" style="width: 50px">Inactive</a>
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.InstructorID }) |
