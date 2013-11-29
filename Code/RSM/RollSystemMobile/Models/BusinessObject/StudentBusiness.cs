@@ -93,6 +93,7 @@ namespace RollSystemMobile.Models.BusinessObject
             SemesterBusiness sem = new SemesterBusiness();
             String semesterName = sem.GetSemesterByID(SemesterID).SemesterName;
 
+            GeneralWorksheet.Cells["A:XFD"].Style.Font.Name = "Arial";
             GeneralWorksheet.Cells["C2"].Value = "Attendance Report";
             GeneralWorksheet.Cells["C2"].Style.Font.Size = 18;
             GeneralWorksheet.Cells["C2"].Style.Font.Bold = true;
@@ -178,8 +179,8 @@ namespace RollSystemMobile.Models.BusinessObject
 
             int Absent = StudentAttendances.Count(sa => !sa.IsPresent);
                double AbsentRate = (double)Absent / rollCall.StudySessions.Count * 100;
-            
 
+               DetailWorkSheet.Cells["A:XFD"].Style.Font.Name = "Arial";
             DetailWorkSheet.Cells["C2"].Value = "Attendance Report Detail";
             DetailWorkSheet.Cells["C2"].Style.Font.Size = 18;
             DetailWorkSheet.Cells["C2"].Style.Font.Bold = true;
@@ -203,7 +204,9 @@ namespace RollSystemMobile.Models.BusinessObject
             DetailWorkSheet.Cells["D7"].Value = StudentAttendances.Count();
             DetailWorkSheet.Cells["D8"].Value = Absent;
             DetailWorkSheet.Cells["D9"].Value = String.Format("{0:0}%", AbsentRate);
-            DetailWorkSheet.Cells["D9"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Right;
+
+            DetailWorkSheet.Cells["D6:D9"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+
             //title table
             DetailWorkSheet.Cells["B11"].Value = "No.";
             DetailWorkSheet.Cells["C11"].Value = "Date";

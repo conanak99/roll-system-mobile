@@ -87,40 +87,29 @@ namespace RollSystemMobile.Controllers
                     {
                         //Thuc hien dang nhap
                         FormsAuthentication.SetAuthCookie(model.Username, false);
+                        String Role = user.Role.RoleName;
+                        String Action = "";
+                        switch (Role)
+                        {
+                            case "Instructor":
+                                Action = "Index_Home";
+                                break;
+                            case "Staff":
+                                Action = "Index";
+                                Role = "RollCall";
+                                break;
+                            case "Admin":
+                                Action = "Index";
+                                break;
+                            case "Student":
+                                Action = "CourseList";
+                                break;
+                            default:
+                                Action = "Index";
+                                break;
+                        }
+                        return RedirectToAction(Action, Role);
 
-                        //Redirect toi trang da goi
-                        String returnUrl = model.ReturnUrl;
-                        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1
-                            && returnUrl.StartsWith("/") && !returnUrl.StartsWith("//")
-                            && !returnUrl.StartsWith("/\\"))
-                        {
-                            return Redirect(returnUrl);
-                        }
-                        else
-                        {
-                            String Role = user.Role.RoleName;
-                            String Action = "";
-                            switch (Role)
-                            {
-                                case "Instructor":
-                                    Action = "Index_Home";
-                                    break;
-                                case "Staff":
-                                    Action = "Index";
-                                    Role = "RollCall";
-                                    break;
-                                case "Admin":
-                                    Action = "Index";
-                                    break;
-                                case "Student":
-                                    Action = "CourseList";
-                                    break;
-                                default:
-                                    Action = "Index";
-                                    break;
-                            }
-                            return RedirectToAction(Action, Role);
-                        }
                     }
                     else
                     {
@@ -141,7 +130,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult ChangeStatus(int UserID, bool NewStatus, String ReturnUrl)
         {
             AccBO.ChangeStatus(UserID, NewStatus);
-            return RedirectToAction(ReturnUrl,"Admin");
+            return RedirectToAction(ReturnUrl, "Admin");
         }
 
         public ActionResult CreateStaffAccount(int StaffID)
@@ -183,7 +172,7 @@ namespace RollSystemMobile.Controllers
             return RedirectToAction("StudentAccountList", "Admin");
         }
 
-        public ActionResult ProcessStaffAccount(String action, IEnumerable<int>  selectedID)
+        public ActionResult ProcessStaffAccount(String action, IEnumerable<int> selectedID)
         {
 
             foreach (int StaffID in selectedID)

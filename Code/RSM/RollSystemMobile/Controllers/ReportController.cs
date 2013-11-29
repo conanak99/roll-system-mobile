@@ -11,6 +11,7 @@ namespace RollSystemMobile.Controllers
 {
     public class ReportController : Controller
     {
+        private static string ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
         //
         // GET: /Report/RollCall/1
         private RSMEntities db = new RSMEntities();
@@ -25,7 +26,6 @@ namespace RollSystemMobile.Controllers
             String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
             BO.CreateRollCallReport(id, FilePath);
 
-            String ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             return File(FilePath, ExcelMimeType, FileName);
         }
 
@@ -37,7 +37,6 @@ namespace RollSystemMobile.Controllers
             String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
             BO.CreateRollCallBooks(RollCallIDs, FilePath);
 
-            String ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             return File(FilePath, ExcelMimeType, FileName);
         }
 
@@ -49,7 +48,6 @@ namespace RollSystemMobile.Controllers
             String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
             BO.CreateStudentLists(RollCallIDs, FilePath);
 
-            String ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
             return File(FilePath, ExcelMimeType, FileName);
         }
 
@@ -66,7 +64,22 @@ namespace RollSystemMobile.Controllers
 
             StuBO.CreateStudentReport(StudentID, SemesterID, FilePath);
 
-            String ExcelMimeType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            return File(FilePath, ExcelMimeType, FileName);
+        }
+
+        public ActionResult SessionReport(int InstructorID, int SelectedMonth)
+        {
+            InstructorBusiness InsBO = new InstructorBusiness();
+
+            var Ins = InsBO.GetInstructorByID(InstructorID);
+            DateTime SelectedTime = new DateTime(DateTime.Today.Year, SelectedMonth, 1);
+
+            String FileName = InstructorID + "_" + Ins.Fullname.NonUnicode()
+                               + "_" + SelectedTime.ToString("yyyy_MMMM") + ".xlsx";
+            String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
+
+            InsBO.CreateSessionReport(InstructorID, SelectedTime, FilePath);
+
             return File(FilePath, ExcelMimeType, FileName);
         }
     }
