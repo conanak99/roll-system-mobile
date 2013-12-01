@@ -153,7 +153,7 @@ namespace RollSystemMobile.Models.BusinessObject
             GeneralWorksheet.Cells["C2:D2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             GeneralWorksheet.Column(2).Width = 5;
             GeneralWorksheet.Column(3).Width = 30;
-            GeneralWorksheet.Column(4).Width = 29;
+            GeneralWorksheet.Column(4).Width = 30;
             GeneralWorksheet.Column(5).Width = 16;
             return GeneralWorksheet;
         }
@@ -244,11 +244,9 @@ namespace RollSystemMobile.Models.BusinessObject
             DetailWorkSheet.Cells["C2:D2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             DetailWorkSheet.Column(2).Width = 5;
             DetailWorkSheet.Column(3).Width = 30;
-            DetailWorkSheet.Column(4).Width = 29;
+            DetailWorkSheet.Column(4).Width = 30;
+            DetailWorkSheet.Column(5).Width = 20;
             return DetailWorkSheet;
         }
-
-
-
     }
 }
