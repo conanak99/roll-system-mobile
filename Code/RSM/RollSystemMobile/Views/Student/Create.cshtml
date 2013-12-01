@@ -1,97 +1,84 @@
 ﻿@model RollSystemMobile.Models.Student
-
 @{
     ViewBag.Title = "Create";
+    Layout = "~/Views/Staff/_Layout.cshtml";
 }
-
-<h2>Create</h2>
-
+<h2>
+    Create new student</h2>
 <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-
-@using (Html.BeginForm()) {
+@using (Html.BeginForm("Create", "Student", FormMethod.Post))
+{
     @Html.ValidationSummary(true)
-    <fieldset>
-        <legend>Student</legend>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.ClassID, "Class")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("ClassID", String.Empty)
-            @Html.ValidationMessageFor(model => model.ClassID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.FullName)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.FullName)
-            @Html.ValidationMessageFor(model => model.FullName)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Birthdate)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Birthdate)
-            @Html.ValidationMessageFor(model => model.Birthdate)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.CitizenID)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.CitizenID)
-            @Html.ValidationMessageFor(model => model.CitizenID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Address)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Address)
-            @Html.ValidationMessageFor(model => model.Address)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.Email)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.Email)
-            @Html.ValidationMessageFor(model => model.Email)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.IsActive)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.IsActive)
-            @Html.ValidationMessageFor(model => model.IsActive)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.UserID, "User")
-        </div>
-        <div class="editor-field">
-            @Html.DropDownList("UserID", String.Empty)
-            @Html.ValidationMessageFor(model => model.UserID)
-        </div>
-
-        <div class="editor-label">
-            @Html.LabelFor(model => model.StudentCode)
-        </div>
-        <div class="editor-field">
-            @Html.EditorFor(model => model.StudentCode)
-            @Html.ValidationMessageFor(model => model.StudentCode)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
+    
+    <table class="table">
+        <tr>
+            <td>
+                <div class="editor-label">
+                    <b>Class : (<span style="color:Red;"> * </span>)</b>
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("ClassID", String.Empty)
+                    @Html.ValidationMessageFor(model => model.ClassID)
+                </div>
+                <span style="height: 10px;" id="se" class="help-block">Select class for student.</span>
+                <div class="editor-label">
+                    <b>Full Name : (<span style="color:Red;"> * </span>)</b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.FullName)
+                    @Html.ValidationMessageFor(model => model.FullName)
+                </div>
+                <span style="height: 10px;" id="se" class="help-block">Type full name for student ( Nguyen Van A ...).</span>
+                <div class="editor-label">
+                    <b> Birth date (<span style="color:Red;"> * </span>)</b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Birthdate)
+                    @Html.ValidationMessageFor(model => model.Birthdate)
+                </div>
+                <span style="height: 10px;" id="se" class="help-block">Birth date of student ( 04-12-1991 , ...).</span>
+                <div class="editor-label">
+                    <b>Citizen ID : (<span style="color:Red;"> * </span>)</b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.CitizenID)
+                    @Html.ValidationMessageFor(model => model.CitizenID)
+                </div>
+                <span style="height: 10px;" id="se" class="help-block">CitizenID of student ( 191781592, ...). </span>
+            </td>
+            <td>
+                <div class="editor-label">
+                    <b>Address : </b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Address)
+                    @Html.ValidationMessageFor(model => model.Address)
+                </div>
+                <span style="height: 10px;" id="se" class="help-block">Address of student.</span>
+                <div class="editor-label">
+                    <b>Email :</b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+                <span style="height: 10px;" id="se" class="help-block">Email of student ( jm_huynq@yahoo.com.vn, ...).</span>
+                <div class="editor-label">
+                    <b>Student Code : (<span style="color:Red;"> * </span>)</b>
+                </div>
+                <div class="editor-field">
+                    @Html.EditorFor(model => model.StudentCode)
+                    @Html.ValidationMessageFor(model => model.StudentCode)
+                </div>
+                <span style="height: 10px;" id="se" class="help-block">Student code (SE60551, ...).</span>
+            </td>
+        </tr>
+    </table>
+    <p>
+        <input style="margin-left: 20px;" type="submit" value="Create" id="submit" class="btn btn-primary" />
+    </p>
 }
-
-<p style="font-size:20px;">
+<p style="font-size: 20px;">
     @Html.ActionLink("Back to List", "Index")
 </p>
