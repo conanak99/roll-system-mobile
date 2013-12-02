@@ -43,8 +43,7 @@ namespace RollSystemMobile.Models.HelperClass
            new SelectListItem { Text = "12:30", Value = "12:30" }, 
            new SelectListItem { Text = "14:15", Value = "14:15" }, 
            new SelectListItem { Text = "16:00", Value = "16:00" },
-           new SelectListItem { Text = "18:45", Value = "18:45" },
-           new SelectListItem { Text = "19:00", Value = "19:00" } 
+           new SelectListItem { Text = "18:45", Value = "18:45" }
        };
             foreach (var item in TimeList)
             {
@@ -66,8 +65,7 @@ namespace RollSystemMobile.Models.HelperClass
            new SelectListItem { Text = "12:30", Value = "12:30" }, 
            new SelectListItem { Text = "14:15", Value = "14:15" }, 
            new SelectListItem { Text = "16:00", Value = "16:00" },
-           new SelectListItem { Text = "18:45", Value = "18:45" },
-           new SelectListItem { Text = "19:00", Value = "19:00" } 
+           new SelectListItem { Text = "18:45", Value = "18:45" }
        };
 
             return TimeList;

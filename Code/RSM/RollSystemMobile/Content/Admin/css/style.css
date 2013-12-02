@@ -3896,3 +3896,8 @@ body.choose #choose-preview > span span {
     margin-top: 380px;
     color: #333;
 }
+
+.modal-header h3 
+{
+    color: rgb(51,51,51);
+}

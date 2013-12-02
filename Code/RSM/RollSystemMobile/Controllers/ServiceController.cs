@@ -46,7 +46,7 @@ namespace RollSystemMobile.Controllers
 
                 //Resize file anh, luu vao thu muc log, nho them ngay thang truoc
                 String NewPath = Server.MapPath("~/Content/Log/"
-                     + rollCall.Class.ClassName + "_"
+                    + rollCall.Class.ClassName + "_"
                      + rollCall.Subject.ShortName + "_"
                      + file.FileName);
                 FaceBusiness.ResizeImage(OldPath, NewPath);
@@ -97,7 +97,7 @@ namespace RollSystemMobile.Controllers
                 rollID = r.RollCallID,
                 subject = r.Subject.FullName,
                 classes = r.Class.ClassName,
-                time = r.StartTime.Equals(new TimeSpan(0,0,0)) ?
+                time = r.StartTime.Equals(new TimeSpan(0, 0, 0)) ?
                        "No Teaching Slot" : r.StartTime.ToString(@"hh\:mm") + " - " + r.EndTime.ToString(@"hh\:mm"),
                 date = r.BeginDate.ToString("dd-MM-yyyy") + " to " + r.EndDate.ToString("dd-MM-yyyy"),
                 isCurrent = CurrentRollCall != null && CurrentRollCall.RollCallID == r.RollCallID ? true : false
@@ -108,7 +108,7 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult GetRollCallInfo(int RollCallID)
         {
-           
+
             RollCallBusiness RollBO = new RollCallBusiness();
             RollCall rollcall = RollBO.GetRollCallByID(RollCallID);
 
@@ -122,22 +122,23 @@ namespace RollSystemMobile.Controllers
                 classes = rollcall.Class.ClassName,
                 time = rollcall.StartTime.ToString(@"hh\:mm") + " - " + rollcall.EndTime.ToString(@"hh\:mm"),
                 date = rollcall.BeginDate.ToString("dd-MM-yyyy") + " to " + rollcall.EndDate.ToString("dd-MM-yyyy"),
-                
-                studentList = rollcall.Students.Select(st => new { 
-                    studentID = st.StudentID, 
-                    studentCode = st.StudentCode, 
+
+                studentList = rollcall.Students.Select(st => new
+                {
+                    studentID = st.StudentID,
+                    studentCode = st.StudentCode,
                     studentName = st.FullName,
-                    percentRate = String.Format("{0:0.00}%",AttenBO.GetStudentAbsentRate(st.StudentID,RollCallID))
-                    
+                    percentRate = String.Format("{0:0.00}%", AttenBO.GetStudentAbsentRate(st.StudentID, RollCallID))
+
                 }),
                 logList = AttendLog.Where(log => log.LogDate >= DateTime.Today.AddDays(-1)).OrderByDescending(log => log.LogDate).Select(log => new
                 {
                     rollID = log.RollCallID,
                     logID = log.LogID,
                     logDate = log.LogDate.ToString("dd-MM-yyyy"),
-                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count,     
+                    logPresent = log.StudentAttendances.Count(attend => attend.IsPresent) + "/" + log.RollCall.Students.Count,
                 }),
-                
+
             };
 
             return Json(RollJson, JsonRequestBehavior.AllowGet);
@@ -157,10 +158,10 @@ namespace RollSystemMobile.Controllers
                 submitDate = Log.LogDate.ToString("MM-dd-yyyy"),
                 studentList = Log.StudentAttendances.Select(sa => new
                 {
-                studentID = sa.StudentID,
-                studentCode = sa.Student.StudentCode,
-                studentName = sa.Student.FullName,
-                isPresent = sa.IsPresent
+                    studentID = sa.StudentID,
+                    studentCode = sa.Student.StudentCode,
+                    studentName = sa.Student.FullName,
+                    isPresent = sa.IsPresent
                 })
             };
 

@@ -231,7 +231,7 @@ namespace RollSystemMobile.Controllers
             CalendarBusiness CalBO = new CalendarBusiness();
             CalBO.SyncInstructorCalendar(AuthorizedInstructor.InstructorID);
 
-            TempData["Message"] = "Your calendar was synced to Google Calendar at" 
+            TempData["Message"] = "Your calendar was synced to Google Calendar at " 
                 + DateTime.Now.ToString("dd-MM-yyyy  HH:mm:ss");
             return RedirectToAction("TeachingCalendar");
         }
