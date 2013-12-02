@@ -30,6 +30,37 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.GetList().ToList();
         }
 
+        public void Update(Instructor Ins, List<int> SubjectTypeIDs)
+        {
+            var FoundIns = GetInstructorByID(Ins.InstructorID);
+
+            //Xoa toan bo subjectID cu
+            FoundIns.Fullname = Ins.Fullname;
+            FoundIns.Email = Ins.Email;
+            FoundIns.Phone = Ins.Phone;
+            FoundIns.SubjectTypes.Clear();
+
+            foreach (var SubjectTypeID in SubjectTypeIDs)
+            {
+                FoundIns.SubjectTypes.Add(GetSubjectTypeByID(SubjectTypeID));
+            }
+            base.RollSystemDB.SaveChanges();
+        }
+
+        public void Insert(Instructor Ins, List<int> SubjectTypeIDs)
+        {
+            Ins.IsActive = true;
+            foreach (var SubjectTypeID in SubjectTypeIDs)
+            {
+                Ins.SubjectTypes.Add(GetSubjectTypeByID(SubjectTypeID));
+            }
+            base.Insert(Ins);
+        }
+
+        private SubjectType GetSubjectTypeByID(int TypeID)
+        {
+            return base.RollSystemDB.SubjectTypes.FirstOrDefault(st => st.TypeID == TypeID);
+        }
 
         public List<Instructor> GetActiveInstructor()
         {

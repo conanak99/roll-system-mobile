@@ -167,6 +167,7 @@
     <Compile Include="Models\BusinessObject\GenericBusiness.cs" />
     <Compile Include="Models\BusinessObject\RollCallBusiness.cs" />
     <Compile Include="Models\BusinessObject\FaceBusiness.cs" />
+    <Compile Include="Models\ValidateModel.cs" />
     <Compile Include="Models\GoogleApi\GoogleCalendarAPIObject.cs" />
     <Compile Include="Models\GoogleApi\GoogleCalendarAPIWrapper.cs" />
     <Compile Include="Models\GoogleApi\WebUtils.cs" />
