@@ -424,8 +424,8 @@ namespace RollSystemMobile.Controllers
         }
         public JsonResult GetInstructors(int id)
         {
-            int typeID = SubBO.GetSubjectByID(id).TypeID;
-            var instructor = InsBO.GetAllInstructor().Where(d => d.SubjectTypeID == typeID).
+            var SubType = SubBO.GetSubjectByID(id).SubjectType;
+            var instructor = SubType.Instructors.Where(ins => ins.IsActive == true).
                 Select(i => new { id = i.InstructorID, name = i.Fullname });
             return Json(instructor, JsonRequestBehavior.AllowGet);
         }
@@ -465,7 +465,7 @@ namespace RollSystemMobile.Controllers
         public JsonResult GetInstructorFree(int id)
         {
             var typeID = SubBO.GetSubjectByID(id).TypeID;
-            var instructor = RollBO.GetList().Where(r => r.Instructor.SubjectType.TypeID == typeID)
+            var instructor = RollBO.GetList().Where(r => r.Instructor.SubjectTypes.Any(type => type.TypeID ==typeID))
                 .Select(i => new
                 {
                     id = i.InstructorID,

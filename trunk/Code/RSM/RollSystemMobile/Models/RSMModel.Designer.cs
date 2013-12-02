@@ -26,7 +26,6 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RSMModel", "SubjectMajorMapping", "Major", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Major), "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Subject))]
 [assembly: EdmRelationshipAttribute("RSMModel", "AttendanceLog_StudentAttendance_FK1", "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.AttendanceLog), "StudentAttendance", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudentAttendance), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_StudySession_Class", "Class", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Class), "StudySession", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudySession), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_Subject_SubjectType", "SubjectType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.SubjectType), "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Subject), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "RollCall_AttendanceLog_FK1", "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.RollCall), "AttendanceLog", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.AttendanceLog), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Class", "Class", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Class), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Semester", "Semester", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Semester), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
@@ -40,10 +39,11 @@ using System.Runtime.Serialization;
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_Request_Student", "Student", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Student), "Request", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Request), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_Request_User", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.User), "Request", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Request), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_RequestImage_Request", "Request", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Request), "RequestImage", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RequestImage), true)]
-[assembly: EdmRelationshipAttribute("RSMModel", "FK_Instructor_SubjectType", "SubjectType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.SubjectType), "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Instructor), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_RollCall_Instructor", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Instructor), "RollCall", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.RollCall), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "FK_StudySession_Instructor", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.Instructor), "StudySession", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.StudySession), true)]
 [assembly: EdmRelationshipAttribute("RSMModel", "User_Instructor_FK1", "User", System.Data.Metadata.Edm.RelationshipMultiplicity.ZeroOrOne, typeof(RollSystemMobile.Models.User), "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Instructor), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "FK_Subject_SubjectType", "SubjectType", System.Data.Metadata.Edm.RelationshipMultiplicity.One, typeof(RollSystemMobile.Models.SubjectType), "Subject", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Subject), true)]
+[assembly: EdmRelationshipAttribute("RSMModel", "InstructorTeaching", "Instructor", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.Instructor), "SubjectType", System.Data.Metadata.Edm.RelationshipMultiplicity.Many, typeof(RollSystemMobile.Models.SubjectType))]
 
 #endregion
 
@@ -306,22 +306,6 @@ namespace RollSystemMobile.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        public ObjectSet<SubjectType> SubjectTypes
-        {
-            get
-            {
-                if ((_SubjectTypes == null))
-                {
-                    _SubjectTypes = base.CreateObjectSet<SubjectType>("SubjectTypes");
-                }
-                return _SubjectTypes;
-            }
-        }
-        private ObjectSet<SubjectType> _SubjectTypes;
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         public ObjectSet<RollCall> RollCalls
         {
             get
@@ -414,6 +398,22 @@ namespace RollSystemMobile.Models
             }
         }
         private ObjectSet<Instructor> _Instructors;
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        public ObjectSet<SubjectType> SubjectTypes
+        {
+            get
+            {
+                if ((_SubjectTypes == null))
+                {
+                    _SubjectTypes = base.CreateObjectSet<SubjectType>("SubjectTypes");
+                }
+                return _SubjectTypes;
+            }
+        }
+        private ObjectSet<SubjectType> _SubjectTypes;
 
         #endregion
         #region AddTo Methods
@@ -523,14 +523,6 @@ namespace RollSystemMobile.Models
         }
     
         /// <summary>
-        /// Deprecated Method for adding a new object to the SubjectTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
-        /// </summary>
-        public void AddToSubjectTypes(SubjectType subjectType)
-        {
-            base.AddObject("SubjectTypes", subjectType);
-        }
-    
-        /// <summary>
         /// Deprecated Method for adding a new object to the RollCalls EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
         /// </summary>
         public void AddToRollCalls(RollCall rollCall)
@@ -576,6 +568,14 @@ namespace RollSystemMobile.Models
         public void AddToInstructors(Instructor instructor)
         {
             base.AddObject("Instructors", instructor);
+        }
+    
+        /// <summary>
+        /// Deprecated Method for adding a new object to the SubjectTypes EntitySet. Consider using the .Add method of the associated ObjectSet&lt;T&gt; property instead.
+        /// </summary>
+        public void AddToSubjectTypes(SubjectType subjectType)
+        {
+            base.AddObject("SubjectTypes", subjectType);
         }
 
         #endregion
@@ -1099,15 +1099,13 @@ namespace RollSystemMobile.Models
         /// <param name="fullname">Initial value of the Fullname property.</param>
         /// <param name="email">Initial value of the Email property.</param>
         /// <param name="isActive">Initial value of the IsActive property.</param>
-        /// <param name="subjectTypeID">Initial value of the SubjectTypeID property.</param>
-        public static Instructor CreateInstructor(global::System.Int32 instructorID, global::System.String fullname, global::System.String email, global::System.Boolean isActive, global::System.Int32 subjectTypeID)
+        public static Instructor CreateInstructor(global::System.Int32 instructorID, global::System.String fullname, global::System.String email, global::System.Boolean isActive)
         {
             Instructor instructor = new Instructor();
             instructor.InstructorID = instructorID;
             instructor.Fullname = fullname;
             instructor.Email = email;
             instructor.IsActive = isActive;
-            instructor.SubjectTypeID = subjectTypeID;
             return instructor;
         }
 
@@ -1264,30 +1262,6 @@ namespace RollSystemMobile.Models
         /// <summary>
         /// No Metadata Documentation available.
         /// </summary>
-        [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=false)]
-        [DataMemberAttribute()]
-        public global::System.Int32 SubjectTypeID
-        {
-            get
-            {
-                return _SubjectTypeID;
-            }
-            set
-            {
-                OnSubjectTypeIDChanging(value);
-                ReportPropertyChanging("SubjectTypeID");
-                _SubjectTypeID = StructuralObject.SetValidValue(value);
-                ReportPropertyChanged("SubjectTypeID");
-                OnSubjectTypeIDChanged();
-            }
-        }
-        private global::System.Int32 _SubjectTypeID;
-        partial void OnSubjectTypeIDChanging(global::System.Int32 value);
-        partial void OnSubjectTypeIDChanged();
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
         [EdmScalarPropertyAttribute(EntityKeyProperty=false, IsNullable=true)]
         [DataMemberAttribute()]
         public global::System.String ApiToken
@@ -1312,44 +1286,6 @@ namespace RollSystemMobile.Models
         #endregion
     
         #region Navigation Properties
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Instructor_SubjectType", "SubjectType")]
-        public SubjectType SubjectType
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Instructor_SubjectType", "SubjectType").Value;
-            }
-            set
-            {
-                ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Instructor_SubjectType", "SubjectType").Value = value;
-            }
-        }
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [BrowsableAttribute(false)]
-        [DataMemberAttribute()]
-        public EntityReference<SubjectType> SubjectTypeReference
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedReference<SubjectType>("RSMModel.FK_Instructor_SubjectType", "SubjectType");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SubjectType>("RSMModel.FK_Instructor_SubjectType", "SubjectType", value);
-                }
-            }
-        }
     
         /// <summary>
         /// No Metadata Documentation available.
@@ -1429,6 +1365,28 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<User>("RSMModel.User_Instructor_FK1", "User", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "InstructorTeaching", "SubjectType")]
+        public EntityCollection<SubjectType> SubjectTypes
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<SubjectType>("RSMModel.InstructorTeaching", "SubjectType");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<SubjectType>("RSMModel.InstructorTeaching", "SubjectType", value);
                 }
             }
         }
@@ -4712,6 +4670,28 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_RollCall_Subject", "RollCall")]
+        public EntityCollection<RollCall> RollCalls
+        {
+            get
+            {
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RollCall>("RSMModel.FK_RollCall_Subject", "RollCall");
+            }
+            set
+            {
+                if ((value != null))
+                {
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RollCall>("RSMModel.FK_RollCall_Subject", "RollCall", value);
+                }
+            }
+        }
+    
+        /// <summary>
+        /// No Metadata Documentation available.
+        /// </summary>
+        [XmlIgnoreAttribute()]
+        [SoapIgnoreAttribute()]
+        [DataMemberAttribute()]
         [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Subject_SubjectType", "SubjectType")]
         public SubjectType SubjectType
         {
@@ -4740,28 +4720,6 @@ namespace RollSystemMobile.Models
                 if ((value != null))
                 {
                     ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedReference<SubjectType>("RSMModel.FK_Subject_SubjectType", "SubjectType", value);
-                }
-            }
-        }
-    
-        /// <summary>
-        /// No Metadata Documentation available.
-        /// </summary>
-        [XmlIgnoreAttribute()]
-        [SoapIgnoreAttribute()]
-        [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_RollCall_Subject", "RollCall")]
-        public EntityCollection<RollCall> RollCalls
-        {
-            get
-            {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<RollCall>("RSMModel.FK_RollCall_Subject", "RollCall");
-            }
-            set
-            {
-                if ((value != null))
-                {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<RollCall>("RSMModel.FK_RollCall_Subject", "RollCall", value);
                 }
             }
         }
@@ -4878,18 +4836,18 @@ namespace RollSystemMobile.Models
         [XmlIgnoreAttribute()]
         [SoapIgnoreAttribute()]
         [DataMemberAttribute()]
-        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "FK_Instructor_SubjectType", "Instructor")]
+        [EdmRelationshipNavigationPropertyAttribute("RSMModel", "InstructorTeaching", "Instructor")]
         public EntityCollection<Instructor> Instructors
         {
             get
             {
-                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Instructor>("RSMModel.FK_Instructor_SubjectType", "Instructor");
+                return ((IEntityWithRelationships)this).RelationshipManager.GetRelatedCollection<Instructor>("RSMModel.InstructorTeaching", "Instructor");
             }
             set
             {
                 if ((value != null))
                 {
-                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Instructor>("RSMModel.FK_Instructor_SubjectType", "Instructor", value);
+                    ((IEntityWithRelationships)this).RelationshipManager.InitializeRelatedCollection<Instructor>("RSMModel.InstructorTeaching", "Instructor", value);
                 }
             }
         }

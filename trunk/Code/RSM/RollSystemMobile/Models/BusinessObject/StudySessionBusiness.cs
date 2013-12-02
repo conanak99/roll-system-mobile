@@ -184,6 +184,38 @@ namespace RollSystemMobile.Models.BusinessObject
             }
         }
 
+        private List<TimeSpan> AllAvailableTime(int NumberOfSlot)
+        {
+            //Tao 1 danh sach cac thoi gian
+            TimeSpan time1 = new TimeSpan(7, 00, 00);
+            TimeSpan time2 = new TimeSpan(8, 45, 00);
+            TimeSpan time3 = new TimeSpan(10, 30, 00);
+
+            TimeSpan time4 = new TimeSpan(12, 30, 00);
+            TimeSpan time5 = new TimeSpan(14, 15, 00);
+            TimeSpan time6 = new TimeSpan(16, 00, 00);
+
+            TimeSpan time7 = new TimeSpan(18, 30, 00);
+
+            List<TimeSpan> TimeList = new List<TimeSpan>();
+            TimeList.Add(time1);
+            TimeList.Add(time2);
+            TimeList.Add(time3);
+            TimeList.Add(time4);
+            TimeList.Add(time5);
+            TimeList.Add(time6);
+            TimeList.Add(time7);
+
+            //Neu 2 slot thi bo 10:30 va 16:00
+            if (NumberOfSlot == 2)
+            {
+                TimeList.Remove(time3);
+                TimeList.Remove(time6);
+            }
+
+            return TimeList;
+        }
+
         /// <summary>
         /// Lấy thời gian rảnh trong ngày. Chỉ tính constrains, ko tính constrain giáo viên
         /// </summary>
@@ -220,39 +252,7 @@ namespace RollSystemMobile.Models.BusinessObject
             return TimeList;
         }
 
-        public List<TimeSpan> AllAvailableTime(int NumberOfSlot)
-        {
-            //Tao 1 danh sach cac thoi gian
-            TimeSpan time1 = new TimeSpan(7, 00, 00);
-            TimeSpan time2 = new TimeSpan(8, 45, 00);
-            TimeSpan time3 = new TimeSpan(10, 30, 00);
-
-            TimeSpan time4 = new TimeSpan(12, 30, 00);
-            TimeSpan time5 = new TimeSpan(14, 15, 00);
-            TimeSpan time6 = new TimeSpan(16, 00, 00);
-
-            TimeSpan time7 = new TimeSpan(18, 30, 00);
-            TimeSpan time8 = new TimeSpan(19, 00, 00);
-
-            List<TimeSpan> TimeList = new List<TimeSpan>();
-            TimeList.Add(time1);
-            TimeList.Add(time2);
-            TimeList.Add(time3);
-            TimeList.Add(time4);
-            TimeList.Add(time5);
-            TimeList.Add(time6);
-            TimeList.Add(time7);
-            TimeList.Add(time8);
-
-            //Neu 2 slot thi bo 10:30 va 16:00
-            if (NumberOfSlot == 2)
-            {
-                TimeList.Remove(time3);
-                TimeList.Remove(time6);
-            }
-
-            return TimeList;
-        }
+       
 
         /// <summary>
         /// Lấy thời gian rảnh trong ngày. 

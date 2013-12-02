@@ -42,13 +42,7 @@ namespace RollSystemMobile.Controllers
         //
         // GET: /Default1/Create
 
-        public ActionResult Create()
-        {
-            SelectListFactory slFactory = new SelectListFactory();
-            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
-            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID","TypeName");
-            return View();
-        }
+
         public ActionResult InactiveInstructor(int id) {
             var ins = InsBO.GetInstructorByID(id);
             ins.IsActive = false;
@@ -65,67 +59,48 @@ namespace RollSystemMobile.Controllers
         //
         // POST: /Default1/Create
 
+        public ActionResult Create()
+        {
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
+            return View();
+        }
+
         [HttpPost]
-        public ActionResult Create(Instructor instructor,int TypeID)
+        public ActionResult Create(Instructor instructor, List<int> SubjectTypeID)
         {
             if (ModelState.IsValid)
             {
-                instructor.SubjectTypeID = TypeID;
-                InsBO.Insert(instructor);
+                InsBO.Insert(instructor, SubjectTypeID);
                 return RedirectToAction("Index");
             }
-
+            ViewBag.SelectedIDs = SubjectTypeID;
             ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
-            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
             return View(instructor);
         }
-
-        //
-        // GET: /Default1/Edit/5
 
         public ActionResult Edit(int id)
         {
             Instructor instructor = InsBO.GetInstructorByID(id);
-            int UserID = 0;
-            if (instructor.User != null)
-            {
-                UserID = instructor.User.UserID; 
-            }
-            int TypeID = instructor.SubjectType.TypeID;
-            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName",TypeID);
-            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username", UserID);
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             return View(instructor);
         }
 
-        //
-        // POST: /Default1/Edit/5
-
         [HttpPost]
-        public ActionResult Edit(Instructor instructor)
+        public ActionResult Edit(Instructor instructor, List<int> SubjectTypeID)
         {
             if (ModelState.IsValid)
             {
-                InsBO.Update(instructor);
-                return RedirectToAction("Index");
+                InsBO.Update(instructor, SubjectTypeID);
             }
-            int UserID = instructor.User.UserID;
-            int TypeID = instructor.SubjectType.TypeID;
-            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName", TypeID);
-            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username", UserID);
-            return View(instructor);
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
+            return View(InsBO.GetInstructorByID(instructor.InstructorID));
         }
-
-        //
-        // GET: /Default1/Delete/5
 
         public ActionResult Delete(int id)
         {
             Instructor instructor = InsBO.GetInstructorByID(id);
             return View(instructor);
         }
-
-        //
-        // POST: /Default1/Delete/5
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
