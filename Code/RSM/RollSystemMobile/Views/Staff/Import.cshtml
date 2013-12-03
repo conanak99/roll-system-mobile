@@ -5,13 +5,14 @@
 }
 <h2>
     Import data</h2>
+<p id="msg">
+</p>
 @using (Html.BeginForm("ImportExcel", "Staff", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {  
     <input id="FileUpload" name="FileUpload" type="file" />
     <br />
     <br />
-    <b>Download file template <a href="@Url.Action("Download", "Staff")">
-        here</a>. </b>
+    <b>Download file template <a href="@Url.Action("Download", "Staff")">here</a>. </b>
     <br />
     <br />
     <input class="btn btn-primary" type="submit" id="Submit" name="Submit" value="Submit" />
@@ -20,6 +21,9 @@
 <script type="text/javascript">
     $(document).ready(function () {
         $(":file").filestyle();
+        if ('@ViewBag.NumCls' != "" && '@ViewBag.NumStu' != "") {
+            document.getElementById("msg").innerHTML = "Import successfull ! " + '@ViewBag.NumCls' + " classes and " + '@ViewBag.NumStu' + " students are saved into database !";
+        }
     });
     $('form').submit(function () {
         var selectedFile = $('#FileUpload').val();
@@ -29,6 +33,5 @@
             return false;
         }
         return true;
-
     });
 </script>
