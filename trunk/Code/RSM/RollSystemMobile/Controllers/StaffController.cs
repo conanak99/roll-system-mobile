@@ -23,8 +23,10 @@ namespace RollSystemMobile.Controllers
         {
             return View();
         }
-        public ActionResult Import()
+        public ActionResult Import(int? numCls, int? numStu)
         {
+            ViewBag.NumCls = numCls;
+            ViewBag.NumStu = numStu;
             return View();
         }
         public FilePathResult Download()
@@ -36,6 +38,9 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult ImportExcel(HttpPostedFileBase file)
         {
+
+            int clsCount = 0;
+            int stuCount = 0;
             if (Request.Files["FileUpload"].ContentLength > 0)
             {
                 string fileExtension =
@@ -102,7 +107,6 @@ namespace RollSystemMobile.Controllers
                     int majorID;
                     int classID;
                     String value;
-
                     // insert tung dong cua file
                     for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                     {
@@ -120,6 +124,7 @@ namespace RollSystemMobile.Controllers
                         {
                             _db.Classes.AddObject(dbclass);
                             _db.SaveChanges();
+                            clsCount++;
                         }
                         //insert student
 
@@ -137,6 +142,7 @@ namespace RollSystemMobile.Controllers
                         {
                             _db.Students.AddObject(dbStudent);
                             _db.SaveChanges();
+                            stuCount++;
                         }
                     }
 
@@ -146,10 +152,10 @@ namespace RollSystemMobile.Controllers
 
                 else
                 {
-
+                    
                 }
             }
-            return RedirectToAction("Import");
+            return RedirectToAction("Import",new {numCls = clsCount,numStu = stuCount});
 
         }
     }
