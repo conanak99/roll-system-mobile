@@ -68,10 +68,14 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult Create(Instructor instructor, List<int> SubjectTypeID)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && SubjectTypeID != null)
             {
                 InsBO.Insert(instructor, SubjectTypeID);
                 return RedirectToAction("Index");
+            }
+            if (SubjectTypeID == null)
+            {
+                ModelState.AddModelError("", "One or more subject type must be selected.");
             }
             ViewBag.SelectedIDs = SubjectTypeID;
             ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
@@ -88,9 +92,13 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult Edit(Instructor instructor, List<int> SubjectTypeID)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && SubjectTypeID != null)
             {
                 InsBO.Update(instructor, SubjectTypeID);
+            }
+            if (SubjectTypeID == null)
+            {
+                ModelState.AddModelError("", "One or more subject type must be selected.");
             }
             ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             return View(InsBO.GetInstructorByID(instructor.InstructorID));

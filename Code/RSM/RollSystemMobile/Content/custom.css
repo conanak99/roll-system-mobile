@@ -224,3 +224,8 @@ img.thumbnail
     width:200px;
     display:inline;
 }
+
+.validation-summary-errors
+{
+    color:Red;
+}
