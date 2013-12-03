@@ -119,6 +119,7 @@ namespace RollSystemMobile.Controllers
                         dbclass.MajorID = majorID;
                         dbclass.ClassName = ds.Tables[0].Rows[i]["ClassName"].ToString();
                         value = dbclass.ClassName;
+                        dbclass.IsActive = true;
                         bool isExist = _db.Classes.AsEnumerable().Any(row => row.ClassName == value);
                         if (isExist == false)
                         {
@@ -136,6 +137,7 @@ namespace RollSystemMobile.Controllers
                         dbStudent.StudentCode = ds.Tables[0].Rows[i]["StudentCode"].ToString();
                         dbStudent.Birthdate = DateTime.Parse(ds.Tables[0].Rows[i]["Birthdate"].ToString());
                         dbStudent.CitizenID = ds.Tables[0].Rows[i]["CitizenID"].ToString();
+                        dbStudent.IsActive = true;
                         value = dbStudent.StudentCode;
                         bool test = _db.Students.AsEnumerable().Any(d => d.StudentCode == value);
                         if (test == false)
