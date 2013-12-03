@@ -115,6 +115,29 @@ namespace RollSystemMobile.Controllers
             AttendanceBusiness AttenBO = new AttendanceBusiness();
             var AttendLog = AttenBO.GetRollCallAttendanceLog(RollCallID);
 
+            var ReturnLog = AttendLog.Where(log => log.LogDate >= DateTime.Today.AddDays(-1)).ToList();//.OrderByDescending(log => log.LogDate);
+
+            //Truong hop hom nay la thu 2
+            if (DateTime.Today.DayOfWeek == DayOfWeek.Monday)
+            {
+                //Tim log thu 6 hoac thu 7
+                DateTime LastSaturday = DateTime.Today.AddDays(-2);
+                var LastSaturdayLog = AttendLog.FirstOrDefault(log => log.LogDate == LastSaturday);
+                if (LastSaturdayLog != null)
+                {
+                    ReturnLog.Add(LastSaturdayLog);
+                }
+                else
+                {
+                    DateTime LastFriday = DateTime.Today.AddDays(-3);
+                    var LastFridayLog = AttendLog.FirstOrDefault(log => log.LogDate == LastFriday);
+                    if (LastFridayLog != null)
+                    {
+                        ReturnLog.Add(LastFridayLog);
+                    }
+                }
+            }
+
             var RollJson = new
             {
                 rollID = rollcall.RollCallID,
@@ -131,7 +154,7 @@ namespace RollSystemMobile.Controllers
                     percentRate = String.Format("{0:0.00}%", AttenBO.GetStudentAbsentRate(st.StudentID, RollCallID))
 
                 }),
-                logList = AttendLog.Where(log => log.LogDate >= DateTime.Today.AddDays(-1)).OrderByDescending(log => log.LogDate).Select(log => new
+                logList = ReturnLog.OrderByDescending(log => log.LogDate).Select(log => new
                 {
                     rollID = log.RollCallID,
                     logID = log.LogID,
