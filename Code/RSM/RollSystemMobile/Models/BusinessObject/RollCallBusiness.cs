@@ -111,16 +111,6 @@ namespace RollSystemMobile.Models.BusinessObject
 
         public bool Delete(RollCall Rollcall)
         {
-            foreach (var Session in Rollcall.StudySessions.ToList())
-            {
-                Rollcall.StudySessions.Remove(Session);
-            }
-
-            foreach (var Student in Rollcall.Students.ToList())
-            {
-                Rollcall.Students.Remove(Student);
-            }
-
             return base.Delete(Rollcall);
         }
 
