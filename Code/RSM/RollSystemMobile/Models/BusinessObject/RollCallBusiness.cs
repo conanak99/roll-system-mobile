@@ -69,18 +69,10 @@ namespace RollSystemMobile.Models.BusinessObject
                     var NewRoll = TodaySession.RollCall.Clone();
                     NewRoll.StartTime = TodaySession.StartTime;
                     NewRoll.EndTime = TodaySession.EndTime;
+                    NewRoll.SessionToCheckAttendance = TodaySession;
                     TodayRollCall.Add(NewRoll);
                 }
-                /*
-                foreach (var RollCall in TodayRollCall)
-                {
-                    StudySession TdSes = TodaySession.FirstOrDefault(ss => ss.RollCallID == RollCall.RollCallID);
-                    //Set lai thoi gian
-                    RollCall.StartTime = TdSes.StartTime;
-                    RollCall.EndTime = TdSes.EndTime;
-                }
-                */
-                //Nhung mon hom qua co nhung hom nay ko co
+
                 foreach (var RollCall in YesterdaySession.Select(s => s.RollCall).ToList())
                 {
                     if (TodayRollCall == null)
@@ -160,7 +152,8 @@ namespace RollSystemMobile.Models.BusinessObject
                     ClassID = rollCall.ClassID,
                     StartTime = rollCall.StartTime,
                     EndTime = rollCall.EndTime,
-                    SessionDate = SessionDate
+                    SessionDate = SessionDate,
+                    Note = SessionDate.ToString("dd-MM-yyyy") + " : "
                 };
                 rollCall.StudySessions.Add(StuSes);
                 do
