@@ -256,13 +256,18 @@ namespace RollSystemMobile.Models.BusinessObject
             {
                 foreach (var Image in Student.StudentImages)
                 {
-                    //Load ID va anh de train cho bo recognizer
-                    StudentIDs.Add(Image.StudentID);
-                    String TrainingImagePath = TRAINING_FOLDER_PATH + "/" + Image.ImageLink;
-                    Image<Gray, byte> TrainingImage = new Image<Gray, byte>(TrainingImagePath);
-
-                    TrainingImage._EqualizeHist();
-                    StudentImages.Add(TrainingImage);
+                    try
+                    {
+                        //Load ID va anh de train cho bo recognizer
+                        String TrainingImagePath = TRAINING_FOLDER_PATH + "/" + Image.ImageLink;
+                        Image<Gray, byte> TrainingImage = new Image<Gray, byte>(TrainingImagePath);
+                        StudentIDs.Add(Image.StudentID);
+                        TrainingImage._EqualizeHist();
+                        StudentImages.Add(TrainingImage);
+                    }
+                    catch
+                    {
+                    }
                 }
             }
 
