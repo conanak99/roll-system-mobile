@@ -476,10 +476,14 @@ namespace RollSystemMobile.Controllers
                 });
             return Json(instructor, JsonRequestBehavior.AllowGet);
         }
+
+
         public ActionResult ChangeSchedule(int id)
         {
             RollCall rollCall = RollBO.GetRollCallByID(id);
+            
             ViewBag.RollCallID = id;
+            ViewBag.HasAttendance = RollBO.RollCallHasAttendance(id);
             return View("RollCallSchedule", rollCall);
         }
 
