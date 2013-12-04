@@ -7,6 +7,7 @@ using System.Drawing;
 using OfficeOpenXml.Style;
 using RollSystemMobile.Models.HelperClass;
 using RollSystemMobile.Models.BindingModels;
+using RollSystemMobile.Models;
 
 namespace RollSystemMobile.Models.BusinessObject
 {
@@ -24,11 +25,11 @@ namespace RollSystemMobile.Models.BusinessObject
 
         }
 
-       
+
         public void SetRollCallStatus()
         {
             //Active nhung roll call toi ngay
-            var RollToActive = base.GetList().Where(roll => 
+            var RollToActive = base.GetList().Where(roll =>
                 roll.BeginDate.CompareTo(DateTime.Today) <= 0 && roll.Status != 2);
             foreach (var rollCall in RollToActive)
             {
@@ -38,7 +39,7 @@ namespace RollSystemMobile.Models.BusinessObject
             }
 
             //Inactive roll call qua ngay
-            var RollToInactive = base.GetList().Where(roll => 
+            var RollToInactive = base.GetList().Where(roll =>
                 roll.EndDate.CompareTo(DateTime.Today) <= 0 && roll.Status != 3);
             foreach (var rollCall in RollToInactive)
             {
@@ -54,16 +55,23 @@ namespace RollSystemMobile.Models.BusinessObject
             StudySessionBusiness StuSesBO = new StudySessionBusiness(this.RollSystemDB);
 
 
-            var TodaySession = StuSesBO.GetInstructorCurrentSession(InstructorID);
+            var TodaySessions = StuSesBO.GetInstructorCurrentSession(InstructorID);
             var YesterdaySession = StuSesBO.GetInstructorYesterdaySession(InstructorID);
-            if (TodaySession == null && YesterdaySession == null)
+            if (TodaySessions == null && YesterdaySession == null)
             {
                 return null;
             }
             else
             {
-
-                var TodayRollCall = TodaySession.Select(s => s.RollCall).ToList();
+                var TodayRollCall = new List<RollCall>();
+                foreach(var TodaySession in TodaySessions)
+                {
+                    var NewRoll = TodaySession.RollCall.Clone();
+                    NewRoll.StartTime = TodaySession.StartTime;
+                    NewRoll.EndTime = TodaySession.EndTime;
+                    TodayRollCall.Add(NewRoll);
+                }
+                /*
                 foreach (var RollCall in TodayRollCall)
                 {
                     StudySession TdSes = TodaySession.FirstOrDefault(ss => ss.RollCallID == RollCall.RollCallID);
@@ -71,7 +79,7 @@ namespace RollSystemMobile.Models.BusinessObject
                     RollCall.StartTime = TdSes.StartTime;
                     RollCall.EndTime = TdSes.EndTime;
                 }
-
+                */
                 //Nhung mon hom qua co nhung hom nay ko co
                 foreach (var RollCall in YesterdaySession.Select(s => s.RollCall).ToList())
                 {
@@ -307,7 +315,7 @@ namespace RollSystemMobile.Models.BusinessObject
             //Tao 1 roll call book rong
             ExcelPackage Package = new ExcelPackage();
             ExcelWorksheet RollCallWorksheet = FilledRollCallWorksheet(RollCallID);
-            
+
             //ExcelWorksheet ExamListWorksheet = FilledExamListWorksheet(RollCallID);
 
             Package.Workbook.Worksheets.Add(RollCallWorksheet.Name, RollCallWorksheet);
@@ -368,7 +376,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
             RollCall RollCall = GetRollCallByID(RollCallID);
             String SheetName = RollCall.Class.ClassName.Trim() + "_" + RollCall.Subject.ShortName;
-            
+
             ExcelWorksheet RollCallWorksheet = new ExcelPackage().Workbook.Worksheets.Add(SheetName);
 
             //Set chieu ngang cac cot
@@ -531,7 +539,7 @@ namespace RollSystemMobile.Models.BusinessObject
             {
                 RollCallWorksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
             }
-           
+
             return RollCallWorksheet;
         }
 
@@ -656,7 +664,7 @@ namespace RollSystemMobile.Models.BusinessObject
         public ExcelPackage CreateRollCallBookPackage(int RollCallID)
         {
             ExcelPackage Package = new ExcelPackage();
-            
+
             ExcelWorksheet RollCallWorksheet = CreateRollCallWorksheet(RollCallID);
             ExcelWorksheet ExamListWorksheet = CreateExamListWorksheet(RollCallID);
             Package.Workbook.Worksheets.Add(RollCallWorksheet.Name, RollCallWorksheet);

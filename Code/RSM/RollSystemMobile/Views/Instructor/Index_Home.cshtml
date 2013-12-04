@@ -33,7 +33,7 @@
     <div class="row-fluid">
         @foreach (var RollCall in Model.TeachingRollCall)
         {
-            bool IsCurrentRollCall = Model.CurrentRollCall != null && RollCall.RollCallID == Model.CurrentRollCall.RollCallID;   
+            bool IsCurrentRollCall = Model.CurrentRollCall != null && RollCall == Model.CurrentRollCall;   
             <div class="span4">
                 <div class="widget widget-3 margin-bottom-none">
                     <div class="widget-head">
@@ -68,9 +68,7 @@
                              <span class="count label label-important"> @Html.FormatTime(@RollCall.StartTime) - @Html.FormatTime(@RollCall.EndTime)
                         </span>
                         }
-                        
-                        
-                       
+                         
                     }
                 </div>
             </div>      
