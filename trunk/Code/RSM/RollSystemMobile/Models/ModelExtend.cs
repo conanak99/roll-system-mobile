@@ -30,4 +30,19 @@ namespace RollSystemMobile.Models
         [RegularExpression("[0-9]{10,12}", ErrorMessage = "Invalid phone number format")]
         public String Phone { get; set; }
     }
+
+    public partial class RollCall
+    {
+        public RollCall Clone()
+        {
+            var NewRoll = new RollCall();
+            NewRoll.RollCallID = this.RollCallID;
+            NewRoll.BeginDate = this.BeginDate;
+            NewRoll.EndDate = this.EndDate;
+            NewRoll.Class = this.Class;
+            NewRoll.Subject = this.Subject;
+
+            return NewRoll;
+        }
+    }
 }
