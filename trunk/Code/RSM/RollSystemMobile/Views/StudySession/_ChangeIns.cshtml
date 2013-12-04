@@ -13,18 +13,27 @@
         <dd>
             @Model.StartTime.ToString(@"hh\:mm")
         </dd>
+
+        @{
+            DateTime DefaultTime = DateTime.Today;
+            if (ViewBag.HasAttendance)
+            {
+                DefaultTime = DefaultTime.AddDays(1);
+            }
+        }
+
         <dt style="margin-top: 12px">From</dt>
         <dd style="margin-top: 7px">
-            <div class="input-append date" data-date="@Html.FormatDate(DateTime.Today.AddDays(1))" id="beginDate" data-date-format="dd-mm-yyyy">
+            <div class="input-append date" data-date="@Html.FormatDate(DefaultTime)" id="beginDate" data-date-format="dd-mm-yyyy">
                 <input class="span2" name="InFromDate" id="InFromDate" style="width: 100px" size="16" type="text"
-                    value="@Html.FormatDate(DateTime.Today.AddDays(1))" readonly><span class="add-on"><i class="icon-th"></i></span>
+                    value="@Html.FormatDate(DefaultTime)" readonly><span class="add-on"><i class="icon-th"></i></span>
             </div>
         </dd>
         <dt class="martop-5">To</dt>
         <dd>
-            <div class="input-append date" data-date="@Html.FormatDate(DateTime.Today.AddDays(1))" id="endDate" data-date-format="dd-mm-yyyy">
+            <div class="input-append date" data-date="@Html.FormatDate(DefaultTime)" id="endDate" data-date-format="dd-mm-yyyy">
                 <input class="span2" name="InToDate" id="InToDate" style="width: 100px" size="16" type="text"
-                    value="@Html.FormatDate(DateTime.Today.AddDays(1))" readonly><span class="add-on"><i class="icon-th"></i></span>
+                    value="@Html.FormatDate(DefaultTime)" readonly><span class="add-on"><i class="icon-th"></i></span>
             </div>
         </dd>
         <dt class="martop-5">Instructor</dt>
@@ -37,10 +46,11 @@
     </dl>
 </fieldset>
 <script>
-    var now = new Date();
+    var now = new Date('@DefaultTime.ToLongDateString()');
     var finalDate = new Date('@Model.EndDate.ToLongDateString()');
     //Tru them 1 ngay, ko lay ngay thu 7 cuoi cung
     finalDate.setDate(finalDate.getDate() - 2);
+    now.setDate(now.getDate() - 1);
     //Nam trong hom nay toi end date, tru chu nhat
     var beginDate = $("#beginDate").datepicker({
         onRender: function (date) {

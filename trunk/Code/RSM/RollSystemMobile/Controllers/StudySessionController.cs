@@ -108,10 +108,10 @@ namespace RollSystemMobile.Controllers
             return Json(Result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ChangeInstructor(int RollCallID)
+        public ActionResult ChangeInstructor(int RollCallID, bool HasAttendance)
         {
             var rollCall = RollBO.GetRollCallByID(RollCallID);
-
+            ViewBag.HasAttendance = HasAttendance;
             return PartialView("_ChangeIns", rollCall);
         }
 

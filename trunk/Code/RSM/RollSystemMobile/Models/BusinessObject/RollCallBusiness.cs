@@ -107,6 +107,10 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.GetList().FirstOrDefault(r => r.RollCallID == ID);
         }
 
+        public bool RollCallHasAttendance(int RollCallID)
+        {
+            return base.RollSystemDB.AttendanceLogs.Any(log => log.RollCallID == RollCallID && log.LogDate == DateTime.Today);
+        }
 
 
         public bool Delete(RollCall Rollcall)
