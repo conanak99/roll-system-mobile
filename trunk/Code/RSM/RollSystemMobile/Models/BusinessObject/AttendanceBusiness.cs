@@ -63,24 +63,6 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
             }
 
-            /*
-            //Bat dau danh dau attendance
-            foreach (int StudentID in StudentIDs)
-            {
-                //Neu student chua duoc danh dau trong log moi add vao.
-                if (!Log.StudentAttendances.Any(attendace => attendace.StudentID == StudentID))
-                {
-                    StudentAttendance Attendance = new StudentAttendance()
-                    {
-                        StudentID = StudentID,
-                        IsPresent = true
-                    };
-                    Log.StudentAttendances.Add(Attendance);
-                }
-            }
-
-             */
-
             //Lay toan bo student cua roll call
             RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
             RollCall rollCall = RollBO.GetRollCallByID(RollCallID);
@@ -112,6 +94,99 @@ namespace RollSystemMobile.Models.BusinessObject
                     if (StudentIDs.Contains(StudentID))
                     {
                          Attendance.IsPresent = true;
+                    }
+                    //Ko chuyen tu true sang false, vi moi lan diem danh co the thieu nguoi
+                }
+            }
+
+            //Neu log chua co thi them vao, da co thi edit lai
+            if (LogExist)
+            {
+                Update(Log);
+            }
+            else
+            {
+                Insert(Log);
+            }
+            //Tra Log ra de show
+            return Log;
+        }
+
+
+        public AttendanceLog WriteAttendanceAutoLog(int RollCallID, List<RecognizerResult> RecognizerResults, DateTime AttendanceDate)
+        {
+            if (RecognizerResults.Count == 0)
+            {
+                return null;
+            }
+
+            //Tim xem da co log auto cho hom do chua
+            AttendanceLog Log = GetAttendanceLogAtDate(RollCallID, AttendanceDate, 1);
+            bool LogExist = true;
+            if (Log == null)
+            {
+                Log = new AttendanceLog()
+                {
+                    RollCallID = RollCallID,
+                    LogDate = AttendanceDate,
+                    TypeID = 1
+                };
+
+                LogExist = false;
+            }
+
+            //Dua danh sach nhan vao, loc ra ID nhung sinh vien co mat
+            HashSet<int> StudentIDs = new HashSet<int>();
+            foreach (var result in RecognizerResults)
+            {
+                foreach (var face in result.FaceList)
+                {
+                    //ID phai khac -1, moi tinh la nhan duoc
+                    if (face.StudentID != -1)
+                    {
+                        StudentIDs.Add(face.StudentID);
+                    }
+                }
+
+                //Save hinh cho log, neu hinh da trung thi ko save
+                if (!Log.LogImages.Any(image => image.ImageLink.Equals(result.ImageLink)))
+                {
+                    LogImage LogImg = new LogImage() { ImageLink = result.ImageLink };
+                    Log.LogImages.Add(LogImg);
+                }
+            }
+
+            //Lay toan bo student cua roll call
+            RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
+            RollCall rollCall = RollBO.GetRollCallByID(RollCallID);
+            List<int> RollCallStudentIDs = rollCall.Students.Select(s => s.StudentID).ToList();
+
+            foreach (int StudentID in RollCallStudentIDs)
+            {
+                //Neu student chua co trong log thi add vao
+                if (!Log.StudentAttendances.Any(attendace => attendace.StudentID == StudentID))
+                {
+                    StudentAttendance Attendance = new StudentAttendance()
+                    {
+                        StudentID = StudentID,
+                    };
+                    //Xem co ten trong list cac id da nhan dc hay ko
+                    if (StudentIDs.Contains(StudentID))
+                    {
+                        Attendance.IsPresent = true;
+                    }
+                    else
+                    {
+                        Attendance.IsPresent = false;
+                    }
+                    Log.StudentAttendances.Add(Attendance);
+                }
+                else
+                {
+                    StudentAttendance Attendance = Log.StudentAttendances.SingleOrDefault(attendance => attendance.StudentID == StudentID);
+                    if (StudentIDs.Contains(StudentID))
+                    {
+                        Attendance.IsPresent = true;
                     }
                     //Ko chuyen tu true sang false, vi moi lan diem danh co the thieu nguoi
                 }

@@ -37,6 +37,7 @@ namespace RollSystemMobile.Controllers
             {
                 //Bug tao select list cua MVC
                 Model.StartTime = _StartTime;
+               
                 //Parse datetime kieu manual
                 Model.SessionDate = _SessionDate.ParseStringToDateTime();
 
@@ -58,11 +59,12 @@ namespace RollSystemMobile.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddSession(StudySession Model, TimeSpan _StartTime, String _SessionDate)
+        public ActionResult AddSession(StudySession Model, TimeSpan _StartTime, String _SessionDate, String _Note)
         { 
             try
             {
                 Model.SessionDate = _SessionDate.ParseStringToDateTime();
+                Model.Note = _SessionDate + " : " + _Note;
                 Model.StartTime = _StartTime;
                 StuSesBO.Insert(Model);
             }

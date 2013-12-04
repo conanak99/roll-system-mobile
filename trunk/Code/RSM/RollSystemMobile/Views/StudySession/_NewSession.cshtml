@@ -8,9 +8,9 @@
         @Html.HiddenFor(model => model.ClassID)
         <dt class="martop-5">Date</dt>
         <dd>
-            <div class="input-append date" data-date="@Html.FormatDate(DateTime.Today)" id="begindate_New" data-date-format="dd-mm-yyyy">
+            <div class="input-append date" data-date="@Html.FormatDate(DateTime.Today.AddDays(1))" id="begindate_New" data-date-format="dd-mm-yyyy">
                 <input class="span2" name="_SessionDate" id="SessionDate" style="width: 100px" size="16" type="text"
-                    value="@Html.FormatDate(DateTime.Today)" readonly><span class="add-on"><i class="icon-th"></i></span>
+                    value="@Html.FormatDate(DateTime.Today.AddDays(1))" readonly><span class="add-on"><i class="icon-th"></i></span>
             </div>
         </dd>
         <dt class="martop-5">StartTime</dt>
@@ -24,7 +24,7 @@
             </select></dd>
         <dt class="martop-5">Note (<font color="red">*</font>)</dt>
         <dd>
-            <input type="text" id="Note_New" name="Note" class="span3" /></dd>
+            <input type="text" id="Note_New" name="_Note" class="span3" /></dd>
     </dl>
 </fieldset>
 <script>

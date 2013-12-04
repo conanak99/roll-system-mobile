@@ -33,7 +33,7 @@ namespace RollSystemMobile.Controllers
         }
 
         [HttpPost]
-        public ActionResult CheckAttendanceAuto(int RollCallID, List<HttpPostedFileBase> ImageFiles)
+        public ActionResult CheckAttendanceAuto(int RollCallID, List<HttpPostedFileBase> ImageFiles, DateTime? AttendanceDate)
         {
             RollCallBusiness RollBO = new RollCallBusiness();
             var rollCall = RollBO.GetRollCallByID(RollCallID);
@@ -58,7 +58,15 @@ namespace RollSystemMobile.Controllers
             List<RecognizerResult> Results = FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths);
             //Dua result nay cho AttendanceBO xu ly
             AttendanceBusiness AttenBO = new AttendanceBusiness();
-            AttendanceLog Log = AttenBO.WriteAttendanceAutoLog(RollCallID, Results);
+            if (AttendanceDate == null)
+            {
+                AttenBO.WriteAttendanceAutoLog(RollCallID, Results);
+            }
+            else
+            {
+                AttenBO.WriteAttendanceAutoLog(RollCallID, Results, AttendanceDate.Value);
+            }
+            
             //Danh sach sinh vien trong log
 
             List<int> StudentIDs = AttenBO.GetStudentIDList(Results);

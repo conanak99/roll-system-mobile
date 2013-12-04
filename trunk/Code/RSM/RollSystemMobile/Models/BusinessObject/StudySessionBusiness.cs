@@ -114,7 +114,7 @@ namespace RollSystemMobile.Models.BusinessObject
             StudySession Session = base.GetList().FirstOrDefault(s => s.SessionID == StuSes.SessionID);
 
             Session.InstructorID = StuSes.InstructorID;
-            Session.Note = StuSes.Note;
+            Session.SetNote(StuSes.Note);
 
             int NumberOfSlot = Session.RollCall.Subject.NumberOfSlot;
 
@@ -130,8 +130,6 @@ namespace RollSystemMobile.Models.BusinessObject
                 Add(TimeSpan.FromMinutes(90 * NumberOfSlot)).
                 Add(TimeSpan.FromMinutes(15 * (NumberOfSlot - 1)));
             Session.SessionDate = StuSes.SessionDate;
-
-
 
             var SameTimeSessions = base.GetList().Where(
                 s => (Session.StartTime >= s.StartTime && Session.StartTime <= s.EndTime)
@@ -330,7 +328,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 {
                     OldInstructorID = StudySession.InstructorID;
                     StudySession.InstructorID = InstructorID;
-                    StudySession.Note = Note;
+                    StudySession.SetNote(Note);
                     base.Detach(StudySession);
                     base.Update(StudySession);
                 }

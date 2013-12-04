@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using RollSystemMobile.Models.HelperClass;
 
 namespace RollSystemMobile.Models
 {
@@ -33,6 +34,8 @@ namespace RollSystemMobile.Models
 
     public partial class RollCall
     {
+        public StudySession SessionToCheckAttendance { get; set; }
+
         public RollCall Clone()
         {
             var NewRoll = new RollCall();
@@ -44,5 +47,39 @@ namespace RollSystemMobile.Models
 
             return NewRoll;
         }
+
+        public DateTime AttendanceDate()
+        {
+            if (SessionToCheckAttendance == null)
+            {
+                return DateTime.Today;
+            }
+            return SessionToCheckAttendance.GetOriginalDate();
+        }
     }
+
+    public partial class StudySession
+    {
+        public void SetNote(String Note)
+        {
+            this.Note = GetOriginalDate().ToString("dd-MM-yyyy") + " : " + Note;
+        }
+
+        //Chi lay doan sau thoi gian
+        public String GetNote()
+        {
+            if (Note.Split(':').Count() > 1)
+            {
+                return Note.Split(':')[1].Trim();
+            }
+            return "";
+        }
+
+        public DateTime GetOriginalDate()
+        {
+            String OriginDateStr = Note.Split(':')[0].Trim();
+            return OriginDateStr.ParseStringToDateTime();
+        }
+    }
+
 }
