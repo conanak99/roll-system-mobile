@@ -170,8 +170,6 @@ namespace RollSystemMobile.Models.BusinessObject
         }
 
 
-
-
         public bool Insert(RollCall InRollCall)
         {
             SubjectBusiness SubBO = new SubjectBusiness(this.RollSystemDB);
@@ -312,11 +310,7 @@ namespace RollSystemMobile.Models.BusinessObject
             //Tao 1 roll call book rong
             ExcelPackage Package = new ExcelPackage();
             ExcelWorksheet RollCallWorksheet = FilledRollCallWorksheet(RollCallID);
-
-            //ExcelWorksheet ExamListWorksheet = FilledExamListWorksheet(RollCallID);
-
             Package.Workbook.Worksheets.Add(RollCallWorksheet.Name, RollCallWorksheet);
-            //Package.Workbook.Worksheets.Add(ExamListWorksheet.Name, ExamListWorksheet);
 
             //Add logo vao
             Package.DoAdjustDrawings = false;
@@ -427,7 +421,7 @@ namespace RollSystemMobile.Models.BusinessObject
             var Students = RollCall.Students.ToList();
             for (int i = 0; i < 30; i++)
             {
-                int RowIndex = 11 + i;
+                int RowIndex = 11 + 1 + i;
                 RollCallWorksheet.Cells["A" + RowIndex].Value = i + 1;
                 if (i < Students.Count)
                 {
@@ -437,7 +431,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 }
             }
 
-
+            /*
             //Lam tron number of slot, vd 17,18 thanh 20
             int NumberOfSlot = RollCall.StudySessions.Count;
             NumberOfSlot = (int)Math.Ceiling((double)NumberOfSlot / 5) * 5;
@@ -467,22 +461,75 @@ namespace RollSystemMobile.Models.BusinessObject
                 RollCallWorksheet.Column(i).Width = 6;
             }
             RollCallWorksheet.Column(FinalColumnIndex).Width = 10;
+            */
+
+            int NumberOfSlot = RollCall.StudySessions.Count;
+            int FinalColumnIndex = 4 + NumberOfSlot;
+
+            for (int column = 1; column <= FinalColumnIndex; column++)
+            {
+                for (int row = 10; row <= 30 + 11 + 1; row++)
+                {
+                    RollCallWorksheet.Cells[row, column].Style.Border.BorderAround(ExcelBorderStyle.Thin, Color.Black);
+                }
+            }
+
+            //Join nhieu ngay lai thanh 1 tuan
+            var SessionDates = RollCall.StudySessions.Select(ss => ss.SessionDate).ToList();
+            int WeekIndex = 1;
+            int BeginCol = 4;
+            int SessionInWeek = 0;
+            for (DateTime dt = RollCall.BeginDate; dt < RollCall.EndDate; dt=dt.AddDays(1))
+            {
+                if (SessionDates.Contains(dt))
+                {
+                    SessionInWeek++;
+                    RollCallWorksheet.Cells[11, BeginCol + SessionInWeek - 1].Value = dt.DayOfWeek.ToString();
+                }
+
+                //Toi ngay CN cuoi tuan
+                if (dt.DayOfWeek == DayOfWeek.Sunday)
+                {
+                    RollCallWorksheet.Cells[10, BeginCol, 10, BeginCol + SessionInWeek - 1].Merge = true;
+                    RollCallWorksheet.Cells[10, BeginCol].Value = "Week " + WeekIndex;
+                    WeekIndex++;
+                    BeginCol += SessionInWeek;
+                    SessionInWeek = 0;
+                }
+            }
+
+            //Merge lai gia tri cuoi cung
+            RollCallWorksheet.Cells[10, BeginCol, 10, BeginCol + SessionInWeek - 1].Merge = true;
+            RollCallWorksheet.Cells[10, BeginCol].Value = "Week " + WeekIndex;
+
+            //Set lai gia tri day of week
+            RollCallWorksheet.Cells[11, 4, 11, FinalColumnIndex].Style.Font.Size = 8;
+            RollCallWorksheet.Cells[11, 4, 11, FinalColumnIndex].Style.Font.Bold = true;
+            RollCallWorksheet.Cells[11, 4, 11, FinalColumnIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            //Set lai gia tri width cua cac cot diem danh
+            for (int i = 4; i < FinalColumnIndex; i++)
+            {
+                RollCallWorksheet.Column(i).Width = 10;
+            }
+            RollCallWorksheet.Column(FinalColumnIndex).Width = 12;
+
 
             //Format header cua bang
             RollCallWorksheet.Cells[10, 1, 10, FinalColumnIndex].Style.Font.Bold = true;
             RollCallWorksheet.Cells[10, 1, 10, FinalColumnIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             //Format ten hoc sinh
-            RollCallWorksheet.Cells[11, 1, 11 + 30, FinalColumnIndex].Style.Font.Name = "Times New Roman";
+            RollCallWorksheet.Cells[12, 1, 11 + 30, FinalColumnIndex].Style.Font.Name = "Times New Roman";
             //Tao them hang cuoi
-            RollCallWorksheet.Cells["A41:C41"].Merge = true;
-            RollCallWorksheet.Cells["A41"].Value = "Total Present Student: ";
-            RollCallWorksheet.Cells["A41"].Style.Font.Bold = true;
-            RollCallWorksheet.Cells["A41"].Style.Font.Name = "Arial";
-            RollCallWorksheet.Cells["A41"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+            RollCallWorksheet.Cells["A42:C42"].Merge = true;
+            RollCallWorksheet.Cells["A42"].Value = "Total Present Student: ";
+            RollCallWorksheet.Cells["A42"].Style.Font.Bold = true;
+            RollCallWorksheet.Cells["A42"].Style.Font.Name = "Arial";
+            RollCallWorksheet.Cells["A42"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             //Tao them 1 hang Percent
-            RollCallWorksheet.Cells[9, FinalColumnIndex].Value = "X = Present";
+            RollCallWorksheet.Cells[9, 4].Value = "X = Present";
             RollCallWorksheet.Cells[9, FinalColumnIndex].Style.Font.Name = "Times New Roman";
             RollCallWorksheet.Cells[10, FinalColumnIndex].Value = "Percent";
             RollCallWorksheet.Cells[11, FinalColumnIndex, 31, FinalColumnIndex].Style.Numberformat.Format = "0.00%";
@@ -508,7 +555,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
             for (int i = 0; i < 30; i++)
             {
-                int RowIndex = 11 + i;
+                int RowIndex = 12 + i;
                 if (i < Students.Count)
                 {
                     Student CurrentStudent = Students.ElementAt(i);
@@ -534,7 +581,7 @@ namespace RollSystemMobile.Models.BusinessObject
             //Tinh so sinh vien di hoc
             if (AttendanceLogs.Count > 0)
             {
-                RollCallWorksheet.Cells[41, 4, 41, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
+                RollCallWorksheet.Cells[42, 4, 42, 4 + AttendanceLogs.Count - 1].Formula = "COUNTIF(D11:D40,\"X\")";
             }
 
             return RollCallWorksheet;
