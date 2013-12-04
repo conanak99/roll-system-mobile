@@ -100,7 +100,7 @@ namespace RollSystemMobile.Controllers
                 time = r.StartTime.Equals(new TimeSpan(0, 0, 0)) ?
                        "No Teaching Slot" : r.StartTime.ToString(@"hh\:mm") + " - " + r.EndTime.ToString(@"hh\:mm"),
                 date = r.BeginDate.ToString("dd-MM-yyyy") + " to " + r.EndDate.ToString("dd-MM-yyyy"),
-                isCurrent = CurrentRollCall != null && CurrentRollCall.RollCallID == r.RollCallID ? true : false
+                isCurrent = CurrentRollCall != null && CurrentRollCall == r ? true : false
             });
 
             return Json(RollCallJson, JsonRequestBehavior.AllowGet);
