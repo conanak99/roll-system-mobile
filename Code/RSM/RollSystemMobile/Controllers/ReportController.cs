@@ -67,12 +67,12 @@ namespace RollSystemMobile.Controllers
             return File(FilePath, ExcelMimeType, FileName);
         }
 
-        public ActionResult SessionReport(int InstructorID, int SelectedMonth)
+        public ActionResult SessionReport(int InstructorID, int SelectedMonth, int SelectedYear)
         {
             InstructorBusiness InsBO = new InstructorBusiness();
 
             var Ins = InsBO.GetInstructorByID(InstructorID);
-            DateTime SelectedTime = new DateTime(DateTime.Today.Year, SelectedMonth, 1);
+            DateTime SelectedTime = new DateTime(SelectedYear, SelectedMonth, 1);
 
             String FileName = InstructorID + "_" + Ins.Fullname.NonUnicode()
                                + "_" + SelectedTime.ToString("yyyy_MMMM") + ".xlsx";

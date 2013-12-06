@@ -126,10 +126,18 @@ namespace RollSystemMobile.Models.BusinessObject
             Worksheet.Cells["C7:F7"].Style.Fill.BackgroundColor.SetColor(Color.Gray);
             Worksheet.Cells["C7:F7"].Style.Font.Bold = true;
 
-            //Lay nhung study session trong thang của giao vien
-            var StudySessions = Ins.StudySessions.Where(ss => ss.SessionDate.Month == SelectedTime.Month
+            //Lay nhung study session trong thang truoc va thang nay
+            var LastMonthSessions = Ins.StudySessions.Where(ss => ss.SessionDate.Month == (SelectedTime.Month - 1)
+                                && ss.SessionDate.Day > 15
                                 && ss.SessionDate.Year == SelectedTime.Year).ToList();
-            var TeachingDates = StudySessions.OrderBy(ss => ss.SessionDate).Select(ss => ss.SessionDate).Distinct().ToList();
+
+            var ThisMonthSessions = Ins.StudySessions.Where(ss => ss.SessionDate.Month == SelectedTime.Month
+                                && ss.SessionDate.Day <= 15
+                                && ss.SessionDate.Year == SelectedTime.Year).ToList();
+
+            //Nhap 2 gia tri lai voi nhau
+            LastMonthSessions.AddRange(ThisMonthSessions);
+            var TeachingDates = LastMonthSessions.OrderBy(ss => ss.SessionDate).Select(ss => ss.SessionDate).Distinct().ToList();
 
             //Bat dau in ra cac ngay day hoc
             int RowIndex = 7;
@@ -141,7 +149,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 Worksheet.Cells["C" + RowIndex].Value = TeachingDate.ToString("dd/MM/yyyy");
                 Worksheet.Cells["C" + RowIndex + ":F" + RowIndex].Style.Font.Bold = true;
 
-                var SessionsAtDate = StudySessions.Where(ss => ss.SessionDate == TeachingDate).ToList();
+                var SessionsAtDate = LastMonthSessions.Where(ss => ss.SessionDate == TeachingDate).ToList();
                 int TotalSlotInDate = 0;
                 for (int k = 0; k < SessionsAtDate.Count; k++)
                 {
