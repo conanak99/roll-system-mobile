@@ -38,9 +38,9 @@ namespace RollSystemMobile.Models.BusinessObject
                 base.UpdateExist(rollCall);
             }
 
-            //Inactive roll call qua ngay
+            //Inactive roll call qua ngay, tru di 7 ngay
             var RollToInactive = base.GetList().Where(roll =>
-                roll.EndDate.CompareTo(DateTime.Today) <= 0 && roll.Status != 3);
+                roll.EndDate.CompareTo(DateTime.Today.AddDays(-7)) <= 0 && roll.Status != 3);
             foreach (var rollCall in RollToInactive)
             {
                 //Status bang 2 la activa, o status nay ko duoc sua gi het, chi duoc doi lich
@@ -204,7 +204,8 @@ namespace RollSystemMobile.Models.BusinessObject
                         ClassID = rollcall.ClassID,
                         StartTime = rollcall.StartTime,
                         EndTime = rollcall.EndTime,
-                        SessionDate = SessionDate
+                        SessionDate = SessionDate,
+                        Note = SessionDate.ToString("dd-MM-yyyy") + " : "
                     };
                 rollcall.StudySessions.Add(StuSes);
                 do
@@ -484,7 +485,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 if (SessionDates.Contains(dt))
                 {
                     SessionInWeek++;
-                    RollCallWorksheet.Cells[11, BeginCol + SessionInWeek - 1].Value = dt.DayOfWeek.ToString();
+                    RollCallWorksheet.Cells[11, BeginCol + SessionInWeek - 1].Value = dt.ToString("dd/MM");
                 }
 
                 //Toi ngay CN cuoi tuan
@@ -503,14 +504,14 @@ namespace RollSystemMobile.Models.BusinessObject
             RollCallWorksheet.Cells[10, BeginCol].Value = "Week " + WeekIndex;
 
             //Set lai gia tri day of week
-            RollCallWorksheet.Cells[11, 4, 11, FinalColumnIndex].Style.Font.Size = 8;
+            RollCallWorksheet.Cells[11, 4, 11, FinalColumnIndex].Style.Font.Size = 10;
             RollCallWorksheet.Cells[11, 4, 11, FinalColumnIndex].Style.Font.Bold = true;
             RollCallWorksheet.Cells[11, 4, 11, FinalColumnIndex].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             //Set lai gia tri width cua cac cot diem danh
             for (int i = 4; i < FinalColumnIndex; i++)
             {
-                RollCallWorksheet.Column(i).Width = 10;
+                RollCallWorksheet.Column(i).Width = 7;
             }
             RollCallWorksheet.Column(FinalColumnIndex).Width = 12;
 

@@ -22,11 +22,12 @@ namespace RollSystemMobile.Controllers
             RollBO = new RollCallBusiness();
         }
 
-        public ActionResult SessionDetail(int ID)
+        public ActionResult SessionDetail(int ID, bool HasAttendance)
         {
             StudySession Session = StuSesBO.GetSessionByID(ID);
             SelectListFactory slFactory = new SelectListFactory();
             ViewBag.InstructorID = slFactory.MakeSelectList<Instructor>("InstructorID", "FullName", Session.InstructorID);
+            ViewBag.HasAttendance = HasAttendance;
 
             return PartialView("_SessionDetail", Session);
         }

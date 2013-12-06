@@ -38,34 +38,38 @@
     <dt>Email</dt>
     <dd>@Model.Email</dd>
 </dl>
-
 <div class="text-left" style="margin: 0 0 15px 280px">
     <h4>
         Session Report</h4>
-     @using (Html.BeginForm("SessionReport", "Report", FormMethod.Post))
-        {
-            <span>Select month:</span> <select name="SelectedMonth">
-                @{
-            for (int i = 1; i <= 12; i++)
+    @using (Html.BeginForm("SessionReport", "Report", FormMethod.Post))
+    {
+        <span>Select time:</span> <select name="SelectedMonth" style="width:150px">
+            @for (int i = 1; i <= 12; i++)
             {
                 DateTime dt = new DateTime(2000, i, 1);
                 if (dt.Month == DateTime.Today.Month)
                 {
-                  <option value="@i" selected>@dt.ToString("MMMM")</option>
+                <option value="@i" selected="selected">@dt.ToString("MMMM")</option>
                 }
                 else
                 {
-                    <option value="@i">@dt.ToString("MMMM")</option>
+                <option value="@i">@dt.ToString("MMMM")</option>
                 }
             }
-                }
-            </select>
-            <input type="hidden" name="InstructorID" value="@Model.InstructorID" />
+            @{
+            int LastYear = DateTime.Now.Year - 1;
+            }
+        </select>
+        <select name="SelectedYear" style="width:120px">
+            <option value="@LastYear">@LastYear</option>
+            <option value="@DateTime.Now.Year" selected="selected">@DateTime.Now.Year</option>
+        </select>
+        <input type="hidden" name="InstructorID" value="@Model.InstructorID" />
             
-            <button class="btn btn-primary">Download</button>
-        }
+        <button class="btn btn-primary" style="margin-top:-10px">
+            Download</button>
+    }
 </div>
-
 <div id='calendar'>
 </div>
 <script>

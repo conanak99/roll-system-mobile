@@ -108,7 +108,8 @@ else
                 else {
                     $.ajax({
                         type: "GET",
-                        url: '@Url.Action("SessionDetail", "StudySession")' + "/" + calEvent.id,
+                        url: '@Url.Action("SessionDetail", "StudySession")' + "?ID=" + calEvent.id
+                                + '&HasAttendance=@ViewBag.HasAttendance',
                         success: function (data) {
                             var date = $.fullCalendar.formatDate(calEvent.start, 'dd-MM-yyyy');
                             $('#myModalLabel').html('Change schedule on ' + date);
