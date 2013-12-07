@@ -1,0 +1,63 @@
+﻿@model IEnumerable<RollSystemMobile.Models.Semester>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Staff/_Layout.cshtml";
+}
+<h2>
+    Semester List <span style="float: right; margin-right: 20px; font-size: 20px;">( @Html.ActionLink("Create new semester", "Create")
+        )</span></h2>
+<table class="table table-bordered table-striped" id="example">
+    <thead>
+        <th style="background-color: #70ad47; color: #ffffff">
+            No.
+        </th>
+        <th style="background-color: #70ad47; color: #ffffff">
+            SemesterName
+        </th>
+        <th style="background-color: #70ad47; color: #ffffff">
+            BeginDate
+        </th>
+        <th style="background-color: #70ad47; color: #ffffff">
+            EndDate
+        </th>
+        <th style="background-color: #70ad47; color: #ffffff">
+        </th>
+    </thead>
+    <tbody>
+        @{int index = 1;}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @item.SemesterName
+                </td>
+                <td>
+                    @item.BeginDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @item.EndDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.SemesterID })
+                </td>
+            </tr>   
+               { index++; }
+        }
+    </tbody>
+</table>
+<script>
+    /* Table initialisation */
+    $(document).ready(function () {
+        $('#example').dataTable({
+            "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
+            "sPaginationType": "bootstrap",
+            "oLanguage": {
+                "sLengthMenu": "Display _MENU_ records per page"
+            },
+            "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4]}]
+        });
+    });
+</script>

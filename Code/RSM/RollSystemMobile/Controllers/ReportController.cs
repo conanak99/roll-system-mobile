@@ -50,6 +50,20 @@ namespace RollSystemMobile.Controllers
 
             return File(FilePath, ExcelMimeType, FileName);
         }
+        public ActionResult RollCallStudentsFail(int id)
+        {
+            SemesterBusiness SemBO = new SemesterBusiness();
+
+            var sem = SemBO.GetSemesterByID(id);
+
+            String FileName = "FailStudentsList_" + sem.SemesterName + ".xlsx";
+            String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
+
+            SemBO.CreateFailStudentReport(id, FilePath);
+
+            return File(FilePath, ExcelMimeType, FileName);
+        }
+
 
         public ActionResult StudentReport(int StudentID, int SemesterID)
         {

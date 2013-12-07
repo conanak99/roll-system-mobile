@@ -98,7 +98,7 @@ namespace RollSystemMobile.Models.BusinessObject
             GeneralWorksheet.Cells["C2"].Style.Font.Size = 18;
             GeneralWorksheet.Cells["C2"].Style.Font.Bold = true;
 
-            //student detail
+            //semester detail
             GeneralWorksheet.Cells["C3"].Value = "Student Name";
             GeneralWorksheet.Cells["C4"].Value = "Student Code";
             GeneralWorksheet.Cells["C5"].Value = "Class";

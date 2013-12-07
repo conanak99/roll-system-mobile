@@ -64,7 +64,7 @@ namespace RollSystemMobile.Models.BusinessObject
             else
             {
                 var TodayRollCall = new List<RollCall>();
-                foreach(var TodaySession in TodaySessions)
+                foreach (var TodaySession in TodaySessions)
                 {
                     var NewRoll = TodaySession.RollCall.Clone();
                     NewRoll.StartTime = TodaySession.StartTime;
@@ -362,7 +362,6 @@ namespace RollSystemMobile.Models.BusinessObject
             ExcelWriter.WriteExcelFile(Package, FileName);
             Package.Dispose();
         }
-
         private ExcelWorksheet CreateRollCallWorksheet(int RollCallID)
         {
 
@@ -480,7 +479,7 @@ namespace RollSystemMobile.Models.BusinessObject
             int WeekIndex = 1;
             int BeginCol = 4;
             int SessionInWeek = 0;
-            for (DateTime dt = RollCall.BeginDate; dt < RollCall.EndDate; dt=dt.AddDays(1))
+            for (DateTime dt = RollCall.BeginDate; dt < RollCall.EndDate; dt = dt.AddDays(1))
             {
                 if (SessionDates.Contains(dt))
                 {
