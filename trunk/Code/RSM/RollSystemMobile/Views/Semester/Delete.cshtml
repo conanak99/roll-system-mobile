@@ -1,0 +1,33 @@
+﻿@model RollSystemMobile.Models.Semester
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Semester</legend>
+
+    <div class="display-label">SemesterName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SemesterName)
+    </div>
+
+    <div class="display-label">BeginDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BeginDate)
+    </div>
+
+    <div class="display-label">EndDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndDate)
+    </div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}

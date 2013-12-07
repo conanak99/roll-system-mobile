@@ -1,0 +1,30 @@
+﻿@model RollSystemMobile.Models.Semester
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Semester</legend>
+
+    <div class="display-label">SemesterName</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.SemesterName)
+    </div>
+
+    <div class="display-label">BeginDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.BeginDate)
+    </div>
+
+    <div class="display-label">EndDate</div>
+    <div class="display-field">
+        @Html.DisplayFor(model => model.EndDate)
+    </div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.SemesterID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

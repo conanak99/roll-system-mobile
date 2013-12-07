@@ -29,14 +29,17 @@
         }
         <input type="submit" class="btn btn-success" value="Roll Call Reports" />
     }
+    ---
     @using (Html.BeginForm("RollCallStudentLists", "Report", FormMethod.Post, new { @class = "inline-form" }))
     {
         foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
         {
         <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
         }
-        <input type="submit" class="btn btn-info" value="Final Exam Student Lists" />
+        <input type="submit" class="btn btn-success" value="Final Student Lists" />
     }
+    ---
+    <input type="submit" class="btn btn-success" onclick="reportStudentsFail()" value="Fail Student Lists in Semester" />
 </div>
 <table class="table table-bordered table-striped" id="example">
     <thead>
@@ -95,8 +98,8 @@
                 <td>
                     @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
                     <br />
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) | 
-                    <a href="#" onclick="deleteRollcall('@item.Class.ClassName','@item.Subject.FullName','@item.Instructor.Fullname','@item.RollCallID');">Delete</a>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) | <a href="#" onclick="deleteRollcall('@item.Class.ClassName','@item.Subject.FullName','@item.Instructor.Fullname','@item.RollCallID');">
+                        Delete</a>
                 </td>
             </tr>
             }
@@ -125,13 +128,13 @@
                     @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
                 </td>
                 <td>
-                   @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
+                    @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
                     <br />
                     @Html.ActionLink("Check Attendance", "RollCallDetail", new { id = item.RollCallID })
                 </td>
             </tr>
             }
-            else if (item.Status == 2 && item.BeginDate.AddDays(2) < DateTime.Now )
+            else if (item.Status == 2 && item.BeginDate.AddDays(2) < DateTime.Now)
             {
             <tr>
                 <td style="text-align: right;">
@@ -156,7 +159,8 @@
                     @Html.ActionLink("Change", "ChangeSchedule", new { id = item.RollCallID })
                 </td>
                 <td>
-                    <a class="modal-call" href="@Url.Action("StudentList", "RollCall", new { RollCallID = item.RollCallID })">Student List</a>
+                    <a class="modal-call" href="@Url.Action("StudentList", "RollCall", new { RollCallID = item.RollCallID })">
+                        Student List</a>
                     <br />
                     @Html.ActionLink("Check Attendance", "RollCallDetail", new { id = item.RollCallID })
                 </td>
@@ -194,14 +198,9 @@
         }
     </tbody>
 </table>
-
-
-
-
 <div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
 </div>
-
 <script>
     $('.modal-call').click(function (e) {
         e.preventDefault();
@@ -218,8 +217,6 @@
     });
 
 </script>
-
-
 <script>
     /* Table initialisation */
     $(document).ready(function () {
@@ -279,7 +276,7 @@
         link = link.replace("semesterid", semesterID);
         window.location.href = link;
     };
-    function deleteRollcall(clss, sub, ins,rollcalID) {
+    function deleteRollcall(clss, sub, ins, rollcalID) {
         var result = confirm("Do you want to delete roll call : \n\t\t Class : " + clss + " \n\t\t Subject : " + sub + " \n\t\t Instructor : " + ins + " ? ");
         if (result) {
             var link = '@Url.Action("Delete", new { id = "tmp1" })';
@@ -288,5 +285,14 @@
             link = link.replace("tmp1", rollcalID);
             window.location.href = link;
         }
+    }
+    function reportStudentsFail() {
+        var semesterID = $('#SemesterID :selected').attr("value");
+        var link = '@Url.Action("RollCallStudentsFail", new { id = "tmp1" })';
+        link = link.replace("amp;", "");
+        link = link.replace("RollCall/", "Report/");
+        link = link.replace("RollCallStudentsFail/", "RollCallStudentsFail?id=");
+        link = link.replace("tmp1", semesterID);
+        window.location.href = link;
     }
 </script>
