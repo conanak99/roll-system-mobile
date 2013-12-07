@@ -18,13 +18,12 @@
                 </div>
                 <div class="editor-field">
                     @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, new { style = "width: 100px;" })
-                    @Html.ValidationMessageFor(model => model.MajorID)
                 </div>
                 <span class="help-block">Select major of class.</span>
             </td>
             <td>
                 <div class="editor-label">
-                    <b>Class Name </b>
+                    <b>Class Name (<span style="color:Red;"> * </span>)</b>
                 </div>
                 <div class="editor-field">
                     @Html.TextBoxFor(model => model.ClassName, new{style ="width:150px;" })
