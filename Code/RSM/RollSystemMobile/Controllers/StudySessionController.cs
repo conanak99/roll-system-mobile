@@ -22,12 +22,12 @@ namespace RollSystemMobile.Controllers
             RollBO = new RollCallBusiness();
         }
 
-        public ActionResult SessionDetail(int ID, bool HasAttendance)
+        public ActionResult SessionDetail(int ID)
         {
             StudySession Session = StuSesBO.GetSessionByID(ID);
             SelectListFactory slFactory = new SelectListFactory();
             ViewBag.InstructorID = slFactory.MakeSelectList<Instructor>("InstructorID", "FullName", Session.InstructorID);
-            ViewBag.HasAttendance = HasAttendance;
+            ViewBag.LastAttendanceDate = RollBO.LastAttendanceDate(Session.RollCallID);
 
             return PartialView("_SessionDetail", Session);
         }
@@ -109,10 +109,10 @@ namespace RollSystemMobile.Controllers
             return Json(Result, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult ChangeInstructor(int RollCallID, bool HasAttendance)
+        public ActionResult ChangeInstructor(int RollCallID)
         {
             var rollCall = RollBO.GetRollCallByID(RollCallID);
-            ViewBag.HasAttendance = HasAttendance;
+            ViewBag.LastAttendanceDate = RollBO.LastAttendanceDate(RollCallID);
             return PartialView("_ChangeIns", rollCall);
         }
 

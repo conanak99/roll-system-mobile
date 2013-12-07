@@ -112,6 +112,19 @@ namespace RollSystemMobile.Models.BusinessObject
             return base.RollSystemDB.AttendanceLogs.Any(log => log.RollCallID == RollCallID && log.LogDate == DateTime.Today);
         }
 
+        //Tim ngay cuoi cung co attendance, chi duoc sua doi nhung ngay sau ngay nay
+        public DateTime LastAttendanceDate(int RollCallID)
+        {
+            var LastestLog = base.RollSystemDB.AttendanceLogs.Where(log => log.RollCallID == RollCallID)
+                                                   .OrderByDescending(log => log.LogDate).FirstOrDefault();
+            if (LastestLog != null)
+            {
+                return LastestLog.LogDate;
+            }
+            //Neu chua co log, tra ra ngay dau tien cua session, tru di 1 ngay
+            return GetRollCallByID(RollCallID).BeginDate.AddDays(-1);
+        }
+
 
         public bool Delete(RollCall Rollcall)
         {
@@ -303,8 +316,6 @@ namespace RollSystemMobile.Models.BusinessObject
             Package.Dispose();
 
         }
-
-
 
         public void CreateRollCallReport(int RollCallID, String FileName)
         {

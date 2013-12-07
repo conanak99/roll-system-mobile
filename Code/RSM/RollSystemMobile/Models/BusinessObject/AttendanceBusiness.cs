@@ -6,7 +6,7 @@ using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Models.BusinessObject
 {
-    public class AttendanceBusiness: GenericBusiness<AttendanceLog>
+    public class AttendanceBusiness : GenericBusiness<AttendanceLog>
     {
         private RollCallBusiness RollBO;
         private StudentBusiness StuBO;
@@ -18,7 +18,7 @@ namespace RollSystemMobile.Models.BusinessObject
         public AttendanceBusiness(RSMEntities DB)
             : base(DB)
         {
-            
+
         }
 
         public AttendanceLog WriteAttendanceAutoLog(int RollCallID, List<RecognizerResult> RecognizerResults)
@@ -33,10 +33,11 @@ namespace RollSystemMobile.Models.BusinessObject
             bool LogExist = true;
             if (Log == null)
             {
-                Log = new AttendanceLog() {
+                Log = new AttendanceLog()
+                {
                     RollCallID = RollCallID,
                     LogDate = DateTime.Today,
-                    TypeID = 1 
+                    TypeID = 1
                 };
 
                 LogExist = false;
@@ -59,7 +60,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 if (!Log.LogImages.Any(image => image.ImageLink.Equals(result.ImageLink)))
                 {
                     LogImage LogImg = new LogImage() { ImageLink = result.ImageLink };
-                    Log.LogImages.Add(LogImg); 
+                    Log.LogImages.Add(LogImg);
                 }
             }
 
@@ -93,7 +94,7 @@ namespace RollSystemMobile.Models.BusinessObject
                     StudentAttendance Attendance = Log.StudentAttendances.SingleOrDefault(attendance => attendance.StudentID == StudentID);
                     if (StudentIDs.Contains(StudentID))
                     {
-                         Attendance.IsPresent = true;
+                        Attendance.IsPresent = true;
                     }
                     //Ko chuyen tu true sang false, vi moi lan diem danh co the thieu nguoi
                 }
@@ -208,7 +209,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
         public AttendanceLog WriteAttendanceManualLog(String username, int RollCallID, DateTime Date, List<SingleAttendanceCheck> AttendanceChecks)
         {
-            
+
             //Tim xem da co log manual cho ngay dua vao chua
             AttendanceLog AutoLog = GetAttendanceLogAtDate(RollCallID, Date, 1);
 
@@ -262,22 +263,22 @@ namespace RollSystemMobile.Models.BusinessObject
                 {
                     //Neu da co roi thi chi sua present
                     //Attendance.Note = AttendanceCheck.Note;
-                    
+
                     //Neu sua attendance moi viet note, con ko sua thi viet node lam gi
                     if (Attendance.IsPresent != AttendanceCheck.IsPresent)
                     {
                         if (Attendance.IsPresent)
                         {
-                            Attendance.Note = String.Format("({0}) P->A : {1}",username,AttendanceCheck.Note);
+                            Attendance.Note = String.Format("({0}) P->A : {1}", username, AttendanceCheck.Note);
                         }
                         else
                         {
                             Attendance.Note = String.Format("({0}) A->P : {1}", username, AttendanceCheck.Note);
                         }
                         Attendance.IsPresent = AttendanceCheck.IsPresent;
-                        
+
                     }
-                    
+
                 }
             }
 
@@ -326,7 +327,10 @@ namespace RollSystemMobile.Models.BusinessObject
                 RollBO = new RollCallBusiness(this.RollSystemDB);
             }
             RollCall RollCall = RollBO.GetRollCallByID(RollCallID);
-            
+
+            //Fill lai gia tri nhung ngay trong qua khu
+            FillAbsentAttendance(RollCallID);
+
             //Lay cac ngay trong roll call
             var Dates = RollCall.AttendanceLogs.OrderBy(roll => roll.LogDate).Select(roll => roll.LogDate).Distinct();
             List<AttendanceLog> AttendanceLogs = new List<AttendanceLog>();
@@ -370,7 +374,7 @@ namespace RollSystemMobile.Models.BusinessObject
                 RollBO = new RollCallBusiness(RollSystemDB);
                 StuBO = new StudentBusiness(RollSystemDB);
             }
-           
+
             var AttendanceLogs = GetRollCallAttendanceLog(RollCallID);
             var Student = StuBO.GetStudentByID(StudentID);
             var RollCall = RollBO.GetRollCallByID(RollCallID);
@@ -383,5 +387,32 @@ namespace RollSystemMobile.Models.BusinessObject
             return AbsentRate;
         }
 
+        public void FillAbsentAttendance(int RollCallID)
+        {
+            RollCallBusiness RollBO = new RollCallBusiness(this.RollSystemDB);
+            var rollCall = RollBO.GetRollCallByID(RollCallID);
+
+            //Tim nhung study session trong qua khu, chua co log
+            var PassStudySessions = rollCall.StudySessions.Where(ses => ses.SessionDate < DateTime.Today
+                                    && !rollCall.AttendanceLogs.Any(log => log.LogDate == ses.SessionDate)).ToList();
+
+            //Bat dau ghi log absent toan bo
+            foreach (var PassStudySession in PassStudySessions)
+            {
+                AttendanceLog Log = new AttendanceLog()
+                {
+                    RollCallID = RollCallID,
+                    LogDate = PassStudySession.GetOriginalDate(),
+                    TypeID = 1
+                };
+
+                foreach (var Student in rollCall.Students)
+                {
+                    StudentAttendance Attendance = new StudentAttendance() { StudentID = Student.StudentID, IsPresent = false };
+                    Log.StudentAttendances.Add(Attendance);
+                }
+                Insert(Log);
+            }
+        }
     }
 }

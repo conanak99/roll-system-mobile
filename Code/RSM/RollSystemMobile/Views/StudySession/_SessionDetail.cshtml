@@ -4,11 +4,8 @@
 }
 <fieldset style="margin: 0 0 -20px -20px">
     @{
-        DateTime DefaultTime = DateTime.Today;
-        if (ViewBag.HasAttendance)
-        {
-            DefaultTime = DefaultTime.AddDays(1);
-        }
+        DateTime LastAttendanceDate = (DateTime)ViewBag.LastAttendanceDate;
+        DateTime DefaultTime = LastAttendanceDate.AddDays(1);
     }
     <dl class="dl-horizontal">
         @Html.HiddenFor(model => model.SessionID)
