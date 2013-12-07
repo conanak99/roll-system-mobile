@@ -49,8 +49,7 @@
     <h4>
         More Action</h4>
     <a href="@Url.Action("AddSession", "StudySession", new { RollCallID = Model.RollCallID })" id="new-ses" class="btn btn-success">
-        Add Session</a> 
-    <a href="@Url.Action("ChangeInstructor", "StudySession", new { RollCallID = Model.RollCallID, HasAttendance = ViewBag.HasAttendance })" id="change-ins" class="btn btn-info">
+        Add Session</a> <a href="@Url.Action("ChangeInstructor", "StudySession", new { RollCallID = Model.RollCallID })" id="change-ins" class="btn btn-info">
             Change Instructor</a>
 </div>
 <div id='calendar'>
@@ -68,28 +67,19 @@
     </div>
     Present and future study session, click to change date, time.
 </div>
-@if (ViewBag.HasAttendance)
-{
-    <script>
-        function isPastDay(day) {
-            var check = $.fullCalendar.formatDate(day, 'yyyy-MM-dd');
-            var today = $.fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');
-            if (check <= today) return true;
-            else return false;
-        }
-    </script>
+
+@{
+    DateTime LastAttendanceDate = (DateTime)ViewBag.LastAttendanceDate;
 }
-else
-{
-    <script>
-        function isPastDay(day) {
-            var check = $.fullCalendar.formatDate(day, 'yyyy-MM-dd');
-            var today = $.fullCalendar.formatDate(new Date(), 'yyyy-MM-dd');
-            if (check < today) return true;
-            else return false;
-        }
-    </script>
-}
+
+<script>
+    function isPastDay(day) {
+        var check = $.fullCalendar.formatDate(day, 'yyyy-MM-dd');
+        var lastedDay = $.fullCalendar.formatDate(new Date('@LastAttendanceDate.ToLongDateString()'), 'yyyy-MM-dd');
+        if (check <= lastedDay) return true;
+        else return false;
+    }
+</script>
 <script>
     $(document).ready(function () {
 
@@ -108,8 +98,7 @@ else
                 else {
                     $.ajax({
                         type: "GET",
-                        url: '@Url.Action("SessionDetail", "StudySession")' + "?ID=" + calEvent.id
-                                + '&HasAttendance=@ViewBag.HasAttendance',
+                        url: '@Url.Action("SessionDetail", "StudySession")' + "?ID=" + calEvent.id,
                         success: function (data) {
                             var date = $.fullCalendar.formatDate(calEvent.start, 'dd-MM-yyyy');
                             $('#myModalLabel').html('Change schedule on ' + date);
@@ -143,7 +132,7 @@ else
 
 
 
-   
+
 
 
     $('#new-ses').click(function (e) {

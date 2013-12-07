@@ -156,9 +156,9 @@ namespace RollSystemMobile.Controllers
         {
             RollCall RollCall = RollBO.GetRollCallByID(id);
 
-            AttendanceBusiness AttendanceBO = new AttendanceBusiness();
             //Lay danh sach nhung log cua roll call nay, tu luc bat dau
-            List<AttendanceLog> AttendanceLogs = AttendanceBO.GetRollCallAttendanceLog(id);
+            AttendanceBusiness AttenBO = new AttendanceBusiness();
+            List<AttendanceLog> AttendanceLogs = AttenBO.GetRollCallAttendanceLog(id);
 
 
             RollCallDetailViewModel Model = new RollCallDetailViewModel();

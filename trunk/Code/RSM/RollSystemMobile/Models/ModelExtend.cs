@@ -44,7 +44,7 @@ namespace RollSystemMobile.Models
             NewRoll.EndDate = this.EndDate;
             NewRoll.Class = this.Class;
             NewRoll.Subject = this.Subject;
-
+            NewRoll.Students = this.Students;
             return NewRoll;
         }
 

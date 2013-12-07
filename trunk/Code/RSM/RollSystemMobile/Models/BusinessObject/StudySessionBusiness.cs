@@ -374,5 +374,7 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             return base.GetList().Where(ss => ss.InstructorID == InstructorID && ss.SessionDate >= DateTime.Today).ToList();
         }
+
+       
     }
 }

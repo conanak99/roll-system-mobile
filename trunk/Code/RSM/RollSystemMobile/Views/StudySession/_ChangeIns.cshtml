@@ -13,15 +13,10 @@
         <dd>
             @Model.StartTime.ToString(@"hh\:mm")
         </dd>
-
         @{
-            DateTime DefaultTime = DateTime.Today;
-            if (ViewBag.HasAttendance)
-            {
-                DefaultTime = DefaultTime.AddDays(1);
-            }
+            DateTime LastAttendanceDate = (DateTime)ViewBag.LastAttendanceDate;
+            DateTime DefaultTime = LastAttendanceDate.AddDays(1);
         }
-
         <dt style="margin-top: 12px">From</dt>
         <dd style="margin-top: 7px">
             <div class="input-append date" data-date="@Html.FormatDate(DefaultTime)" id="beginDate" data-date-format="dd-mm-yyyy">

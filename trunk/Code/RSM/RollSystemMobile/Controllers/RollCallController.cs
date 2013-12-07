@@ -99,10 +99,9 @@ namespace RollSystemMobile.Controllers
         {
             RollCall RollCall = RollBO.GetRollCallByID(id);
 
-            AttendanceBusiness AttendanceBO = new AttendanceBusiness();
             //Lay danh sach nhung log cua roll call nay, tu luc bat dau
-            List<AttendanceLog> AttendanceLogs = AttendanceBO.GetRollCallAttendanceLog(id);
-
+            AttendanceBusiness AttenBO = new AttendanceBusiness();
+            List<AttendanceLog> AttendanceLogs = AttenBO.GetRollCallAttendanceLog(id);
 
             RollCallDetailViewModel Model = new RollCallDetailViewModel();
             Model.RollCall = RollCall;
@@ -481,9 +480,18 @@ namespace RollSystemMobile.Controllers
         public ActionResult ChangeSchedule(int id)
         {
             RollCall rollCall = RollBO.GetRollCallByID(id);
-            
+
+            //Fill lai gia tri nhung ngay trong qua khu
+            AttendanceBusiness AttenBO = new AttendanceBusiness();
+            AttenBO.FillAbsentAttendance(id);
+
+
             ViewBag.RollCallID = id;
-            ViewBag.HasAttendance = RollBO.RollCallHasAttendance(id);
+            ViewBag.LastAttendanceDate = RollBO.LastAttendanceDate(id);
+            
+            //ViewBag.HasAttendance = RollBO.RollCallHasAttendance(id);
+            
+            
             return View("RollCallSchedule", rollCall);
         }
 
