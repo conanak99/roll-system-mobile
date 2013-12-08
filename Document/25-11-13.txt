@@ -1,22 +1,58 @@
 [ Web ]
  1. Vi sao su dung mo hinh MVC ?
+ Chuan, phu hop, de phat trien.
  2. Vi sao su dung agile model ? (Nghien cuu so luoc cac model khac ? Scrum)
+ _ spoce chua fix, de thay doi.	
  3. Vi sao khong dong bo calendar theo event ?
+ _ Xoa cu, dong bo data moi nen han che dong bo.
  4. Trang roll call list cua staff show cai j?
  _Show nhung roll call nam trong khoang thoi gian hoac semester staff lua chon . Cac roll call se duoc show theo ten class, Date giam dan.	
- 5. Khoang thoi gian giao vien co the chup hinh tu luc bat dau hoc la bao lau ? cong tru 15p hay trong thoi gian hoc.
+ 5. Khoang thoi gian giao vien co the chup hinh tu luc bat dau hoc la bao lau ? cong tru 15p hay trong thoi gian hoc?
+ _ trong thoi gian hoc.
  6. Danh sach roll call cua giao vien show theo quy luat nao ? 
+ _ now trong khoang roll call time.
  7. Truong hop gap nguoi la se xu li nhu the nao ?
- _Se phat trien them mot module khac de xu li.
- 8.Anh cua sinh vien khi duoc xac nhan hoac xu li khi diem danh co duoc add them vao database ? 
+ _ Se phat trien them mot module khac de xu li.
+ 8. Anh cua sinh vien khi duoc xac nhan hoac xu li khi diem danh co duoc add them vao database ? 
+ _ A cap nhat chi co admin, upload, tu student.
+ 9. Student request time (real time) cho staff?
+ _Reques time. 
+ 10. Staff duoc diem danh lai trong khoang thoi gian nao ??
+	
+
 [ Mobile ]
  1. Ve che do offline, sau khi co mang lai (chuong trinh van chay nen) thi co auto sync duoc khong hay user pha chon chuong trinh ?
+ _ Tu dong sync.
+	
  2. O trang roll call detail, vi sao khong show het chi tiet nhu ben web ?
+ _ layout cua mobile k du. 
  3. Gia su giao vien hu het cac thiet bi, muon dien thoai giao vien khac diem danh co duoc khong ?
+ _ duoc.
  4. Vi sao o che do offline, giao vien van login duoc?
+ _ khi giao vien log lan dau, username, password se duoc luu lai.
+
  5. Thieu hoac du bao nhieu nguoi thi system gui notation check manual ? 
+ _ Mac dinh cap nhat.
+
 
 
 [ Database ]
- 2. Neu truong hop muon phat trien them kiem soat theo block, thi them cai gi? bang nao ?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
  
