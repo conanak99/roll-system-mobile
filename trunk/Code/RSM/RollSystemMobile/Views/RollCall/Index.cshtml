@@ -98,7 +98,8 @@
                 <td>
                     @Html.ActionLink("Student List", "RollCallStudentList", new { RollCallID = item.RollCallID })
                     <br />
-                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) | <a href="#" onclick="deleteRollcall('@item.Class.ClassName','@item.Subject.FullName','@item.Instructor.Fullname','@item.RollCallID');">
+                    @Html.ActionLink("Edit", "Edit", new { id = item.RollCallID }) |
+                     <a href="#" onclick="deleteRollcall('@item.Class.ClassName','@item.Subject.FullName','@item.Instructor.Fullname','@item.RollCallID');">
                         Delete</a>
                 </td>
             </tr>

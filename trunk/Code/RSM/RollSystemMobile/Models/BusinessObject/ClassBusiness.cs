@@ -40,5 +40,14 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             return base.GetList().SingleOrDefault(c => c.ClassID == id);
         }
+        public bool Update(Class Incls)
+        {
+            Class cls = GetClassByID(Incls.ClassID);
+            
+            cls.MajorID = Incls.MajorID;
+            cls.ClassName = Incls.ClassName;
+            base.Detach(cls);
+            return base.Update(cls);
+        }
     }
 }

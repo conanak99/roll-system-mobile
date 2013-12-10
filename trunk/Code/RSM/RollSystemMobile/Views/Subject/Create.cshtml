@@ -33,7 +33,7 @@
                     <b>Subject Type</b>
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("TypeID", (SelectList)ViewBag.TypeID, new { style = "width: 200px;" })
+                      @Html.DropDownList("SubjectTypeID", (SelectList)ViewBag.TypeID, new { multiple = "", style = "width: 200px;" })
                 </div>
                 <span class="help-block">Select subject type of subject</span>
             </td>
@@ -68,3 +68,18 @@
 <p style="font-size:20px;">
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<script>
+@{
+    String subjectTypeIDs = "";
+    if (ViewBag.SelectedIDs != null)
+    {
+        foreach (var SubType in (List<int>)ViewBag.SelectedIDs)
+        {
+            subjectTypeIDs += SubType + ",";
+        }
+    }
+}
+
+    $('#SubjectTypeID').val([@subjectTypeIDs]).select2();
+</script>

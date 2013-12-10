@@ -57,7 +57,8 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) 
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
+                     <a href="#" onclick="deleteSubject('@item.FullName','@item.SubjectID');">
+                        Delete</a>
                 </td>
             </tr>
             }
@@ -85,7 +86,8 @@
                 </td>
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.SubjectID }) 
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SubjectID })
+                    <a href="#" onclick="deleteSubject('@item.FullName','@item.SubjectID');">
+                        Delete</a>
                 </td>
             </tr>
             }
@@ -121,6 +123,16 @@
             link = '@Url.Action("ActiveSubject", new { id = "tmp1" })';
             link = link.replace("amp;", "");
             link = link.replace("tmp1", id);
+            window.location.href = link;
+        }
+    }
+    function deleteSubject(sub, subID) {
+        var result = confirm("Do you want to delete subject " + sub + " ? ");
+        if (result) {
+            var link = '@Url.Action("Delete", new { id = "tmp1" })';
+            link = link.replace("amp;", "");
+            link = link.replace("Delete/", "Delete?id=");
+            link = link.replace("tmp1", subID);
             window.location.href = link;
         }
     }

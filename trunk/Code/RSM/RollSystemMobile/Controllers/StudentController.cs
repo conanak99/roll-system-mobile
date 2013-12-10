@@ -53,7 +53,6 @@ namespace RollSystemMobile.Controllers
         public ActionResult Create()
         {
             ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName");
-            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
             return View();
         }
 
@@ -65,11 +64,11 @@ namespace RollSystemMobile.Controllers
         {
             if (ModelState.IsValid)
             {
+                student.IsActive = true;
                 StuBO.Insert(student);
                 return RedirectToAction("Index");
             }
             ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName");
-            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
             return View(student);
         }
 
@@ -79,8 +78,11 @@ namespace RollSystemMobile.Controllers
         public ActionResult Edit(int id)
         {
             Student student = StuBO.GetStudentByID(id);
-            ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName");
-            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
+            int clsid = 0;
+            if (student.ClassID!=null){
+                clsid = Convert.ToInt32(student.ClassID);
+            }
+            ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName", clsid);
             return View(student);
         }
 
@@ -95,8 +97,12 @@ namespace RollSystemMobile.Controllers
                 StuBO.Update(student);
                 return RedirectToAction("Index");
             }
-            ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName");
-            ViewBag.UserID = slFactory.MakeSelectList<User>("UserID", "Username");
+            int clsid = 0;
+            if (student.ClassID != null)
+            {
+                clsid = Convert.ToInt32(student.ClassID);
+            }
+            ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName", clsid);
             return View(student);
         }
         //
@@ -158,7 +164,8 @@ namespace RollSystemMobile.Controllers
         public ActionResult Delete(int id)
         {
             Student student = StuBO.GetStudentByID(id);
-            return View(student);
+            StuBO.Delete(student);
+            return RedirectToAction("Index");
         }
 
         //

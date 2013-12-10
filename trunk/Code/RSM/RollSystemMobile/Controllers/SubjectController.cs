@@ -51,14 +51,19 @@ namespace RollSystemMobile.Controllers
         // POST: /Subject/Create
 
         [HttpPost]
-        public ActionResult Create(Subject subject,int TypeID)
+        public ActionResult Create(Subject subject , List<int> SubjectTypeID)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && SubjectTypeID != null)
             {
-                subject.TypeID = TypeID;
-                SubBO.Insert(subject);
-                return RedirectToAction("Index");  
+                subject.IsActive= true;
+                SubBO.Insert(subject, SubjectTypeID);
+                return RedirectToAction("Index");
             }
+            if (SubjectTypeID == null)
+            {
+                ModelState.AddModelError("", "One or more subject type must be selected.");
+            }
+            ViewBag.SelectedIDs = SubjectTypeID;
             ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             return View(subject);
         }
@@ -71,6 +76,7 @@ namespace RollSystemMobile.Controllers
             Subject subject = SubBO.GetSubjectByID(id);
             int NumberOfSlot = subject.NumberOfSlot;
             ViewBag.NumberOfSlot = slFactory.MakeSelectList<Subject>("SubjectID", "NumberOfSlot", NumberOfSlot);
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             return View(subject);
         }
 
@@ -78,13 +84,17 @@ namespace RollSystemMobile.Controllers
         // POST: /Subject/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Subject subject)
+        public ActionResult Edit(Subject subject, List<int> SubjectTypeID)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && SubjectTypeID != null)
             {
-                SubBO.Update(subject);
-                return RedirectToAction("Index");
+                SubBO.Update(subject, SubjectTypeID);
             }
+            if (SubjectTypeID == null)
+            {
+                ModelState.AddModelError("", "One or more subject type must be selected.");
+            }
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             int NumberOfSlot = subject.NumberOfSlot;
             ViewBag.NumberOfSlot = slFactory.MakeSelectList<Subject>("SubjectID", "NumberOfSlot", NumberOfSlot);
             return View(subject);
@@ -110,7 +120,8 @@ namespace RollSystemMobile.Controllers
         public ActionResult Delete(int id)
         {
             Subject subject = SubBO.GetSubjectByID(id);
-            return View(subject);
+            SubBO.Delete(subject);
+            return RedirectToAction("Index");
         }
 
         //
