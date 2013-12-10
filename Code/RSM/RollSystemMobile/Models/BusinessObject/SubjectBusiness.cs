@@ -38,6 +38,30 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             return base.GetList().FirstOrDefault(s => s.SubjectID == SubjectID);
         }
+        public void Insert(Subject sub, List<int> SubjectTypeIDs)
+        {
+            foreach (var SubjectTypeID in SubjectTypeIDs)
+            {
+             //   sub.SubjectTypes.Add(GetSubjectTypeByID(SubjectTypeID));
+            }
+            base.Insert(sub);
+        }
 
+        public void Update(Subject sub, List<int> SubjectTypeIDs)
+        {
+            var subject = GetSubjectByID(sub.SubjectID);
+
+            subject.ShortName = sub.ShortName;
+            subject.NumberOfSession = sub.NumberOfSession;
+            subject.NumberOfSlot = sub.NumberOfSlot;
+            subject.FullName = sub.FullName;
+
+            foreach (var SubjectTypeID in SubjectTypeIDs)
+            {
+                //subject.SubjectTypes.Add(GetSubjectTypeByID(SubjectTypeID));
+            }
+            base.Detach(subject);
+            base.Update(subject);
+        }
     }
 }

@@ -101,7 +101,7 @@ namespace RollSystemMobile.Controllers
                 ModelState.AddModelError("", "One or more subject type must be selected.");
             }
             ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
-            return View(InsBO.GetInstructorByID(instructor.InstructorID));
+            return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int id)

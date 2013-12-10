@@ -51,9 +51,12 @@ namespace RollSystemMobile.Models
         [MaxLength(7, ErrorMessage = "Student code must be shorter than 7 character")]
         public String StudentCode { get; set; }
 
-        [Required(ErrorMessage = "Please enter CitizenID")]
-        [RegularExpression("[0-9]{9}", ErrorMessage = "Invalid phone number format")]
+        [Required(ErrorMessage = "Please enter student citizenID")]
+        [RegularExpression("[0-9]{8}", ErrorMessage = "Invalid citizenid format")]
         public String CitizenID { get; set; }
+
+        [Required(ErrorMessage = "Please enter the student birthdate")]
+        public String Birthdate { get; set; }
     }
 
     [MetadataType(typeof(SubjectMetaData))]
@@ -62,6 +65,7 @@ namespace RollSystemMobile.Models
     }
     public class SubjectMetaData
     {
+         [Required(ErrorMessage = "Please enter subject short name")]
         [MinLength(1, ErrorMessage = "Short name must be longer than 1 characters")]
         [MaxLength(10, ErrorMessage = "Short name must be shorter than 10 character")]
         public String ShortName { get; set; }
@@ -70,6 +74,13 @@ namespace RollSystemMobile.Models
         [MinLength(1, ErrorMessage = "Full name must be longer than 1 characters")]
         [MaxLength(50, ErrorMessage = "Full name must be shorter than 50 character")]
         public String FullName { get; set; }
+
+        [Required(ErrorMessage = "Please enter number of session")]
+        [RegularExpression("[0-9]", ErrorMessage = "Please enter the digit.")]
+        public String NumberOfSession { get; set; }
+
+        [Required(ErrorMessage = "Please enter number of slot")]
+        public String NumberOfSlot { get; set; }
     }
     [MetadataType(typeof(ClassMetaData))]
     public partial class Class

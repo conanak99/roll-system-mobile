@@ -44,8 +44,7 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult Create()
         {
-            SelectListFactory slFactory = new SelectListFactory();
-            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "ShortName");
+            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "FullName");
             return View();
         } 
 
@@ -53,7 +52,7 @@ namespace RollSystemMobile.Controllers
         // POST: /Class/Create
 
         [HttpPost]
-        public ActionResult Create(Class cls)
+        public ActionResult Create(Class cls,int MajorID)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +60,7 @@ namespace RollSystemMobile.Controllers
                 ClassBO.Insert(cls);
                 return RedirectToAction("Index");  
             }
+            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "FullName");
             return View(cls);
         }
         
@@ -139,6 +139,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult Delete(int id)
         {
             Class cls = ClassBO.GetClassByID(id);
+            ClassBO.Delete(cls);
             return View(cls);
         }
 
