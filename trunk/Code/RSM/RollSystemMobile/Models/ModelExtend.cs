@@ -65,7 +65,7 @@ namespace RollSystemMobile.Models
     }
     public class SubjectMetaData
     {
-         [Required(ErrorMessage = "Please enter subject short name")]
+        [Required(ErrorMessage = "Please enter subject short name")]
         [MinLength(1, ErrorMessage = "Short name must be longer than 1 characters")]
         [MaxLength(10, ErrorMessage = "Short name must be shorter than 10 character")]
         public String ShortName { get; set; }
@@ -76,7 +76,6 @@ namespace RollSystemMobile.Models
         public String FullName { get; set; }
 
         [Required(ErrorMessage = "Please enter number of session")]
-        [RegularExpression("[0-9]", ErrorMessage = "Please enter the digit.")]
         public String NumberOfSession { get; set; }
 
         [Required(ErrorMessage = "Please enter number of slot")]
@@ -93,7 +92,15 @@ namespace RollSystemMobile.Models
         [MaxLength(50, ErrorMessage = "Name must be shorter than 50 character")]
         public String ClassName { get; set; }
     }
-
+    [MetadataType(typeof(SemesterMetadata))]
+    public partial class Semester
+    {
+    }
+    public class SemesterMetadata
+    {
+        [Required(ErrorMessage = "Please enter semester name")]
+        public String SemesterName { get; set; }
+    }
     public partial class RollCall
     {
         public StudySession SessionToCheckAttendance { get; set; }

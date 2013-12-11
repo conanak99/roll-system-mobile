@@ -20,13 +20,14 @@
                     @Html.EditorFor(model => model.SemesterName)
                     @Html.ValidationMessageFor(model => model.SemesterName)
                 </div>
-                <span style="height: 10px; margin-top:8px;" id="be" class="help-block">Input name of semester (Semester 2013,...).</span>
+                <span style="height: 10px; margin-top: 8px;" id="be" class="help-block">Input name of
+                    semester (Semester 2013,...).</span>
             </td>
             <td>
                 <div class="editor-label">
                     2. Start date.
                 </div>
-                <div class="input-append date" id="begindate" name="begindate" data-date="10-10-2013"
+                <div class="input-append date" id="begindate" name="begindate"
                     data-date-format="dd-mm-yyyy">
                     <input class="span2" name="BeginDate" id="BeginDate" style="width: 100px; margin-left: 10px;"
                         size="16" type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i
@@ -44,3 +45,15 @@
 <p style="font-size: 20px;">
     @Html.ActionLink("Back to List", "Index")
 </p>
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+    var checkin = $("#begindate").datepicker({
+        onRender: function (date) {
+            return date.valueOf() < now.valueOf() ? 'disabled' : '';
+        }
+    }).on('changeDate', function (ev) {
+        checkin.hide();
+    }).data('datepicker');
+</script>

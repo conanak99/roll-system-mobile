@@ -27,6 +27,8 @@
         @{int index = 1;}
         @foreach (var item in Model)
         {
+            if (item.BeginDate.CompareTo(DateTime.Now) >0 )
+            { 
             <tr>
                 <td style="text-align: right;">
                     @index
@@ -45,6 +47,26 @@
                 </td>
             </tr>   
                { index++; }
+            }
+            else
+            { <tr>
+                <td style="text-align: right;">
+                    @index
+                </td>
+                <td>
+                    @item.SemesterName
+                </td>
+                <td>
+                    @item.BeginDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                    @item.EndDate.ToString("dd-MM-yyyy")
+                </td>
+                <td>
+                </td>
+            </tr>   
+               { index++; }
+            }
         }
     </tbody>
 </table>
