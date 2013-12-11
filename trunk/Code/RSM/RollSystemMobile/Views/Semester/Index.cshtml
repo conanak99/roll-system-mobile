@@ -43,7 +43,9 @@
                     @item.EndDate.ToString("dd-MM-yyyy")
                 </td>
                 <td>
-                    @Html.ActionLink("Delete", "Delete", new { id = item.SemesterID })
+                     @Html.ActionLink("Edit", "Edit", new { id= item.SemesterID }) |
+                    <a href="#" onclick="deleteSemester('@item.SemesterName','@item.SemesterID');">
+                        Delete</a>
                 </td>
             </tr>   
                { index++; }
@@ -82,4 +84,14 @@
             "aoColumnDefs": [{ 'bSortable': false, 'aTargets': [4]}]
         });
     });
+    function deleteSemester(smt, smtID) {
+        var result = confirm("Do you want to delete semester " + smt + " ? ");
+        if (result) {
+            var link = '@Url.Action("Delete", new { id = "tmp1" })';
+            link = link.replace("amp;", "");
+            link = link.replace("Delete/", "Delete?id=");
+            link = link.replace("tmp1", smtID);
+            window.location.href = link;
+        }
+    }
 </script>

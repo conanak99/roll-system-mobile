@@ -20,6 +20,30 @@ namespace RollSystemMobile.Models.BusinessObject
         {
 
         }
+        public bool Insert(Semester smt,String begindate)
+        {
+          
+            Semester semester = smt;
+            String[] tmp = begindate.Split('-');
+            String bgd = tmp[1] + "-" + tmp[0] + "-" + tmp[2];
+            semester.BeginDate = Convert.ToDateTime(bgd);
+            TimeSpan duration = new TimeSpan(120, 0, 0, 0);
+            semester.EndDate = semester.BeginDate.Add(duration);
+            return base.Insert(semester);
+        }
+
+        public bool Update(Semester Insmt,String begindate)
+        {
+            Semester smt = GetSemesterByID(Insmt.SemesterID);
+            smt.SemesterName = Insmt.SemesterName;
+            String[] tmp = begindate.Split('-');
+            String bgd = tmp[1] + "-" + tmp[0] + "-" + tmp[2];
+            smt.BeginDate = Convert.ToDateTime(bgd);
+            TimeSpan duration = new TimeSpan(120, 0, 0, 0);
+            smt.EndDate = Insmt.BeginDate.Add(duration);
+            base.Detach(smt);
+            return base.Update(smt);
+        }
 
         public Semester GetSemesterByID(int id)
         {

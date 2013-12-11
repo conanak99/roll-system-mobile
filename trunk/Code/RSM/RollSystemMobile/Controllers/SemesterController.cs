@@ -6,13 +6,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using RollSystemMobile.Models;
+using RollSystemMobile.Models.BusinessObject;
+using RollSystemMobile.Models.ViewModels;
+using RollSystemMobile.Models.BindingModels;
 
 namespace RollSystemMobile.Controllers
-{ 
+{
     public class SemesterController : Controller
     {
         private RSMEntities db = new RSMEntities();
-
+        private SemesterBusiness SeBO = new SemesterBusiness();
         //
         // GET: /Semester/
 
@@ -36,30 +39,25 @@ namespace RollSystemMobile.Controllers
         public ActionResult Create()
         {
             return View();
-        } 
+        }
 
         //
         // POST: /Semester/Create
 
         [HttpPost]
-        public ActionResult Create(Semester semester)
+        public ActionResult Create(Semester semester, String begindate)
         {
-            if (ModelState.IsValid)
-            {
-                db.Semesters.AddObject(semester);
-                db.SaveChanges();
-                return RedirectToAction("Index");  
-            }
-
-            return View(semester);
+            SeBO.Insert(semester, begindate);
+            return RedirectToAction("Index");
         }
-        
+
         //
         // GET: /Semester/Edit/5
- 
+
         public ActionResult Edit(int id)
         {
-            Semester semester = db.Semesters.Single(s => s.SemesterID == id);
+            Semester semester = SeBO.GetSemesterByID(id);
+            ViewBag.Begindate = semester.BeginDate.ToString("dd-MM-yyyy");
             return View(semester);
         }
 
@@ -67,13 +65,11 @@ namespace RollSystemMobile.Controllers
         // POST: /Semester/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Semester semester)
+        public ActionResult Edit(Semester semester,String begindate)
         {
             if (ModelState.IsValid)
             {
-                db.Semesters.Attach(semester);
-                db.ObjectStateManager.ChangeObjectState(semester, EntityState.Modified);
-                db.SaveChanges();
+                SeBO.Update(semester,begindate);
                 return RedirectToAction("Index");
             }
             return View(semester);
@@ -81,11 +77,12 @@ namespace RollSystemMobile.Controllers
 
         //
         // GET: /Semester/Delete/5
- 
+
         public ActionResult Delete(int id)
         {
-            Semester semester = db.Semesters.Single(s => s.SemesterID == id);
-            return View(semester);
+            Semester semester = SeBO.GetSemesterByID(id);
+            SeBO.Delete(semester);
+            return RedirectToAction("Index");
         }
 
         //
@@ -93,7 +90,7 @@ namespace RollSystemMobile.Controllers
 
         [HttpPost, ActionName("Delete")]
         public ActionResult DeleteConfirmed(int id)
-        {            
+        {
             Semester semester = db.Semesters.Single(s => s.SemesterID == id);
             db.Semesters.DeleteObject(semester);
             db.SaveChanges();
