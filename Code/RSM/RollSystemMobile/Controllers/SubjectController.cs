@@ -43,6 +43,7 @@ namespace RollSystemMobile.Controllers
 
         public ActionResult Create()
         {
+            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "FullName");
             ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             return View();
         } 
@@ -51,19 +52,18 @@ namespace RollSystemMobile.Controllers
         // POST: /Subject/Create
 
         [HttpPost]
-        public ActionResult Create(Subject subject , List<int> SubjectTypeID)
+        public ActionResult Create(Subject subject , List<int> MajorID)
         {
-            if (ModelState.IsValid && SubjectTypeID != null)
+            if (ModelState.IsValid && MajorID != null)
             {
-                subject.IsActive= true;
-                SubBO.Insert(subject, SubjectTypeID);
+                SubBO.Insert(subject, MajorID);
                 return RedirectToAction("Index");
             }
-            if (SubjectTypeID == null)
+            if (MajorID == null)
             {
-                ModelState.AddModelError("", "One or more subject type must be selected.");
+                ModelState.AddModelError("", "One or more major must be selected.");
             }
-            ViewBag.SelectedIDs = SubjectTypeID;
+            ViewBag.SelectedIDs = MajorID;
             ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
             return View(subject);
         }
@@ -75,8 +75,11 @@ namespace RollSystemMobile.Controllers
         {
             Subject subject = SubBO.GetSubjectByID(id);
             int NumberOfSlot = subject.NumberOfSlot;
+            int TypeID = subject.TypeID;
+            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "FullName");
             ViewBag.NumberOfSlot = slFactory.MakeSelectList<Subject>("SubjectID", "NumberOfSlot", NumberOfSlot);
-            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName",TypeID);
+            ViewBag.NumberOfSlotDefault = subject.NumberOfSlot;
             return View(subject);
         }
 
@@ -84,19 +87,24 @@ namespace RollSystemMobile.Controllers
         // POST: /Subject/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Subject subject, List<int> SubjectTypeID)
+        public ActionResult Edit(Subject subject, List<int> MajorID)
         {
-            if (ModelState.IsValid && SubjectTypeID != null)
+            if (ModelState.IsValid && MajorID != null)
             {
-                SubBO.Update(subject, SubjectTypeID);
+                SubBO.Update(subject, MajorID);
+                return RedirectToAction("Index");
             }
-            if (SubjectTypeID == null)
+            if (MajorID == null)
             {
-                ModelState.AddModelError("", "One or more subject type must be selected.");
+                ModelState.AddModelError("", "One or more major must be selected.");
             }
-            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName");
+
             int NumberOfSlot = subject.NumberOfSlot;
+            int TypeID = subject.TypeID;
+            ViewBag.MajorID = slFactory.MakeSelectList<Major>("MajorID", "FullName");
             ViewBag.NumberOfSlot = slFactory.MakeSelectList<Subject>("SubjectID", "NumberOfSlot", NumberOfSlot);
+            ViewBag.TypeID = slFactory.MakeSelectList<SubjectType>("TypeID", "TypeName", TypeID);
+            ViewBag.NumberOfSlotDefault = subject.NumberOfSlot;
             return View(subject);
         }
 
@@ -120,6 +128,7 @@ namespace RollSystemMobile.Controllers
         public ActionResult Delete(int id)
         {
             Subject subject = SubBO.GetSubjectByID(id);
+            subject.Majors.Clear();
             SubBO.Delete(subject);
             return RedirectToAction("Index");
         }

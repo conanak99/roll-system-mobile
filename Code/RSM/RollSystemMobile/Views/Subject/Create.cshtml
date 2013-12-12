@@ -33,7 +33,7 @@
                     <b>Subject Type</b>
                 </div>
                 <div class="editor-field">
-                      @Html.DropDownList("SubjectTypeID", (SelectList)ViewBag.TypeID, new { multiple = "", style = "width: 200px;" })
+                      @Html.DropDownList("TypeID", (SelectList)ViewBag.TypeID, new { style = "width: 200px;" })
                 </div>
                 <span class="help-block">Select subject type of subject</span>
             </td>
@@ -58,6 +58,13 @@
                     @Html.ValidationMessageFor(model => model.NumberOfSlot)
                 </div>
                 <span class="help-block">Number slot of subject in day.</span>
+                  <div class="editor-label">
+                    <b>Majors</b>
+                </div>
+                <div class="editor-field">
+                    @Html.DropDownList("MajorID", (SelectList)ViewBag.MajorID, new { multiple = "", style = "width: 200px;" })
+                </div>
+                <span class="help-block">Select type of the majors for subject</span>
             </td>
         </tr>
     </table>
@@ -68,18 +75,17 @@
 <p style="font-size:20px;">
     @Html.ActionLink("Back to List", "Index")
 </p>
-
 <script>
 @{
-    String subjectTypeIDs = "";
+    String majorIDs = "";
     if (ViewBag.SelectedIDs != null)
     {
-        foreach (var SubType in (List<int>)ViewBag.SelectedIDs)
+        foreach (var Major in (List<int>)ViewBag.SelectedIDs)
         {
-            subjectTypeIDs += SubType + ",";
+            majorIDs += Major + ",";
         }
     }
 }
 
-    $('#SubjectTypeID').val([@subjectTypeIDs]).select2();
+    $('#MajorID').val([@majorIDs]).select2();
 </script>

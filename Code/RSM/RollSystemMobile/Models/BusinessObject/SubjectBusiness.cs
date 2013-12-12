@@ -38,16 +38,20 @@ namespace RollSystemMobile.Models.BusinessObject
         {
             return base.GetList().FirstOrDefault(s => s.SubjectID == SubjectID);
         }
-        public void Insert(Subject sub, List<int> SubjectTypeIDs)
+        public void Insert(Subject sub, List<int> MajorIDs)
         {
-            foreach (var SubjectTypeID in SubjectTypeIDs)
+            sub.IsActive = true;
+            foreach (var MajorID in MajorIDs)
             {
-             //   sub.SubjectTypes.Add(GetSubjectTypeByID(SubjectTypeID));
+                sub.Majors.Add(GetMajorByID(MajorID));
             }
             base.Insert(sub);
         }
-
-        public void Update(Subject sub, List<int> SubjectTypeIDs)
+        private Major GetMajorByID(int MajorID)
+        {
+            return base.RollSystemDB.Majors.FirstOrDefault(st => st.MajorID == MajorID);
+        }
+        public void Update(Subject sub, List<int> MajorIDs)
         {
             var subject = GetSubjectByID(sub.SubjectID);
 
@@ -55,13 +59,13 @@ namespace RollSystemMobile.Models.BusinessObject
             subject.NumberOfSession = sub.NumberOfSession;
             subject.NumberOfSlot = sub.NumberOfSlot;
             subject.FullName = sub.FullName;
-
-            foreach (var SubjectTypeID in SubjectTypeIDs)
+            subject.SubjectType = subject.SubjectType;
+            subject.Majors.Clear();
+            foreach (var MajorID in MajorIDs)
             {
-                //subject.SubjectTypes.Add(GetSubjectTypeByID(SubjectTypeID));
+                subject.Majors.Add(GetMajorByID(MajorID));
             }
-            base.Detach(subject);
-            base.Update(subject);
+            base.RollSystemDB.SaveChanges();
         }
     }
 }
