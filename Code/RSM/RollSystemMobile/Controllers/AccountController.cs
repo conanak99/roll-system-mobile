@@ -99,7 +99,7 @@ namespace RollSystemMobile.Controllers
                                 Role = "RollCall";
                                 break;
                             case "Admin":
-                                Action = "Index";
+                                Action = "StudentList";
                                 break;
                             case "Student":
                                 Action = "CourseList";

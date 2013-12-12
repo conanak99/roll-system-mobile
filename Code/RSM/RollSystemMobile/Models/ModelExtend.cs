@@ -113,7 +113,11 @@ namespace RollSystemMobile.Models
             NewRoll.EndDate = this.EndDate;
             NewRoll.Class = this.Class;
             NewRoll.Subject = this.Subject;
-            NewRoll.Students = this.Students;
+            foreach (var Student in this.Students)
+            {
+                NewRoll.Students.Add(Student);
+            }
+            //NewRoll.Students = this.Students.ToList();
             return NewRoll;
         }
 
