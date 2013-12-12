@@ -64,6 +64,7 @@ namespace RollSystemMobile.Models.BusinessObject
             List<RollCall> rollcalls = new List<RollCall>();
             rollcalls = rc.GetList().Where(r => r.SemesterID == id).ToList();
             List<Subject> subjectlist = new List<Subject>();
+            List<int> subj = new List<int>();
 
             foreach (var rollcall in rollcalls)
             {
@@ -72,8 +73,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
                 int NumberOfSlot = rollcall.StudySessions.Count;
                 var Students = rollcall.Students;
-                List<int> subj = new List<int>();
-
+                
                 for (int i = 0; i < Students.Count; i++)
                 {
                     int RowIndex = 7 + i;
