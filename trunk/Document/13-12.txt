@@ -1,0 +1,29 @@
+﻿khi muon thong ke du lieu thi phai dung tay va mat nen se ko chinh xac cao va ton thoi gian. (ko thuan tien)
+
+alide  face recognize (description cac module co san
+
+demo khi cuoi cung cua slide thuoc ve phan do, demo xong moi chay qua slide moi
+
+nhan alt + tab thay vi esc
+
+he thong tu dong resize hinh anh thanh 100*100px
+
+show student list trong dt sau khi diem danh xong
+
+2 chu attendance + Detail cho màu đen đam.
+
+mau trang chi co the diem danh ngay cu, con ngay hien hanh thi chua de diem danh ngay moi.
+
+ve them slide phu de xoa
+
+bo bot 1 phan trong student list, bo 1,2 nguoi thoi, sau do diem danh tiep
+
+ti le phan tram kha lon nen ti le diem danh lop hoc nho thi mong muon giao vien nho mat hoc sinh de ma thuc hien diem danh lai, chu neu bam check all thi ko hop ly, 
+
+Show het toan bo thong tin ben trong report, present rate, total ...
+
+them vai du lieu ve report de xuat ra it nhat 2 lop
+
+tu van cho phu huynh
+
+doi voi cau hoi qua kho thi can xac nhannlai, co quyen gia ngu, gia dien roi sau do 3 dua cung suy nghi de hop lai tra loi.
