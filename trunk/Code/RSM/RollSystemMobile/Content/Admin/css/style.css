@@ -1734,14 +1734,14 @@ ul.icons li {
 }
 .widget.widget-3 .widget-footer a {
   float: none;
-  color: #dddddd;
+  color: #333;
   width: auto;
   padding: 0 10px 0 30px;
   border-right: 1px solid #dddddd;
   text-decoration: none;
 }
 .widget.widget-3 .widget-footer a i:before {
-  color: #dddddd;
+  color: #333;
   left: 5px;
 }
 .widget.widget-3 .widget-footer a:hover {
@@ -1978,7 +1978,7 @@ p.glyphicons.envelope i:before {
   background: #74614f;
 }
 .label-important {
-  background: #744646;
+  
 }
 .label-success {
   background: #44bf39;
