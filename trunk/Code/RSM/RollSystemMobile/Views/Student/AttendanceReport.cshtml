@@ -16,19 +16,19 @@
 
 <table class="table table-bordered table-striped" id="example">
     <thead>
-        <th>
+        <th style="background-color: rgb(112, 173, 71); color: rgb(255, 255, 255);">
             No.
         </th>
-        <th>
+        <th style="background-color: rgb(112, 173, 71); color: rgb(255, 255, 255);">
             Subject
         </th>
-        <th>
+        <th style="background-color: rgb(112, 173, 71); color: rgb(255, 255, 255);">
             Semester
         </th>
-        <th>
+        <th style="background-color: rgb(112, 173, 71); color: rgb(255, 255, 255);">
             Absent Rate
         </th>
-        <th>
+        <th style="background-color: rgb(112, 173, 71); color: rgb(255, 255, 255);">
             Detail
         </th>
     </thead>
@@ -69,6 +69,7 @@
 </div>
 <script>
     $(document).ready(function () {
+        document.getElementById('SemesterID').value = 3;
         $('#example').dataTable({
             "sDom": "<'row'<'span4'l><'span4'f>r>t<'row'<'span4'i><'span4'p>>",
             "sPaginationType": "bootstrap",

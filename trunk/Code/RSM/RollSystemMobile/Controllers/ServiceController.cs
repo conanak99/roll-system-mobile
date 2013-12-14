@@ -58,28 +58,39 @@ namespace RollSystemMobile.Controllers
             List<RecognizerResult> Results = FaceBusiness.RecognizeStudentForAttendance(RollCallID, ImagePaths);
             //Dua result nay cho AttendanceBO xu ly
             AttendanceBusiness AttenBO = new AttendanceBusiness();
+            AttendanceLog Log = null;
             if (AttendanceDate == null)
             {
-                AttenBO.WriteAttendanceAutoLog(RollCallID, Results);
+              Log = AttenBO.WriteAttendanceAutoLog(RollCallID, Results);
             }
             else
             {
-                AttenBO.WriteAttendanceAutoLog(RollCallID, Results, AttendanceDate.Value);
+               Log = AttenBO.WriteAttendanceAutoLog(RollCallID, Results, AttendanceDate.Value);
             }
             
             //Danh sach sinh vien trong log
 
             List<int> StudentIDs = AttenBO.GetStudentIDList(Results);
 
-            //Lay danh sach sinh vien da nhan
+            //Lay danh sach sinh vien ton tai trong log
             StudentBusiness StuBO = new StudentBusiness();
-            List<Student> Students = StuBO.Find(stu => StudentIDs.Contains(stu.StudentID)).ToList();
-
+            //List<Student> Students = StuBO.Find(stu => StudentIDs.Contains(stu.StudentID)).ToList();
+            
+            /*
             var StudentsJson = Students.ToList().Select(s => new
             {
                 studentID = s.StudentID,
                 studentCode = s.StudentCode,
                 studentName = s.FullName
+            });
+             */
+
+            var StudentsJson = Log.StudentAttendances.Select(sa => new
+            {
+                studentID = sa.StudentID,
+                studentCode = sa.Student.StudentCode,
+                studentName = sa.Student.FullName,
+                isPresent = sa.IsPresent
             });
 
             return Json(StudentsJson, JsonRequestBehavior.AllowGet);

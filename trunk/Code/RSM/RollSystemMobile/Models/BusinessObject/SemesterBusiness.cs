@@ -258,14 +258,13 @@ namespace RollSystemMobile.Models.BusinessObject
         private ExcelWorksheet CreateDetailWorksheet(int subjectID, int semesterID)
         {
             SubjectBusiness SuBO = new SubjectBusiness();
-            String subshortname = SuBO.GetSubjectByID(subjectID).ShortName;
-            ExcelWorksheet DetailWorkSheet = new ExcelPackage().Workbook.Worksheets.Add(subshortname);
-
-            //get value semester, student, subject
             SemesterBusiness sem = new SemesterBusiness();
-            SubjectBusiness sub = new SubjectBusiness();
+                        //get value semester, student, subject
             String semestername = sem.GetSemesterByID(semesterID).SemesterName;
-            String subjectname = sub.GetSubjectByID(subjectID).FullName;
+            String subjectname = SuBO.GetSubjectByID(subjectID).FullName;
+            String subshortname = SuBO.GetSubjectByID(subjectID).ShortName;
+
+            ExcelWorksheet DetailWorkSheet = new ExcelPackage().Workbook.Worksheets.Add(subshortname + "_" + semestername);
             
             // get student list absent > 20%
             RollCallBusiness RoBO = new RollCallBusiness();
