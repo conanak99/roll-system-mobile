@@ -173,14 +173,13 @@ namespace RollSystemMobile.Controllers
             
             List<RollCall> rollcalls = StuBO.GetRollCallsOfStudent(id);
 
-            int SemesterID = 1;
            //set semestr defaul la 1
             int smID = Convert.ToInt32(smtID);
             AttendanceReportViewModel Model = new AttendanceReportViewModel();
             if (smtID == null)
             {
-                ViewBag.SemesterID = slFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", SemesterID);
-                Model.RollCallList = rollcalls.Where(r => r.SemesterID == 1).ToList();
+                ViewBag.SemesterID = slFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", 3);
+                Model.RollCallList = rollcalls.Where(r => r.SemesterID == 3).ToList();
             }
             else {
                 ViewBag.SemesterID = slFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", smID);

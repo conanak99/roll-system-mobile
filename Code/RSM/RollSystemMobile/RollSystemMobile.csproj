@@ -509,6 +509,11 @@
     <Content Include="Views\Admin\StudentRequest.cshtml" />
     <Content Include="Views\Admin\_RequestCount.cshtml" />
     <Content Include="Views\Admin\AddStaff.cshtml" />
+    <Content Include="Views\Semester\Create.cshtml" />
+    <Content Include="Views\Semester\Delete.cshtml" />
+    <Content Include="Views\Semester\Details.cshtml" />
+    <Content Include="Views\Semester\Edit.cshtml" />
+    <Content Include="Views\Semester\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
