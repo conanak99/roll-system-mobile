@@ -46,15 +46,31 @@ namespace RollSystemMobile.Controllers
 
             //set current semester. with format dd-mm-yyyy
             var now = new DateTime();
+            int id = 0;
+            var begindate = "";
+            var enddate = "";
+            var bgdate = "";
+            var endate = "";
             now = DateTime.Now;
-            var begindate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).BeginDate.ToString("dd-MM-yyyy");
-
-            var enddate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).EndDate.ToString("dd-MM-yyyy");
-            var id = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).SemesterID;
-
-
-            //get date with format mm-dd-yyyy
-            var bgdate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).BeginDate.ToString("MM-dd-yyyy"); var endate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).EndDate.ToString("MM-dd-yyyy");
+            int sem = SeBO.GetList().Where(a => a.BeginDate < now && now < a.EndDate).Count();
+            if (sem == 1)
+            {
+                id = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).SemesterID;
+                begindate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).BeginDate.ToString("dd-MM-yyyy");
+                enddate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).EndDate.ToString("dd-MM-yyyy");
+                //get date with format mm-dd-yyyy
+                bgdate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).BeginDate.ToString("MM-dd-yyyy");
+                endate = SeBO.GetList().SingleOrDefault(a => a.BeginDate < now && now < a.EndDate).EndDate.ToString("MM-dd-yyyy");
+            }
+            else
+            {
+                
+                begindate = SeBO.GetList().Max(a => a.BeginDate).ToString("dd-MM-yyyy");
+                enddate = SeBO.GetList().Max(a => a.EndDate).ToString("dd-MM-yyyy");
+                id = SeBO.GetList().SingleOrDefault(a => a.BeginDate.ToString("dd-MM-yyyy").Equals(begindate)).SemesterID;
+                bgdate = SeBO.GetList().Max(a => a.BeginDate).ToString("MM-dd-yyyy");
+                endate = SeBO.GetList().Max(a => a.EndDate).ToString("MM-dd-yyyy");
+            }
             DateTime fdate;
             DateTime tdate;
             if (fromdate == null && todate == null)
@@ -452,19 +468,19 @@ namespace RollSystemMobile.Controllers
                 numrc = RollBO.GetList().Where(r => r.Class.MajorID == major.MajorID && r.SemesterID == smtID).Count();
                 if (totalrc > numrc)
                 {
-                    id = id + major.MajorID.ToString() +",";
+                    id = id + major.MajorID.ToString() + ",";
                     name = name + major.FullName + ",";
                 }
             };
 
-            var mj = new { id,name };
+            var mj = new { id, name };
             return Json(mj, JsonRequestBehavior.AllowGet);
         }
         //get time instructor day trong ngay
         public JsonResult GetInstructorFree(int id)
         {
             var typeID = SubBO.GetSubjectByID(id).TypeID;
-            var instructor = RollBO.GetList().Where(r => r.Instructor.SubjectTypes.Any(type => type.TypeID ==typeID))
+            var instructor = RollBO.GetList().Where(r => r.Instructor.SubjectTypes.Any(type => type.TypeID == typeID))
                 .Select(i => new
                 {
                     id = i.InstructorID,
@@ -488,10 +504,10 @@ namespace RollSystemMobile.Controllers
 
             ViewBag.RollCallID = id;
             ViewBag.LastAttendanceDate = RollBO.LastAttendanceDate(id);
-            
+
             //ViewBag.HasAttendance = RollBO.RollCallHasAttendance(id);
-            
-            
+
+
             return View("RollCallSchedule", rollCall);
         }
 

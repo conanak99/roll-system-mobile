@@ -79,7 +79,8 @@ namespace RollSystemMobile.Controllers
         {
             Student student = StuBO.GetStudentByID(id);
             int clsid = 0;
-            if (student.ClassID!=null){
+            if (student.ClassID != null)
+            {
                 clsid = Convert.ToInt32(student.ClassID);
             }
             ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName", clsid);
@@ -108,7 +109,7 @@ namespace RollSystemMobile.Controllers
         //
         public ActionResult InactiveStudent(int id)
         {
-            var stu = StuBO.GetStudentByID(id) ;
+            var stu = StuBO.GetStudentByID(id);
             stu.IsActive = false;
             StuBO.UpdateExist(stu);
             return RedirectToAction("Index");
@@ -142,21 +143,17 @@ namespace RollSystemMobile.Controllers
         [HttpPost]
         public ActionResult ChangeClass(Student student, int id)
         {
-            if (ModelState.IsValid)
+            Student std = StuBO.GetStudentByID(id);
+            if (student.ClassID != -1)
             {
-                Student std = StuBO.GetStudentByID(id);
-                if (student.ClassID != -1)
-                {
-                    std.ClassID = student.ClassID;
-                }
-                else
-                {
-                    std.ClassID = null;
-                }
-                StuBO.UpdateExist(std);
-                return Redirect("~/Student/Index");
+                std.ClassID = student.ClassID;
             }
-            return View();
+            else
+            {
+                std.ClassID = null;
+            }
+            StuBO.UpdateExist(std);
+            return RedirectToAction("Index");
         }
         //
         // GET: /Student/Delete/5
@@ -169,11 +166,12 @@ namespace RollSystemMobile.Controllers
         }
 
         //
-        public ActionResult AttendanceReport(int id,int? smtID) {
-            
+        public ActionResult AttendanceReport(int id, int? smtID)
+        {
+
             List<RollCall> rollcalls = StuBO.GetRollCallsOfStudent(id);
 
-           //set semestr defaul la 1
+            //set semestr defaul la 1
             int smID = Convert.ToInt32(smtID);
             AttendanceReportViewModel Model = new AttendanceReportViewModel();
             if (smtID == null)
@@ -181,11 +179,12 @@ namespace RollSystemMobile.Controllers
                 ViewBag.SemesterID = slFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", 3);
                 Model.RollCallList = rollcalls.Where(r => r.SemesterID == 3).ToList();
             }
-            else {
+            else
+            {
                 ViewBag.SemesterID = slFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", smID);
                 Model.RollCallList = rollcalls.Where(r => r.SemesterID == smtID).ToList();
-            } 
-            
+            }
+
             Model.Student = StuBO.GetStudentByID(id);
             return View(Model);
         }
@@ -231,7 +230,7 @@ namespace RollSystemMobile.Controllers
             return View(Student);
         }
 
-        public ActionResult ResponseRequest(int StudentID,int requestID)
+        public ActionResult ResponseRequest(int StudentID, int requestID)
         {
             ViewBag.RequestID = requestID;
             var Student = StuBO.GetStudentByID(StudentID);
@@ -241,7 +240,7 @@ namespace RollSystemMobile.Controllers
 
         [HttpPost]
         //student view image or upload image
-        public ActionResult ResonpeRequest(int StudentID,int requestID, IEnumerable<HttpPostedFileBase> ImageFiles)
+        public ActionResult ResonpeRequest(int StudentID, int requestID, IEnumerable<HttpPostedFileBase> ImageFiles)
         {
             ViewBag.RequestID = requestID;
             ViewBag.StudentID = StudentID;
