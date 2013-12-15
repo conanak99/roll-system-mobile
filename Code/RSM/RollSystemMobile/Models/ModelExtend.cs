@@ -47,8 +47,9 @@ namespace RollSystemMobile.Models
         public String FullName { get; set; }
 
         [Required(ErrorMessage = "Please enter student code")]
-        [MinLength(1, ErrorMessage = "Student code must be longer than 1 characters")]
+        [MinLength(5, ErrorMessage = "Student code must be longer than 5 characters")]
         [MaxLength(7, ErrorMessage = "Student code must be shorter than 7 character")]
+        [RegularExpression(@"^([A-Za-z]{2})?[\d]{5,6}$", ErrorMessage = "Invalid student code format")]
         public String StudentCode { get; set; }
 
         [Required(ErrorMessage = "Please enter student citizenID")]
@@ -76,10 +77,11 @@ namespace RollSystemMobile.Models
         public String FullName { get; set; }
 
         [Required(ErrorMessage = "Please enter number of session")]
-        public String NumberOfSession { get; set; }
+        [Range(1,2,ErrorMessage ="The number of sesion is a digit from 1 to 100"]
+        public int NumberOfSession { get; set; }
 
         [Required(ErrorMessage = "Please enter number of slot")]
-        public String NumberOfSlot { get; set; }
+        public int NumberOfSlot { get; set; }
     }
     [MetadataType(typeof(ClassMetaData))]
     public partial class Class
