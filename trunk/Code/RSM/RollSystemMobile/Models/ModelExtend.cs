@@ -77,7 +77,7 @@ namespace RollSystemMobile.Models
         public String FullName { get; set; }
 
         [Required(ErrorMessage = "Please enter number of session")]
-        [Range(1,2,ErrorMessage ="The number of sesion is a digit from 1 to 100"]
+        [Range(1,2,ErrorMessage ="The number of sesion is a digit from 1 to 100")]
         public int NumberOfSession { get; set; }
 
         [Required(ErrorMessage = "Please enter number of slot")]
