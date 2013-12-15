@@ -22,13 +22,10 @@ namespace RollSystemMobile.Models
 
         [MinLength(5, ErrorMessage = "Email must be longer than 5 characters")]
         [MaxLength(50, ErrorMessage = "Email must be shorter than 50 character")]
-        [DataType(DataType.EmailAddress, ErrorMessage = "Invalid email format")]
-        [RegularExpression(@"^([\w\.])+@([\w])+\.(\w){2,6}(\.([\w]){2,4})*$", ErrorMessage = "Invalid email format")]
+        [RegularExpression(@"^[\w\.=-]+@[\w\.-]+\.[\w]{2,3}$", ErrorMessage = "Invalid email format")]
         public String Email { get; set; }
 
-        [MinLength(10, ErrorMessage = "Phone number must in range [10-12]")]
-        [MaxLength(12, ErrorMessage = "Phone number must in range [10-12]")]
-        [RegularExpression("[0-9]{10,12}", ErrorMessage = "Invalid phone number format")]
+        [RegularExpression(@"^[\d]*{8,10}$", ErrorMessage = "Invalid email format")]
         public String Phone { get; set; }
     }
 
@@ -49,15 +46,19 @@ namespace RollSystemMobile.Models
         [Required(ErrorMessage = "Please enter student code")]
         [MinLength(5, ErrorMessage = "Student code must be longer than 5 characters")]
         [MaxLength(7, ErrorMessage = "Student code must be shorter than 7 character")]
-        [RegularExpression(@"^([A-Za-z]{2})?[\d]{5,6}$", ErrorMessage = "Invalid student code format")]
+        [RegularExpression(@"^([A-Za-z]{2})?[\d]{5}$", ErrorMessage = "Invalid student code format")]
         public String StudentCode { get; set; }
 
         [Required(ErrorMessage = "Please enter student citizenID")]
-        [RegularExpression("[0-9]{8}", ErrorMessage = "Invalid citizenid format")]
-        public String CitizenID { get; set; }
+        [RegularExpression("[0-9]{9}", ErrorMessage = "Invalid citizenid format")]
+        public int CitizenID { get; set; }
 
         [Required(ErrorMessage = "Please enter the student birthdate")]
-        public String Birthdate { get; set; }
+        public DateTime Birthdate { get; set; }
+
+        [DataType(DataType.EmailAddress,ErrorMessage = "Invalid email format")]
+        [RegularExpression(@"^[\w\.=-]+@[\w\.-]+\.[\w]{2,3}$", ErrorMessage = "Invalid email format")]
+        public String Email { get; set; }
     }
 
     [MetadataType(typeof(SubjectMetaData))]
@@ -77,7 +78,7 @@ namespace RollSystemMobile.Models
         public String FullName { get; set; }
 
         [Required(ErrorMessage = "Please enter number of session")]
-        [Range(1,2,ErrorMessage ="The number of sesion is a digit from 1 to 100")]
+        [Range(1,100,ErrorMessage ="The number of sesion is a digit from 1 to 100")]
         public int NumberOfSession { get; set; }
 
         [Required(ErrorMessage = "Please enter number of slot")]

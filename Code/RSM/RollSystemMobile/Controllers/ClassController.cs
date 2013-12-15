@@ -140,7 +140,7 @@ namespace RollSystemMobile.Controllers
         {
             Class cls = ClassBO.GetClassByID(id);
             ClassBO.Delete(cls);
-            return View(cls);
+            return RedirectToAction("Index");
         }
 
         //

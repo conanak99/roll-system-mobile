@@ -31,7 +31,7 @@ namespace RollSystemMobile.Controllers
         }
         public FilePathResult Download()
         {
-            string fileName = "File_Import_Template.xls";
+            string fileName = "File_Import_Template.xlsx";
             string path = AppDomain.CurrentDomain.BaseDirectory + "Content/Files/";
             return File(path + fileName, "file/xls", fileName);
         }
@@ -117,7 +117,7 @@ namespace RollSystemMobile.Controllers
                         majorID = _db.Majors.SingleOrDefault(m => m.ShortName == tmp).MajorID;
                         //check class da duoc ton tai trong database
                         dbclass.MajorID = majorID;
-                        dbclass.ClassName = ds.Tables[0].Rows[i]["ClassName"].ToString();
+                        dbclass.ClassName = ds.Tables[0].Rows[i]["Class Name"].ToString();
                         value = dbclass.ClassName;
                         dbclass.IsActive = true;
                         bool isExist = _db.Classes.AsEnumerable().Any(row => row.ClassName == value);
@@ -129,12 +129,12 @@ namespace RollSystemMobile.Controllers
                         }
                         //insert student
 
-                        tmp = ds.Tables[0].Rows[i]["ClassName"].ToString();
+                        tmp = ds.Tables[0].Rows[i]["Class Name"].ToString();
                         classID = _db.Classes.SingleOrDefault(c => c.ClassName == tmp).ClassID;
                         dbStudent = new Student();
                         dbStudent.ClassID = classID;
-                        dbStudent.FullName = ds.Tables[0].Rows[i]["FullName"].ToString();
-                        dbStudent.StudentCode = ds.Tables[0].Rows[i]["StudentCode"].ToString();
+                        dbStudent.FullName = ds.Tables[0].Rows[i]["Student Name"].ToString();
+                        dbStudent.StudentCode = ds.Tables[0].Rows[i]["Student Code"].ToString();
                         dbStudent.Birthdate = DateTime.Parse(ds.Tables[0].Rows[i]["Birthdate"].ToString());
                         dbStudent.CitizenID = ds.Tables[0].Rows[i]["CitizenID"].ToString();
                         dbStudent.IsActive = true;

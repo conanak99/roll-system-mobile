@@ -50,7 +50,7 @@
             </tr>   
                { index++; }
             }
-            else
+            else if (item.EndDate.CompareTo(DateTime.Now) >0 )
             { <tr>
                 <td style="text-align: right;">
                     @index
