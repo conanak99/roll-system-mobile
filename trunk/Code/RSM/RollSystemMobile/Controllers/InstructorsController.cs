@@ -107,7 +107,8 @@ namespace RollSystemMobile.Controllers
         public ActionResult Delete(int id)
         {
             Instructor instructor = InsBO.GetInstructorByID(id);
-            return View(instructor);
+            InsBO.Delete(instructor);
+            return RedirectToAction("Index");
         }
 
         [HttpPost, ActionName("Delete")]

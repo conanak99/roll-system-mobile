@@ -85,9 +85,8 @@
         MajorIDs += Major.MajorID + ",";
     }
 }
-
+$(document).ready(function () {
+    document.getElementById('NumberOfSlot').value ="@ViewBag.NumberOfSlotDefault"; 
     $('#MajorID').val([@MajorIDs]).select2();
+    });
 </script>
-$(document).ready(function () { document.getElementById('NumberOfSlot').value =
-"@ViewBag.NumberOfSlotDefault"; });
- </script>

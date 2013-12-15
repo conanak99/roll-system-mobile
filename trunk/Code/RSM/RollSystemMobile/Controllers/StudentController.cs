@@ -60,8 +60,11 @@ namespace RollSystemMobile.Controllers
         // POST: /Student/Create
 
         [HttpPost]
-        public ActionResult Create(Student student)
+        public ActionResult Create(Student student, String birthdate)
         {
+            String[] tmp = birthdate.Split('-');
+            String bd = tmp[1] + "-" + tmp[0] + "-" + tmp[2];
+            student.Birthdate = Convert.ToDateTime(bd);
             if (ModelState.IsValid)
             {
                 student.IsActive = true;
@@ -84,6 +87,7 @@ namespace RollSystemMobile.Controllers
                 clsid = Convert.ToInt32(student.ClassID);
             }
             ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName", clsid);
+            ViewBag.Birthdate = student.Birthdate.ToString("dd-MM-yyyy") ;
             return View(student);
         }
 
@@ -91,8 +95,12 @@ namespace RollSystemMobile.Controllers
         // POST: /Student/Edit/5
 
         [HttpPost]
-        public ActionResult Edit(Student student)
+        public ActionResult Edit(Student student,String birthdate)
         {
+            String[] tmp = birthdate.Split('-');
+            String bd = tmp[1] + "-" + tmp[0] + "-" + tmp[2];
+            student.Birthdate = Convert.ToDateTime(bd);
+         
             if (ModelState.IsValid)
             {
                 StuBO.Update(student);
@@ -103,6 +111,7 @@ namespace RollSystemMobile.Controllers
             {
                 clsid = Convert.ToInt32(student.ClassID);
             }
+            ViewBag.Birthdate = student.Birthdate.ToString("dd-MM-yyyy");
             ViewBag.ClassID = slFactory.MakeSelectList<Class>("ClassID", "ClassName", clsid);
             return View(student);
         }

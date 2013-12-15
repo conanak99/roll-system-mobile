@@ -19,7 +19,7 @@
                     @Html.LabelFor(model => model.ClassID, "Class")
                 </div>
                 <div class="editor-field">
-                    @Html.DropDownList("ClassID", String.Empty)
+                    @Html.DropDownList("ClassID", (SelectList)ViewBag.ClassID, new { style = "width: 130px;" })
                     @Html.ValidationMessageFor(model => model.ClassID)
                 </div>
                 <div class="editor-label">
@@ -33,14 +33,16 @@
                     @Html.LabelFor(model => model.Birthdate)
                 </div>
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.Birthdate)
-                    @Html.ValidationMessageFor(model => model.Birthdate)
+                    <div class="input-append date" id="birthdate" data-date="10-10-2013" data-date-format="dd-mm-yyyy">
+                        <input class="span2" name="birthdate" id="birthdate" style="width: 100px;" size="16"
+                            type="text" data-date-format="dd-mm-yyyy" readonly><span class="add-on"><i class="icon-th"></i></span>
+                    </div>
                 </div>
                 <div class="editor-label">
                     @Html.LabelFor(model => model.CitizenID)
                 </div>
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.CitizenID)
+                    @Html.TextBoxFor(model => model.CitizenID, new { style = "width: 130px;" })
                     @Html.ValidationMessageFor(model => model.CitizenID)
                 </div>
             </td>
@@ -49,30 +51,45 @@
                     @Html.LabelFor(model => model.Address)
                 </div>
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.Address)
+                    @Html.TextBoxFor(model => model.Address, new { style = "width: 250px;" })
                     @Html.ValidationMessageFor(model => model.Address)
                 </div>
                 <div class="editor-label">
                     @Html.LabelFor(model => model.Email)
                 </div>
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.Email)
+                    @Html.TextBoxFor(model => model.Email, new { style = "width: 200px;" })
                     @Html.ValidationMessageFor(model => model.Email)
                 </div>
                 <div class="editor-label">
                     @Html.LabelFor(model => model.StudentCode)
                 </div>
                 <div class="editor-field">
-                    @Html.EditorFor(model => model.StudentCode)
+                     @Html.TextBoxFor(model => model.StudentCode, new { style = "width:150px;" })
                     @Html.ValidationMessageFor(model => model.StudentCode)
                 </div>
             </td>
         </tr>
     </table>
     <p>
-            <input class="btn btn-primary" type="submit" value="Save" />
+        <input class="btn btn-primary" type="submit" value="Save" />
     </p>
 }
-<div>
+<p style="font-size: 20px;">
     @Html.ActionLink("Back to List", "Index")
-</div>
+</p>
+<script>
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+    var defaultDate = new Date('@ViewBag.Birthdate');
+    var birthdate = $("#birthdate").datepicker
+            ({
+                onRender: function (date) {
+                    return (now.getFullYear() - date.getFullYear()) <= 12 ||
+                            (now.getFullYear() - date.getFullYear()) >= 60 ? 'disabled' : '';
+                }
+            }).on('changeDate', function (ev) {
+                begindate.hide();
+            }).data('datepicker');
+    birthdate.setValue(defaultDate);
+</script>
