@@ -268,7 +268,8 @@ namespace RollSystemMobile.Controllers
             ViewBag.ClassID = new SelectList(ClaBO.GetClassByMajor(MajorID),
                 "ClassID", "ClassName", rollcall.ClassID);
             //Mac dinh, lay semester moi nhat
-            ViewBag.SemesterID = SlFactory.MakeSelectList<Semester>("SemesterID", "SemesterName", rollcall.SemesterID);
+            List<Semester> semester = SeBO.GetList().Where(s => s.EndDate > DateTime.Now).ToList();
+            ViewBag.SemesterID = semester;
             ViewBag.SubjectID = new SelectList(SubBO.GetSubjectByMajor(MajorID), "SubjectID", "FullName", rollcall.SubjectID);
             return View(rollcall);
         }

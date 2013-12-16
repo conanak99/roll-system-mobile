@@ -117,7 +117,7 @@ namespace RollSystemMobile.Controllers
                 subject = r.Subject.FullName,
                 classes = r.Class.ClassName,
                 time = r.StartTime.Equals(new TimeSpan(0, 0, 0)) ?
-                       "No Teaching Slot" : r.StartTime.ToString(@"hh\:mm") + " - " + r.EndTime.ToString(@"hh\:mm"),
+                       "No Slot" : r.StartTime.ToString(@"hh\:mm") + " - " + r.EndTime.ToString(@"hh\:mm"),
                 date = r.BeginDate.ToString("dd-MM-yyyy") + " to " + r.EndDate.ToString("dd-MM-yyyy"),
                 isCurrent = CurrentRollCall != null && CurrentRollCall == r ? true : false,
                 attendanceDate = r.AttendanceDate().ToString("MM-dd-yyyy")
