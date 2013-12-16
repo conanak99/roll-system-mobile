@@ -10,6 +10,7 @@
 @using (Html.BeginForm())
 {
     @Html.HiddenFor(model => model.StudentID)
+    @Html.HiddenFor(model => model.StudentCode)
     @Html.HiddenFor(model => model.IsActive)
     @Html.ValidationSummary(true)
     <table class="table">
@@ -65,8 +66,7 @@
                     @Html.LabelFor(model => model.StudentCode)
                 </div>
                 <div class="editor-field">
-                     @Html.TextBoxFor(model => model.StudentCode, new { style = "width:150px;" })
-                    @Html.ValidationMessageFor(model => model.StudentCode)
+                   @Model.StudentCode
                 </div>
             </td>
         </tr>
