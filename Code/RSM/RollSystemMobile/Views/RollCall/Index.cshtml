@@ -27,7 +27,7 @@
         {
         <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
         }
-        <input type="submit" class="btn btn-success" value="Roll Call Reports" />
+        <input type="submit" class="btn btn-success" value="Roll call reports" />
     }
     ---
     @using (Html.BeginForm("RollCallStudentLists", "Report", FormMethod.Post, new { @class = "inline-form" }))
@@ -36,10 +36,10 @@
         {
         <input type="hidden" name="RollCallIDs" value="@item.RollCallID" />
         }
-        <input type="submit" class="btn btn-success" value="Final Student Lists" />
+        <input type="submit" class="btn btn-success" value="Final student lists" />
     }
     ---
-    <input type="submit" class="btn btn-success" onclick="reportStudentsFail()" value="Fail Student Lists in Semester" />
+    <input type="submit" class="btn btn-success" onclick="reportStudentsFail()" value="Unqualified for examination student list" />
 </div>
 <table class="table table-bordered table-striped" id="example">
     <thead>
@@ -69,7 +69,7 @@
     </thead>
     <tbody>
         @{ int index = 1;}
-        @foreach (var item in Model.OrderByDescending(r => r.Class.ClassName).OrderByDescending(r => r.BeginDate))
+        @foreach (var item in Model.OrderByDescending(r => r.BeginDate).OrderByDescending(r => r.Class.ClassName))
         {
             if (item.Status == 1)
             {

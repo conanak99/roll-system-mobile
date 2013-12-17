@@ -56,7 +56,7 @@ namespace RollSystemMobile.Controllers
 
             var sem = SemBO.GetSemesterByID(id);
 
-            String FileName = "FailStudentsList_" + sem.SemesterName + ".xlsx";
+            String FileName = "ListOfStudentNotQualifyingForExamination_" + sem.SemesterName + ".xlsx";
             String FilePath = Server.MapPath("~/Content/Temp/" + FileName);
 
             SemBO.CreateFailStudentReport(id, FilePath);

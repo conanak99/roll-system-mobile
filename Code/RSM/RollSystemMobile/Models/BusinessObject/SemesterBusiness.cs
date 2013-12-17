@@ -112,7 +112,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
             ExcelWorksheet GeneralWorksheet = new ExcelPackage().Workbook.Worksheets.Add("General Report");
             GeneralWorksheet.Cells["A:XFD"].Style.Font.Name = "Arial";
-            GeneralWorksheet.Cells["C2"].Value = "Fail Student List Report";
+            GeneralWorksheet.Cells["C2"].Value = "List of student unqualified for examination report";
             GeneralWorksheet.Cells["C2"].Style.Font.Size = 18;
             GeneralWorksheet.Cells["C2"].Style.Font.Bold = true;
 
@@ -209,9 +209,9 @@ namespace RollSystemMobile.Models.BusinessObject
 
             GeneralWorksheet.Cells["C3"].Value = "Semester ";
             GeneralWorksheet.Cells["C4"].Value = "Time ";
-            GeneralWorksheet.Cells["C5"].Value = "Total subject";
-            GeneralWorksheet.Cells["C6"].Value = "Total student";
-            GeneralWorksheet.Cells["C7"].Value = "Total fail student";
+            GeneralWorksheet.Cells["C5"].Value = "Total subjects";
+            GeneralWorksheet.Cells["C6"].Value = "Total students";
+            GeneralWorksheet.Cells["C7"].Value = "Total students unqualified for examination";
 
             GeneralWorksheet.Cells["C3:C7"].Style.Font.Size = 12;
             GeneralWorksheet.Cells["C3:C7"].Style.Font.Bold = true;
@@ -224,7 +224,7 @@ namespace RollSystemMobile.Models.BusinessObject
 
             GeneralWorksheet.Cells["B9"].Value = "No.";
             GeneralWorksheet.Cells["C9"].Value = "Subject";
-            GeneralWorksheet.Cells["D9"].Value = "Number of fail student";
+            GeneralWorksheet.Cells["D9"].Value = "Number of students unqualified for examination";
             GeneralWorksheet.Cells["B9:D9"].Style.Font.Size = 12;
             GeneralWorksheet.Cells["B9:D9"].Style.Font.Bold = true;
 
@@ -250,8 +250,8 @@ namespace RollSystemMobile.Models.BusinessObject
             GeneralWorksheet.Cells["C2:D2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
 
             GeneralWorksheet.Column(2).Width = 8;
-            GeneralWorksheet.Column(3).Width = 30;
-            GeneralWorksheet.Column(4).Width = 30;
+            GeneralWorksheet.Column(3).Width = 47;
+            GeneralWorksheet.Column(4).Width = 53;
 
             return GeneralWorksheet;
         }
@@ -306,7 +306,7 @@ namespace RollSystemMobile.Models.BusinessObject
             }
             //write file
             DetailWorkSheet.Cells["A:XFD"].Style.Font.Name = "Arial";
-            DetailWorkSheet.Cells["C2"].Value = "Fail Student List Report";
+            DetailWorkSheet.Cells["C2"].Value = "List of student unqualified for examination report";
             DetailWorkSheet.Cells["C2"].Style.Font.Size = 18;
             DetailWorkSheet.Cells["C2"].Style.Font.Bold = true;
 
@@ -352,7 +352,7 @@ namespace RollSystemMobile.Models.BusinessObject
             DetailWorkSheet.Cells["C2:D2"].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             DetailWorkSheet.Column(2).Width = 5;
             DetailWorkSheet.Column(3).Width = 25;
-            DetailWorkSheet.Column(4).Width = 25;
+            DetailWorkSheet.Column(4).Width = 60;
             DetailWorkSheet.Column(5).Width = 12;
             return DetailWorkSheet;
         }
